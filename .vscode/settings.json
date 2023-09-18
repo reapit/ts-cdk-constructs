@@ -1,0 +1,14 @@
+{
+  "search.exclude": {
+    "**/.yarn": true,
+    "**/.pnp.*": true
+  },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.validate": ["javascript", "typescript"],
+  "debug.javascript.terminalOptions": {
+    "envFile": "${workspaceFolder}/.env"
+  }
+}
