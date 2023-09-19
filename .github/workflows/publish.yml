@@ -5,11 +5,8 @@ on:
     types: [published]
 
 env:
-  NPM_TOKEN: ${{secrets.NPM_TOKEN}}
-  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+  NPM_TOKEN: ${{secrets.CDK_NPM_TOKEN}}
   CI: true
-  IS_RELEASE: true
-  GH_PAT: ${{ secrets.GH_PAT }}
 
 jobs:
   release-prod:
@@ -18,9 +15,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-          token: ${{ secrets.GH_PAT }}
 
       - name: Get Tag
         uses: olegtarasov/get-tag@v2.1
