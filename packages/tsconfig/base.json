@@ -4,7 +4,6 @@
     "strict": true,
     "preserveConstEnums": true,
     "noEmit": true,
-    "composite": true,
     "sourceMap": false,
     "module": "commonjs",
     "moduleResolution": "node",

@@ -1,0 +1,10 @@
+{
+  "name": "@reapit-cdk/tsup",
+  "dependencies": {
+    "tsup": "7.2.0"
+  },
+  "type": "module",
+  "bin": {
+    "reapit-cdk-tsup": "./src/index.js"
+  }
+}

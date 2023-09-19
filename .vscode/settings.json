@@ -10,5 +10,8 @@
   "eslint.validate": ["javascript", "typescript"],
   "debug.javascript.terminalOptions": {
     "envFile": "${workspaceFolder}/.env"
+  },
+  "yaml.schemas": {
+    "https://json.schemastore.org/github-workflow.json": "file:///Users/joshbalfour/src/ts-cdk-constructs/.github/workflows.yml"
   }
 }

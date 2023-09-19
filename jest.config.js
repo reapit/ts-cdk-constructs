@@ -1,4 +1,3 @@
-
 /** @type {import('ts-jest').JestConfigWithTsJest} */
 module.exports = {
   silent: true, // uncomment this to get console.log
@@ -19,4 +18,5 @@ module.exports = {
     ],
   },
   testEnvironment: 'node',
+  collectCoverage: true,
 }
