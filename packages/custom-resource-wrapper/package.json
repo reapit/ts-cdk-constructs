@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@reapit-cdk/eslint": "workspace:^",
+    "@reapit-cdk/tsup": "workspace:^",
     "@reapit-cdk/version-package": "workspace:^",
     "@types/aws-lambda": "^8.10.121",
     "aws-lambda": "1.0.7"
