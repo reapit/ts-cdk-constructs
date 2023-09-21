@@ -291,6 +291,10 @@ describe('replicated-key', () => {
               Arn: '',
               Region: 'eu-west-2',
             },
+            {
+              Arn: '',
+              Region: 'cn-north-1',
+            },
           ],
         },
       },
@@ -452,5 +456,86 @@ describe('replicated-key', () => {
     expect(kmsMock).toHaveReceivedCommandTimes(DescribeKeyCommand, 11)
     expect(kmsMock).not.toHaveReceivedCommand(CancelKeyDeletionCommand)
     expect(kmsMock).not.toHaveReceivedCommand(ScheduleKeyDeletionCommand)
+  })
+  it('should cope with being given a non-multiregion key', async () => {
+    kmsMock
+      .on(DescribeKeyCommand)
+      .resolvesOnce({
+        KeyMetadata: {
+          KeyId: 'key-id',
+          MultiRegion: false,
+        },
+      })
+      const res = await onEvent({
+        RequestType: 'Create',
+        LogicalResourceId: '1q23',
+        RequestId: '1q23',
+        ResourceProperties: {
+          ServiceToken: 'asdf',
+          keyArn: 'arn:aws:kms:us-east-1:account:key/key-id',
+          regions: ['eu-west-2', 'us-east-2'],
+        },
+        ResourceType: 'asdf',
+        ResponseURL: 'asdf',
+        ServiceToken: 'asdf',
+        StackId: 'asdf',
+      })
+      expect(res.Status).toBe('FAILED')
+      expect(res.Reason?.split('\n')[0].includes('given key is not multiregion'))
+  })
+  it('should cope with being given a replica key', async () => {
+    kmsMock
+      .on(DescribeKeyCommand)
+      .resolvesOnce({
+        KeyMetadata: {
+          KeyId: 'key-id',
+          MultiRegion: true,
+          MultiRegionConfiguration: {
+            MultiRegionKeyType: 'REPLICA',
+          }
+        },
+      })
+      const res = await onEvent({
+        RequestType: 'Create',
+        LogicalResourceId: '1q23',
+        RequestId: '1q23',
+        ResourceProperties: {
+          ServiceToken: 'asdf',
+          keyArn: 'arn:aws:kms:us-east-1:account:key/key-id',
+          regions: ['eu-west-2', 'us-east-2'],
+        },
+        ResourceType: 'asdf',
+        ResponseURL: 'asdf',
+        ServiceToken: 'asdf',
+        StackId: 'asdf',
+      })
+      expect(res.Status).toBe('FAILED')
+      expect(res.Reason?.split('\n')[0].includes('given key is not multiregion primary key'))
+  })
+  it('should cope with being given a multiregion key with no MultiRegionConfiguration', async () => {
+    kmsMock
+      .on(DescribeKeyCommand)
+      .resolvesOnce({
+        KeyMetadata: {
+          KeyId: 'key-id',
+          MultiRegion: true,
+        },
+      })
+      const res = await onEvent({
+        RequestType: 'Create',
+        LogicalResourceId: '1q23',
+        RequestId: '1q23',
+        ResourceProperties: {
+          ServiceToken: 'asdf',
+          keyArn: 'arn:aws:kms:us-east-1:account:key/key-id',
+          regions: ['eu-west-2', 'us-east-2'],
+        },
+        ResourceType: 'asdf',
+        ResponseURL: 'asdf',
+        ServiceToken: 'asdf',
+        StackId: 'asdf',
+      })
+      expect(res.Status).toBe('FAILED')
+      expect(res.Reason?.split('\n')[0].includes('given key is multiregion but no multiregion configuration was found'))
   })
 })

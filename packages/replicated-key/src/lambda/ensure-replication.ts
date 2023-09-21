@@ -28,7 +28,7 @@ const validateKeyMetadata = (keyMetadata?: KeyMetadata): AWSRegion[] => {
       return existingRegions as AWSRegion[] // :(
     }
   }
-  return []
+  throw new Error('given key is multiregion but no multiregion configuration was found')
 }
 
 export const ensureReplication = async (keyArn: string, regions: AWSRegion[]) => {
