@@ -1,0 +1,7 @@
+{
+  "name": "@reapit-cdk/common",
+  "main": "src",
+  "devDependencies": {
+    "@reapit-cdk/eslint": "workspace:^"
+  }
+}
