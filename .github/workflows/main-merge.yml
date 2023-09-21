@@ -20,7 +20,7 @@ jobs:
       - name: Unit Test
         run:  yarn test
 
-      - uses: sonarsource/sonarqube-scan-action@master
+      - uses: sonarsource/sonarcloud-scan-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
