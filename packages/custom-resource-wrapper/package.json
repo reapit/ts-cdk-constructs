@@ -18,7 +18,7 @@
   "scripts": {
     "check": "npx tsc",
     "lint": "npx eslint",
-    "test": "npx jest",
+    "test": "cd ../ && yarn test packages/custom-resource-wrapper",
     "build": "reapit-cdk-tsup",
     "prepack": "reapit-version-package && yarn build"
   },
