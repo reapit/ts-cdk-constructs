@@ -1,5 +1,5 @@
 import { Arn, CustomResource, Duration, Stack, Token } from 'aws-cdk-lib'
-import { PolicyDocument, PolicyStatement } from 'aws-cdk-lib/aws-iam'
+import { PolicyDocument, PolicyStatement, IGrantable } from 'aws-cdk-lib/aws-iam'
 import { CfnKey, IKey, Key } from 'aws-cdk-lib/aws-kms'
 import { Provider } from 'aws-cdk-lib/custom-resources'
 import { Construct, IDependable } from 'constructs'
@@ -7,7 +7,6 @@ import { generateKeyPolicy } from './generate-key-policy'
 import { AWSRegion, stringIsAWSRegion } from '@reapit-cdk/common'
 import { Code, Function, Runtime } from 'aws-cdk-lib/aws-lambda'
 import * as path from 'path'
-import { IGrantable } from 'aws-cdk-lib/aws-iam'
 
 export class ReplicatedKey extends Construct {
   private masterKey: IKey
