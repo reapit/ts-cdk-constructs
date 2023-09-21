@@ -11,7 +11,7 @@
     "build": "reapit-cdk-tsup --lambda",
     "check": "npx tsc",
     "lint": "npx eslint",
-    "test": "npx test",
+    "test": "npx jest",
     "prepack": "reapit-version-package && yarn build"
   },
   "publishConfig": {
