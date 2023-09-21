@@ -43,7 +43,7 @@ jobs:
 
       - name: Authenticate with NPM
         run: |
-          npm set "//registry.npmjs.org/:_authToken" ${{ secrets.CDK_NPM_TOKEN }}
+          yarn config set npmAuthToken ${{ secrets.CDK_NPM_TOKEN }}
 
       - name: Publish
         run: |
