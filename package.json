@@ -8,6 +8,7 @@
   "scripts": {
     "test": "jest",
     "check": "yarn workspaces foreach run check",
+    "build": "yarn workspaces foreach run build",
     "lint": "yarn workspaces foreach run lint"
   },
   "devDependencies": {

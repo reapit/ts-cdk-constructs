@@ -18,6 +18,7 @@
   "scripts": {
     "check": "npx tsc",
     "lint": "npx eslint",
+    "test": "npx jest",
     "build": "reapit-cdk-tsup",
     "prepack": "reapit-version-package && yarn build"
   },
