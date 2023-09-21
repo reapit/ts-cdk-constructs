@@ -1,11 +1,30 @@
 {
   "name": "@reapit-cdk/custom-resource-wrapper",
   "main": "src/index.ts",
+  "version": "0.0.0",
+  "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/custom-resource-wrapper",
+  "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/custom-resource-wrapper/readme.md",
+  "bugs": {
+    "url": "https://github.com/reapit/ts-cdk-constructs/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reapit/ts-cdk-constructs.git"
+  },
   "license": "MIT",
-  "dependencies": {
-    "aws-lambda": "1.0.7"
+  "publishConfig": {
+    "main": "dist/index.js"
+  },
+  "scripts": {
+    "check": "npx tsc",
+    "lint": "npx eslint",
+    "build": "reapit-cdk-tsup",
+    "prepack": "reapit-version-package && yarn build"
   },
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.121"
+    "@reapit-cdk/eslint": "workspace:^",
+    "@reapit-cdk/version-package": "workspace:^",
+    "@types/aws-lambda": "^8.10.121",
+    "aws-lambda": "1.0.7"
   }
 }

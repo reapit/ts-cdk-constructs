@@ -1,7 +1,6 @@
 module.exports = {
   root: true,
   env: {
-    browser: true,
     es6: true,
     node: true,
     amd: true,
@@ -26,7 +25,7 @@ module.exports = {
   ignorePatterns: [
     'node_modules/',
     '**/node_modules/',
-    'packages/*/dist',
+    '**/dist',
     "tsconfig.json",
     ".eslintrc.js"
   ],

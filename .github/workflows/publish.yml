@@ -1,0 +1,47 @@
+name: Publish
+
+on:
+  release:
+    types: [published]
+
+env:
+  NPM_TOKEN: ${{secrets.CDK_NPM_TOKEN}}
+  CI: true
+
+jobs:
+  release-prod:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Get Tag
+        uses: olegtarasov/get-tag@v2.1
+        id: tagName
+        with:
+          tagRegex: '(?<package>.*)_(?<version>.*)'
+
+      - name: Set Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '18.x'
+
+      - name: Set Version
+        run: |
+          echo "RELEASE_VERSION=${{ steps.tagName.outputs.version }}" >> $GITHUB_ENV
+
+      - name: Install
+        run: yarn
+
+      - name: Lint
+        run: |
+          yarn workspace ${{ steps.tagName.outputs.package }} run lint
+
+      - name: Test
+        run: |
+          yarn workspace ${{ steps.tagName.outputs.package }} run test
+
+      - name: Publish
+        run: |
+          yarn workspace ${{ steps.tagName.outputs.package }} run npm publish --tag latest

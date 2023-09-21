@@ -86,6 +86,5 @@ export const customResourceWrapper = (handler: Handler) => {
       console.error(e)
       return failureEvent(event, { reason: errToString(e as Error) })
     }
-    return successEvent(event, {})
   }
 }
