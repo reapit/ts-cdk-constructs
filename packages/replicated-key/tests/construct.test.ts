@@ -84,7 +84,6 @@ describe('replicated-key', () => {
       code: cdk.aws_lambda.Code.fromInline('export const handler = () => {}'),
     })
     replicatedKey.grantEncryptDecrypt(lambda)
-    console.log(JSON.stringify(template().toJSON(), null, 2))
     template().hasResourceProperties('AWS::IAM::Policy', {
       PolicyDocument: {
         Statement: [
