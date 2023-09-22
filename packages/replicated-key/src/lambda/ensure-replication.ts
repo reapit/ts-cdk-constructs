@@ -25,7 +25,7 @@ const validateKeyMetadata = (keyMetadata?: KeyMetadata): AWSRegion[] => {
       const existingRegions = ReplicaKeys.map((key) => key.Region)
         .filter(strIsDefined)
         .filter(stringIsAWSRegion)
-      return existingRegions as AWSRegion[] // :(
+      return existingRegions
     }
   }
   throw new Error('given key is multiregion but no multiregion configuration was found')
