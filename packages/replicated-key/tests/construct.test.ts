@@ -8,7 +8,7 @@ const synth = () => {
   const stack = new cdk.Stack(app, 'stack', {
     env: {
       region: 'eu-west-2',
-    }
+    },
   })
   const replicatedKey = new ReplicatedKey(stack, 'key', {
     replicaRegions: ['af-south-1', 'cn-north-1'],
@@ -22,46 +22,43 @@ const synth = () => {
 }
 
 const regionalKeyArn = (masterLogicalId: string, region: AWSRegion) => ({
-  "Fn::Join": [
-    "",
+  'Fn::Join': [
+    '',
     [
-      "arn:",
+      'arn:',
       {
-        "Ref": "AWS::Partition"
+        Ref: 'AWS::Partition',
       },
       `:kms:${region}:`,
       {
-        "Ref": "AWS::AccountId"
+        Ref: 'AWS::AccountId',
       },
-      ":key/",
+      ':key/',
       {
-        "Fn::Select": [
+        'Fn::Select': [
           1,
           {
-            "Fn::Split": [
-              "/",
+            'Fn::Split': [
+              '/',
               {
-                "Fn::Select": [
+                'Fn::Select': [
                   5,
                   {
-                    "Fn::Split": [
-                      ":",
+                    'Fn::Split': [
+                      ':',
                       {
-                        "Fn::GetAtt": [
-                          masterLogicalId,
-                          "Arn"
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  ]
+                        'Fn::GetAtt': [masterLogicalId, 'Arn'],
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  ],
 })
 
 const masterKeyLogicalId = 'keyresource49C04B4F'
@@ -84,7 +81,7 @@ describe('replicated-key', () => {
     const lambda = new cdk.aws_lambda.Function(stack, 'lambda', {
       runtime: cdk.aws_lambda.Runtime.NODEJS_18_X,
       handler: 'lambda.handler',
-      code: cdk.aws_lambda.Code.fromInline('export const handler = () => {}')
+      code: cdk.aws_lambda.Code.fromInline('export const handler = () => {}'),
     })
     replicatedKey.grantEncryptDecrypt(lambda)
     console.log(JSON.stringify(template().toJSON(), null, 2))
@@ -94,15 +91,17 @@ describe('replicated-key', () => {
           {
             Action: ['kms:Decrypt', 'kms:Encrypt', 'kms:ReEncrypt*', 'kms:GenerateDataKey*'],
             Resource: {
-              "Fn::GetAtt": [masterKeyLogicalId, "Arn"]
+              'Fn::GetAtt': [masterKeyLogicalId, 'Arn'],
             },
-          }, {
+          },
+          {
             Action: ['kms:Decrypt', 'kms:Encrypt', 'kms:ReEncrypt*', 'kms:GenerateDataKey*'],
-            Resource: regionalKeyArn(masterKeyLogicalId, 'af-south-1')
-          }, {
+            Resource: regionalKeyArn(masterKeyLogicalId, 'af-south-1'),
+          },
+          {
             Action: ['kms:Decrypt', 'kms:Encrypt', 'kms:ReEncrypt*', 'kms:GenerateDataKey*'],
-            Resource: regionalKeyArn(masterKeyLogicalId, 'cn-north-1')
-          }
+            Resource: regionalKeyArn(masterKeyLogicalId, 'cn-north-1'),
+          },
         ],
       },
     })
@@ -112,7 +111,7 @@ describe('replicated-key', () => {
     const lambda = new cdk.aws_lambda.Function(stack, 'lambda', {
       runtime: cdk.aws_lambda.Runtime.NODEJS_18_X,
       handler: 'lambda.handler',
-      code: cdk.aws_lambda.Code.fromInline('export const handler = () => {}')
+      code: cdk.aws_lambda.Code.fromInline('export const handler = () => {}'),
     })
     replicatedKey.grantDecrypt(lambda)
     template().hasResourceProperties('AWS::IAM::Policy', {
@@ -121,15 +120,17 @@ describe('replicated-key', () => {
           {
             Action: 'kms:Decrypt',
             Resource: {
-              "Fn::GetAtt": [masterKeyLogicalId, "Arn"]
+              'Fn::GetAtt': [masterKeyLogicalId, 'Arn'],
             },
-          }, {
+          },
+          {
             Action: 'kms:Decrypt',
-            Resource: regionalKeyArn(masterKeyLogicalId, 'af-south-1')
-          }, {
+            Resource: regionalKeyArn(masterKeyLogicalId, 'af-south-1'),
+          },
+          {
             Action: 'kms:Decrypt',
-            Resource: regionalKeyArn(masterKeyLogicalId, 'cn-north-1')
-          }
+            Resource: regionalKeyArn(masterKeyLogicalId, 'cn-north-1'),
+          },
         ],
       },
     })
@@ -139,7 +140,7 @@ describe('replicated-key', () => {
     const lambda = new cdk.aws_lambda.Function(stack, 'lambda', {
       runtime: cdk.aws_lambda.Runtime.NODEJS_18_X,
       handler: 'lambda.handler',
-      code: cdk.aws_lambda.Code.fromInline('export const handler = () => {}')
+      code: cdk.aws_lambda.Code.fromInline('export const handler = () => {}'),
     })
     replicatedKey.grantEncrypt(lambda)
     template().hasResourceProperties('AWS::IAM::Policy', {
@@ -148,15 +149,17 @@ describe('replicated-key', () => {
           {
             Action: ['kms:Encrypt', 'kms:ReEncrypt*', 'kms:GenerateDataKey*'],
             Resource: {
-              "Fn::GetAtt": [masterKeyLogicalId, "Arn"]
+              'Fn::GetAtt': [masterKeyLogicalId, 'Arn'],
             },
-          }, {
+          },
+          {
             Action: ['kms:Encrypt', 'kms:ReEncrypt*', 'kms:GenerateDataKey*'],
-            Resource: regionalKeyArn(masterKeyLogicalId, 'af-south-1')
-          }, {
+            Resource: regionalKeyArn(masterKeyLogicalId, 'af-south-1'),
+          },
+          {
             Action: ['kms:Encrypt', 'kms:ReEncrypt*', 'kms:GenerateDataKey*'],
-            Resource: regionalKeyArn(masterKeyLogicalId, 'cn-north-1')
-          }
+            Resource: regionalKeyArn(masterKeyLogicalId, 'cn-north-1'),
+          },
         ],
       },
     })

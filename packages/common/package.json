@@ -1,7 +1,10 @@
 {
   "name": "@reapit-cdk/common",
   "main": "src",
+  "scripts": {
+    "lint": "yarn run root:lint $PWD"
+  },
   "devDependencies": {
-    "@reapit-cdk/eslint": "workspace:^"
+    "@reapit-cdk/eslint-config": "workspace:^"
   }
 }

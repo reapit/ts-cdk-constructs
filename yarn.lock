@@ -1595,7 +1595,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@reapit-cdk/common@workspace:packages/common"
   dependencies:
-    "@reapit-cdk/eslint": "workspace:^"
+    "@reapit-cdk/eslint-config": "workspace:^"
   languageName: unknown
   linkType: soft
 
@@ -1603,17 +1603,25 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@reapit-cdk/custom-resource-wrapper@workspace:packages/custom-resource-wrapper"
   dependencies:
-    "@reapit-cdk/eslint": "workspace:^"
+    "@reapit-cdk/eslint-config": "workspace:^"
     "@reapit-cdk/tsup": "workspace:^"
     "@reapit-cdk/version-package": "workspace:^"
     "@types/aws-lambda": ^8.10.121
-    aws-lambda: 1.0.7
+    aws-lambda: ^1.0.7
   languageName: unknown
   linkType: soft
 
-"@reapit-cdk/eslint@workspace:^, @reapit-cdk/eslint@workspace:packages/eslint":
+"@reapit-cdk/eslint-config@workspace:^, @reapit-cdk/eslint-config@workspace:packages/eslint":
   version: 0.0.0-use.local
-  resolution: "@reapit-cdk/eslint@workspace:packages/eslint"
+  resolution: "@reapit-cdk/eslint-config@workspace:packages/eslint"
+  dependencies:
+    "@types/eslint": ^8.44.2
+    "@typescript-eslint/eslint-plugin": ^6.7.0
+    "@typescript-eslint/parser": ^6.7.0
+    eslint: ^8.49.0
+    eslint-config-prettier: ^9.0.0
+    eslint-plugin-prettier: ^5.0.0
+    prettier: ^3.0.3
   languageName: unknown
   linkType: soft
 
@@ -1624,7 +1632,7 @@ __metadata:
     "@aws-sdk/client-kms": 3.414.0
     "@reapit-cdk/common": "workspace:^"
     "@reapit-cdk/custom-resource-wrapper": "workspace:^"
-    "@reapit-cdk/eslint": "workspace:^"
+    "@reapit-cdk/eslint-config": "workspace:^"
     "@reapit-cdk/tsup": "workspace:^"
     "@reapit-cdk/version-package": "workspace:^"
     aws-cdk-lib: 2.96.2
@@ -1644,6 +1652,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@reapit-cdk/tsup@workspace:packages/tsup"
   dependencies:
+    "@reapit-cdk/eslint-config": "workspace:^"
     tsup: 7.2.0
   bin:
     reapit-cdk-tsup: ./src/index.js
@@ -1656,7 +1665,7 @@ __metadata:
   dependencies:
     "@aws-sdk/client-cognito-identity-provider": 3.414.0
     "@reapit-cdk/custom-resource-wrapper": "workspace:^"
-    "@reapit-cdk/eslint": "workspace:^"
+    "@reapit-cdk/eslint-config": "workspace:^"
     "@reapit-cdk/tsup": "workspace:^"
     "@reapit-cdk/version-package": "workspace:^"
     aws-cdk-lib: 2.96.2
@@ -1670,6 +1679,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@reapit-cdk/version-package@workspace:packages/version-package"
   dependencies:
+    "@reapit-cdk/eslint-config": "workspace:^"
     semver: ^7.5.4
   bin:
     reapit-version-package: ./src/index.js
@@ -1681,17 +1691,11 @@ __metadata:
   resolution: "@reapit/ts-cdk-constructs@workspace:."
   dependencies:
     "@jest/globals": ^29.7.0
-    "@types/eslint": ^8.44.2
     "@types/jest": ^29.5.5
-    "@typescript-eslint/eslint-plugin": ^6.7.0
-    "@typescript-eslint/parser": ^6.7.0
     aws-sdk-client-mock: ^3.0.0
     aws-sdk-client-mock-jest: ^3.0.0
     eslint: ^8.49.0
-    eslint-config-prettier: ^9.0.0
-    eslint-plugin-prettier: ^5.0.0
     jest: ^29.7.0
-    prettier: ^3.0.3
     ts-jest: ^29.1.1
     typescript: ^5.2.2
   languageName: unknown
@@ -2733,7 +2737,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"aws-lambda@npm:1.0.7, aws-lambda@npm:^1.0.7":
+"aws-lambda@npm:^1.0.7":
   version: 1.0.7
   resolution: "aws-lambda@npm:1.0.7"
   dependencies:

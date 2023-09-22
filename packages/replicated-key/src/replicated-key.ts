@@ -93,7 +93,7 @@ export class ReplicatedKey extends Construct {
   getRegionalKey(region: AWSRegion): IKey {
     const key = this.keys[region]
     if (!key) {
-      throw new Error('No key in region '+region)
+      throw new Error('No key in region ' + region)
     }
     return key
   }

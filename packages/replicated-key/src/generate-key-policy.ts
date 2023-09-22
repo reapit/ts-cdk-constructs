@@ -1,4 +1,4 @@
-import { AWSRegion } from "@reapit-cdk/common"
+import { AWSRegion } from '@reapit-cdk/common'
 
 export const generateKeyPolicy = (account: string, region: AWSRegion) => {
   return {

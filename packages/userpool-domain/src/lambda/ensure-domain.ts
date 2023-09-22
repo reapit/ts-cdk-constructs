@@ -4,7 +4,7 @@ import {
   DescribeUserPoolCommand,
 } from '@aws-sdk/client-cognito-identity-provider'
 import { randomUUID } from 'crypto'
-    
+
 const getUserPoolDomain = async (userPoolId: string) => {
   const [region] = userPoolId.split('_')
   const client = new CognitoIdentityProviderClient({

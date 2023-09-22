@@ -49,7 +49,7 @@ describe('userpool-domain', () => {
     cognitoMock.on(CreateUserPoolDomainCommand).resolves({
       CloudFrontDomain: 'something.com',
     })
-    
+
     const res = await onEvent(genEvent())
     expect(cognitoMock).toHaveReceivedCommandWith(DescribeUserPoolCommand, {
       UserPoolId: 'eu-west-8_user-pool-id',

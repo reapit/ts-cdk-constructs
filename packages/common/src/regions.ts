@@ -28,6 +28,6 @@ export const awsRegions = [
   'cn-northwest-1',
 ] as const
 
-export type AWSRegion = typeof awsRegions[number]
+export type AWSRegion = (typeof awsRegions)[number]
 
 export const stringIsAWSRegion = (str: string): str is AWSRegion => awsRegions.includes(str as AWSRegion)

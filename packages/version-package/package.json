@@ -1,10 +1,15 @@
 {
   "name": "@reapit-cdk/version-package",
-  "type": "module",
   "bin": {
     "reapit-version-package": "./src/index.js"
   },
+  "scripts": {
+    "lint": "yarn run root:lint $PWD"
+  },
   "dependencies": {
     "semver": "^7.5.4"
+  },
+  "devDependencies": {
+    "@reapit-cdk/eslint-config": "workspace:^"
   }
 }

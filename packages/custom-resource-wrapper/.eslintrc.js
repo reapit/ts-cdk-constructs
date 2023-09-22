@@ -1,4 +1,4 @@
 module.exports = {
   root: true,
-  extends: ["@reapit-cdk/eslint"],
+  extends: ["@reapit-cdk/eslint-config"],
 }
