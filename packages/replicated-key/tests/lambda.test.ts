@@ -16,6 +16,23 @@ const kmsMock = mockClient(KMSClient)
 
 process.env.TEST = '1'
 
+const genEvent = (RequestType: string = 'Create', props: Record<string, any> = {}): any => ({
+  RequestType,
+  LogicalResourceId: '1q23',
+  RequestId: '1q23',
+  ResourceProperties: {
+    ServiceToken: 'asdf',
+    keyArn: 'arn:aws:kms:us-east-1:account:key/key-id',
+    regions: ['eu-west-2', 'us-east-2'],
+    ...props,
+  },
+  OldResourceProperties: {},
+  ResourceType: 'asdf',
+  ResponseURL: 'asdf',
+  ServiceToken: 'asdf',
+  StackId: 'asdf',
+})
+
 describe('replicated-key', () => {
   beforeEach(() => {
     kmsMock.reset()
@@ -55,20 +72,7 @@ describe('replicated-key', () => {
       KeyId: 'key-id',
     })
 
-    await onEvent({
-      RequestType: 'Create',
-      LogicalResourceId: '1q23',
-      RequestId: '1q23',
-      ResourceProperties: {
-        ServiceToken: 'asdf',
-        keyArn: 'arn:aws:kms:us-east-1:account:key/key-id',
-        regions: ['eu-west-2', 'us-east-2'],
-      },
-      ResourceType: 'asdf',
-      ResponseURL: 'asdf',
-      ServiceToken: 'asdf',
-      StackId: 'asdf',
-    })
+    await onEvent(genEvent())
 
     expect(kmsMock).toHaveReceivedCommandWith(ReplicateKeyCommand, {
       KeyId: 'key-id',
@@ -103,20 +107,7 @@ describe('replicated-key', () => {
       KeyId: 'key-id',
     })
 
-    await onEvent({
-      RequestType: 'Create',
-      LogicalResourceId: '1q23',
-      RequestId: '1q23',
-      ResourceProperties: {
-        ServiceToken: 'asdf',
-        keyArn: 'arn:aws:kms:us-east-1:account:key/key-id',
-        regions: ['eu-west-2', 'us-east-2'],
-      },
-      ResourceType: 'asdf',
-      ResponseURL: 'asdf',
-      ServiceToken: 'asdf',
-      StackId: 'asdf',
-    })
+    await onEvent(genEvent())
     expect(kmsMock).toHaveReceivedCommandTimes(DescribeKeyCommand, 3)
     expect(kmsMock).not.toHaveReceivedCommand(ReplicateKeyCommand)
     expect(kmsMock).not.toHaveReceivedCommand(CancelKeyDeletionCommand)
@@ -167,20 +158,7 @@ describe('replicated-key', () => {
       KeyId: 'key-id',
     })
 
-    await onEvent({
-      RequestType: 'Create',
-      LogicalResourceId: '1q23',
-      RequestId: '1q23',
-      ResourceProperties: {
-        ServiceToken: 'asdf',
-        keyArn: 'arn:aws:kms:us-east-1:account:key/key-id',
-        regions: ['eu-west-2', 'us-east-2'],
-      },
-      ResourceType: 'asdf',
-      ResponseURL: 'asdf',
-      ServiceToken: 'asdf',
-      StackId: 'asdf',
-    })
+    await onEvent(genEvent())
     expect(kmsMock).toHaveReceivedCommand(CancelKeyDeletionCommand)
     expect(kmsMock).toHaveReceivedCommand(ReplicateKeyCommand)
   })
@@ -245,22 +223,7 @@ describe('replicated-key', () => {
       KeyId: 'key-id',
     })
 
-    await onEvent({
-      RequestType: 'Update',
-      OldResourceProperties: {},
-      PhysicalResourceId: '',
-      LogicalResourceId: '1q23',
-      RequestId: '1q23',
-      ResourceProperties: {
-        ServiceToken: 'asdf',
-        keyArn: 'arn:aws:kms:us-east-1:account:key/key-id',
-        regions: ['eu-west-2', 'us-east-2'],
-      },
-      ResourceType: 'asdf',
-      ResponseURL: 'asdf',
-      ServiceToken: 'asdf',
-      StackId: 'asdf',
-    })
+    await onEvent(genEvent('Update'))
     expect(kmsMock).toHaveReceivedCommandWith(ReplicateKeyCommand, {
       KeyId: 'key-id',
       ReplicaRegion: 'us-east-2',
@@ -307,21 +270,12 @@ describe('replicated-key', () => {
       KeyId: 'key-id',
     })
 
-    await onEvent({
-      RequestType: 'Delete',
-      LogicalResourceId: '1q23',
-      RequestId: '1q23',
-      ResourceProperties: {
-        ServiceToken: 'asdf',
+    await onEvent(
+      genEvent('Delete', {
         keyArn: 'arn:aws:kms:us-east-1:account:key/key-id',
         regions: ['eu-west-2', 'us-west-2'],
-      },
-      ResourceType: 'asdf',
-      ResponseURL: 'asdf',
-      ServiceToken: 'asdf',
-      StackId: 'asdf',
-      PhysicalResourceId: '',
-    })
+      }),
+    )
 
     expect(kmsMock).not.toHaveReceivedCommand(ReplicateKeyCommand)
     expect(kmsMock).not.toHaveReceivedCommand(CancelKeyDeletionCommand)
@@ -428,20 +382,7 @@ describe('replicated-key', () => {
       KeyId: 'key-id',
     })
 
-    await onEvent({
-      RequestType: 'Create',
-      LogicalResourceId: '1q23',
-      RequestId: '1q23',
-      ResourceProperties: {
-        ServiceToken: 'asdf',
-        keyArn: 'arn:aws:kms:us-east-1:account:key/key-id',
-        regions: ['eu-west-2', 'us-east-2'],
-      },
-      ResourceType: 'asdf',
-      ResponseURL: 'asdf',
-      ServiceToken: 'asdf',
-      StackId: 'asdf',
-    })
+    await onEvent(genEvent())
 
     expect(kmsMock).toHaveReceivedCommandWith(ReplicateKeyCommand, {
       KeyId: 'key-id',
@@ -464,20 +405,7 @@ describe('replicated-key', () => {
         MultiRegion: false,
       },
     })
-    const res = await onEvent({
-      RequestType: 'Create',
-      LogicalResourceId: '1q23',
-      RequestId: '1q23',
-      ResourceProperties: {
-        ServiceToken: 'asdf',
-        keyArn: 'arn:aws:kms:us-east-1:account:key/key-id',
-        regions: ['eu-west-2', 'us-east-2'],
-      },
-      ResourceType: 'asdf',
-      ResponseURL: 'asdf',
-      ServiceToken: 'asdf',
-      StackId: 'asdf',
-    })
+    const res = await onEvent(genEvent())
     expect(res.Status).toBe('FAILED')
     expect(res.Reason?.split('\n')[0].includes('given key is not multiregion'))
   })
@@ -491,20 +419,7 @@ describe('replicated-key', () => {
         },
       },
     })
-    const res = await onEvent({
-      RequestType: 'Create',
-      LogicalResourceId: '1q23',
-      RequestId: '1q23',
-      ResourceProperties: {
-        ServiceToken: 'asdf',
-        keyArn: 'arn:aws:kms:us-east-1:account:key/key-id',
-        regions: ['eu-west-2', 'us-east-2'],
-      },
-      ResourceType: 'asdf',
-      ResponseURL: 'asdf',
-      ServiceToken: 'asdf',
-      StackId: 'asdf',
-    })
+    const res = await onEvent(genEvent())
     expect(res.Status).toBe('FAILED')
     expect(res.Reason?.split('\n')[0].includes('given key is not multiregion primary key'))
   })
@@ -515,20 +430,7 @@ describe('replicated-key', () => {
         MultiRegion: true,
       },
     })
-    const res = await onEvent({
-      RequestType: 'Create',
-      LogicalResourceId: '1q23',
-      RequestId: '1q23',
-      ResourceProperties: {
-        ServiceToken: 'asdf',
-        keyArn: 'arn:aws:kms:us-east-1:account:key/key-id',
-        regions: ['eu-west-2', 'us-east-2'],
-      },
-      ResourceType: 'asdf',
-      ResponseURL: 'asdf',
-      ServiceToken: 'asdf',
-      StackId: 'asdf',
-    })
+    const res = await onEvent(genEvent())
     expect(res.Status).toBe('FAILED')
     expect(res.Reason?.split('\n')[0].includes('given key is multiregion but no multiregion configuration was found'))
   })
