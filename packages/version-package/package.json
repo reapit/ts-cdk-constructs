@@ -1,5 +1,6 @@
 {
   "name": "@reapit-cdk/version-package",
+  "type": "module",
   "bin": {
     "reapit-version-package": "./src/index.js"
   },
