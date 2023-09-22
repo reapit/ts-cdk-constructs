@@ -19,7 +19,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'ESNext',
     sourceType: 'module',
-    project: 'tsconfig.json',
+    project: './packages/*/tsconfig.json',
   },
   plugins: ['@typescript-eslint', 'prettier'],
   ignorePatterns: [

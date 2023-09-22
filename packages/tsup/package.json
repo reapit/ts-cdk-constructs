@@ -1,9 +1,15 @@
 {
   "name": "@reapit-cdk/tsup",
+  "type": "module",
   "dependencies": {
     "tsup": "7.2.0"
   },
-  "type": "module",
+  "devDependencies": {
+    "@reapit-cdk/eslint-config": "workspace:^"
+  },
+  "scripts": {
+    "lint": "yarn run root:lint $PWD"
+  },
   "bin": {
     "reapit-cdk-tsup": "./src/index.js"
   }

@@ -16,17 +16,17 @@
     "main": "dist/index.js"
   },
   "scripts": {
-    "check": "npx tsc",
-    "lint": "npx eslint",
-    "test": "cd ../ && yarn test packages/custom-resource-wrapper",
+    "check": "yarn run root:check -p $PWD",
+    "lint": "yarn run root:lint $PWD",
+    "test": "yarn run root:test $PWD",
     "build": "reapit-cdk-tsup",
     "prepack": "reapit-version-package && yarn build"
   },
   "devDependencies": {
-    "@reapit-cdk/eslint": "workspace:^",
+    "@reapit-cdk/eslint-config": "workspace:^",
     "@reapit-cdk/tsup": "workspace:^",
     "@reapit-cdk/version-package": "workspace:^",
     "@types/aws-lambda": "^8.10.121",
-    "aws-lambda": "1.0.7"
+    "aws-lambda": "^1.0.7"
   }
 }

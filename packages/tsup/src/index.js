@@ -16,7 +16,9 @@ await build({
 if (hasLambda) {
   const pkgJson = JSON.parse(fs.readFileSync(path.resolve('./package.json'), 'utf-8'))
 
-  const deps = [...Object.keys(pkgJson.dependencies || {}), ...Object.keys(pkgJson.devDependencies || {})].filter(name => !name.includes('@aws-sdk'))
+  const deps = [...Object.keys(pkgJson.dependencies || {}), ...Object.keys(pkgJson.devDependencies || {})].filter(
+    (name) => !name.includes('@aws-sdk'),
+  )
   await build({
     entry: {
       'lambda/lambda': 'src/lambda/lambda.ts',

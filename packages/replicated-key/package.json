@@ -1,8 +1,8 @@
 {
-  "name": "@reapit-cdk/userpool-domain",
+  "name": "@reapit-cdk/replicated-key",
   "version": "0.0.0",
-  "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/userpool-domain",
-  "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/userpool-domain/readme.md",
+  "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/replicated-key",
+  "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/replicated-key/readme.md",
   "bugs": {
     "url": "https://github.com/reapit/ts-cdk-constructs/issues"
   },
@@ -19,11 +19,12 @@
   },
   "main": "src/index.ts",
   "dependencies": {
+    "@reapit-cdk/common": "workspace:^",
     "aws-cdk-lib": "2.96.2",
     "constructs": "10.2.70"
   },
   "devDependencies": {
-    "@aws-sdk/client-cognito-identity-provider": "3.414.0",
+    "@aws-sdk/client-kms": "3.414.0",
     "@reapit-cdk/custom-resource-wrapper": "workspace:^",
     "@reapit-cdk/eslint-config": "workspace:^",
     "@reapit-cdk/tsup": "workspace:^",
