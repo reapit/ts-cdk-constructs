@@ -7,10 +7,12 @@
   ],
   "scripts": {
     "test": "jest",
-    "check": "yarn workspaces foreach run check",
+    "check": "tsc packages/**/*.ts --noEmit",
     "build": "yarn workspaces foreach run build",
-    "lint": "yarn eslint packages",
-    "root:lint": "eslint"
+    "lint": "eslint packages",
+    "root:lint": "eslint",
+    "root:test": "jest",
+    "root:check": "tsc"
   },
   "devDependencies": {
     "@jest/globals": "^29.7.0",

@@ -16,9 +16,9 @@
     "main": "dist/index.js"
   },
   "scripts": {
-    "check": "npx tsc",
+    "check": "yarn run root:check -p $PWD",
     "lint": "yarn run root:lint $PWD",
-    "test": "cd ../ && yarn test packages/custom-resource-wrapper",
+    "test": "yarn run root:test $PWD",
     "build": "reapit-cdk-tsup",
     "prepack": "reapit-version-package && yarn build"
   },

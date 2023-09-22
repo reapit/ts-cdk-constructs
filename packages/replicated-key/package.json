@@ -9,9 +9,9 @@
   "license": "MIT",
   "scripts": {
     "build": "reapit-cdk-tsup --lambda",
-    "check": "npx tsc",
+    "check": "yarn run root:check -p $PWD",
     "lint": "yarn run root:lint $PWD",
-    "test": "cd ../ && yarn test packages/replicated-key",
+    "test": "yarn run root:test $PWD",
     "prepack": "reapit-version-package && yarn build"
   },
   "publishConfig": {
