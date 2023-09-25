@@ -22,8 +22,8 @@ const synth = () => {
 describe('userpool-domain', () => {
   test('synthesizes', () => {
     const { userpoolDomain, template } = synth()
-    expect(userpoolDomain)
-    expect(template)
+    expect(userpoolDomain).toBeDefined()
+    expect(template).toBeDefined()
   })
   test('creates the lambda', () => {
     const { template } = synth()
