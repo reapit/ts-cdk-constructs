@@ -1,0 +1,4 @@
+{
+  "name": "@reapit-cdk/email-receiver-types",
+  "main": "src/index.ts"
+}
