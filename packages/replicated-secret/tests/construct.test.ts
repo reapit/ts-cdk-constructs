@@ -3,11 +3,11 @@ import * as cdk from 'aws-cdk-lib'
 import { ReplicatedSecret } from '../src'
 import { ReplicatedKey } from '@reapit-cdk/replicated-key'
 
-const synth = () => {
+const synth = (region: string = 'eu-west-2') => {
   const app = new cdk.App()
   const stack = new cdk.Stack(app, 'stack', {
     env: {
-      region: 'eu-west-2',
+      region,
     },
   })
   const replicatedKey = new ReplicatedKey(stack, 'key', {
@@ -101,8 +101,8 @@ const regionalSecretArn = (masterLogicalId: string, region: string) => ({
 describe('replicated-secret', () => {
   test('synthesizes', () => {
     const { replicatedSecret, template } = synth()
-    expect(replicatedSecret)
-    expect(template())
+    expect(replicatedSecret).toBeDefined()
+    expect(template()).toBeDefined()
   })
   test('getRegionalSecret', () => {
     const { replicatedSecret } = synth()

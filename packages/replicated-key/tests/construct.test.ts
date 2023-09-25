@@ -66,8 +66,8 @@ const masterKeyLogicalId = 'keyresource49C04B4F'
 describe('replicated-key', () => {
   test('synthesizes', () => {
     const { replicatedKey, template } = synth()
-    expect(replicatedKey)
-    expect(template())
+    expect(replicatedKey).toBeDefined()
+    expect(template()).toBeDefined()
   })
   test('getRegionalKey', () => {
     const { replicatedKey } = synth()
