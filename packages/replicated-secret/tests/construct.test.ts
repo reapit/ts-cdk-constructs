@@ -113,6 +113,86 @@ describe('replicated-secret', () => {
       new Error('No secret in region us-east-1'),
     )
   })
+  test('unresolved stack region error', () => {
+    const app = new cdk.App()
+    const keyStack = new cdk.Stack(app, 'stack', {
+      env: {
+        region: 'eu-west-1',
+      },
+    })
+    const replicatedKey = new ReplicatedKey(keyStack, 'key', {
+      replicaRegions: ['af-south-1', 'cn-north-1'],
+    })
+    const stack = new cdk.Stack(app, 'stack-2')
+    expect(() => {
+      new ReplicatedSecret(stack, 'secret', {
+        replicaRegions: ['af-south-1', 'cn-north-1'],
+        replicatedKey,
+      })
+    }).toThrowError('stack region is not resolved, please be explicit')
+  })
+  test('invalid stack region error', () => {
+    const app = new cdk.App()
+    const keyStack = new cdk.Stack(app, 'stack', {
+      env: {
+        region: 'eu-west-2',
+      },
+    })
+    const replicatedKey = new ReplicatedKey(keyStack, 'key', {
+      replicaRegions: ['af-south-1', 'cn-north-1'],
+    })
+    const stack = new cdk.Stack(app, 'stack-2', {
+      env: {
+        region: 'invalid',
+      },
+    })
+    expect(() => {
+      new ReplicatedSecret(stack, 'secret', {
+        replicaRegions: ['af-south-1', 'cn-north-1'],
+        replicatedKey,
+      })
+    }).toThrowError('invalid stack region')
+  })
+  test('replicate secret into non-key region error', () => {
+    const app = new cdk.App()
+    const stack = new cdk.Stack(app, 'stack', {
+      env: {
+        region: 'eu-west-2',
+      },
+    })
+    const replicatedKey = new ReplicatedKey(stack, 'key', {
+      replicaRegions: ['af-south-1', 'cn-north-1'],
+    })
+    expect(() => {
+      new ReplicatedSecret(stack, 'secret', {
+        replicaRegions: ['us-east-1', 'cn-north-1'],
+        replicatedKey,
+      })
+    }).toThrowError('No key in region us-east-1')
+  })
+
+  test('replicate main secret into non-key region error', () => {
+    const app = new cdk.App()
+    const keyStack = new cdk.Stack(app, 'stack', {
+      env: {
+        region: 'eu-west-2',
+      },
+    })
+    const replicatedKey = new ReplicatedKey(keyStack, 'key', {
+      replicaRegions: ['af-south-1', 'cn-north-1'],
+    })
+    const stack = new cdk.Stack(app, 'stack-2', {
+      env: {
+        region: 'eu-west-1',
+      },
+    })
+    expect(() => {
+      new ReplicatedSecret(stack, 'secret', {
+        replicaRegions: ['us-east-1', 'cn-north-1'],
+        replicatedKey,
+      })
+    }).toThrowError('attempted to create replicated secret with no key available in secret primary region')
+  })
 
   test('grantRead', () => {
     const { stack, replicatedSecret, template } = synth()

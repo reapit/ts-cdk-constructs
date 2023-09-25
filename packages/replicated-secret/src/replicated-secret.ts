@@ -51,7 +51,7 @@ export class ReplicatedSecret extends Secret {
     }
 
     const { replicatedKey, replicaRegions } = props
-    const masterKey = replicatedKey.getRegionalKey(stackRegion)
+    const masterKey = replicatedKey.tryGetRegionalKey(stackRegion)
     if (!masterKey) {
       throw new Error('attempted to create replicated secret with no key available in secret primary region')
     }

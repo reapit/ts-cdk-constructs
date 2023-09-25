@@ -76,6 +76,35 @@ describe('replicated-key', () => {
     expect(replicatedKey.getRegionalKey('cn-north-1'))
     expect(() => replicatedKey.getRegionalKey('us-east-1')).toThrowError(new Error('No key in region us-east-1'))
   })
+  test('tryGetRegionalKey', () => {
+    const { replicatedKey } = synth()
+    expect(replicatedKey.tryGetRegionalKey('eu-west-2'))
+    expect(replicatedKey.tryGetRegionalKey('af-south-1'))
+    expect(replicatedKey.tryGetRegionalKey('cn-north-1'))
+    expect(replicatedKey.tryGetRegionalKey('us-east-1')).toBeUndefined()
+  })
+  test('stack region is unresolved error', () => {
+    const app = new cdk.App()
+    const stack = new cdk.Stack(app, 'stack')
+    expect(() => {
+      new ReplicatedKey(stack, 'key', {
+        replicaRegions: ['af-south-1', 'cn-north-1'],
+      })
+    }).toThrowError('stack region is unresolved, please explicitly specify')
+  })
+  test('stack region is invalid error', () => {
+    const app = new cdk.App()
+    const stack = new cdk.Stack(app, 'stack', {
+      env: {
+        region: 'invalid',
+      },
+    })
+    expect(() => {
+      new ReplicatedKey(stack, 'key', {
+        replicaRegions: ['af-south-1', 'cn-north-1'],
+      })
+    }).toThrowError('stack region is invalid')
+  })
   test('grantEncryptDecrypt', () => {
     const { replicatedKey, template, stack } = synth()
     const lambda = new cdk.aws_lambda.Function(stack, 'lambda', {

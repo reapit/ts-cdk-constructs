@@ -21,7 +21,7 @@ export class ReplicatedKey extends Construct {
       throw new Error('stack region is unresolved, please explicitly specify')
     }
     if (!stringIsAWSRegion(masterRegion)) {
-      throw new Error('region is not valid')
+      throw new Error('stack region is invalid')
     }
     const cfnKey = new CfnKey(this, 'resource', {
       multiRegion: true,
@@ -95,6 +95,11 @@ export class ReplicatedKey extends Construct {
     if (!key) {
       throw new Error('No key in region ' + region)
     }
+    return key
+  }
+
+  tryGetRegionalKey(region: AWSRegion): IKey | undefined {
+    const key = this.keys[region]
     return key
   }
 
