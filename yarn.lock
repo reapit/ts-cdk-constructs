@@ -246,6 +246,53 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@aws-sdk/client-ses@npm:3.414.0":
+  version: 3.414.0
+  resolution: "@aws-sdk/client-ses@npm:3.414.0"
+  dependencies:
+    "@aws-crypto/sha256-browser": 3.0.0
+    "@aws-crypto/sha256-js": 3.0.0
+    "@aws-sdk/client-sts": 3.414.0
+    "@aws-sdk/credential-provider-node": 3.414.0
+    "@aws-sdk/middleware-host-header": 3.413.0
+    "@aws-sdk/middleware-logger": 3.413.0
+    "@aws-sdk/middleware-recursion-detection": 3.413.0
+    "@aws-sdk/middleware-signing": 3.413.0
+    "@aws-sdk/middleware-user-agent": 3.413.0
+    "@aws-sdk/region-config-resolver": 3.413.0
+    "@aws-sdk/types": 3.413.0
+    "@aws-sdk/util-endpoints": 3.413.0
+    "@aws-sdk/util-user-agent-browser": 3.413.0
+    "@aws-sdk/util-user-agent-node": 3.413.0
+    "@smithy/config-resolver": ^2.0.8
+    "@smithy/fetch-http-handler": ^2.1.3
+    "@smithy/hash-node": ^2.0.7
+    "@smithy/invalid-dependency": ^2.0.7
+    "@smithy/middleware-content-length": ^2.0.9
+    "@smithy/middleware-endpoint": ^2.0.7
+    "@smithy/middleware-retry": ^2.0.10
+    "@smithy/middleware-serde": ^2.0.7
+    "@smithy/middleware-stack": ^2.0.0
+    "@smithy/node-config-provider": ^2.0.10
+    "@smithy/node-http-handler": ^2.1.3
+    "@smithy/protocol-http": ^3.0.3
+    "@smithy/smithy-client": ^2.1.4
+    "@smithy/types": ^2.3.1
+    "@smithy/url-parser": ^2.0.7
+    "@smithy/util-base64": ^2.0.0
+    "@smithy/util-body-length-browser": ^2.0.0
+    "@smithy/util-body-length-node": ^2.1.0
+    "@smithy/util-defaults-mode-browser": ^2.0.8
+    "@smithy/util-defaults-mode-node": ^2.0.10
+    "@smithy/util-retry": ^2.0.0
+    "@smithy/util-utf8": ^2.0.0
+    "@smithy/util-waiter": ^2.0.7
+    fast-xml-parser: 4.2.5
+    tslib: ^2.5.0
+  checksum: a28987514a1deaec587a553416a889145e8f792520ec826099e766e967e3d589ef18bb1dde18c0408a82b67670110bc78115f64dadb14cf4168a70fd88f47130
+  languageName: node
+  linkType: hard
+
 "@aws-sdk/client-sso@npm:3.414.0":
   version: 3.414.0
   resolution: "@aws-sdk/client-sso@npm:3.414.0"
@@ -1637,6 +1684,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@reapit-cdk/active-ruleset@workspace:packages/active-ruleset":
+  version: 0.0.0-use.local
+  resolution: "@reapit-cdk/active-ruleset@workspace:packages/active-ruleset"
+  dependencies:
+    "@aws-sdk/client-ses": 3.414.0
+    "@reapit-cdk/custom-resource-wrapper": "workspace:^"
+    "@reapit-cdk/eslint-config": "workspace:^"
+    "@reapit-cdk/tsup": "workspace:^"
+    "@reapit-cdk/version-package": "workspace:^"
+    aws-cdk-lib: 2.96.2
+    aws-lambda: ^1.0.7
+    aws-sdk-client-mock: ^3.0.0
+    constructs: 10.2.70
+  languageName: unknown
+  linkType: soft
+
 "@reapit-cdk/common@workspace:^, @reapit-cdk/common@workspace:packages/common":
   version: 0.0.0-use.local
   resolution: "@reapit-cdk/common@workspace:packages/common"
@@ -1848,6 +1911,16 @@ __metadata:
     "@smithy/types": ^2.3.2
     tslib: ^2.5.0
   checksum: 2aa4862979d86ed75b94d6cdf32ce799122b097eaff888f468a2a22731afca7e743d9f1719143cd361b36605776873e0d30246c6ea6b25050f2cb605a874f381
+  languageName: node
+  linkType: hard
+
+"@smithy/abort-controller@npm:^2.0.9":
+  version: 2.0.9
+  resolution: "@smithy/abort-controller@npm:2.0.9"
+  dependencies:
+    "@smithy/types": ^2.3.3
+    tslib: ^2.5.0
+  checksum: 41abbd8fa6a812410d3164b6acccbb32d81bfc21db14b2ee56d73842a5a966c46e85b090ffdd8c8169925b2d36ae37042aab25ef9d64a5063e0901e2f7d192e6
   languageName: node
   linkType: hard
 
@@ -2115,6 +2188,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@smithy/types@npm:^2.3.3":
+  version: 2.3.3
+  resolution: "@smithy/types@npm:2.3.3"
+  dependencies:
+    tslib: ^2.5.0
+  checksum: e40a508e41c0df6bb540a554cc42c31c4f6ad4473c7d124827122d959bada29df06a040a2c980b9e3b9420d7b30bd03033ecaf968a7ffd945ad6385824267a3a
+  languageName: node
+  linkType: hard
+
 "@smithy/url-parser@npm:^2.0.7, @smithy/url-parser@npm:^2.0.8":
   version: 2.0.8
   resolution: "@smithy/url-parser@npm:2.0.8"
@@ -2263,6 +2345,17 @@ __metadata:
     "@smithy/util-buffer-from": ^2.0.0
     tslib: ^2.5.0
   checksum: bc8cda84f85b513380a61352635b306ae50d3b92974454db32835b39bbaa38150332b89346098ba9dea2e0002e2963fcbdd622bc9b3eec7b7ea8fa3f8c7ce737
+  languageName: node
+  linkType: hard
+
+"@smithy/util-waiter@npm:^2.0.7":
+  version: 2.0.9
+  resolution: "@smithy/util-waiter@npm:2.0.9"
+  dependencies:
+    "@smithy/abort-controller": ^2.0.9
+    "@smithy/types": ^2.3.3
+    tslib: ^2.5.0
+  checksum: f35f6353184499b63b757b245052860b281f35a423ecef4c43a1e6bd297b7fe5016bbc68b130054e53e9bb0348504336c7092b8b9b1323c93516af6fd4a84a63
   languageName: node
   linkType: hard
 
