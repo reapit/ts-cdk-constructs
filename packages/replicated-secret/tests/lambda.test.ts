@@ -12,8 +12,8 @@ import { onEvent } from '../src/lambda/lambda'
 const secretMock = mockClient(SecretsManagerClient)
 process.env.TEST = '1'
 
-const genEvent = (): any => ({
-  RequestType: 'Create',
+const genEvent = (RequestType: string = 'Create'): any => ({
+  RequestType,
   LogicalResourceId: '1q23',
   RequestId: '1q23',
   ResourceProperties: {
@@ -73,6 +73,51 @@ describe('replicated-secret wait-for-replication', () => {
       })
 
     await onEvent(genEvent())
+
+    expect(secretMock).toHaveReceivedCommandTimes(DescribeSecretCommand, 3)
+  })
+
+  test('it should wait for all regions to be ready before returning when updating too', async () => {
+    secretMock
+      .on(DescribeSecretCommand)
+      .resolvesOnce({
+        ReplicationStatus: [
+          {
+            Region: 'eu-west-2',
+            Status: 'InProgress',
+          },
+          {
+            Region: 'us-east-1',
+            Status: 'InProgress',
+          },
+        ],
+      })
+      .resolvesOnce({
+        ReplicationStatus: [
+          {
+            Region: 'eu-west-2',
+            Status: 'InProgress',
+          },
+          {
+            Region: 'us-east-1',
+            Status: 'InProgress',
+          },
+        ],
+      })
+      .resolves({
+        ReplicationStatus: [
+          {
+            Region: 'eu-west-2',
+            Status: 'InSync',
+          },
+          {
+            Region: 'us-east-1',
+            Status: 'InSync',
+          },
+        ],
+      })
+
+    await onEvent(genEvent('Update'))
 
     expect(secretMock).toHaveReceivedCommandTimes(DescribeSecretCommand, 3)
   })
