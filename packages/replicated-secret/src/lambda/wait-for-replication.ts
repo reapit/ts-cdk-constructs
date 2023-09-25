@@ -22,7 +22,7 @@ export const waitForReplication = async (secretId: string, regions: string[], it
   const weCareAbout = res.ReplicationStatus.filter(({ Region }) => Region && regions.includes(Region))
 
   const statusStr = weCareAbout
-    .map(({ Region, Status, StatusMessage }) => `${Region}: ${Status}${StatusMessage ?? ''}`)
+    .map(({ Region, Status, StatusMessage }) => `${Region}: ${Status} ${StatusMessage ?? ''}`.trim())
     .join(', ')
   console.log(`Replication status ${statusStr}`)
 
