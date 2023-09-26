@@ -9,8 +9,7 @@
     "test": "jest",
     "check": "tsc packages/**/*.ts --noEmit",
     "build": "yarn workspaces foreach run build",
-    "lint": "eslint packages",
-    "root:lint": "eslint",
+    "lint": "yarn workspaces foreach run lint",
     "root:test": "jest",
     "root:check": "tsc"
   },

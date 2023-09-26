@@ -5,7 +5,7 @@
     "reapit-version-package": "./src/index.js"
   },
   "scripts": {
-    "lint": "yarn run root:lint $PWD"
+    "lint": "reapit-cdk-eslint"
   },
   "dependencies": {
     "semver": "^7.5.4"

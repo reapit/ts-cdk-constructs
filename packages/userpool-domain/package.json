@@ -10,7 +10,7 @@
   "scripts": {
     "build": "reapit-cdk-tsup --lambda",
     "check": "yarn run root:check -p $PWD",
-    "lint": "yarn run root:lint $PWD",
+    "lint": "reapit-cdk-eslint",
     "test": "yarn run root:test $PWD",
     "prepack": "reapit-version-package && yarn build"
   },

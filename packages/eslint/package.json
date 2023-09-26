@@ -1,6 +1,12 @@
 {
   "name": "@reapit-cdk/eslint-config",
   "main": "index.js",
+  "bin": {
+    "reapit-cdk-eslint": "bin.js"
+  },
+  "scripts": {
+    "lint": "reapit-cdk-eslint"
+  },
   "dependencies": {
     "@types/eslint": "^8.44.2",
     "@typescript-eslint/eslint-plugin": "^6.7.0",
