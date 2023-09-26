@@ -70,7 +70,6 @@ describe('wildcard-certificate', () => {
     const { template } = synth([
       {
         domainName: 'example.org',
-        account: '00000',
         hostedZoneArn: 'arn:partition:route53::account:hostedzone/Id',
         roleArn: 'arn:aws:iam::account:role/role-name-with-path',
       },
@@ -81,5 +80,28 @@ describe('wildcard-certificate', () => {
     expect(domainMappings[0].parentDomainName).toBe('example.org')
     expect(domainMappings[0].hostedZoneId).toBe('Id')
     expect(domainMappings[0].roleArn).toBe('arn:aws:iam::account:role/role-name-with-path')
+  })
+  test('errors when env is not resolved and hostedZoneArn is not specified', () => {
+    const app = new cdk.App()
+    const stack = new cdk.Stack(app)
+    expect(() => {
+      new WildcardCertificate(stack, 'cert', {
+        domains: ['example.org'],
+      })
+    }).toThrowError('Stack region and account must be specified if hostedZoneArn is not specified')
+  })
+  test('errors when x-account hosted zone has no accompanying role', () => {
+    const app = new cdk.App()
+    const stack = new cdk.Stack(app)
+    expect(() => {
+      new WildcardCertificate(stack, 'cert', {
+        domains: [
+          {
+            domainName: 'example.org',
+            hostedZoneArn: 'arn:partition:route53::12345:hostedzone/Id',
+          },
+        ],
+      })
+    }).toThrowError('roleArn must be provided when hosted zone is cross-account')
   })
 })
