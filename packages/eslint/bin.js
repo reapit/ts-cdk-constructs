@@ -20,6 +20,7 @@ async function lint() {
     const formatter = await eslint.loadFormatter()
     const output = await formatter.format(results)
     console.log(output)
+    process.exit(1)
   }
 }
 
