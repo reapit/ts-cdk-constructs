@@ -21,7 +21,7 @@ export class EmailReceiver extends Construct {
     props: { parentDomain?: string; subdomain?: string; hostedZone: IHostedZone },
   ) {
     super(scope, id)
-    const domain = (props.subdomain || 'email') + '.' + (props.parentDomain || props.hostedZone.zoneName)
+    const domain = (props.subdomain ?? 'email') + '.' + (props.parentDomain ?? props.hostedZone.zoneName)
     this.domainName = domain
 
     if (Token.isUnresolved(Stack.of(this).region)) {
