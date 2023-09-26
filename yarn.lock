@@ -110,6 +110,52 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@aws-sdk/client-acm@npm:3.414.0":
+  version: 3.414.0
+  resolution: "@aws-sdk/client-acm@npm:3.414.0"
+  dependencies:
+    "@aws-crypto/sha256-browser": 3.0.0
+    "@aws-crypto/sha256-js": 3.0.0
+    "@aws-sdk/client-sts": 3.414.0
+    "@aws-sdk/credential-provider-node": 3.414.0
+    "@aws-sdk/middleware-host-header": 3.413.0
+    "@aws-sdk/middleware-logger": 3.413.0
+    "@aws-sdk/middleware-recursion-detection": 3.413.0
+    "@aws-sdk/middleware-signing": 3.413.0
+    "@aws-sdk/middleware-user-agent": 3.413.0
+    "@aws-sdk/region-config-resolver": 3.413.0
+    "@aws-sdk/types": 3.413.0
+    "@aws-sdk/util-endpoints": 3.413.0
+    "@aws-sdk/util-user-agent-browser": 3.413.0
+    "@aws-sdk/util-user-agent-node": 3.413.0
+    "@smithy/config-resolver": ^2.0.8
+    "@smithy/fetch-http-handler": ^2.1.3
+    "@smithy/hash-node": ^2.0.7
+    "@smithy/invalid-dependency": ^2.0.7
+    "@smithy/middleware-content-length": ^2.0.9
+    "@smithy/middleware-endpoint": ^2.0.7
+    "@smithy/middleware-retry": ^2.0.10
+    "@smithy/middleware-serde": ^2.0.7
+    "@smithy/middleware-stack": ^2.0.0
+    "@smithy/node-config-provider": ^2.0.10
+    "@smithy/node-http-handler": ^2.1.3
+    "@smithy/protocol-http": ^3.0.3
+    "@smithy/smithy-client": ^2.1.4
+    "@smithy/types": ^2.3.1
+    "@smithy/url-parser": ^2.0.7
+    "@smithy/util-base64": ^2.0.0
+    "@smithy/util-body-length-browser": ^2.0.0
+    "@smithy/util-body-length-node": ^2.1.0
+    "@smithy/util-defaults-mode-browser": ^2.0.8
+    "@smithy/util-defaults-mode-node": ^2.0.10
+    "@smithy/util-retry": ^2.0.0
+    "@smithy/util-utf8": ^2.0.0
+    "@smithy/util-waiter": ^2.0.7
+    tslib: ^2.5.0
+  checksum: 4692a64f6cb1182a46d09ec09327f4258261814d6c50b74a4c6dd370a0dd5205ac3805411ddfe3bf89723fa9da93faeb2c587ff9182ba9e6208a759333601619
+  languageName: node
+  linkType: hard
+
 "@aws-sdk/client-cognito-identity-provider@npm:3.414.0":
   version: 3.414.0
   resolution: "@aws-sdk/client-cognito-identity-provider@npm:3.414.0"
@@ -245,6 +291,55 @@ __metadata:
     "@smithy/util-utf8": ^2.0.0
     tslib: ^2.5.0
   checksum: 96e9f0245d1a2775b77b3b700e6d5d1617f2047b7e6324606007d0bea309420bbc0187b9e0db233dafddb8efde8f6aa28032b1adcd6aa0a79164243e7c6f6b81
+  languageName: node
+  linkType: hard
+
+"@aws-sdk/client-route-53@npm:3.414.0":
+  version: 3.414.0
+  resolution: "@aws-sdk/client-route-53@npm:3.414.0"
+  dependencies:
+    "@aws-crypto/sha256-browser": 3.0.0
+    "@aws-crypto/sha256-js": 3.0.0
+    "@aws-sdk/client-sts": 3.414.0
+    "@aws-sdk/credential-provider-node": 3.414.0
+    "@aws-sdk/middleware-host-header": 3.413.0
+    "@aws-sdk/middleware-logger": 3.413.0
+    "@aws-sdk/middleware-recursion-detection": 3.413.0
+    "@aws-sdk/middleware-sdk-route53": 3.413.0
+    "@aws-sdk/middleware-signing": 3.413.0
+    "@aws-sdk/middleware-user-agent": 3.413.0
+    "@aws-sdk/region-config-resolver": 3.413.0
+    "@aws-sdk/types": 3.413.0
+    "@aws-sdk/util-endpoints": 3.413.0
+    "@aws-sdk/util-user-agent-browser": 3.413.0
+    "@aws-sdk/util-user-agent-node": 3.413.0
+    "@aws-sdk/xml-builder": 3.310.0
+    "@smithy/config-resolver": ^2.0.8
+    "@smithy/fetch-http-handler": ^2.1.3
+    "@smithy/hash-node": ^2.0.7
+    "@smithy/invalid-dependency": ^2.0.7
+    "@smithy/middleware-content-length": ^2.0.9
+    "@smithy/middleware-endpoint": ^2.0.7
+    "@smithy/middleware-retry": ^2.0.10
+    "@smithy/middleware-serde": ^2.0.7
+    "@smithy/middleware-stack": ^2.0.0
+    "@smithy/node-config-provider": ^2.0.10
+    "@smithy/node-http-handler": ^2.1.3
+    "@smithy/protocol-http": ^3.0.3
+    "@smithy/smithy-client": ^2.1.4
+    "@smithy/types": ^2.3.1
+    "@smithy/url-parser": ^2.0.7
+    "@smithy/util-base64": ^2.0.0
+    "@smithy/util-body-length-browser": ^2.0.0
+    "@smithy/util-body-length-node": ^2.1.0
+    "@smithy/util-defaults-mode-browser": ^2.0.8
+    "@smithy/util-defaults-mode-node": ^2.0.10
+    "@smithy/util-retry": ^2.0.0
+    "@smithy/util-utf8": ^2.0.0
+    "@smithy/util-waiter": ^2.0.7
+    fast-xml-parser: 4.2.5
+    tslib: ^2.5.0
+  checksum: c04821424b0b020445271734e0d528bb4bf3c13f5710f06ac387461ce8486e1cba7a05532a8f375d4d67ae6024c9a890d5068e28d7d30906ba755ba3c697a403
   languageName: node
   linkType: hard
 
@@ -588,6 +683,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@aws-sdk/middleware-sdk-route53@npm:3.413.0":
+  version: 3.413.0
+  resolution: "@aws-sdk/middleware-sdk-route53@npm:3.413.0"
+  dependencies:
+    "@aws-sdk/types": 3.413.0
+    "@smithy/types": ^2.3.1
+    tslib: ^2.5.0
+  checksum: 735d7d0a39459a88847d4aaf01c1b4050e21d43ecc3491378a257136ba69c694a2506e5e639de23e53411c6eeea1a061b6f848c21b7a2471eef8b626b19d4e45
+  languageName: node
+  linkType: hard
+
 "@aws-sdk/middleware-sdk-sts@npm:3.413.0":
   version: 3.413.0
   resolution: "@aws-sdk/middleware-sdk-sts@npm:3.413.0"
@@ -766,6 +872,15 @@ __metadata:
   dependencies:
     tslib: ^2.3.1
   checksum: b6a1e580da1c9b62c749814182a7649a748ca4253edb4063aa521df97d25b76eae3359eb1680b86f71aac668e05cc05c514379bca39ebf4ba998ae4348412da8
+  languageName: node
+  linkType: hard
+
+"@aws-sdk/xml-builder@npm:3.310.0":
+  version: 3.310.0
+  resolution: "@aws-sdk/xml-builder@npm:3.310.0"
+  dependencies:
+    tslib: ^2.5.0
+  checksum: fc17fd8f68470702d947948ada46097bdddecafdc68fa57bf584320e92748e8ef0372a51999d3ab7902ba4f62c2dbfbdec2dba1180fca19bb5127bad1ef0e48b
   languageName: node
   linkType: hard
 
@@ -1953,6 +2068,23 @@ __metadata:
     semver: ^7.5.4
   bin:
     reapit-version-package: ./src/index.js
+  languageName: unknown
+  linkType: soft
+
+"@reapit-cdk/wildcard-certificate@workspace:packages/wildcard-certificate":
+  version: 0.0.0-use.local
+  resolution: "@reapit-cdk/wildcard-certificate@workspace:packages/wildcard-certificate"
+  dependencies:
+    "@aws-sdk/client-acm": 3.414.0
+    "@aws-sdk/client-route-53": 3.414.0
+    "@reapit-cdk/custom-resource-wrapper": "workspace:^"
+    "@reapit-cdk/eslint-config": "workspace:^"
+    "@reapit-cdk/tsup": "workspace:^"
+    "@reapit-cdk/version-package": "workspace:^"
+    aws-cdk-lib: 2.96.2
+    aws-lambda: ^1.0.7
+    aws-sdk-client-mock: ^3.0.0
+    constructs: 10.2.70
   languageName: unknown
   linkType: soft
 
