@@ -1,5 +1,6 @@
 import { ComparisonOperator, DynamoDBClient, DynamoDBClientConfig } from '@aws-sdk/client-dynamodb'
 import { QueryCommand, DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb'
+import { validate } from '@aws-sdk/util-arn-parser'
 import type { EmailMessage } from '@reapit-cdk/email-receiver-types'
 export type { EmailMessage } from '@reapit-cdk/email-receiver-types'
 
@@ -8,6 +9,12 @@ export class EmailReceiverClient {
   tableName: string
 
   constructor(config: DynamoDBClientConfig & { tableArn: string }) {
+    if (!config.tableArn) {
+      throw new Error('tableArn not present')
+    }
+    if (!validate(config.tableArn)) {
+      throw new Error('invalid tableArn')
+    }
     const [, , , region, , resourceName] = config.tableArn.split(':')
     const [, tableName] = resourceName.split('/')
     const client = new DynamoDBClient({

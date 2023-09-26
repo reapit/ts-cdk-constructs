@@ -694,6 +694,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@aws-sdk/util-arn-parser@npm:^3.310.0":
+  version: 3.310.0
+  resolution: "@aws-sdk/util-arn-parser@npm:3.310.0"
+  dependencies:
+    tslib: ^2.5.0
+  checksum: faac1e10f8bb6c2fe5fee82bcb7ce56c2b37ae9ffdb2b78b0746a7a06005eaa5ea747a0a10eaf490c1c4907ecc327e1c94a600e26a069e023e54b8d63c031e96
+  languageName: node
+  linkType: hard
+
 "@aws-sdk/util-dynamodb@npm:3.414.0":
   version: 3.414.0
   resolution: "@aws-sdk/util-dynamodb@npm:3.414.0"
@@ -1816,6 +1825,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@reapit-cdk/email-receiver-client@workspace:packages/email-receiver-client"
   dependencies:
+    "@aws-sdk/util-arn-parser": ^3.310.0
     "@reapit-cdk/email-receiver-types": "workspace:^"
     "@reapit-cdk/eslint-config": "workspace:^"
     "@reapit-cdk/tsup": "workspace:^"

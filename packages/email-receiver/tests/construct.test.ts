@@ -79,42 +79,20 @@ describe('email-receiver', () => {
   test('creates the DKIM records', () => {
     const { template } = synth()
     const domainIdentityLogicalId = 'domainIdentityC6435A28'
-    template.hasResourceProperties('AWS::Route53::RecordSet', {
-      Type: 'CNAME',
-      HostedZoneId: { Ref: hostedZoneLogicalId },
-      ResourceRecords: [
-        {
-          'Fn::GetAtt': [domainIdentityLogicalId, 'DkimDNSTokenValue1'],
+    for (let i = 1; i <= 3; i++) {
+      template.hasResourceProperties('AWS::Route53::RecordSet', {
+        Type: 'CNAME',
+        HostedZoneId: { Ref: hostedZoneLogicalId },
+        ResourceRecords: [
+          {
+            'Fn::GetAtt': [domainIdentityLogicalId, `DkimDNSTokenValue${i}`],
+          },
+        ],
+        Name: {
+          'Fn::GetAtt': [domainIdentityLogicalId, `DkimDNSTokenName${i}`],
         },
-      ],
-      Name: {
-        'Fn::GetAtt': [domainIdentityLogicalId, 'DkimDNSTokenName1'],
-      },
-    })
-    template.hasResourceProperties('AWS::Route53::RecordSet', {
-      Type: 'CNAME',
-      HostedZoneId: { Ref: hostedZoneLogicalId },
-      ResourceRecords: [
-        {
-          'Fn::GetAtt': [domainIdentityLogicalId, 'DkimDNSTokenValue2'],
-        },
-      ],
-      Name: {
-        'Fn::GetAtt': [domainIdentityLogicalId, 'DkimDNSTokenName2'],
-      },
-    })
-    template.hasResourceProperties('AWS::Route53::RecordSet', {
-      Type: 'CNAME',
-      HostedZoneId: { Ref: hostedZoneLogicalId },
-      ResourceRecords: [
-        {
-          'Fn::GetAtt': [domainIdentityLogicalId, 'DkimDNSTokenValue3'],
-        },
-      ],
-      Name: {
-        'Fn::GetAtt': [domainIdentityLogicalId, 'DkimDNSTokenName3'],
-      },
-    })
+      })
+    }
   })
   test('creates the MX record', () => {
     const { template } = synth()
