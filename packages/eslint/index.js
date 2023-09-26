@@ -6,11 +6,7 @@ module.exports = {
     amd: true,
     jest: true,
   },
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/eslint-recommended',
-    'prettier',
-  ],
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/eslint-recommended', 'prettier'],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
@@ -22,13 +18,7 @@ module.exports = {
     project: './packages/*/tsconfig.json',
   },
   plugins: ['@typescript-eslint', 'prettier'],
-  ignorePatterns: [
-    'node_modules/',
-    '**/node_modules/',
-    '**/dist',
-    "tsconfig.json",
-    ".eslintrc.js"
-  ],
+  ignorePatterns: ['node_modules/', '**/node_modules/', '**/dist', 'tsconfig.json', '.eslintrc.js'],
   rules: {
     quotes: ['error', 'single', { avoidEscape: true, allowTemplateLiterals: false }],
     semi: ['error', 'never'],
@@ -37,8 +27,8 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
-    "@typescript-eslint/no-floating-promises": "error",
-    "@typescript-eslint/no-misused-promises": "error",
+    '@typescript-eslint/no-floating-promises': 'error',
+    '@typescript-eslint/no-misused-promises': 'error',
     'no-unused-vars': 'off',
     'no-debugger': 'off',
     'no-prototype-builtins': 0,
@@ -66,7 +56,5 @@ module.exports = {
     // Disabling as conflicts with Prettier
     indent: 0,
   },
-  settings: {
-    
-  },
+  settings: {},
 }

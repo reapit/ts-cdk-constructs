@@ -8,7 +8,7 @@
     "@reapit-cdk/eslint-config": "workspace:^"
   },
   "scripts": {
-    "lint": "yarn run root:lint $PWD"
+    "lint": "reapit-cdk-eslint"
   },
   "bin": {
     "reapit-cdk-tsup": "./src/index.js"

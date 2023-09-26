@@ -1,9 +1,9 @@
 {
-  "name": "@reapit-cdk/custom-resource-wrapper",
+  "name": "@reapit-cdk/email-receiver-client",
   "main": "src/index.ts",
   "version": "0.0.0",
-  "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/custom-resource-wrapper",
-  "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/custom-resource-wrapper/readme.md",
+  "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/email-receiver-client",
+  "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/email-receiver-client/readme.md",
   "bugs": {
     "url": "https://github.com/reapit/ts-cdk-constructs/issues"
   },
@@ -28,5 +28,9 @@
     "@reapit-cdk/version-package": "workspace:^",
     "@types/aws-lambda": "^8.10.121",
     "aws-lambda": "^1.0.7"
+  },
+  "dependencies": {
+    "@aws-sdk/util-arn-parser": "^3.310.0",
+    "@reapit-cdk/email-receiver-types": "workspace:^"
   }
 }
