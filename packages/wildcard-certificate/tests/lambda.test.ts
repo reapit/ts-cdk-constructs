@@ -27,6 +27,7 @@ const genEvent = (
       hostedZoneId: '456',
     },
   ],
+  oldDomainMappings: any[] = [],
 ): any => ({
   RequestType,
   LogicalResourceId: '123',
@@ -34,6 +35,9 @@ const genEvent = (
   ResourceProperties: {
     ServiceToken: '123',
     domainMappings,
+  },
+  OldResourceProperties: {
+    domainMappings: oldDomainMappings,
   },
   ResourceType: 'asdf',
   ResponseURL: 'asdf',
@@ -329,13 +333,10 @@ describe('wildcard-certificate', () => {
         SubmittedAt: new Date(),
       },
     })
-    const result = await onEvent({
-      RequestType: 'Update',
-      LogicalResourceId: '123',
-      RequestId: '123',
-      ResourceProperties: {
-        ServiceToken: '123',
-        domainMappings: [
+    const result = await onEvent(
+      genEvent(
+        'Update',
+        [
           {
             parentDomainName: 'asdf.com',
             hostedZoneId: '123',
@@ -345,9 +346,7 @@ describe('wildcard-certificate', () => {
             hostedZoneId: '456',
           },
         ],
-      },
-      OldResourceProperties: {
-        domainMappings: [
+        [
           {
             parentDomainName: 'asdf.com',
             hostedZoneId: '234',
@@ -357,13 +356,8 @@ describe('wildcard-certificate', () => {
             hostedZoneId: '456',
           },
         ],
-      },
-      PhysicalResourceId: 'asdf',
-      ResourceType: 'asdf',
-      ResponseURL: 'asdf',
-      ServiceToken: 'asdf',
-      StackId: 'asdf',
-    })
+      ),
+    )
 
     expect(acmMock).toHaveReceivedCommandWith(RequestCertificateCommand, {
       DomainName: '*.asdf.com',
@@ -421,13 +415,10 @@ describe('wildcard-certificate', () => {
   })
 
   it("should not do anything if the resource properties don't change", async () => {
-    await onEvent({
-      RequestType: 'Update',
-      LogicalResourceId: '123',
-      RequestId: '123',
-      ResourceProperties: {
-        ServiceToken: '123',
-        domainMappings: [
+    await onEvent(
+      genEvent(
+        'Update',
+        [
           {
             parentDomainName: 'asdf.com',
             hostedZoneId: '123',
@@ -437,9 +428,7 @@ describe('wildcard-certificate', () => {
             hostedZoneId: '456',
           },
         ],
-      },
-      OldResourceProperties: {
-        domainMappings: [
+        [
           {
             parentDomainName: 'asdf.com',
             hostedZoneId: '123',
@@ -449,13 +438,8 @@ describe('wildcard-certificate', () => {
             hostedZoneId: '456',
           },
         ],
-      },
-      PhysicalResourceId: 'asdf',
-      ResourceType: 'asdf',
-      ResponseURL: 'asdf',
-      ServiceToken: 'asdf',
-      StackId: 'asdf',
-    })
+      ),
+    )
   })
 
   it('should not do anything on delete', async () => {
