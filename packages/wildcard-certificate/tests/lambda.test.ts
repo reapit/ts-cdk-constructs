@@ -15,6 +15,32 @@ const acmMock = mockClient(ACMClient)
 const route53Mock = mockClient(Route53Client)
 const stsMock = mockClient(STSClient)
 
+const genEvent = (
+  RequestType: string = 'Create',
+  domainMappings: any[] = [
+    {
+      parentDomainName: 'asdf.com',
+      hostedZoneId: '123',
+    },
+    {
+      parentDomainName: 'qwerty.com',
+      hostedZoneId: '456',
+    },
+  ],
+): any => ({
+  RequestType,
+  LogicalResourceId: '123',
+  RequestId: '123',
+  ResourceProperties: {
+    ServiceToken: '123',
+    domainMappings,
+  },
+  ResourceType: 'asdf',
+  ResponseURL: 'asdf',
+  ServiceToken: 'asdf',
+  StackId: 'asdf',
+})
+
 describe('wildcard-certificate', () => {
   beforeEach(() => {
     acmMock.reset()
@@ -70,28 +96,7 @@ describe('wildcard-certificate', () => {
       },
     })
 
-    const result = await onEvent({
-      RequestType: 'Create',
-      LogicalResourceId: '123',
-      RequestId: '123',
-      ResourceProperties: {
-        ServiceToken: '123',
-        domainMappings: [
-          {
-            parentDomainName: 'asdf.com',
-            hostedZoneId: '123',
-          },
-          {
-            parentDomainName: 'qwerty.com',
-            hostedZoneId: '456',
-          },
-        ],
-      },
-      ResourceType: 'asdf',
-      ResponseURL: 'asdf',
-      ServiceToken: 'asdf',
-      StackId: 'asdf',
-    })
+    const result = await onEvent(genEvent())
 
     expect(acmMock).toHaveReceivedCommandWith(RequestCertificateCommand, {
       DomainName: '*.asdf.com',
@@ -160,28 +165,7 @@ describe('wildcard-certificate', () => {
       ],
     })
 
-    const result = await onEvent({
-      RequestType: 'Create',
-      LogicalResourceId: '123',
-      RequestId: '123',
-      ResourceProperties: {
-        ServiceToken: '123',
-        domainMappings: [
-          {
-            parentDomainName: 'asdf.com',
-            hostedZoneId: '123',
-          },
-          {
-            parentDomainName: 'qwerty.com',
-            hostedZoneId: '456',
-          },
-        ],
-      },
-      ResourceType: 'asdf',
-      ResponseURL: 'asdf',
-      ServiceToken: 'asdf',
-      StackId: 'asdf',
-    })
+    const result = await onEvent(genEvent())
 
     if (!result.Data) {
       throw new Error('no result data')
@@ -244,28 +228,7 @@ describe('wildcard-certificate', () => {
       },
     })
 
-    const result = await onEvent({
-      RequestType: 'Create',
-      LogicalResourceId: '123',
-      RequestId: '123',
-      ResourceProperties: {
-        ServiceToken: '123',
-        domainMappings: [
-          {
-            parentDomainName: 'asdf.com',
-            hostedZoneId: '123',
-          },
-          {
-            parentDomainName: 'qwerty.com',
-            hostedZoneId: '456',
-          },
-        ],
-      },
-      ResourceType: 'asdf',
-      ResponseURL: 'asdf',
-      ServiceToken: 'asdf',
-      StackId: 'asdf',
-    })
+    const result = await onEvent(genEvent())
 
     if (!result.Data) {
       throw new Error('no result data')
@@ -496,30 +459,8 @@ describe('wildcard-certificate', () => {
   })
 
   it('should not do anything on delete', async () => {
-    await onEvent({
-      RequestType: 'Delete',
-      LogicalResourceId: '123',
-      RequestId: '123',
-      ResourceProperties: {
-        ServiceToken: '123',
-
-        domainMappings: [
-          {
-            parentDomainName: 'asdf.com',
-            hostedZoneId: '123',
-          },
-          {
-            parentDomainName: 'qwerty.com',
-            hostedZoneId: '456',
-          },
-        ],
-      },
-      PhysicalResourceId: 'asdf',
-      ResourceType: 'asdf',
-      ResponseURL: 'asdf',
-      ServiceToken: 'asdf',
-      StackId: 'asdf',
-    })
+    // this will fail if it attempts any SDK commands as the mocks aren't set up
+    await onEvent(genEvent('Delete'))
   })
 
   it('should handle cross-region DNS changes', async () => {
@@ -578,29 +519,19 @@ describe('wildcard-certificate', () => {
       },
     })
 
-    const result = await onEvent({
-      RequestType: 'Create',
-      LogicalResourceId: '123',
-      RequestId: '123',
-      ResourceProperties: {
-        ServiceToken: '123',
-        domainMappings: [
-          {
-            parentDomainName: 'asdf.com',
-            hostedZoneId: '123',
-          },
-          {
-            parentDomainName: 'qwerty.com',
-            hostedZoneId: '456',
-            roleArn: 'role-arn',
-          },
-        ],
-      },
-      ResourceType: 'asdf',
-      ResponseURL: 'asdf',
-      ServiceToken: 'asdf',
-      StackId: 'asdf',
-    })
+    const result = await onEvent(
+      genEvent('Create', [
+        {
+          parentDomainName: 'asdf.com',
+          hostedZoneId: '123',
+        },
+        {
+          parentDomainName: 'qwerty.com',
+          hostedZoneId: '456',
+          roleArn: 'role-arn',
+        },
+      ]),
+    )
 
     expect(acmMock).toHaveReceivedCommandWith(RequestCertificateCommand, {
       DomainName: '*.asdf.com',
@@ -736,29 +667,19 @@ describe('wildcard-certificate', () => {
       },
     })
 
-    const result = await onEvent({
-      RequestType: 'Create',
-      LogicalResourceId: '123',
-      RequestId: '123',
-      ResourceProperties: {
-        ServiceToken: '123',
-        domainMappings: [
-          {
-            parentDomainName: 'asdf.com',
-            hostedZoneId: '123',
-          },
-          {
-            parentDomainName: 'qwerty.com',
-            hostedZoneId: '456',
-            roleArn: 'role-arn',
-          },
-        ],
-      },
-      ResourceType: 'asdf',
-      ResponseURL: 'asdf',
-      ServiceToken: 'asdf',
-      StackId: 'asdf',
-    })
+    const result = await onEvent(
+      genEvent('Create', [
+        {
+          parentDomainName: 'asdf.com',
+          hostedZoneId: '123',
+        },
+        {
+          parentDomainName: 'qwerty.com',
+          hostedZoneId: '456',
+          roleArn: 'role-arn',
+        },
+      ]),
+    )
 
     expect(acmMock).toHaveReceivedCommandWith(RequestCertificateCommand, {
       DomainName: '*.asdf.com',
