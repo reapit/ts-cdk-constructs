@@ -12,9 +12,11 @@ export const ensureDnsRecords = async (
 ) => {
   await Promise.all(
     records.map(async ({ Name, Type, Value }) => {
-      const zone = hostedZones.find(
-        ({ parentDomainName }) => Name?.endsWith(parentDomainName) || Name?.endsWith(parentDomainName + '.'),
-      )
+      const zone =
+        Name &&
+        hostedZones.find(
+          ({ parentDomainName }) => Name.endsWith(parentDomainName) || Name.endsWith(parentDomainName + '.'),
+        )
       if (!zone) {
         throw new Error(`Could not find hosted zone for subdomain ${Name} in ${JSON.stringify(hostedZones)}`)
       }

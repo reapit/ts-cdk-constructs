@@ -35,7 +35,7 @@ const findCertificates = async (domainNames: string[], NextToken?: string): Prom
   )
 
   const existing =
-    certificates.CertificateSummaryList?.filter((cert) => certIncludesDomainNames(cert, domainNames)) || []
+    certificates.CertificateSummaryList?.filter((cert) => certIncludesDomainNames(cert, domainNames)) ?? []
 
   if (certificates.NextToken) {
     const next = await findCertificates(domainNames, certificates.NextToken)
@@ -144,7 +144,7 @@ export const ensureWildcardCertificate = async (
       DomainName: wildcardDomainNames[0],
       SubjectAlternativeNames: wildcardDomainNames,
       ValidationMethod: 'DNS',
-      IdempotencyToken: crypto.createHash('sha256').update(requestId).digest('hex').substr(0, 32),
+      IdempotencyToken: crypto.createHash('sha256').update(requestId).digest('hex').substring(0, 32),
     }),
   )
 
