@@ -739,4 +739,159 @@ describe('wildcard-certificate', () => {
     expect(result.Data).toHaveProperty('certificateArn')
     expect(result.Data.certificateArn).toBe('cert-arn')
   })
+
+  it('should handle STS errors - empty object', async () => {
+    stsMock.on(AssumeRoleCommand).resolves({
+      //@ts-expect-error
+      Credentials: {},
+    })
+    acmMock.on(ListCertificatesCommand).resolves({
+      CertificateSummaryList: [],
+    })
+    acmMock.on(RequestCertificateCommand).resolves({
+      CertificateArn: 'cert-arn',
+    })
+
+    route53Mock.on(ChangeResourceRecordSetsCommand).resolves({
+      ChangeInfo: {
+        Id: 'change-batch-id',
+        Status: 'INSYNC',
+        SubmittedAt: new Date(),
+      },
+    })
+
+    route53Mock.on(GetChangeCommand).resolves({
+      ChangeInfo: {
+        Id: 'change-batch-id',
+        Status: 'INSYNC',
+        SubmittedAt: new Date(),
+      },
+    })
+
+    acmMock
+      .on(DescribeCertificateCommand)
+      .resolvesOnce({
+        Certificate: {},
+      })
+      .resolvesOnce({
+        Certificate: {
+          DomainValidationOptions: [
+            {
+              ValidationStatus: 'SUCCESS',
+              DomainName: '',
+            },
+            {
+              ValidationStatus: 'SUCCESS',
+              DomainName: '',
+            },
+          ],
+        },
+      })
+      .resolves({
+        Certificate: {
+          DomainValidationOptions: [
+            {
+              ValidationStatus: 'SUCCESS',
+              DomainName: '',
+              ResourceRecord: {
+                Name: 'second-record-name.qwerty.com.',
+                Type: 'TXT',
+                Value: 'second-record-value',
+              },
+            },
+          ],
+        },
+      })
+
+    const res = await onEvent(
+      genEvent('Create', [
+        {
+          parentDomainName: 'qwerty.com',
+          hostedZoneId: '456',
+          roleArn: 'role-arn',
+        },
+      ]),
+    )
+
+    expect(res.Status).toBe('FAILED')
+    expect(res.Reason?.split('\n')[0]).toBe(
+      '[Error] invalid credentials returned from assumerole call: Error: invalid credentials returned from assumerole call',
+    )
+  })
+
+  it('should handle STS errors - no Credentials', async () => {
+    stsMock.on(AssumeRoleCommand).resolves({})
+    acmMock.on(ListCertificatesCommand).resolves({
+      CertificateSummaryList: [],
+    })
+    acmMock.on(RequestCertificateCommand).resolves({
+      CertificateArn: 'cert-arn',
+    })
+
+    route53Mock.on(ChangeResourceRecordSetsCommand).resolves({
+      ChangeInfo: {
+        Id: 'change-batch-id',
+        Status: 'INSYNC',
+        SubmittedAt: new Date(),
+      },
+    })
+
+    route53Mock.on(GetChangeCommand).resolves({
+      ChangeInfo: {
+        Id: 'change-batch-id',
+        Status: 'INSYNC',
+        SubmittedAt: new Date(),
+      },
+    })
+
+    acmMock
+      .on(DescribeCertificateCommand)
+      .resolvesOnce({
+        Certificate: {},
+      })
+      .resolvesOnce({
+        Certificate: {
+          DomainValidationOptions: [
+            {
+              ValidationStatus: 'SUCCESS',
+              DomainName: '',
+            },
+            {
+              ValidationStatus: 'SUCCESS',
+              DomainName: '',
+            },
+          ],
+        },
+      })
+      .resolves({
+        Certificate: {
+          DomainValidationOptions: [
+            {
+              ValidationStatus: 'SUCCESS',
+              DomainName: '',
+              ResourceRecord: {
+                Name: 'second-record-name.qwerty.com.',
+                Type: 'TXT',
+                Value: 'second-record-value',
+              },
+            },
+          ],
+        },
+      })
+
+    const res = await onEvent(
+      genEvent('Create', [
+        {
+          parentDomainName: 'qwerty.com',
+          hostedZoneId: '456',
+          roleArn: 'role-arn',
+        },
+      ]),
+    )
+
+    expect(res.Status).toBe('FAILED')
+    expect(res.Reason?.split('\n')[0]).toBe(
+      '[Error] failed to assumed role role-arn: Error: failed to assumed role role-arn',
+    )
+  })
 })
