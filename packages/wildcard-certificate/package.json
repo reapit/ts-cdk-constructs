@@ -1,0 +1,36 @@
+{
+  "name": "@reapit-cdk/wildcard-certificate",
+  "version": "0.0.0",
+  "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/wildcard-certificate",
+  "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/wildcard-certificate/readme.md",
+  "bugs": {
+    "url": "https://github.com/reapit/ts-cdk-constructs/issues"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "reapit-cdk-tsup --lambda",
+    "check": "yarn run root:check -p $PWD",
+    "lint": "reapit-cdk-eslint",
+    "test": "yarn run root:test $PWD",
+    "prepack": "reapit-version-package && yarn build"
+  },
+  "publishConfig": {
+    "main": "dist/index.js"
+  },
+  "main": "src/index.ts",
+  "dependencies": {
+    "aws-cdk-lib": "2.96.2",
+    "constructs": "10.2.70"
+  },
+  "devDependencies": {
+    "@aws-sdk/client-acm": "3.414.0",
+    "@aws-sdk/client-route-53": "3.414.0",
+    "@aws-sdk/client-sts": "3.414.0",
+    "@reapit-cdk/custom-resource-wrapper": "workspace:^",
+    "@reapit-cdk/eslint-config": "workspace:^",
+    "@reapit-cdk/tsup": "workspace:^",
+    "@reapit-cdk/version-package": "workspace:^",
+    "aws-lambda": "^1.0.7",
+    "aws-sdk-client-mock": "^3.0.0"
+  }
+}
