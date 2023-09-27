@@ -1,0 +1,39 @@
+{
+  "name": "@reapit-cdk/edge-api",
+  "version": "0.0.0",
+  "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/edge-api",
+  "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/edge-api/readme.md",
+  "bugs": {
+    "url": "https://github.com/reapit/ts-cdk-constructs/issues"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "reapit-cdk-tsup --lambda",
+    "check": "yarn run root:check -p $PWD",
+    "lint": "reapit-cdk-eslint",
+    "test": "yarn run root:test $PWD",
+    "prepack": "reapit-version-package && yarn build"
+  },
+  "publishConfig": {
+    "main": "dist/index.js"
+  },
+  "main": "src/index.ts",
+  "dependencies": {
+    "@reapit-cdk/common": "workspace:^",
+    "aws-cdk-lib": "2.96.2",
+    "constructs": "10.2.70"
+  },
+  "devDependencies": {
+    "@aws-sdk/client-dynamodb": "3.414.0",
+    "@aws-sdk/client-secrets-manager": "3.414.0",
+    "@aws-sdk/lib-dynamodb": "3.414.0",
+    "@reapit-cdk/edge-api-types": "workspace:^",
+    "@reapit-cdk/eslint-config": "workspace:^",
+    "@reapit-cdk/tsup": "workspace:^",
+    "@reapit-cdk/version-package": "workspace:^",
+    "@types/mailparser": "^3.4.0",
+    "aws-lambda": "^1.0.7",
+    "aws-sdk-client-mock": "^3.0.0",
+    "mailparser": "^3.6.5"
+  }
+}
