@@ -20,15 +20,18 @@ if (hasLambda || hasLambdas) {
   const deps = [...Object.keys(pkgJson.dependencies || {}), ...Object.keys(pkgJson.devDependencies || {})].filter(
     (name) => !name.includes('@aws-sdk'),
   )
-  await build({
+  const config = {
     entry: hasLambdas
       ? ['src/lambdas']
       : {
           'lambda/lambda': 'src/lambda/lambda.ts',
         },
     target: 'node18',
-    outDir: hasLambdas ? 'dist/lambdas' : undefined,
     noExternal: deps,
     external: [/@aws-sdk\/(.*)/],
-  })
+  }
+  if (hasLambdas) {
+    config.outDir = 'dist/lambdas'
+  }
+  await build(config)
 }
