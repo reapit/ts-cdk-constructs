@@ -1,15 +1,25 @@
-const getEnv = (event) => {
+import { CloudFrontRequest, CloudFrontRequestEvent } from 'aws-lambda'
+
+const getEnv = (event: CloudFrontRequest): Record<string, any> => {
   const header = event.origin?.custom?.customHeaders['env']
   const str = header ? header[0].value : undefined
   return str ? JSON.parse(str) : {}
 }
 
-const middlewares = []
+const middlewares: string[] = []
 
-export const handler = async (event) => {
+export const handler = async (event: CloudFrontRequestEvent): Promise<CloudFrontRequest> => {
   console.log(JSON.stringify(event))
-  const req = event.Records[0].cf.request
-  const host = req.headers['req-host'][0].value
+  const [Record] = event.Records
+  if (!Record) {
+    throw new Error('no Record present')
+  }
+  const req = Record.cf.request
+  const reqHostHeaders = req.headers['req-host']
+  if (!reqHostHeaders?.length) {
+    throw new Error('no req-host header present')
+  }
+  const host = reqHostHeaders[0].value
   if (!host) {
     throw new Error('no req-host header present')
   }
@@ -27,18 +37,22 @@ export const handler = async (event) => {
   req.origin = {
     custom: {
       ...req.origin.custom,
-      domainName: mapping,
+      domainName: mapping.domain,
     },
   }
   req.headers['host'] = [
     {
       key: 'host',
-      value: mapping,
+      value: mapping.domain,
     },
   ]
 
   middlewares.forEach((middleware) => {
-    middleware(req, mapping)
+    try {
+      eval(middleware)(req, mapping)
+    } catch (e) {
+      console.error(e)
+    }
   })
 
   return req

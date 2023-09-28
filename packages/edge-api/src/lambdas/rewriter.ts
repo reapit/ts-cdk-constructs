@@ -1,4 +1,6 @@
-const rewriteCookie = (header, host) => {
+import { CloudFrontResponseEvent, CloudFrontResponseResult } from 'aws-lambda'
+
+const rewriteCookie = (header: string, host: string) => {
   return header
     .split('; ')
     .map((part) => {
@@ -10,9 +12,11 @@ const rewriteCookie = (header, host) => {
     .join('; ')
 }
 
-const domains = []
+const domains: string[] = []
+const doCookieRewrite = true
+const doRedirectRewrite = true
 
-const rewriteLocationHeader = (location, host) => {
+const rewriteLocationHeader = (location: string, host: string) => {
   try {
     const url = new URL(location)
     if (url.hostname !== host && domains.find((domain) => url.hostname.endsWith(domain))) {
@@ -25,17 +29,17 @@ const rewriteLocationHeader = (location, host) => {
   return location
 }
 
-export const handler = async (event) => {
+export const handler = async (event: CloudFrontResponseEvent): Promise<CloudFrontResponseResult> => {
   const req = event.Records[0].cf.request
   const res = event.Records[0].cf.response
   const host = req.headers['host'][0].value
-  if (res.headers['set-cookie']) {
+  if (doCookieRewrite && res.headers['set-cookie']) {
     res.headers['set-cookie'] = res.headers['set-cookie'].map(({ key, value }) => ({
       key,
       value: rewriteCookie(value, host),
     }))
   }
-  if (res.headers['location']) {
+  if (doRedirectRewrite && res.headers['location']) {
     res.headers['location'][0].value = rewriteLocationHeader(res.headers['location'][0].value, host)
   }
   return res

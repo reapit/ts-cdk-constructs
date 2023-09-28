@@ -43,6 +43,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@aws-cdk/aws-apigatewayv2-alpha@npm:2.96.2-alpha.0":
+  version: 2.96.2-alpha.0
+  resolution: "@aws-cdk/aws-apigatewayv2-alpha@npm:2.96.2-alpha.0"
+  peerDependencies:
+    aws-cdk-lib: 2.96.2
+    constructs: ^10.0.0
+  checksum: 1397bdba8b8b28cd725c030db34ae7101a3bb7d40e34540129dce6bc1712127fb69c4178b81db79cbb2b837a0df46a30a51e551843e978137ed5c6369ec8a65d
+  languageName: node
+  linkType: hard
+
+"@aws-cdk/aws-apigatewayv2-integrations-alpha@npm:2.96.2-alpha.0":
+  version: 2.96.2-alpha.0
+  resolution: "@aws-cdk/aws-apigatewayv2-integrations-alpha@npm:2.96.2-alpha.0"
+  peerDependencies:
+    "@aws-cdk/aws-apigatewayv2-alpha": 2.96.2-alpha.0
+    aws-cdk-lib: 2.96.2
+    constructs: ^10.0.0
+  checksum: 52f0b0378d3e2fc050c14e6df7d87643f1c5731066e75c5e7c3b123b244d0d8674a3b53fedd6129bf67f1fa4a7088c9791d46bbcb546ec683a495021e9116873
+  languageName: node
+  linkType: hard
+
 "@aws-crypto/crc32@npm:3.0.0":
   version: 3.0.0
   resolution: "@aws-crypto/crc32@npm:3.0.0"
@@ -1933,6 +1954,26 @@ __metadata:
     "@reapit-cdk/version-package": "workspace:^"
     "@types/aws-lambda": ^8.10.121
     aws-lambda: ^1.0.7
+  languageName: unknown
+  linkType: soft
+
+"@reapit-cdk/edge-api@workspace:packages/edge-api":
+  version: 0.0.0-use.local
+  resolution: "@reapit-cdk/edge-api@workspace:packages/edge-api"
+  dependencies:
+    "@aws-cdk/aws-apigatewayv2-alpha": 2.96.2-alpha.0
+    "@aws-cdk/aws-apigatewayv2-integrations-alpha": 2.96.2-alpha.0
+    "@aws-sdk/client-dynamodb": 3.414.0
+    "@aws-sdk/client-secrets-manager": 3.414.0
+    "@aws-sdk/lib-dynamodb": 3.414.0
+    "@reapit-cdk/common": "workspace:^"
+    "@reapit-cdk/eslint-config": "workspace:^"
+    "@reapit-cdk/tsup": "workspace:^"
+    "@reapit-cdk/version-package": "workspace:^"
+    aws-cdk-lib: 2.96.2
+    aws-lambda: ^1.0.7
+    aws-sdk-client-mock: ^3.0.0
+    constructs: 10.2.70
   languageName: unknown
   linkType: soft
 

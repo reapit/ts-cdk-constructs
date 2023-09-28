@@ -8,7 +8,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "reapit-cdk-tsup --lambda",
+    "build": "reapit-cdk-tsup --lambdas",
     "check": "yarn run root:check -p $PWD",
     "lint": "reapit-cdk-eslint",
     "test": "yarn run root:test $PWD",
@@ -19,6 +19,8 @@
   },
   "main": "src/index.ts",
   "dependencies": {
+    "@aws-cdk/aws-apigatewayv2-alpha": "2.96.2-alpha.0",
+    "@aws-cdk/aws-apigatewayv2-integrations-alpha": "2.96.2-alpha.0",
     "@reapit-cdk/common": "workspace:^",
     "aws-cdk-lib": "2.96.2",
     "constructs": "10.2.70"
@@ -27,13 +29,10 @@
     "@aws-sdk/client-dynamodb": "3.414.0",
     "@aws-sdk/client-secrets-manager": "3.414.0",
     "@aws-sdk/lib-dynamodb": "3.414.0",
-    "@reapit-cdk/edge-api-types": "workspace:^",
     "@reapit-cdk/eslint-config": "workspace:^",
     "@reapit-cdk/tsup": "workspace:^",
     "@reapit-cdk/version-package": "workspace:^",
-    "@types/mailparser": "^3.4.0",
     "aws-lambda": "^1.0.7",
-    "aws-sdk-client-mock": "^3.0.0",
-    "mailparser": "^3.6.5"
+    "aws-sdk-client-mock": "^3.0.0"
   }
 }

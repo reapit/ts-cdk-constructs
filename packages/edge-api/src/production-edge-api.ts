@@ -13,11 +13,14 @@ import {
 import { Bucket } from 'aws-cdk-lib/aws-s3'
 import { Construct } from 'constructs'
 import {
+  DisableBuiltInMiddlewares,
   EdgeAPIProps,
   Endpoint,
   FrontendEndpoint,
+  HttpMethod,
   LambdaEndpoint,
   ProxyEndpoint,
+  ProxyMiddleware,
   endpointIsFrontendEndpoint,
   endpointIsLambdaEndpoint,
   endpointIsProxyEndpoint,
@@ -28,9 +31,10 @@ import { Fn } from 'aws-cdk-lib'
 import { HttpOrigin, S3Origin } from 'aws-cdk-lib/aws-cloudfront-origins'
 import { EdgeAPILambda } from './edge-api-lambda'
 import { Code, Runtime } from 'aws-cdk-lib/aws-lambda'
-import * as fs from 'fs'
 import * as path from 'path'
+import * as crypto from 'crypto'
 import { InvalidateCloudfrontDistribution } from './invalidate-cloudfront-distribution'
+import { generateLambda } from './generate-lambda'
 
 interface ProductionEdgeAPIProps extends EdgeAPIProps {}
 
@@ -41,11 +45,12 @@ type EndpointBehaviorOptions = {
 }
 
 export class ProductionEdgeAPI extends Construct {
+  r53Target: RecordTarget
+
   private bucket: Bucket
   private originAccessIdentity: OriginAccessIdentity
-  r53Target: RecordTarget
   private invalidationPaths: string[] = []
-  distribution: Distribution
+  private distribution: Distribution
 
   constructor(scope: Construct, id: string, props: ProductionEdgeAPIProps) {
     super(scope, id)
@@ -53,7 +58,10 @@ export class ProductionEdgeAPI extends Construct {
     this.originAccessIdentity = new OriginAccessIdentity(this, 'oia', {})
     this.bucket.grantRead(this.originAccessIdentity)
     const distribution = new Distribution(this, 'Resource', {
-      defaultBehavior: this.endpointToBehaviorOptions(props.defaultEndpoint),
+      defaultBehavior: this.endpointToBehaviorOptions({
+        ...props.defaultEndpoint,
+        pathPattern: '',
+      }),
       domainNames: props.domains,
       certificate: props.certificate,
     })
@@ -73,6 +81,28 @@ export class ProductionEdgeAPI extends Construct {
       })
   }
 
+  private methodsToAllowedMethods(methods?: HttpMethod[]): AllowedMethods {
+    if (!methods) {
+      return AllowedMethods.ALLOW_ALL
+    }
+
+    const hasGet = methods.includes(HttpMethod.GET)
+    const hasOptions = methods.includes(HttpMethod.OPTIONS)
+    const hasHead = methods.includes(HttpMethod.HEAD)
+
+    if (methods.length === 3 && hasGet && hasHead && hasOptions) {
+      return AllowedMethods.ALLOW_GET_HEAD_OPTIONS
+    }
+    if (methods.length === 2 && hasGet && hasHead) {
+      return AllowedMethods.ALLOW_GET_HEAD
+    }
+    if (methods.length === 1 && hasGet) {
+      return AllowedMethods.ALLOW_GET_HEAD
+    }
+
+    return AllowedMethods.ALLOW_ALL
+  }
+
   private lambdaEndpointToAddBehaviorOptions(endpoint: LambdaEndpoint): EndpointBehaviorOptions[] {
     const origin = new S3Origin(this.bucket, {
       originAccessIdentity: this.originAccessIdentity,
@@ -81,7 +111,7 @@ export class ProductionEdgeAPI extends Construct {
       },
     })
     const addBehaviorOptions: AddBehaviorOptions = {
-      allowedMethods: AllowedMethods.ALLOW_ALL,
+      allowedMethods: this.methodsToAllowedMethods(endpoint.methods),
       cachePolicy: endpoint.static ? CachePolicy.CACHING_OPTIMIZED : CachePolicy.CACHING_DISABLED,
       originRequestPolicy: OriginRequestPolicy.ALL_VIEWER,
       edgeLambdas: [
@@ -110,7 +140,12 @@ export class ProductionEdgeAPI extends Construct {
     const origin = new S3Origin(endpoint.bucket, {
       originAccessIdentity: this.originAccessIdentity,
     })
-    this.invalidationPaths.push(pathPattern, `${pathPattern}/`, `${pathPattern}/index.html`)
+    this.invalidationPaths.push(
+      pathPattern,
+      `${pathPattern}/`,
+      `${pathPattern}/index.html`,
+      ...(endpoint.invalidationItems || []).map((item) => `${pathPattern}/${item}`),
+    )
 
     return [
       {
@@ -140,18 +175,23 @@ export class ProductionEdgeAPI extends Construct {
     ]
   }
 
-  private generateRewriter(domains: string[]) {
+  private generateRewriter(config: DisableBuiltInMiddlewares | undefined, domains: string[]) {
+    const doRedirectRewrite = !config?.redirect
+    const doCookieRewrite = !config?.cookie
+
     return Code.fromInline(
-      fs
-        .readFileSync(path.resolve(__dirname, 'lambdas', 'rewriter.js'), 'utf-8')
-        .replace('const domains = []', 'const domains = ' + JSON.stringify(domains)),
+      generateLambda('rewriter', [
+        ['var domains = []', 'var domains = ' + JSON.stringify(domains)],
+        ['var doCookieRewrite = true', 'var doCookieRewrite = ' + doCookieRewrite],
+        ['var doRedirectRewrite = true', 'var doRedirectRewrite = ' + doRedirectRewrite],
+      ]),
     )
   }
 
   private proxyEndpointToAddBehaviorOptions(endpoint: ProxyEndpoint): EndpointBehaviorOptions[] {
     const baseAddBehaviorOptions: AddBehaviorOptions = {
       cachePolicy: CachePolicy.CACHING_DISABLED,
-      allowedMethods: AllowedMethods.ALLOW_ALL,
+      allowedMethods: this.methodsToAllowedMethods(endpoint.methods),
       originRequestPolicy: OriginRequestPolicy.ALL_VIEWER_EXCEPT_HOST_HEADER,
     }
     if (typeof endpoint.destination === 'string') {
@@ -161,7 +201,7 @@ export class ProductionEdgeAPI extends Construct {
       const rewriterLambda = new EdgeAPILambda(this, 'rewriter-' + endpoint.destination, {
         runtime: Runtime.NODEJS_18_X,
         handler: 'index.handler',
-        code: this.generateRewriter([endpoint.destination]),
+        code: this.generateRewriter(endpoint.disableBuiltInMiddlewares, [endpoint.destination]),
       })
       const addBehaviorOptions: AddBehaviorOptions = {
         ...baseAddBehaviorOptions,
@@ -190,11 +230,18 @@ export class ProductionEdgeAPI extends Construct {
         }),
       },
     })
+
     const rewriterLambda = new EdgeAPILambda(this, 'rewriter-' + endpoint.destination, {
       runtime: Runtime.NODEJS_18_X,
       handler: 'index.handler',
-      code: this.generateRewriter(Object.values(endpoint.destination)),
+      code: this.generateRewriter(
+        endpoint.disableBuiltInMiddlewares,
+        Object.values(endpoint.destination).map((destination) => {
+          return typeof destination === 'string' ? destination : destination.destination
+        }),
+      ),
     })
+
     const addBehaviorOptions: AddBehaviorOptions = {
       ...baseAddBehaviorOptions,
       edgeLambdas: [
@@ -204,7 +251,7 @@ export class ProductionEdgeAPI extends Construct {
         },
         {
           eventType: LambdaEdgeEventType.ORIGIN_REQUEST,
-          functionVersion: this.getOriginSelectorLambda().currentVersion, // TODO: add extra middlewares
+          functionVersion: this.getOriginSelectorLambda(endpoint.customMiddlewares).currentVersion,
         },
         {
           eventType: LambdaEdgeEventType.VIEWER_RESPONSE,
@@ -271,7 +318,22 @@ export class ProductionEdgeAPI extends Construct {
   }
 
   private originSelectorLambda?: EdgeAPILambda
-  private getOriginSelectorLambda(): EdgeAPILambda {
+  private originSelectorLambdas: Record<string, EdgeAPILambda> = {}
+  private getOriginSelectorLambda(customMiddlewares?: ProxyMiddleware[]): EdgeAPILambda {
+    if (customMiddlewares?.length) {
+      const str = JSON.stringify(customMiddlewares.map((fn) => fn.toString()))
+      const key = crypto.createHash('sha1').update(str).digest('hex')
+      if (!this.originSelectorLambdas[key]) {
+        this.originSelectorLambdas[key] = new EdgeAPILambda(this, 'origin-selector-' + key, {
+          runtime: Runtime.NODEJS_18_X,
+          handler: 'index.handler',
+          code: Code.fromInline(
+            generateLambda('origin-selector', [['var middlewares = []', `var middlewares = ${str}`]]),
+          ),
+        })
+      }
+      return this.originSelectorLambdas[key]
+    }
     if (!this.originSelectorLambda) {
       this.originSelectorLambda = new EdgeAPILambda(this, 'origin-selector', {
         runtime: Runtime.NODEJS_18_X,
