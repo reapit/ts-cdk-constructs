@@ -14,7 +14,7 @@ npm install @reapit-cdk/edge-api --save-dev
 ```ts
 import { CfnOutput, Stack, App } from 'aws-cdk-lib'
 import { HostedZone } from 'aws-cdk-lib/aws-route53'
-import { EmailReceiver } from '@reapit-cdk/edge-api'
+import { EdgeAPI, EdgeAPILambda } from '@reapit-cdk/edge-api'
 
 const app = new App()
 const stack = new Stack(app, 'stack-name', {
@@ -22,18 +22,34 @@ const stack = new Stack(app, 'stack-name', {
     region: 'us-east-1', // region must be specified
   },
 })
-const hostedZone = new HostedZone(stack, 'hostedZone', {
-  zoneName: 'example.org',
+const certificate = new Certificate(stack, 'certificate', {
+  domainName: 'example.org',
 })
-const emailReceiver = new EmailReceiver(stack, 'domain', {
-  hostedZone,
-  // parentDomain: '', // you can optionally override the parent domain (e.g. your hosted zone is example.org but you want to use dev.example.org)
-  // subdomain: '', // you can optionally override the subdomain, this defaults to 'email' so the resulting domain will be email.example.org
+const api = new EdgeAPI(stack, 'api', {
+  certificate,
+  domains: ['example.org'],
+  defaultEndpoint: {
+    destination: 'example.com',
+  },
 })
-new CfnOutput(stack, 'emailReceiverDomainName', {
-  value: emailReceiver.domainName,
+const lambda = new EdgeAPILambda(stack, 'lambda', {
+  code: Code.fromInline('export const handler = () => {}'),
+  handler: 'index.handler',
+  runtime: Runtime.NODEJS_18_X,
+  environment: {
+    aVariable: 'contents',
+  },
 })
-new CfnOutput(stack, 'emailReceiverTableArn', {
-  value: emailReceiver.table.tableArn,
+api.addEndpoint({
+  pathPattern: '/api/lambda',
+  lambda,
+})
+const zone = HostedZone.fromLookup(stack, 'zone', {
+  domainName: 'example.org',
+})
+new ARecord(this, 'arecord', {
+  zone,
+  recordName: 'example.org',
+  target: api.route53Target,
 })
 ```

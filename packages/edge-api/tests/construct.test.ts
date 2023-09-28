@@ -45,6 +45,10 @@ describe('edge-api', () => {
       const { api } = synth('us-east-1', {})
       expect(api).toBeDefined()
     })
+    test('has route53Target', () => {
+      const { api } = synth('us-east-1', {})
+      expect(api.route53Target).toBeDefined()
+    })
     test('synthesizes - unresolved region', () => {
       const app = new cdk.App()
       const stack = new cdk.Stack(app)
@@ -670,6 +674,14 @@ describe('edge-api', () => {
     test('synthesizes', () => {
       const { api } = synth('us-east-1', { devMode: true })
       expect(api).toBeDefined()
+    })
+    test('synthesizes in other region', () => {
+      const { api } = synth('eu-west-2', { devMode: true })
+      expect(api).toBeDefined()
+    })
+    test('has route53Target', () => {
+      const { api } = synth('us-east-1', { devMode: true })
+      expect(api.route53Target).toBeDefined()
     })
     test('default endpoint', () => {
       const { template } = synth('us-east-1', { devMode: true })
