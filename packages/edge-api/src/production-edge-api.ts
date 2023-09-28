@@ -322,7 +322,7 @@ export class ProductionEdgeAPI extends Construct {
   private getOriginSelectorLambda(customMiddlewares?: ProxyMiddleware[]): EdgeAPILambda {
     if (customMiddlewares?.length) {
       const str = JSON.stringify(customMiddlewares.map((fn) => fn.toString()))
-      const key = crypto.createHash('sha1').update(str).digest('hex')
+      const key = crypto.createHash('sha256').update(str).digest('hex').substring(0, 6)
       if (!this.originSelectorLambdas[key]) {
         this.originSelectorLambdas[key] = new EdgeAPILambda(this, 'origin-selector-' + key, {
           runtime: Runtime.NODEJS_18_X,
