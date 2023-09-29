@@ -8,8 +8,8 @@
   "scripts": {
     "test": "jest",
     "check": "tsc packages/**/*.ts --noEmit",
-    "build": "yarn workspaces foreach run build",
-    "lint": "yarn workspaces foreach run lint",
+    "build": "yarn workspaces -v foreach run build",
+    "lint": "yarn workspaces -v foreach run lint",
     "root:test": "jest",
     "root:check": "tsc"
   },
