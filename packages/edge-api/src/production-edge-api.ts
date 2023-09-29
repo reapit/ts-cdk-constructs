@@ -144,7 +144,7 @@ export class ProductionEdgeAPI extends Construct {
       pathPattern,
       `${pathPattern}/`,
       `${pathPattern}/index.html`,
-      ...(endpoint.invalidationItems || []).map((item) => `${pathPattern}/${item}`),
+      ...(endpoint.invalidationItems ?? []).map((item) => `${pathPattern}/${item}`),
     )
 
     return [
