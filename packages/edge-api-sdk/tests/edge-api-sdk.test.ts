@@ -1,8 +1,99 @@
 import { describe, expect } from '@jest/globals'
-import { CloudFrontHeaders, CloudFrontRequestEvent, CloudFrontResultResponse } from 'aws-lambda'
-import { jsonRequestHandler, JSONRequest, JSONResponse } from '../src'
+import {
+  APIGatewayProxyEventV2,
+  APIGatewayProxyResultV2,
+  CloudFrontHeaders,
+  CloudFrontRequestEvent,
+  CloudFrontResultResponse,
+} from 'aws-lambda'
+import { jsonRequestHandler, JSONRequest, RedirectionResponse, formRequestHandler, requestHandler } from '../src'
 
 process.env.AWS_REGION = 'eu-west-2'
+
+type RequestGeneratorParams = {
+  headers?: CloudFrontHeaders
+  method?: string
+  querystring?: string
+  uri: string
+  body?: string
+  env?: any
+}
+type ResponseGeneratorParams = CloudFrontResultResponse
+type RequestGenerator = (params: RequestGeneratorParams) => CloudFrontRequestEvent | APIGatewayProxyEventV2
+type ResponseGenerator = (params: ResponseGeneratorParams) => CloudFrontResultResponse | APIGatewayProxyResultV2
+
+const cloudfrontResponseGenerator = (params: ResponseGeneratorParams): CloudFrontResultResponse => params
+const apigatewayResponseGenerator = (params: ResponseGeneratorParams): APIGatewayProxyResultV2 => {
+  const apigwHeaders: Record<string, string> = {}
+  Object.values(params.headers || {})
+    .flat()
+    .forEach(({ key, value }) => {
+      apigwHeaders[key || ''] = value
+    })
+  const res = {
+    headers: apigwHeaders,
+    isBase64Encoded: false,
+    statusCode: parseInt(params.status, 10),
+  }
+  if (params.body) {
+    return {
+      ...res,
+      body: params.body,
+    }
+  }
+  return res
+}
+
+const strToBase64 = (str: string) => Buffer.from(str).toString('base64')
+
+const generateApiGatewayRequest = ({
+  headers = {
+    host: [{ key: 'host', value: 'google.com' }],
+  },
+  method = 'GET',
+  querystring = '',
+  uri,
+  body,
+  env,
+}: RequestGeneratorParams): APIGatewayProxyEventV2 => {
+  const apigwHeaders: Record<string, string> = {
+    env: strToBase64(JSON.stringify(env || {})),
+  }
+  Object.entries(headers).forEach(([key, values]) => {
+    apigwHeaders[key] = values.map(({ value }) => value).join(',')
+  })
+
+  return {
+    isBase64Encoded: true,
+    body: body ? strToBase64(body) : undefined,
+    headers: apigwHeaders,
+    rawPath: uri,
+    rawQueryString: querystring,
+    routeKey: `${method} ${uri}`,
+    version: '2',
+    cookies: [],
+    requestContext: {
+      accountId: '',
+      apiId: '',
+      domainName: '',
+      domainPrefix: '',
+      requestId: '',
+      routeKey: `${method} ${uri}`,
+      stage: '$default',
+      time: '',
+      timeEpoch: 0,
+      authentication: undefined,
+      http: {
+        method,
+        path: uri,
+        protocol: 'https',
+        sourceIp: '1.1.1.1',
+        userAgent: '',
+      },
+    },
+  }
+}
+
 const generateCloudfrontRequest = ({
   headers = {
     host: [{ key: 'host', value: 'google.com' }],
@@ -12,15 +103,8 @@ const generateCloudfrontRequest = ({
   uri,
   body,
   env,
-}: {
-  headers?: CloudFrontHeaders
-  method?: string
-  querystring?: string
-  uri: string
-  body?: string
-  env?: any
-}) => {
-  const event: CloudFrontRequestEvent = {
+}: RequestGeneratorParams): CloudFrontRequestEvent => {
+  return {
     Records: [
       {
         cf: {
@@ -62,150 +146,174 @@ const generateCloudfrontRequest = ({
       },
     ],
   }
-  return event
 }
 
-describe('edge-api-sdk', () => {
+const testEventType = (generateRequest: RequestGenerator, generateResponse: ResponseGenerator) => {
+  Object.entries({ jsonRequestHandler, requestHandler, formRequestHandler }).forEach(([name, func]: [string, any]) => {
+    describe(name, () => {
+      it('should run the handler', async () => {
+        const handler = jest.fn().mockResolvedValue({})
+        await func(handler)(
+          generateRequest({
+            uri: '/',
+          }),
+        )
+        expect(handler).toBeCalledTimes(1)
+      })
+
+      describe('cookie parsing', () => {
+        it('should parse cookies correctly', async () => {
+          const handler = jest.fn().mockResolvedValue({})
+          await func(handler)(
+            generateRequest({
+              uri: '/',
+              headers: {
+                cookies: [
+                  {
+                    value: 'a=b;c=d',
+                    key: 'cookies',
+                  },
+                ],
+              },
+            }),
+          )
+
+          expect(handler.mock.calls[0][0].cookies).toStrictEqual(['a=b', 'c=d'])
+        })
+      })
+      describe('querystring parsing', () => {
+        it('should parse the querystring correctly', async () => {
+          const handler = jest.fn().mockResolvedValue({})
+          await func(handler)(
+            generateRequest({
+              uri: '/',
+              querystring: 'asdf=1&qwerty=2&ghjkl=3',
+            }),
+          )
+          const request: JSONRequest<any, any> = {
+            headers: {
+              host: ['google.com'],
+            },
+            env: {},
+            host: 'google.com',
+            method: 'GET',
+            path: '/',
+            query: {
+              asdf: '1',
+              qwerty: '2',
+              ghjkl: '3',
+            },
+            region: 'eu-west-2',
+            cookies: [],
+          }
+          expect(handler).toHaveBeenCalledWith(request)
+        })
+        it('should cope with no querystring', async () => {
+          const handler = jest.fn().mockResolvedValue({})
+          await func(handler)(
+            generateRequest({
+              uri: '/',
+            }),
+          )
+          const request: JSONRequest<any, any> = {
+            headers: {
+              host: ['google.com'],
+            },
+            env: {},
+            host: 'google.com',
+            method: 'GET',
+            path: '/',
+            region: 'eu-west-2',
+            cookies: [],
+          }
+          expect(handler).toHaveBeenCalledWith(request)
+        })
+      })
+
+      it('redirects - should return the correct object', async () => {
+        const response: RedirectionResponse = {
+          headers: {
+            location: 'https://google.com',
+          },
+          status: 302,
+        }
+        const handler = jest.fn().mockResolvedValue(response)
+        const result = await func(handler)(
+          generateRequest({
+            uri: '/authorize',
+          }),
+        )
+        const resultEvent = generateResponse({
+          status: '302',
+          headers: {
+            location: [
+              {
+                key: 'location',
+                value: 'https://google.com',
+              },
+            ],
+          },
+        })
+        expect(result).toEqual(resultEvent)
+      })
+
+      describe('env parsing', () => {
+        it('should decode the custom header correctly', async () => {
+          const handler = jest.fn().mockResolvedValue({})
+          const env = {
+            aKey: 'avalue',
+            something: 'else',
+            completely: 'different',
+          }
+          await func(handler)(
+            generateRequest({
+              uri: '/',
+              env,
+            }),
+          )
+          const request: JSONRequest<any, any> = {
+            env,
+            headers: {
+              host: ['google.com'],
+            },
+            method: 'GET',
+            host: 'google.com',
+            path: '/',
+            region: 'eu-west-2',
+            cookies: [],
+          }
+          expect(handler).toHaveBeenCalledWith(request)
+        })
+      })
+
+      describe('error handling', () => {
+        it('should allow errors to be thrown', async () => {
+          const message = 'asdfg'
+          const ce = jest.spyOn(console, 'error').mockImplementation(() => {})
+          const cl = jest.spyOn(console, 'log').mockImplementation(() => {})
+          const handler = jest.fn().mockRejectedValue(new Error(message))
+          const result = await func(handler)(
+            generateRequest({
+              uri: '/',
+              env: {},
+            }),
+          )
+          const res = JSON.parse((result as CloudFrontResultResponse).body || '')
+          expect(res).toHaveProperty('status', 'error')
+          expect(res).toHaveProperty('error')
+          expect(res.error).toHaveProperty('message', message)
+
+          expect(ce).toHaveBeenCalled()
+          expect(cl).toHaveBeenCalled()
+          ce.mockRestore()
+          cl.mockRestore()
+        })
+      })
+    })
+  })
   describe('jsonRequestHandler', () => {
-    it('should run the handler', async () => {
-      // const response: JSONResponse = {}
-      const handler = jest.fn().mockResolvedValue({})
-      await jsonRequestHandler(handler)(
-        generateCloudfrontRequest({
-          uri: '/',
-        }),
-      )
-      expect(handler).toBeCalledTimes(1)
-    })
-
-    it('should call the handler with the correct object', async () => {
-      // const response: JSONResponse = {}
-      const handler = jest.fn().mockResolvedValue({})
-      await jsonRequestHandler(handler)(
-        generateCloudfrontRequest({
-          uri: '/',
-        }),
-      )
-      const request: JSONRequest<any, any> = {
-        env: {},
-        host: 'google.com',
-        headers: {
-          host: ['google.com'],
-        },
-        method: 'GET',
-        path: '/',
-        region: 'eu-west-2',
-        cookies: [],
-      }
-      expect(handler).toHaveBeenCalledWith(request)
-    })
-
-    it('should return the correct object', async () => {
-      const response: JSONResponse = {
-        body: { something: 'here' },
-        headers: {},
-        status: 200,
-      }
-      const handler = jest.fn().mockResolvedValue(response)
-      const result = await jsonRequestHandler(handler)(
-        generateCloudfrontRequest({
-          uri: '/authorize',
-        }),
-      )
-      const resultEvent: CloudFrontResultResponse = {
-        status: '200',
-        headers: {
-          'content-type': [
-            {
-              key: 'content-type',
-              value: 'application/json',
-            },
-          ],
-        },
-        bodyEncoding: 'text',
-        body: JSON.stringify({ something: 'here' }),
-      }
-      expect(result).toEqual(resultEvent)
-    })
-
-    it('redirects - should return the correct object', async () => {
-      const response: JSONResponse = {
-        headers: {
-          location: 'https://google.com',
-        },
-        status: 302,
-      }
-      const handler = jest.fn().mockResolvedValue(response)
-      const result = await jsonRequestHandler(handler)(
-        generateCloudfrontRequest({
-          uri: '/authorize',
-        }),
-      )
-      const resultEvent: CloudFrontResultResponse = {
-        status: '302',
-        headers: {
-          location: [
-            {
-              key: 'location',
-              value: 'https://google.com',
-            },
-          ],
-        },
-      }
-      expect(result).toEqual(resultEvent)
-    })
-
-    describe('querystring parsing', () => {
-      it('should parse the querystring correctly', async () => {
-        const handler = jest.fn().mockResolvedValue({})
-        await jsonRequestHandler(handler)(
-          generateCloudfrontRequest({
-            uri: '/',
-            querystring: 'asdf=1&qwerty=2&ghjkl=3',
-          }),
-        )
-        const request: JSONRequest<any, any> = {
-          headers: {
-            host: ['google.com'],
-          },
-          env: {},
-          host: 'google.com',
-          method: 'GET',
-          path: '/',
-          query: {
-            asdf: '1',
-            qwerty: '2',
-            ghjkl: '3',
-          },
-          region: 'eu-west-2',
-          cookies: [],
-        }
-        expect(handler).toHaveBeenCalledWith(request)
-      })
-      it('should cope with no querystring', async () => {
-        const handler = jest.fn().mockResolvedValue({})
-        await jsonRequestHandler(handler)(
-          generateCloudfrontRequest({
-            uri: '/',
-          }),
-        )
-        const request: JSONRequest<any, any> = {
-          headers: {
-            host: ['google.com'],
-          },
-          env: {},
-          host: 'google.com',
-          method: 'GET',
-          path: '/',
-          region: 'eu-west-2',
-          cookies: [],
-        }
-        expect(handler).toHaveBeenCalledWith(request)
-      })
-    })
-
-    describe('env parsing', () => {
-      it('should decode the custom header correctly', async () => {
+    describe('body parsing', () => {
+      it('should parse the body correctly', async () => {
         const handler = jest.fn().mockResolvedValue({})
         const env = {
           aKey: 'avalue',
@@ -213,9 +321,10 @@ describe('edge-api-sdk', () => {
           completely: 'different',
         }
         await jsonRequestHandler(handler)(
-          generateCloudfrontRequest({
+          generateRequest({
             uri: '/',
             env,
+            body: JSON.stringify({ something: 'here' }),
           }),
         )
         const request: JSONRequest<any, any> = {
@@ -228,33 +337,49 @@ describe('edge-api-sdk', () => {
           path: '/',
           region: 'eu-west-2',
           cookies: [],
+          body: { something: 'here' },
         }
         expect(handler).toHaveBeenCalledWith(request)
       })
     })
-
-    describe('error handling', () => {
-      it('should allow errors to be thrown', async () => {
-        const message = 'asdfg'
-        const ce = jest.spyOn(console, 'error').mockImplementation(() => {})
-        const cl = jest.spyOn(console, 'log').mockImplementation(() => {})
-        const handler = jest.fn().mockRejectedValue(new Error(message))
-        const result = await jsonRequestHandler(handler)(
-          generateCloudfrontRequest({
-            uri: '/',
-            env: {},
-          }),
-        )
-        const res = JSON.parse((result as CloudFrontResultResponse).body || '')
-        expect(res).toHaveProperty('status', 'error')
-        expect(res).toHaveProperty('error')
-        expect(res.error).toHaveProperty('message', message)
-
-        expect(ce).toHaveBeenCalled()
-        expect(cl).toHaveBeenCalled()
-        ce.mockRestore()
-        cl.mockRestore()
-      })
+  })
+  describe('formRequestHandler', () => {
+    it('should parse the request body correctly', async () => {
+      const handler = jest.fn().mockResolvedValue({})
+      const env = {
+        aKey: 'avalue',
+        something: 'else',
+        completely: 'different',
+      }
+      await formRequestHandler(handler)(
+        generateRequest({
+          uri: '/',
+          env,
+          body: new URLSearchParams({ something: 'here' }).toString(),
+        }),
+      )
+      const request: JSONRequest<any, any> = {
+        env,
+        headers: {
+          host: ['google.com'],
+        },
+        method: 'GET',
+        host: 'google.com',
+        path: '/',
+        region: 'eu-west-2',
+        cookies: [],
+        body: { something: 'here' },
+      }
+      expect(handler).toHaveBeenCalledWith(request)
     })
+  })
+}
+
+describe('edge-api-sdk', () => {
+  describe('cloudfront events', () => {
+    testEventType(generateCloudfrontRequest, cloudfrontResponseGenerator)
+  })
+  describe('api gateway v2 events', () => {
+    testEventType(generateApiGatewayRequest, apigatewayResponseGenerator)
   })
 })

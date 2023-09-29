@@ -3,6 +3,7 @@ import { envKey } from './config'
 import { parseQueryString } from './parse-querystring'
 import { EventInput, HTTPMethod, RCHeaders, RCRequest, RCResponse } from './types'
 import { getEnvRegion } from './utils'
+import { parseCookies } from './parse-cookies'
 
 export type RequestEvent = CloudFrontRequestEvent
 export type ResponseEvent = CloudFrontRequestResult
@@ -44,11 +45,6 @@ const getEnv = (req: CloudFrontRequest): Record<string, any> => {
   return str ? JSON.parse(str) : {}
 }
 
-const parseCookies = (cookiesHeader: string | string[]) => {
-  const header = Array.isArray(cookiesHeader) ? cookiesHeader[0] : cookiesHeader
-  return header.split(';').map((v) => v.trim())
-}
-
 export const toRCRequest = <EnvType>(event: RequestEvent): RCRequest<EnvType> => {
   const request = event.Records[0].cf.request
   const body = requestBodyHandler(request.body)
@@ -73,7 +69,7 @@ export const toRCRequest = <EnvType>(event: RequestEvent): RCRequest<EnvType> =>
     cookies: headers.cookies ? parseCookies(headers.cookies) : [],
   }
 
-  if (Object.keys(query).length) {
+  if (query && Object.keys(query).length) {
     obj['query'] = query
   }
   if (body) {

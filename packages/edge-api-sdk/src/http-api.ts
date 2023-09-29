@@ -8,6 +8,7 @@ import { envKey } from './config'
 import { parseQueryString } from './parse-querystring'
 import { EventInput, HTTPMethod, RCHeaders, RCRequest, RCResponse } from './types'
 import { getEnvRegion } from './utils'
+import { parseCookies } from './parse-cookies'
 
 export type RequestEvent = APIGatewayProxyEventV2
 export type ResponseEvent = APIGatewayProxyResultV2
@@ -23,7 +24,7 @@ const requestHeadersHandler = (headers: APIGatewayProxyEventHeaders): RCHeaders 
   const rcHeaders: RCHeaders = {}
   Object.entries(headers).forEach(([k, v]) => {
     if (v) {
-      rcHeaders[k] = v
+      rcHeaders[k] = v.split(',')
     }
   })
   return rcHeaders
@@ -46,6 +47,7 @@ const requestBodyHandler = (event: RequestEvent) => {
 
 const getEnv = (headers: RCHeaders): Record<string, string> => {
   const envHeader = Array.isArray(headers[envKey]) ? headers[envKey][0] : headers[envKey]
+  delete headers[envKey]
   const env = envHeader ? JSON.parse(Buffer.from(envHeader, 'base64').toString('utf-8')) : {}
   if (env.domainMapping) {
     return Object.values(env.domainMapping)[0] as Record<string, string>
@@ -55,17 +57,24 @@ const getEnv = (headers: RCHeaders): Record<string, string> => {
 
 export const toRCRequest = <EnvType>(request: RequestEvent): RCRequest<EnvType> => {
   const headers = requestHeadersHandler(request.headers)
-  return {
+  const req = {
     method: request.requestContext.http.method as HTTPMethod,
     path: request.rawPath,
     host: Array.isArray(headers['host']) ? headers['host'][0] : headers['host'],
-    cookies: request.cookies || [],
+    cookies: parseCookies(headers['cookies']),
     body: requestBodyHandler(request),
     headers,
-    query: parseQueryString(request.rawQueryString),
     env: getEnv(headers) as EnvType,
     ...getEnvRegion(),
   }
+  const query = parseQueryString(request.rawQueryString)
+  if (query) {
+    return {
+      ...req,
+      query,
+    }
+  }
+  return req
 }
 
 export const handleRCResponse = (res: RCResponse): ResponseEvent => {
