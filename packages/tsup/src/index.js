@@ -5,6 +5,7 @@ import path from 'path'
 import { build } from 'tsup'
 
 const hasLambda = process.argv.slice(2).includes('--lambda')
+const hasLambdas = process.argv.slice(2).includes('--lambdas')
 
 await build({
   entry: ['src/index.ts'],
@@ -13,18 +14,24 @@ await build({
   clean: true,
 })
 
-if (hasLambda) {
+if (hasLambda || hasLambdas) {
   const pkgJson = JSON.parse(fs.readFileSync(path.resolve('./package.json'), 'utf-8'))
 
   const deps = [...Object.keys(pkgJson.dependencies || {}), ...Object.keys(pkgJson.devDependencies || {})].filter(
     (name) => !name.includes('@aws-sdk'),
   )
-  await build({
-    entry: {
-      'lambda/lambda': 'src/lambda/lambda.ts',
-    },
+  const config = {
+    entry: hasLambdas
+      ? ['src/lambdas']
+      : {
+          'lambda/lambda': 'src/lambda/lambda.ts',
+        },
     target: 'node18',
     noExternal: deps,
     external: [/@aws-sdk\/(.*)/],
-  })
+  }
+  if (hasLambdas) {
+    config.outDir = 'dist/lambdas'
+  }
+  await build(config)
 }
