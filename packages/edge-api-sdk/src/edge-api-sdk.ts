@@ -103,15 +103,15 @@ export const jsonRequestHandler = <EnvType, BodyType = any>(
         return respondToEvent(event, {
           status: response.status,
           headers: {
-            ...(response.headers || {}),
+            ...(response.headers ?? {}),
           },
         })
       }
 
       return respondToEvent(event, {
-        status: response.status || 200,
+        status: response.status ?? 200,
         headers: {
-          ...(response.headers || {}),
+          ...(response.headers ?? {}),
           'content-type': ['application/json'],
         },
         body: response.body ? JSON.stringify(response.body) : undefined,
@@ -149,15 +149,15 @@ export const formRequestHandler = <EnvType, BodyType = any>(
         return respondToEvent(event, {
           status: response.status,
           headers: {
-            ...(response.headers || {}),
+            ...(response.headers ?? {}),
           },
         })
       }
 
       return respondToEvent(event, {
-        status: response.status || 200,
+        status: response.status ?? 200,
         headers: {
-          ...(response.headers || {}),
+          ...(response.headers ?? {}),
           'content-type': ['application/json'],
         },
         body: response.body ? JSON.stringify(response.body) : undefined,

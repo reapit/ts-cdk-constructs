@@ -25,10 +25,10 @@ type ResponseGenerator = (params: ResponseGeneratorParams) => CloudFrontResultRe
 const cloudfrontResponseGenerator = (params: ResponseGeneratorParams): CloudFrontResultResponse => params
 const apigatewayResponseGenerator = (params: ResponseGeneratorParams): APIGatewayProxyResultV2 => {
   const apigwHeaders: Record<string, string> = {}
-  Object.values(params.headers || {})
+  Object.values(params.headers ?? {})
     .flat()
     .forEach(({ key, value }) => {
-      apigwHeaders[key || ''] = value
+      apigwHeaders[key ?? ''] = value
     })
   const res = {
     headers: apigwHeaders,
@@ -57,7 +57,7 @@ const generateApiGatewayRequest = ({
   env,
 }: RequestGeneratorParams): APIGatewayProxyEventV2 => {
   const apigwHeaders: Record<string, string> = {
-    env: strToBase64(JSON.stringify(env || {})),
+    env: strToBase64(JSON.stringify(env ?? {})),
   }
   Object.entries(headers).forEach(([key, values]) => {
     apigwHeaders[key] = values.map(({ value }) => value).join(',')
@@ -298,7 +298,7 @@ const testEventType = (generateRequest: RequestGenerator, generateResponse: Resp
               env: {},
             }),
           )
-          const res = JSON.parse((result as CloudFrontResultResponse).body || '')
+          const res = JSON.parse((result as CloudFrontResultResponse).body ?? '')
           expect(res).toHaveProperty('status', 'error')
           expect(res).toHaveProperty('error')
           expect(res.error).toHaveProperty('message', message)
