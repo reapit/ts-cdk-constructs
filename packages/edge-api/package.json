@@ -21,7 +21,7 @@
   "dependencies": {
     "@aws-cdk/aws-apigatewayv2-alpha": "2.96.2-alpha.0",
     "@aws-cdk/aws-apigatewayv2-integrations-alpha": "2.96.2-alpha.0",
-    "@reapit-cdk/common": "workspace:^",
+    "@reapit-cdk/cloudfront-invalidation": "workspace:^",
     "aws-cdk-lib": "2.96.2",
     "constructs": "10.2.70"
   },

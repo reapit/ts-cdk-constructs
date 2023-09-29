@@ -1937,6 +1937,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@reapit-cdk/cloudfront-invalidation@workspace:^, @reapit-cdk/cloudfront-invalidation@workspace:packages/cloudfront-invalidation":
+  version: 0.0.0-use.local
+  resolution: "@reapit-cdk/cloudfront-invalidation@workspace:packages/cloudfront-invalidation"
+  dependencies:
+    "@reapit-cdk/common": "workspace:^"
+    "@reapit-cdk/eslint-config": "workspace:^"
+    "@reapit-cdk/tsup": "workspace:^"
+    "@reapit-cdk/version-package": "workspace:^"
+    aws-cdk-lib: 2.96.2
+    constructs: 10.2.70
+  languageName: unknown
+  linkType: soft
+
 "@reapit-cdk/common@workspace:^, @reapit-cdk/common@workspace:packages/common":
   version: 0.0.0-use.local
   resolution: "@reapit-cdk/common@workspace:packages/common"
@@ -1966,7 +1979,7 @@ __metadata:
     "@aws-sdk/client-dynamodb": 3.414.0
     "@aws-sdk/client-secrets-manager": 3.414.0
     "@aws-sdk/lib-dynamodb": 3.414.0
-    "@reapit-cdk/common": "workspace:^"
+    "@reapit-cdk/cloudfront-invalidation": "workspace:^"
     "@reapit-cdk/eslint-config": "workspace:^"
     "@reapit-cdk/tsup": "workspace:^"
     "@reapit-cdk/version-package": "workspace:^"

@@ -33,7 +33,7 @@ import { EdgeAPILambda } from './edge-api-lambda'
 import { Code, Runtime } from 'aws-cdk-lib/aws-lambda'
 import * as path from 'path'
 import * as crypto from 'crypto'
-import { InvalidateCloudfrontDistribution } from './invalidate-cloudfront-distribution'
+import { CloudfrontInvalidation } from '@reapit-cdk/cloudfront-invalidation'
 import { generateLambda } from './generate-lambda'
 
 interface ProductionEdgeAPIProps extends EdgeAPIProps {}
@@ -66,7 +66,7 @@ export class ProductionEdgeAPI extends Construct {
       certificate: props.certificate,
     })
     this.r53Target = RecordTarget.fromAlias(new CloudFrontTarget(distribution))
-    new InvalidateCloudfrontDistribution(this, 'invalidation', {
+    new CloudfrontInvalidation(this, 'invalidation', {
       distribution,
       items: this.invalidationPaths,
     })
