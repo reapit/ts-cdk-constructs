@@ -181,7 +181,7 @@ export class ProductionEdgeAPI extends Construct {
 
     return Code.fromInline(
       generateLambda('rewriter', [
-        ['var domains = []', 'var domains = ' + JSON.stringify(domains)],
+        ["var ['example.org']", 'var domains = ' + JSON.stringify(domains)],
         ['var doCookieRewrite = true', 'var doCookieRewrite = ' + doCookieRewrite],
         ['var doRedirectRewrite = true', 'var doRedirectRewrite = ' + doRedirectRewrite],
       ]),

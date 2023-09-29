@@ -12,7 +12,7 @@ const rewriteCookie = (header: string, host: string) => {
     .join('; ')
 }
 
-const domains: string[] = []
+const domains: string[] = ['example.org']
 const doCookieRewrite = true
 const doRedirectRewrite = true
 
