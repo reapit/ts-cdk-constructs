@@ -1970,6 +1970,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@reapit-cdk/edge-api-sdk@workspace:packages/edge-api-sdk":
+  version: 0.0.0-use.local
+  resolution: "@reapit-cdk/edge-api-sdk@workspace:packages/edge-api-sdk"
+  dependencies:
+    "@reapit-cdk/eslint-config": "workspace:^"
+    "@reapit-cdk/tsup": "workspace:^"
+    "@reapit-cdk/version-package": "workspace:^"
+    "@types/aws-lambda": ^8.10.121
+    aws-lambda: ^1.0.7
+  languageName: unknown
+  linkType: soft
+
 "@reapit-cdk/edge-api@workspace:packages/edge-api":
   version: 0.0.0-use.local
   resolution: "@reapit-cdk/edge-api@workspace:packages/edge-api"
