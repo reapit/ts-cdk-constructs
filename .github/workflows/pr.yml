@@ -30,11 +30,11 @@ jobs:
       - name: Lint
         run: yarn lint
 
-      - name: TypeCheck
-        run: yarn check
-
       - name: Build
         run:  yarn build
+
+      - name: TypeCheck
+        run: yarn check
 
       - name: Unit Test
         run:  yarn test
