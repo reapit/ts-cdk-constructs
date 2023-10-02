@@ -13,7 +13,7 @@
     "lint": "reapit-cdk-eslint",
     "test": "yarn run root:test $PWD",
     "prepack": "reapit-version-package && yarn build",
-    "integ": "integ-runner --directory ./integ-tests --parallel-regions eu-central-1 --update-on-failed"
+    "integ": "reapit-cdk-integ"
   },
   "publishConfig": {
     "main": "dist/index.js"
@@ -24,17 +24,14 @@
     "constructs": "10.2.70"
   },
   "devDependencies": {
-    "@aws-cdk/integ-runner": "^2.99.1-alpha.0",
-    "@aws-cdk/integ-tests-alpha": "^2.99.1-alpha.0",
     "@aws-sdk/client-ses": "3.414.0",
     "@reapit-cdk/custom-resource-wrapper": "workspace:^",
     "@reapit-cdk/eslint-config": "workspace:^",
+    "@reapit-cdk/integration-tests": "workspace:^",
     "@reapit-cdk/tsup": "workspace:^",
     "@reapit-cdk/version-package": "workspace:^",
     "aws-cdk": "2.99.1",
     "aws-lambda": "^1.0.7",
-    "aws-sdk-client-mock": "^3.0.0",
-    "cdk-nag": "^2.27.148",
-    "ts-node": "^10.9.1"
+    "aws-sdk-client-mock": "^3.0.0"
   }
 }

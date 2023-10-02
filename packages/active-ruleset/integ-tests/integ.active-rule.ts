@@ -1,13 +1,9 @@
-import { IntegTest, ExpectedResult } from '@aws-cdk/integ-tests-alpha'
-import { App, Aspects, Stack } from 'aws-cdk-lib'
-// import { AwsSolutionsChecks } from 'cdk-nag'
+import { IntegTest, ExpectedResult, App } from '@reapit-cdk/integration-tests'
+import { Stack } from 'aws-cdk-lib'
 
 import { ActiveRuleset } from '../dist'
 
-// CDK App for Integration Tests
 const app = new App()
-// Add the cdk-nag AwsSolutions Pack with extra verbose logging enabled.
-// Aspects.of(app).add(new AwsSolutionsChecks({ verbose: true }))
 
 const stackUnderTest = new Stack(app, 'active-ruleset-stack')
 const activeRuleset = new ActiveRuleset(stackUnderTest, 'active-ruleset')

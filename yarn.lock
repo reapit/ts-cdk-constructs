@@ -1969,20 +1969,17 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@reapit-cdk/active-ruleset@workspace:packages/active-ruleset"
   dependencies:
-    "@aws-cdk/integ-runner": ^2.99.1-alpha.0
-    "@aws-cdk/integ-tests-alpha": ^2.99.1-alpha.0
     "@aws-sdk/client-ses": 3.414.0
     "@reapit-cdk/custom-resource-wrapper": "workspace:^"
     "@reapit-cdk/eslint-config": "workspace:^"
+    "@reapit-cdk/integration-tests": "workspace:^"
     "@reapit-cdk/tsup": "workspace:^"
     "@reapit-cdk/version-package": "workspace:^"
     aws-cdk: 2.99.1
     aws-cdk-lib: 2.96.2
     aws-lambda: ^1.0.7
     aws-sdk-client-mock: ^3.0.0
-    cdk-nag: ^2.27.148
     constructs: 10.2.70
-    ts-node: ^10.9.1
   languageName: unknown
   linkType: soft
 
@@ -2108,6 +2105,24 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@reapit-cdk/integration-tests@workspace:^, @reapit-cdk/integration-tests@workspace:packages/integration-tests":
+  version: 0.0.0-use.local
+  resolution: "@reapit-cdk/integration-tests@workspace:packages/integration-tests"
+  dependencies:
+    "@aws-cdk/integ-runner": ^2.99.1-alpha.0
+    "@aws-cdk/integ-tests-alpha": ^2.99.1-alpha.0
+    "@reapit-cdk/eslint-config": "workspace:^"
+    "@reapit-cdk/tsup": "workspace:^"
+    aws-cdk: 2.99.1
+    aws-cdk-lib: 2.96.2
+    cdk-nag: ^2.27.148
+    constructs: 10.2.70
+    ts-node: ^10.9.1
+  bin:
+    reapit-cdk-integ: ./bin/index.js
+  languageName: unknown
+  linkType: soft
+
 "@reapit-cdk/replicated-key@workspace:packages/replicated-key":
   version: 0.0.0-use.local
   resolution: "@reapit-cdk/replicated-key@workspace:packages/replicated-key"
@@ -2209,10 +2224,10 @@ __metadata:
   resolution: "@reapit/ts-cdk-constructs@workspace:."
   dependencies:
     "@jest/globals": ^29.7.0
+    "@reapit-cdk/integration-tests": "workspace:^"
     "@types/jest": ^29.5.5
     aws-sdk-client-mock: ^3.0.0
     aws-sdk-client-mock-jest: ^3.0.0
-    eslint: ^8.49.0
     jest: ^29.7.0
     ts-jest: ^29.1.1
     typescript: ^5.2.2
