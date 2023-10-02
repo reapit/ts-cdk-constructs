@@ -64,28 +64,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-cdk/integ-runner@npm:^2.99.1-alpha.0":
-  version: 2.99.1-alpha.0
-  resolution: "@aws-cdk/integ-runner@npm:2.99.1-alpha.0"
+"@aws-cdk/integ-runner@npm:^2.96.2-alpha.0":
+  version: 2.96.2-alpha.0
+  resolution: "@aws-cdk/integ-runner@npm:2.96.2-alpha.0"
   dependencies:
-    aws-cdk: 2.99.1
+    aws-cdk: 2.96.2
     fsevents: 2.3.2
   dependenciesMeta:
     fsevents:
       optional: true
   bin:
     integ-runner: bin/integ-runner
-  checksum: 73effd08c4945ce7fdd610e94ef9fba2a0ba6ba568742e83d263a547adadddb031ed138608469cde8af9716b06cadd59620ffc4dccc6c1b4d2ebae22631b3440
+  checksum: 94688b4d941459ef22365f74ebfd447cb2fd63657c36970b399f431d2fa53b7298acece2efe1d3c7b98e62923d845ff79a343e9e0093319c59c508b6e4f70122
   languageName: node
   linkType: hard
 
-"@aws-cdk/integ-tests-alpha@npm:^2.99.1-alpha.0":
-  version: 2.99.1-alpha.0
-  resolution: "@aws-cdk/integ-tests-alpha@npm:2.99.1-alpha.0"
+"@aws-cdk/integ-tests-alpha@npm:^2.96.2-alpha.0":
+  version: 2.96.2-alpha.0
+  resolution: "@aws-cdk/integ-tests-alpha@npm:2.96.2-alpha.0"
   peerDependencies:
-    aws-cdk-lib: 2.99.1
+    aws-cdk-lib: 2.96.2
     constructs: ^10.0.0
-  checksum: 763d4183ff9471c678cbecd6f16f45ef2d29f42810798ac6c3fb7a7d29b4465f02afc4fa79b5b0d6c97ab99a25ceea7e9c6c6e3708401231d7dbaffacab7981f
+  checksum: 8f5425a1ecfb0ae270c0e9c7f12ee1be2acaebc27fe024cf9cc17298aeab444352b6f4e0141df3a02f07679fe3189fc7341b905ba5b3df12e3351fa14e066c1f
   languageName: node
   linkType: hard
 
@@ -1975,7 +1975,6 @@ __metadata:
     "@reapit-cdk/integration-tests": "workspace:^"
     "@reapit-cdk/tsup": "workspace:^"
     "@reapit-cdk/version-package": "workspace:^"
-    aws-cdk: 2.99.1
     aws-cdk-lib: 2.96.2
     aws-lambda: ^1.0.7
     aws-sdk-client-mock: ^3.0.0
@@ -2109,11 +2108,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@reapit-cdk/integration-tests@workspace:packages/integration-tests"
   dependencies:
-    "@aws-cdk/integ-runner": ^2.99.1-alpha.0
-    "@aws-cdk/integ-tests-alpha": ^2.99.1-alpha.0
+    "@aws-cdk/integ-runner": ^2.96.2-alpha.0
+    "@aws-cdk/integ-tests-alpha": ^2.96.2-alpha.0
     "@reapit-cdk/eslint-config": "workspace:^"
     "@reapit-cdk/tsup": "workspace:^"
-    aws-cdk: 2.99.1
+    aws-cdk: 2.96.2
     aws-cdk-lib: 2.96.2
     cdk-nag: ^2.27.148
     constructs: 10.2.70
@@ -3362,9 +3361,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"aws-cdk@npm:2.99.1":
-  version: 2.99.1
-  resolution: "aws-cdk@npm:2.99.1"
+"aws-cdk@npm:2.96.2":
+  version: 2.96.2
+  resolution: "aws-cdk@npm:2.96.2"
   dependencies:
     fsevents: 2.3.2
   dependenciesMeta:
@@ -3372,7 +3371,7 @@ __metadata:
       optional: true
   bin:
     cdk: bin/cdk
-  checksum: 339d8bf4dded682b57b41ffb9c8b458e807d3c1cacc63c70edb74c1197c72cd4ddb41012f847449996b88a544d9157052c6f8fc2b3636170492d20efc1f1c9d3
+  checksum: b17bf2dfc80c205b3c09a90dbb358ebb21152c312d7816e615cf0e63e371fbc5b3d8251e6bd55d4e9434e3f524c2f88091cf729fc415bd9fe8765696da79c99b
   languageName: node
   linkType: hard
 
