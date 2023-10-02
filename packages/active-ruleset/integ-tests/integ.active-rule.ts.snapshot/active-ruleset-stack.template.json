@@ -65,7 +65,7 @@
      "S3Bucket": {
       "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
      },
-     "S3Key": "38da9928a18b281fadabdc3073b123988eb28ba00e2f6ba8658738c383db8b40.zip"
+     "S3Key": "168239b5805faedf9e5efd61a5583f56953a8d26f81f6999f972730a212e4f19.zip"
     },
     "Handler": "lambda.onEvent",
     "Role": {
@@ -198,7 +198,8 @@
       "activerulesetproviderframeworkonEvent585AFC28",
       "Arn"
      ]
-    }
+    },
+    "test": 1
    },
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete"

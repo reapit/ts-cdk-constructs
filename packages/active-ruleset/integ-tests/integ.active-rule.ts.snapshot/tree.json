@@ -154,7 +154,7 @@
                           "s3Bucket": {
                             "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
                           },
-                          "s3Key": "38da9928a18b281fadabdc3073b123988eb28ba00e2f6ba8658738c383db8b40.zip"
+                          "s3Key": "168239b5805faedf9e5efd61a5583f56953a8d26f81f6999f972730a212e4f19.zip"
                         },
                         "handler": "lambda.onEvent",
                         "role": {
@@ -491,7 +491,7 @@
                         },
                         "constructInfo": {
                           "fqn": "@aws-cdk/integ-tests-alpha.AssertionsProvider",
-                          "version": "2.99.1-alpha.0"
+                          "version": "2.96.2-alpha.0"
                         }
                       },
                       "Default": {
@@ -523,7 +523,7 @@
                     },
                     "constructInfo": {
                       "fqn": "@aws-cdk/integ-tests-alpha.AwsApiCall",
-                      "version": "2.99.1-alpha.0"
+                      "version": "2.96.2-alpha.0"
                     }
                   },
                   "SingletonFunction1488541a7b23466481b69b4408076b81": {
@@ -585,13 +585,13 @@
             },
             "constructInfo": {
               "fqn": "@aws-cdk/integ-tests-alpha.IntegTestCase",
-              "version": "2.99.1-alpha.0"
+              "version": "2.96.2-alpha.0"
             }
           }
         },
         "constructInfo": {
           "fqn": "@aws-cdk/integ-tests-alpha.IntegTest",
-          "version": "2.99.1-alpha.0"
+          "version": "2.96.2-alpha.0"
         }
       },
       "Tree": {

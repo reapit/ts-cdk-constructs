@@ -87,6 +87,13 @@ var deleteIfEmpty = async () => {
     console.log("active ruleset contains rules, skipping deletion");
     return;
   }
+  console.log(`deactivating ruleset "${activeName}"`);
+  await client.send(
+    new import_client_ses.SetActiveReceiptRuleSetCommand({
+      RuleSetName: void 0
+    })
+  );
+  console.log(`deleting ruleset "${activeName}"`);
   await client.send(
     new import_client_ses.DeleteReceiptRuleSetCommand({
       RuleSetName: activeName
