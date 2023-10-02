@@ -5,11 +5,7 @@ import { ActiveRuleset } from '../dist'
 
 const app = new App()
 
-const stackUnderTest = new Stack(app, 'active-ruleset-stack', {
-  env: {
-    account: process.env.AWS_ACCOUNT,
-  },
-})
+const stackUnderTest = new Stack(app, 'active-ruleset-stack')
 const activeRuleset = new ActiveRuleset(stackUnderTest, 'active-ruleset')
 
 const integ = new IntegTest(app, 'ActiveRulesetTest', {
