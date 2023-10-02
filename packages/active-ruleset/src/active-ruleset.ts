@@ -25,7 +25,9 @@ export class ActiveRuleset extends Construct {
 
     const cr = new CustomResource(this, 'resource', {
       serviceToken: provider.serviceToken,
-      properties: {},
+      properties: {
+        test: 1,
+      },
     })
 
     const name = cr.getAttString('ruleSetName')

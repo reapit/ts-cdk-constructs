@@ -37,3 +37,6 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
           AWS_ACCOUNT: ${{secrets.AWS_ACCOUNT}}
 
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Apply cdk integration test changes
