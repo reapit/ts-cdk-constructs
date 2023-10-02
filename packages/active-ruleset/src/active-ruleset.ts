@@ -37,6 +37,7 @@ export class ActiveRuleset extends Construct {
           'ses:CreateReceiptRuleSet',
           'ses:SetActiveReceiptRuleSet',
           'ses:DescribeReceiptRuleSet',
+          'ses:DeleteReceiptRuleSet',
         ],
         resources: ['*'],
       }),

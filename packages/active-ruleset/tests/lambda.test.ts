@@ -7,6 +7,7 @@ import {
   SetActiveReceiptRuleSetCommand,
   DescribeReceiptRuleSetCommand,
   RuleSetDoesNotExistException,
+  DeleteReceiptRuleSetCommand,
 } from '@aws-sdk/client-ses'
 
 import { onEvent } from '../src/lambda/lambda'
@@ -39,17 +40,17 @@ describe('ensure-active-ruleset', () => {
     sesMock.on(DescribeReceiptRuleSetCommand).rejects(
       new RuleSetDoesNotExistException({
         message: 'doesnt exist',
-        Name: 'default',
+        Name: 'rpt-cdk-active-ruleset',
         $metadata: {},
       }),
     )
     const { Data } = await onEvent(genEvent())
     expect(sesMock).toHaveReceivedCommand(DescribeReceiptRuleSetCommand)
     expect(sesMock).toHaveReceivedCommandWith(CreateReceiptRuleSetCommand, {
-      RuleSetName: 'default',
+      RuleSetName: 'rpt-cdk-active-ruleset',
     })
     expect(Data).toBeDefined()
-    expect(Data?.ruleSetName).toBe('default')
+    expect(Data?.ruleSetName).toBe('rpt-cdk-active-ruleset')
   })
 
   it('should activate the created ruleset if it doesnt exist', async () => {
@@ -59,16 +60,16 @@ describe('ensure-active-ruleset', () => {
     sesMock.on(DescribeReceiptRuleSetCommand).rejects(
       new RuleSetDoesNotExistException({
         message: 'doesnt exist',
-        Name: 'default',
+        Name: 'rpt-cdk-active-ruleset',
         $metadata: {},
       }),
     )
     const { Data } = await onEvent(genEvent())
     expect(sesMock).toHaveReceivedCommandWith(SetActiveReceiptRuleSetCommand, {
-      RuleSetName: 'default',
+      RuleSetName: 'rpt-cdk-active-ruleset',
     })
     expect(Data).toBeDefined()
-    expect(Data?.ruleSetName).toBe('default')
+    expect(Data?.ruleSetName).toBe('rpt-cdk-active-ruleset')
   })
   it('should activate the "default" ruleset if it exists', async () => {
     sesMock.on(DescribeActiveReceiptRuleSetCommand).resolves({})
@@ -76,16 +77,16 @@ describe('ensure-active-ruleset', () => {
     sesMock.on(SetActiveReceiptRuleSetCommand).resolves({})
     sesMock.on(DescribeReceiptRuleSetCommand).resolves({
       Metadata: {
-        Name: 'default',
+        Name: 'rpt-cdk-active-ruleset',
       },
     })
     const { Data } = await onEvent(genEvent())
     expect(sesMock).toHaveReceivedCommandWith(SetActiveReceiptRuleSetCommand, {
-      RuleSetName: 'default',
+      RuleSetName: 'rpt-cdk-active-ruleset',
     })
     expect(sesMock).not.toHaveReceivedCommand(CreateReceiptRuleSetCommand)
     expect(Data).toBeDefined()
-    expect(Data?.ruleSetName).toBe('default')
+    expect(Data?.ruleSetName).toBe('rpt-cdk-active-ruleset')
   })
   it('should return the active ruleset if it exists', async () => {
     sesMock.on(DescribeActiveReceiptRuleSetCommand).resolves({
@@ -117,19 +118,61 @@ describe('ensure-active-ruleset', () => {
     sesMock.on(DescribeReceiptRuleSetCommand).rejects(
       new RuleSetDoesNotExistException({
         message: 'doesnt exist',
-        Name: 'default',
+        Name: 'rpt-cdk-active-ruleset',
         $metadata: {},
       }),
     )
     const { Data } = await onEvent(genEvent('Update'))
     expect(sesMock).toHaveReceivedCommand(DescribeReceiptRuleSetCommand)
     expect(sesMock).toHaveReceivedCommandWith(CreateReceiptRuleSetCommand, {
-      RuleSetName: 'default',
+      RuleSetName: 'rpt-cdk-active-ruleset',
     })
     expect(sesMock).toHaveReceivedCommandWith(SetActiveReceiptRuleSetCommand, {
-      RuleSetName: 'default',
+      RuleSetName: 'rpt-cdk-active-ruleset',
     })
     expect(Data).toBeDefined()
-    expect(Data?.ruleSetName).toBe('default')
+    expect(Data?.ruleSetName).toBe('rpt-cdk-active-ruleset')
+  })
+  it('should delete the active ruleset if we created it and its empty', async () => {
+    sesMock.on(DescribeActiveReceiptRuleSetCommand).resolves({
+      Metadata: {
+        Name: 'rpt-cdk-active-ruleset',
+      },
+    })
+    await onEvent(genEvent('Delete'))
+    expect(sesMock).toHaveReceivedCommand(DescribeActiveReceiptRuleSetCommand)
+    expect(sesMock).toHaveReceivedCommandWith(DeleteReceiptRuleSetCommand, {
+      RuleSetName: 'rpt-cdk-active-ruleset',
+    })
+  })
+
+  it('should not delete the active ruleset it its not empty', async () => {
+    sesMock.on(DescribeActiveReceiptRuleSetCommand).resolves({
+      Metadata: {
+        Name: 'rpt-cdk-active-ruleset',
+      },
+      Rules: [
+        {
+          Name: 'asdf',
+        },
+      ],
+    })
+    await onEvent(genEvent('Delete'))
+    expect(sesMock).not.toHaveReceivedCommandWith(DeleteReceiptRuleSetCommand, {
+      RuleSetName: 'rpt-cdk-active-ruleset',
+    })
+  })
+
+  it('should not delete the active ruleset if its not ours', async () => {
+    sesMock.on(DescribeActiveReceiptRuleSetCommand).resolves({
+      Metadata: {
+        Name: 'asdf',
+      },
+      Rules: [],
+    })
+    await onEvent(genEvent('Delete'))
+    expect(sesMock).not.toHaveReceivedCommandWith(DeleteReceiptRuleSetCommand, {
+      RuleSetName: 'asdf',
+    })
   })
 })

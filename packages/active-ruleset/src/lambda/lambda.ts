@@ -1,4 +1,4 @@
-import { ensureActiveRuleSet } from './ensure-active-ruleset'
+import { ensureActiveRuleSet, deleteIfEmpty } from './ensure-active-ruleset'
 import { customResourceWrapper } from '@reapit-cdk/custom-resource-wrapper'
 
 const handler = async () => {
@@ -11,4 +11,5 @@ const handler = async () => {
 export const onEvent = customResourceWrapper({
   onCreate: handler,
   onUpdate: handler,
+  onDelete: deleteIfEmpty,
 })

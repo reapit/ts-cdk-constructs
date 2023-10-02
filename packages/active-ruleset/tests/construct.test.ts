@@ -37,6 +37,7 @@ describe('active-ruleset', () => {
               'ses:CreateReceiptRuleSet',
               'ses:SetActiveReceiptRuleSet',
               'ses:DescribeReceiptRuleSet',
+              'ses:DeleteReceiptRuleSet',
             ],
             Resource: '*',
           },
