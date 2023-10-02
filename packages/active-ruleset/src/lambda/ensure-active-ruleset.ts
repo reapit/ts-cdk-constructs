@@ -76,6 +76,14 @@ export const deleteIfEmpty = async () => {
     console.log('active ruleset contains rules, skipping deletion')
     return
   }
+
+  console.log(`deactivating ruleset "${activeName}"`)
+  await client.send(
+    new SetActiveReceiptRuleSetCommand({
+      RuleSetName: undefined,
+    }),
+  )
+  console.log(`deleting ruleset "${activeName}"`)
   await client.send(
     new DeleteReceiptRuleSetCommand({
       RuleSetName: activeName,
