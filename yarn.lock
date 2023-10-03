@@ -2212,8 +2212,10 @@ __metadata:
     "@aws-sdk/client-sts": 3.414.0
     "@reapit-cdk/custom-resource-wrapper": "workspace:^"
     "@reapit-cdk/eslint-config": "workspace:^"
+    "@reapit-cdk/integration-tests": "workspace:^"
     "@reapit-cdk/tsup": "workspace:^"
     "@reapit-cdk/version-package": "workspace:^"
+    aws-cdk: 2.96.2
     aws-cdk-lib: 2.96.2
     aws-lambda: ^1.0.7
     aws-sdk-client-mock: ^3.0.0
