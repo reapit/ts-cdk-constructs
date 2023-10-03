@@ -25,7 +25,9 @@ export class ActiveRuleset extends Construct {
 
     const cr = new CustomResource(this, 'resource', {
       serviceToken: provider.serviceToken,
-      properties: {},
+      properties: {
+        test: 1,
+      },
     })
 
     const name = cr.getAttString('ruleSetName')
@@ -37,6 +39,7 @@ export class ActiveRuleset extends Construct {
           'ses:CreateReceiptRuleSet',
           'ses:SetActiveReceiptRuleSet',
           'ses:DescribeReceiptRuleSet',
+          'ses:DeleteReceiptRuleSet',
         ],
         resources: ['*'],
       }),

@@ -1,0 +1,178 @@
+{
+  "version": "34.0.0",
+  "artifacts": {
+    "active-ruleset-stack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "active-ruleset-stack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "active-ruleset-stack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "active-ruleset-stack.template.json",
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/1604ed67c84f48288fc3eccddc97f779b17d99778de8d86e638250d63cb38dac.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "active-ruleset-stack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "active-ruleset-stack.assets"
+      ],
+      "metadata": {
+        "/active-ruleset-stack/active-ruleset/lambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "activerulesetlambdaServiceRole7474A4F6"
+          }
+        ],
+        "/active-ruleset-stack/active-ruleset/lambda/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "activerulesetlambdaServiceRoleDefaultPolicyBDADC6F0"
+          }
+        ],
+        "/active-ruleset-stack/active-ruleset/lambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "activerulesetlambda1F6A4182"
+          }
+        ],
+        "/active-ruleset-stack/active-ruleset/provider/framework-onEvent/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "activerulesetproviderframeworkonEventServiceRoleC29CF607"
+          }
+        ],
+        "/active-ruleset-stack/active-ruleset/provider/framework-onEvent/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "activerulesetproviderframeworkonEventServiceRoleDefaultPolicy9B45AADC"
+          }
+        ],
+        "/active-ruleset-stack/active-ruleset/provider/framework-onEvent/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "activerulesetproviderframeworkonEvent585AFC28"
+          }
+        ],
+        "/active-ruleset-stack/active-ruleset/resource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "activerulesetresourceB9A9E74D"
+          }
+        ],
+        "/active-ruleset-stack/Exports/Output{\"Fn::GetAtt\":[\"activerulesetresourceB9A9E74D\",\"ruleSetName\"]}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputFnGetAttactiverulesetresourceB9A9E74DruleSetNameED924B47"
+          }
+        ],
+        "/active-ruleset-stack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/active-ruleset-stack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "active-ruleset-stack"
+    },
+    "ActiveRulesetTestDefaultTestDeployAssertF938C9E6.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "ActiveRulesetTestDefaultTestDeployAssertF938C9E6.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "ActiveRulesetTestDefaultTestDeployAssertF938C9E6": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "ActiveRulesetTestDefaultTestDeployAssertF938C9E6.template.json",
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/2114b86e95507af29906e0b71763124189f2f543aec244f1b5c89b6639fcaf6d.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "ActiveRulesetTestDefaultTestDeployAssertF938C9E6.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "active-ruleset-stack",
+        "ActiveRulesetTestDefaultTestDeployAssertF938C9E6.assets"
+      ],
+      "metadata": {
+        "/ActiveRulesetTest/DefaultTest/DeployAssert/AwsApiCallSESDescribeActiveReceiptRuleSet/Default/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AwsApiCallSESDescribeActiveReceiptRuleSet"
+          }
+        ],
+        "/ActiveRulesetTest/DefaultTest/DeployAssert/AwsApiCallSESDescribeActiveReceiptRuleSet/AssertionResults": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AssertionResultsAwsApiCallSESDescribeActiveReceiptRuleSet"
+          }
+        ],
+        "/ActiveRulesetTest/DefaultTest/DeployAssert/SingletonFunction1488541a7b23466481b69b4408076b81/Role": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SingletonFunction1488541a7b23466481b69b4408076b81Role37ABCE73"
+          }
+        ],
+        "/ActiveRulesetTest/DefaultTest/DeployAssert/SingletonFunction1488541a7b23466481b69b4408076b81/Handler": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SingletonFunction1488541a7b23466481b69b4408076b81HandlerCD40AE9F"
+          }
+        ],
+        "/ActiveRulesetTest/DefaultTest/DeployAssert/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/ActiveRulesetTest/DefaultTest/DeployAssert/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "ActiveRulesetTest/DefaultTest/DeployAssert"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}

@@ -5,6 +5,7 @@ import {
   SetActiveReceiptRuleSetCommand,
   DescribeReceiptRuleSetCommand,
   RuleSetDoesNotExistException,
+  DeleteReceiptRuleSetCommand,
 } from '@aws-sdk/client-ses'
 
 const client = new SESClient({})
@@ -39,6 +40,8 @@ const getActiveRuleSet = async () => {
   return activeRuleSet.Metadata?.Name
 }
 
+const defaultName = 'rpt-cdk-active-ruleset'
+
 const activateRuleSet = async (name: string) => {
   console.log('activating ruleset', name)
   await client.send(
@@ -56,8 +59,35 @@ export const ensureActiveRuleSet = async () => {
     return existing
   }
 
-  const name = 'default'
-  await ensureRuleSet(name)
-  await activateRuleSet(name)
-  return name
+  await ensureRuleSet(defaultName)
+  await activateRuleSet(defaultName)
+  return defaultName
+}
+
+export const deleteIfEmpty = async () => {
+  const activeRuleSet = await client.send(new DescribeActiveReceiptRuleSetCommand({}))
+  const activeName = activeRuleSet.Metadata?.Name
+  console.log('found active ruleset', activeName)
+  if (activeName !== defaultName) {
+    console.log('active ruleset is not one we created, skipping deletion')
+    return
+  }
+  if (activeRuleSet.Rules?.length) {
+    console.log('active ruleset contains rules, skipping deletion')
+    return
+  }
+
+  console.log(`deactivating ruleset "${activeName}"`)
+  await client.send(
+    new SetActiveReceiptRuleSetCommand({
+      RuleSetName: undefined,
+    }),
+  )
+  console.log(`deleting ruleset "${activeName}"`)
+  await client.send(
+    new DeleteReceiptRuleSetCommand({
+      RuleSetName: activeName,
+    }),
+  )
+  console.log(`deleted ruleset "${activeName}"`)
 }
