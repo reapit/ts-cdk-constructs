@@ -7,7 +7,7 @@ const app = new App()
 
 const stack = new Stack(app, 'certificate-test-stack')
 
-const parentDomain = process.env.PARENT_DOMAIN ?? 'integ.dev.paas.reapit.cloud'
+const parentDomain = process.env.INTEG_DOMAIN ?? 'integ.dev.paas.reapit.cloud'
 
 const cert = new WildcardCertificate(stack, 'certificate', {
   domains: [`wildcard-test.${parentDomain}`],
