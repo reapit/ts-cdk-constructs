@@ -1,5 +1,4 @@
-import { IntegTest, ExpectedResult, App } from '@reapit-cdk/integration-tests'
-import { Stack } from 'aws-cdk-lib'
+import { IntegTest, ExpectedResult, App, Stack } from '@reapit-cdk/integration-tests'
 
 import { WildcardCertificate } from '../dist'
 

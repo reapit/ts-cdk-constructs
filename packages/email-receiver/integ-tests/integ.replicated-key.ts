@@ -1,5 +1,5 @@
-import { IntegTest, ExpectedResult, App } from '@reapit-cdk/integration-tests'
-import { Duration, Stack } from 'aws-cdk-lib'
+import { IntegTest, ExpectedResult, App, Stack } from '@reapit-cdk/integration-tests'
+import { Duration } from 'aws-cdk-lib'
 import { randomUUID } from 'crypto'
 
 import { EmailReceiver } from '../dist'
