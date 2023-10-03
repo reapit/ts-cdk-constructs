@@ -12,7 +12,8 @@
     "check": "yarn run root:check -p $PWD",
     "lint": "reapit-cdk-eslint",
     "test": "yarn run root:test $PWD",
-    "prepack": "reapit-version-package && yarn build"
+    "prepack": "reapit-version-package && yarn build",
+    "integ": "reapit-cdk-integ"
   },
   "publishConfig": {
     "main": "dist/index.js"
@@ -25,7 +26,9 @@
   },
   "devDependencies": {
     "@reapit-cdk/eslint-config": "workspace:^",
+    "@reapit-cdk/integration-tests": "workspace:^",
     "@reapit-cdk/tsup": "workspace:^",
-    "@reapit-cdk/version-package": "workspace:^"
+    "@reapit-cdk/version-package": "workspace:^",
+    "aws-cdk": "2.96.2"
   }
 }
