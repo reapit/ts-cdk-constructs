@@ -1,4 +1,4 @@
-import { ensureWildcardCertificate } from './ensure-wildcard-certificate'
+import { ensureWildcardCertificate, deleteIfUnused } from './ensure-wildcard-certificate'
 import { customResourceWrapper } from '@reapit-cdk/custom-resource-wrapper'
 
 const arrayHasChanged = (arr: string[], newArr: string[]): boolean => {
@@ -31,6 +31,11 @@ export const onEvent = customResourceWrapper({
   onUpdate: (props, oldProps) => {
     if (objectHasChanged(oldProps, props)) {
       return handler(props)
+    }
+  },
+  onDelete: async ({ physicalResourceId }) => {
+    if (physicalResourceId) {
+      await deleteIfUnused(physicalResourceId)
     }
   },
 })
