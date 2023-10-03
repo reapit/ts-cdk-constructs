@@ -25,6 +25,7 @@ const integ = new IntegTest(app, 'ReplicatedSecretTest', {
       },
     },
   },
+  diffAssets: true,
   regions: [stack.region],
 })
 

@@ -22,6 +22,7 @@ const integ = new IntegTest(app, 'UserpoolDomainTest', {
       },
     },
   },
+  diffAssets: true,
   regions: [stack.region],
 })
 

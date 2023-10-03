@@ -22,6 +22,7 @@ const integ = new IntegTest(app, 'WildcardCertificateTest', {
       },
     },
   },
+  diffAssets: true,
   regions: [stack.region],
 })
 
