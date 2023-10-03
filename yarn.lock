@@ -2183,6 +2183,7 @@ __metadata:
     "@aws-sdk/client-cognito-identity-provider": 3.414.0
     "@reapit-cdk/custom-resource-wrapper": "workspace:^"
     "@reapit-cdk/eslint-config": "workspace:^"
+    "@reapit-cdk/integration-tests": "workspace:^"
     "@reapit-cdk/tsup": "workspace:^"
     "@reapit-cdk/version-package": "workspace:^"
     aws-cdk-lib: 2.96.2
