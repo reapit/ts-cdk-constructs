@@ -2041,8 +2041,10 @@ __metadata:
     "@aws-sdk/lib-dynamodb": 3.414.0
     "@reapit-cdk/cloudfront-invalidation": "workspace:^"
     "@reapit-cdk/eslint-config": "workspace:^"
+    "@reapit-cdk/integration-tests": "workspace:^"
     "@reapit-cdk/tsup": "workspace:^"
     "@reapit-cdk/version-package": "workspace:^"
+    aws-cdk: 2.96.2
     aws-cdk-lib: 2.96.2
     aws-lambda: ^1.0.7
     aws-sdk-client-mock: ^3.0.0
@@ -2080,9 +2082,11 @@ __metadata:
     "@reapit-cdk/common": "workspace:^"
     "@reapit-cdk/email-receiver-types": "workspace:^"
     "@reapit-cdk/eslint-config": "workspace:^"
+    "@reapit-cdk/integration-tests": "workspace:^"
     "@reapit-cdk/tsup": "workspace:^"
     "@reapit-cdk/version-package": "workspace:^"
     "@types/mailparser": ^3.4.0
+    aws-cdk: 2.96.2
     aws-cdk-lib: 2.96.2
     aws-lambda: ^1.0.7
     aws-sdk-client-mock: ^3.0.0
@@ -2137,6 +2141,7 @@ __metadata:
     "@reapit-cdk/replicated-key": "workspace:^"
     "@reapit-cdk/tsup": "workspace:^"
     "@reapit-cdk/version-package": "workspace:^"
+    aws-cdk: 2.96.2
     aws-cdk-lib: 2.96.2
     aws-lambda: ^1.0.7
     aws-sdk-client-mock: ^3.0.0
