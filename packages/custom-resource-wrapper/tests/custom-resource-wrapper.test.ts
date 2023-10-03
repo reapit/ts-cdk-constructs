@@ -71,6 +71,7 @@ describe('custom-resource-wrapper', () => {
         serviceToken: 'asdf',
         arrProperty: [],
         requestId: '1q23',
+        physicalResourceId: 'asdf',
       },
       {
         property: 'old-value',
@@ -112,6 +113,7 @@ describe('custom-resource-wrapper', () => {
       serviceToken: 'asdf',
       arrProperty: [],
       requestId: '1q23',
+      physicalResourceId: 'asdf',
     })
     expect(createHandler).not.toBeCalled()
     expect(updateHandler).not.toBeCalled()

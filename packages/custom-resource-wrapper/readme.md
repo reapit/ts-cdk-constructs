@@ -21,9 +21,11 @@ export const onEvent = customResourceWrapper({
     const { aDataAttribute } = await createThing(aProperty)
     return {
       aDataAttribute,
+      physicalResourceId: '123', // optional
     }
   },
-  onUpdate: async ({ aProperty }, oldProps) => {
+  onUpdate: async ({ aProperty, physicalResourceId }, oldProps) => {
+    console.log(physicalResourceId) // '123'
     if (aProperty !== oldProps.aProperty) {
       await deleteThing(oldProps.aProperty)
       const { aDataAttribute } = await createThing(aProperty)
@@ -32,7 +34,8 @@ export const onEvent = customResourceWrapper({
       }
     }
   },
-  onDelete: async ({ aProperty }) => {
+  onDelete: async ({ aProperty, physicalResourceId }) => {
+    console.log(physicalResourceId) // '123'
     await deleteThing(aProperty)
   },
 })
