@@ -2,7 +2,7 @@ import { SESMail, SESReceipt, SNSEvent } from 'aws-lambda'
 import { simpleParser } from 'mailparser'
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
 import { PutCommand, DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb'
-import type { EmailMessage } from '../../../../libs/email-receiver-types/src'
+import type { EmailMessage } from '@reapit-cdk/email-receiver-types'
 
 type SESMessage = {
   mail: SESMail

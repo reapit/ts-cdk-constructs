@@ -1,5 +1,5 @@
 import { ensureUserPoolDomain } from './ensure-domain'
-import { customResourceWrapper } from '../../../../libs/custom-resource-wrapper/src'
+import { customResourceWrapper } from '@reapit-cdk/custom-resource-wrapper'
 
 export const onEvent = customResourceWrapper({
   onCreate: async ({ userPoolId }) => {

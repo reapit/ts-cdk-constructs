@@ -2,7 +2,7 @@ import { Arn, ArnFormat, CustomResource, Duration, PhysicalName, Stack, Token } 
 import { ISecret, Secret } from 'aws-cdk-lib/aws-secretsmanager'
 import { Construct, IDependable } from 'constructs'
 import { ReplicatedKey } from '@reapit-cdk/replicated-key'
-import { AWSRegion, stringIsAWSRegion } from '../../../libs/common/src'
+import { AWSRegion, stringIsAWSRegion } from '@reapit-cdk/common'
 import { Grant, IGrantable, PolicyStatement } from 'aws-cdk-lib/aws-iam'
 import { Provider } from 'aws-cdk-lib/custom-resources'
 import { Code, Function, Runtime } from 'aws-cdk-lib/aws-lambda'

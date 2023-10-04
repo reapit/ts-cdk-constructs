@@ -1,5 +1,5 @@
 import { ensureActiveRuleSet, deleteIfEmpty } from './ensure-active-ruleset'
-import { customResourceWrapper } from '../../../../libs/custom-resource-wrapper/src'
+import { customResourceWrapper } from '@reapit-cdk/custom-resource-wrapper'
 
 const handler = async () => {
   const ruleSetName = await ensureActiveRuleSet()
