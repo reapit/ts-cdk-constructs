@@ -9,14 +9,25 @@ import { Code, Runtime } from 'aws-cdk-lib/aws-lambda'
 export const edgeAPITest = (devMode?: boolean) => {
   const app = new App()
 
+  const env = devMode
+    ? undefined
+    : {
+        account: process.env.AWS_ACCOUNT,
+        region: 'us-east-1',
+      }
+
   if (!process.env.INTEG_DOMAIN) {
     throw new Error('process.env.INTEG_DOMAIN required')
   }
   const parentDomainName = process.env.INTEG_DOMAIN ?? ''
+  if (!process.env.INTEG_ZONE_ID) {
+    throw new Error('process.env.INTEG_ZONE_ID required')
+  }
+  const stack = new Stack(app, 'edge-api-test-stack' + (devMode ? '-dev' : ''), { env })
 
-  const stack = new Stack(app, 'edge-api-test-stack' + (devMode ? '-dev' : ''))
-  const zone = HostedZone.fromLookup(stack, 'zone', {
-    domainName: parentDomainName,
+  const zone = HostedZone.fromHostedZoneAttributes(stack, 'zone', {
+    hostedZoneId: process.env.INTEG_ZONE_ID,
+    zoneName: parentDomainName,
   })
 
   const domainName = `edge-api-test-${devMode ? 'dev' : 'prod'}.${parentDomainName}`
@@ -80,6 +91,9 @@ export const edgeAPITest = (devMode?: boolean) => {
         },
       },
     },
+    assertionStack: new Stack(app, 'EdgeAPITestAssertions', {
+      env,
+    }),
     diffAssets: true,
     regions: [stack.region],
   })

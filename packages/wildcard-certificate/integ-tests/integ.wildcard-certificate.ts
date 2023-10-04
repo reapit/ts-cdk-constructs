@@ -23,6 +23,9 @@ const integ = new IntegTest(app, 'WildcardCertificateTest', {
   },
   diffAssets: true,
   regions: [stack.region],
+
+  enableLookups: true,
+  stackUpdateWorkflow: false,
 })
 
 const assertion = integ.assertions

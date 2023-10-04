@@ -27,7 +27,7 @@ export class IntegTest extends integ.IntegTest {
   constructor(app: App, id: string, props: integ.IntegTestProps) {
     super(app, id, {
       ...props,
-      assertionStack: new Stack(app, id + 'Assertions'),
+      assertionStack: props.assertionStack ?? new Stack(app, id + 'Assertions'),
     })
   }
 }
