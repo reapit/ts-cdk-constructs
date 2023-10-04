@@ -14,7 +14,7 @@ export const edgeAPITest = (devMode?: boolean) => {
   }
   const parentDomainName = process.env.INTEG_DOMAIN ?? ''
 
-  const stack = new Stack(app, 'edge-api-test-stack' + devMode ? '-dev' : '')
+  const stack = new Stack(app, 'edge-api-test-stack' + (devMode ? '-dev' : ''))
   const zone = HostedZone.fromLookup(stack, 'zone', {
     domainName: parentDomainName,
   })
