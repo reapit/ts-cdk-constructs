@@ -1,12 +1,17 @@
 {
   "name": "@reapit-cdk/generate-readme",
   "devDependencies": {
-    "@reapit-cdk/eslint-config": "workspace:^"
+    "@reapit-cdk/eslint-config": "workspace:^",
+    "ts-node": "^10.9.1"
   },
   "scripts": {
     "lint": "reapit-cdk-eslint"
   },
   "bin": {
-    "reapit-cdk-generate-readme": "./src/index.js"
+    "reapit-cdk-generate-readme": "./bin/index.js"
+  },
+  "dependencies": {
+    "badge-maker": "^3.3.1",
+    "fast-xml-parser": "^4.3.2"
   }
 }

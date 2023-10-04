@@ -1996,17 +1996,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@reapit-cdk/common@workspace:^, @reapit-cdk/common@workspace:packages/libs/common":
+"@reapit-cdk/common@workspace:^, @reapit-cdk/common@workspace:packages/modules/common":
   version: 0.0.0-use.local
-  resolution: "@reapit-cdk/common@workspace:packages/libs/common"
+  resolution: "@reapit-cdk/common@workspace:packages/modules/common"
   dependencies:
     "@reapit-cdk/eslint-config": "workspace:^"
   languageName: unknown
   linkType: soft
 
-"@reapit-cdk/custom-resource-wrapper@workspace:^, @reapit-cdk/custom-resource-wrapper@workspace:packages/libs/custom-resource-wrapper":
+"@reapit-cdk/custom-resource-wrapper@workspace:^, @reapit-cdk/custom-resource-wrapper@workspace:packages/modules/custom-resource-wrapper":
   version: 0.0.0-use.local
-  resolution: "@reapit-cdk/custom-resource-wrapper@workspace:packages/libs/custom-resource-wrapper"
+  resolution: "@reapit-cdk/custom-resource-wrapper@workspace:packages/modules/custom-resource-wrapper"
   dependencies:
     "@reapit-cdk/eslint-config": "workspace:^"
     "@reapit-cdk/tsup": "workspace:^"
@@ -2016,9 +2016,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@reapit-cdk/edge-api-sdk@workspace:packages/libs/edge-api-sdk":
+"@reapit-cdk/edge-api-sdk@workspace:packages/modules/edge-api-sdk":
   version: 0.0.0-use.local
-  resolution: "@reapit-cdk/edge-api-sdk@workspace:packages/libs/edge-api-sdk"
+  resolution: "@reapit-cdk/edge-api-sdk@workspace:packages/modules/edge-api-sdk"
   dependencies:
     "@reapit-cdk/eslint-config": "workspace:^"
     "@reapit-cdk/tsup": "workspace:^"
@@ -2048,9 +2048,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@reapit-cdk/email-receiver-client@workspace:packages/libs/email-receiver-client":
+"@reapit-cdk/email-receiver-client@workspace:packages/modules/email-receiver-client":
   version: 0.0.0-use.local
-  resolution: "@reapit-cdk/email-receiver-client@workspace:packages/libs/email-receiver-client"
+  resolution: "@reapit-cdk/email-receiver-client@workspace:packages/modules/email-receiver-client"
   dependencies:
     "@aws-sdk/util-arn-parser": ^3.310.0
     "@reapit-cdk/email-receiver-types": "workspace:^"
@@ -2062,9 +2062,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@reapit-cdk/email-receiver-types@workspace:^, @reapit-cdk/email-receiver-types@workspace:packages/libs/email-receiver-types":
+"@reapit-cdk/email-receiver-types@workspace:^, @reapit-cdk/email-receiver-types@workspace:packages/modules/email-receiver-types":
   version: 0.0.0-use.local
-  resolution: "@reapit-cdk/email-receiver-types@workspace:packages/libs/email-receiver-types"
+  resolution: "@reapit-cdk/email-receiver-types@workspace:packages/modules/email-receiver-types"
   languageName: unknown
   linkType: soft
 
@@ -2110,8 +2110,11 @@ __metadata:
   resolution: "@reapit-cdk/generate-readme@workspace:packages/tools/generate-readme"
   dependencies:
     "@reapit-cdk/eslint-config": "workspace:^"
+    badge-maker: ^3.3.1
+    fast-xml-parser: ^4.3.2
+    ts-node: ^10.9.1
   bin:
-    reapit-cdk-generate-readme: ./src/index.js
+    reapit-cdk-generate-readme: ./bin/index.js
   languageName: unknown
   linkType: soft
 
@@ -2164,6 +2167,23 @@ __metadata:
     aws-lambda: ^1.0.7
     aws-sdk-client-mock: ^3.0.0
     constructs: 10.2.70
+  languageName: unknown
+  linkType: soft
+
+"@reapit-cdk/ts-constructs@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@reapit-cdk/ts-constructs@workspace:."
+  dependencies:
+    "@jest/globals": ^29.7.0
+    "@reapit-cdk/generate-readme": "workspace:^"
+    "@reapit-cdk/integration-tests": "workspace:^"
+    "@types/jest": ^29.5.5
+    aws-cdk: 2.96.2
+    aws-sdk-client-mock: ^3.0.0
+    aws-sdk-client-mock-jest: ^3.0.0
+    jest: ^29.7.0
+    ts-jest: ^29.1.1
+    typescript: ^5.2.2
   languageName: unknown
   linkType: soft
 
@@ -2226,23 +2246,6 @@ __metadata:
     aws-lambda: ^1.0.7
     aws-sdk-client-mock: ^3.0.0
     constructs: 10.2.70
-  languageName: unknown
-  linkType: soft
-
-"@reapit/ts-cdk-constructs@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "@reapit/ts-cdk-constructs@workspace:."
-  dependencies:
-    "@jest/globals": ^29.7.0
-    "@reapit-cdk/generate-readme": "workspace:^"
-    "@reapit-cdk/integration-tests": "workspace:^"
-    "@types/jest": ^29.5.5
-    aws-cdk: 2.96.2
-    aws-sdk-client-mock: ^3.0.0
-    aws-sdk-client-mock-jest: ^3.0.0
-    jest: ^29.7.0
-    ts-jest: ^29.1.1
-    typescript: ^5.2.2
   languageName: unknown
   linkType: soft
 
@@ -3218,6 +3221,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"anafanafo@npm:2.0.0":
+  version: 2.0.0
+  resolution: "anafanafo@npm:2.0.0"
+  dependencies:
+    char-width-table-consumer: ^1.0.0
+  checksum: c166fc5920ca83c321ecfecdaf7b8b6e09553ad8c6214da39cd82e77decb4b06da440bdcb978ba567c4ed34746e048d61901ff9ddedf52555aeba82642115ac8
+  languageName: node
+  linkType: hard
+
 "ansi-escapes@npm:^4.2.1":
   version: 4.3.2
   resolution: "ansi-escapes@npm:4.3.2"
@@ -3519,6 +3531,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"badge-maker@npm:^3.3.1":
+  version: 3.3.1
+  resolution: "badge-maker@npm:3.3.1"
+  dependencies:
+    anafanafo: 2.0.0
+    css-color-converter: ^2.0.0
+  bin:
+    badge: lib/badge-cli.js
+  checksum: 17ddd409da395a5a58a4b984aa3224a26fec80a580f7b2f011cbfcf3d1ecc4b8daae879d0ff21b7bb78081eb03c703fd161bebc846018456edfa7e3544932e10
+  languageName: node
+  linkType: hard
+
 "balanced-match@npm:^1.0.0":
   version: 1.0.2
   resolution: "balanced-match@npm:1.0.2"
@@ -3544,6 +3568,13 @@ __metadata:
   version: 2.2.0
   resolution: "binary-extensions@npm:2.2.0"
   checksum: ccd267956c58d2315f5d3ea6757cf09863c5fc703e50fbeb13a7dc849b812ef76e3cf9ca8f35a0c48498776a7478d7b4a0418e1e2b8cb9cb9731f2922aaad7f8
+  languageName: node
+  linkType: hard
+
+"binary-search@npm:^1.3.5":
+  version: 1.3.6
+  resolution: "binary-search@npm:1.3.6"
+  checksum: 2e6b3459a9c1ba1bd674a6a855a5ef7505f70707422244430e3510e989c0df6074a49fe60784a98b93b51545c9bcace1db1defee06ff861b124c036a2f2836bf
   languageName: node
   linkType: hard
 
@@ -3771,6 +3802,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"char-width-table-consumer@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "char-width-table-consumer@npm:1.0.0"
+  dependencies:
+    binary-search: ^1.3.5
+  checksum: daffca7cf4201f55acb75c6f98967be6d8a7cbb5783f3e58d90930d83cadc367e63e62fcfa893ea3985c05d8c32557a1bfa2ea7e2f39b845cb2dea966cfbeccd
+  languageName: node
+  linkType: hard
+
 "chokidar@npm:^3.5.1":
   version: 3.5.3
   resolution: "chokidar@npm:3.5.3"
@@ -3843,6 +3883,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"color-convert@npm:^0.5.2":
+  version: 0.5.3
+  resolution: "color-convert@npm:0.5.3"
+  checksum: 1074989a2c216d0171a397b870a0d698ef802ab3f9ece72b35bd92c4d20aeab31f222ea525dd5d3fad175a3f256a750eadd14ab882caed0089efc1cb7ba74086
+  languageName: node
+  linkType: hard
+
 "color-convert@npm:^1.9.0":
   version: 1.9.3
   resolution: "color-convert@npm:1.9.3"
@@ -3868,7 +3915,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"color-name@npm:~1.1.4":
+"color-name@npm:^1.1.4, color-name@npm:~1.1.4":
   version: 1.1.4
   resolution: "color-name@npm:1.1.4"
   checksum: b0445859521eb4021cd0fb0cc1a75cecf67fceecae89b63f62b201cca8d345baf8b952c966862a9d9a2632987d4f6581f0ec8d957dfacece86f0a7919316f610
@@ -3965,6 +4012,24 @@ __metadata:
     shebang-command: ^2.0.0
     which: ^2.0.1
   checksum: 671cc7c7288c3a8406f3c69a3ae2fc85555c04169e9d611def9a675635472614f1c0ed0ef80955d5b6d4e724f6ced67f0ad1bb006c2ea643488fcfef994d7f52
+  languageName: node
+  linkType: hard
+
+"css-color-converter@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "css-color-converter@npm:2.0.0"
+  dependencies:
+    color-convert: ^0.5.2
+    color-name: ^1.1.4
+    css-unit-converter: ^1.1.2
+  checksum: 87819fb3648bb433de49e534c5597d8021642f3199f8985f27b41dc5170c522f775db804fc4533ea78723f8cc70747c545c8f010f4a3ca0ba7bc4dd8f3eea532
+  languageName: node
+  linkType: hard
+
+"css-unit-converter@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "css-unit-converter@npm:1.1.2"
+  checksum: 07888033346a5128f34dbe2f72884c966d24e9f29db24416dcde92860242490617ef9a178ac193a92f730834bbeea026cdc7027701d92ba9bbbe59db7a37eb2a
   languageName: node
   linkType: hard
 
@@ -4596,6 +4661,17 @@ __metadata:
   bin:
     fxparser: src/cli/cli.js
   checksum: d32b22005504eeb207249bf40dc82d0994b5bb9ca9dcc731d335a1f425e47fe085b3cace3cf9d32172dd1a5544193c49e8615ca95b4bf95a4a4920a226b06d80
+  languageName: node
+  linkType: hard
+
+"fast-xml-parser@npm:^4.3.2":
+  version: 4.3.2
+  resolution: "fast-xml-parser@npm:4.3.2"
+  dependencies:
+    strnum: ^1.0.5
+  bin:
+    fxparser: src/cli/cli.js
+  checksum: d507ce2efa5fd13d0a5ba28bd76dd68f2fc30ad8748357c37b70f360d19417866d79e35a688af067d5bceaaa796033fa985206aef9692f7a421e1326b6e73309
   languageName: node
   linkType: hard
 
