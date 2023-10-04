@@ -12,10 +12,12 @@
     "lint": "yarn workspaces foreach -v run lint",
     "integ": "reapit-cdk-integ --root",
     "root:test": "jest",
-    "root:check": "tsc"
+    "root:check": "tsc",
+    "generate-readme": "reapit-cdk-generate-readme"
   },
   "devDependencies": {
     "@jest/globals": "^29.7.0",
+    "@reapit-cdk/generate-readme": "workspace:^",
     "@reapit-cdk/integration-tests": "workspace:^",
     "@types/jest": "^29.5.5",
     "aws-cdk": "2.96.2",

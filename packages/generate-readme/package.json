@@ -1,0 +1,12 @@
+{
+  "name": "@reapit-cdk/generate-readme",
+  "devDependencies": {
+    "@reapit-cdk/eslint-config": "workspace:^"
+  },
+  "scripts": {
+    "lint": "reapit-cdk-eslint"
+  },
+  "bin": {
+    "reapit-cdk-generate-readme": "./src/index.js"
+  }
+}
