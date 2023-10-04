@@ -1,0 +1,32 @@
+{
+  "name": "@reapit-cdk/edge-api-sdk",
+  "main": "src/index.ts",
+  "version": "0.0.0",
+  "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/modules/edge-api-sdk",
+  "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/modules/edge-api-sdk/readme.md",
+  "bugs": {
+    "url": "https://github.com/reapit/ts-cdk-constructs/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reapit/ts-cdk-constructs.git"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "main": "dist/index.js"
+  },
+  "scripts": {
+    "check": "yarn run root:check -p $PWD",
+    "lint": "reapit-cdk-eslint",
+    "test": "yarn run root:test $PWD",
+    "build": "reapit-cdk-tsup",
+    "prepack": "reapit-version-package && yarn build"
+  },
+  "devDependencies": {
+    "@reapit-cdk/eslint-config": "workspace:^",
+    "@reapit-cdk/tsup": "workspace:^",
+    "@reapit-cdk/version-package": "workspace:^",
+    "@types/aws-lambda": "^8.10.121",
+    "aws-lambda": "^1.0.7"
+  }
+}
