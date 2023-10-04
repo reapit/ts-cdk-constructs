@@ -1,0 +1,7 @@
+organization=reapit
+projectKey=reapit_ts-cdk-constructs
+serverUrl=https://sonarcloud.io
+serverVersion=8.0.0.47021
+dashboardUrl=https://sonarcloud.io/dashboard?id=reapit_ts-cdk-constructs&pullRequest=11
+ceTaskId=AYr7k7dtNymZgk-QO0dr
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AYr7k7dtNymZgk-QO0dr
