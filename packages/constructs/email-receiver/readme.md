@@ -1,7 +1,10 @@
 # @reapit-cdk/email-receiver
 
 
-![npm version](https://img.shields.io/npm/v/@reapit-cdk/email-receiver) ![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/email-receiver) ![coverage: 99.02%](https://img.shields.io/badge/coverage-99.02%-green) ![Integ Tests: X](https://img.shields.io/badge/Integ%20Tests-X-red)
+![npm version](https://img.shields.io/npm/v/@reapit-cdk/email-receiver)
+![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/email-receiver)
+![coverage: 99.02%](https://img.shields.io/badge/coverage-99.02%-green)
+![Integ Tests: X](https://img.shields.io/badge/Integ%20Tests-X-red)
 
 This construct sets up everything necessary to receive email. The emails get stored in a dynamodb table, queryable by recipient. This is designed to be used in end-to-end tests, with the [@reapit-cdk/email-receiver-client](../../libs/email-receiver-client) helper library.
 

@@ -46,7 +46,7 @@ const renderBadges = ({ pkgJson, coverage, packageType, hasIntegrationTests }: P
     makeIntegBadge(packageType, hasIntegrationTests),
   ]
     .filter(Boolean)
-    .join(' ')
+    .join('\n')
 }
 
 const renderUsage = (usage?: string) => {
