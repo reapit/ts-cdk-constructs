@@ -1,7 +1,7 @@
 # @reapit-cdk/cloudfront-invalidation
 
 
-![npm version](https://img.shields.io/npm/v/@reapit-cdk/cloudfront-invalidation) ![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/cloudfront-invalidation) ![coverage: 99.02%25](https://img.shields.io/badge/coverage-99.02%25-green) ![Integ Tests: X](https://img.shields.io/badge/Integ Tests-X-red)
+![npm version](https://img.shields.io/npm/v/@reapit-cdk/cloudfront-invalidation) ![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/cloudfront-invalidation) ![coverage: 99.02%](https://img.shields.io/badge/coverage-99.02%-green) ![Integ Tests: X](https://img.shields.io/badge/Integ%20Tests-X-red)
 
 CloudFront invalidations are [very error prone](https://github.com/aws/aws-cdk/issues/15891#issuecomment-966456154), making it hard to invalidate distributions reliably. This construct aims to solve this problem by using a step function which is triggered on stack update, and uses exponential backoff to retry the invalidation. Inspired by https://github.com/aws/aws-cdk/issues/15891#issuecomment-1362163142.
 

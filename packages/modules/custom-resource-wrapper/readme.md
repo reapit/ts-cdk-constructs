@@ -1,7 +1,7 @@
 # @reapit-cdk/custom-resource-wrapper
 
 
-![npm version](https://img.shields.io/npm/v/@reapit-cdk/custom-resource-wrapper) ![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/custom-resource-wrapper) ![coverage: 99.02%25](https://img.shields.io/badge/coverage-99.02%25-green)
+![npm version](https://img.shields.io/npm/v/@reapit-cdk/custom-resource-wrapper) ![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/custom-resource-wrapper) ![coverage: 99.02%](https://img.shields.io/badge/coverage-99.02%-green)
 
 This module helps write custom resource handlers. It's designed to work with the [Custom Resource Provider Framework](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.CustomResource.html). It accepts an object which contains event handlers for `onCreate`, and optionally, `onUpdate`, and `onDelete`. Anything returned from `onCreate` and `onUpdate` is returned as data attributes on the resulting custom resource.
 

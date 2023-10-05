@@ -1,7 +1,8 @@
 import { PackageInfo, RepoInfo } from './types'
 
 const makeBadge = ({ label, message, color }: { label: string; message: string; color: string }) => {
-  return `![${label}: ${message}](https://img.shields.io/badge/${label}-${message}-${color})`
+  const url = new URL(`https://img.shields.io/badge/${label}-${message}-${color}`)
+  return `![${label}: ${message}](${url.toString()})`
 }
 
 const makeCoverageBadge = (statements?: number) => {
@@ -15,7 +16,7 @@ const makeCoverageBadge = (statements?: number) => {
 
   return makeBadge({
     label: 'coverage',
-    message: statements ? `${statements}%25` : '0%25',
+    message: statements ? `${statements}%` : '0%',
     color,
   })
 }
@@ -101,7 +102,7 @@ export const renderRootReadme = async ({ packages, rootPkgJson, coverage }: Repo
       .map((pkg) =>
         [
           `<h3><a href="packages/${packageType}/${pkg.subdir}">${pkg.pkgJson.name}</a></h3>`,
-          renderBadges(pkg),
+          '\n' + renderBadges(pkg),
           pkg.pkgJson.description,
         ].join('\n'),
       )
