@@ -3,7 +3,7 @@
 
 ![npm version](https://img.shields.io/npm/v/@reapit-cdk/active-ruleset)
 ![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/active-ruleset)
-![coverage: 99.02%](https://img.shields.io/badge/coverage-99.02%-green)
+![coverage: 99.02%25](https://img.shields.io/badge/coverage-99.02%25-green)
 ![Integ Tests: ✔](https://img.shields.io/badge/Integ%20Tests-%E2%9C%94-green)
 
 This construct returns the currently active SES receipt RuleSet, or creates one. This enables you to add rules to it.

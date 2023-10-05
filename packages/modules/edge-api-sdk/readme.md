@@ -3,7 +3,7 @@
 
 ![npm version](https://img.shields.io/npm/v/@reapit-cdk/edge-api-sdk)
 ![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/edge-api-sdk)
-![coverage: 96.44%](https://img.shields.io/badge/coverage-96.44%-green)
+![coverage: 96.44%25](https://img.shields.io/badge/coverage-96.44%25-green)
 
 Provides convenience wrappers for accepting and responding to [@reapit-cdk/edge-api]('../../constructs/edge-api/readme.md') lambda requests.
 

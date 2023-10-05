@@ -16,7 +16,7 @@ const makeCoverageBadge = (statements?: number) => {
 
   return makeBadge({
     label: 'coverage',
-    message: statements ? `${statements}%` : '0%',
+    message: statements ? `${statements}%25` : '0%25',
     color,
   })
 }

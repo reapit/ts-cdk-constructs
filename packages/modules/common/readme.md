@@ -3,7 +3,7 @@
 
 ![npm version](https://img.shields.io/npm/v/@reapit-cdk/common)
 ![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/common)
-![coverage: 99.02%](https://img.shields.io/badge/coverage-99.02%-green)
+![coverage: 99.02%25](https://img.shields.io/badge/coverage-99.02%25-green)
 
 Common types and small utilities.
 
