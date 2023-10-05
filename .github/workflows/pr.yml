@@ -44,6 +44,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: Generate Readme
+        run:  yarn generate-readme
+
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Apply readme changes
+
   integ:
     name: Integration Tests
     runs-on: ubuntu-latest

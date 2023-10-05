@@ -1,0 +1,28 @@
+{
+  "name": "@reapit-cdk/integration-tests",
+  "description": "Easily run integration tests for CDK constructs.",
+  "version": "0.0.0",
+  "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/tools/integration-tests",
+  "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/tools/integration-tests/readme.md",
+  "bugs": {
+    "url": "https://github.com/reapit/ts-cdk-constructs/issues"
+  },
+  "license": "MIT",
+  "main": "src/index.ts",
+  "bin": {
+    "reapit-cdk-integ": "./bin/index.js"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "2.96.2",
+    "constructs": "10.2.70"
+  },
+  "devDependencies": {
+    "@aws-cdk/integ-runner": "^2.96.2-alpha.0",
+    "@aws-cdk/integ-tests-alpha": "^2.96.2-alpha.0",
+    "@reapit-cdk/eslint-config": "workspace:^",
+    "@reapit-cdk/tsup": "workspace:^",
+    "aws-cdk": "2.96.2",
+    "cdk-nag": "^2.27.148",
+    "ts-node": "^10.9.1"
+  }
+}

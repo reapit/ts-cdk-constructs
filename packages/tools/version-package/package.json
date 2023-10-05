@@ -1,0 +1,17 @@
+{
+  "name": "@reapit-cdk/version-package",
+  "type": "module",
+  "description": "Set package version to the release version before publishing.",
+  "bin": {
+    "reapit-version-package": "./src/index.js"
+  },
+  "scripts": {
+    "lint": "reapit-cdk-eslint"
+  },
+  "dependencies": {
+    "semver": "^7.5.4"
+  },
+  "devDependencies": {
+    "@reapit-cdk/eslint-config": "workspace:^"
+  }
+}

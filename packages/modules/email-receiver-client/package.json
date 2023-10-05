@@ -1,0 +1,37 @@
+{
+  "name": "@reapit-cdk/email-receiver-client",
+  "main": "src/index.ts",
+  "version": "0.0.0",
+  "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/modules/email-receiver-client",
+  "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/modules/email-receiver-client/readme.md",
+  "description": "This module helps you write tests which rely on receiving emails. Once you have set up [@reapit-cdk/email-receiver](../../constructs/email-receiver/), this module helps you interact with the dynamodb table it creates. You'll have to export the table arn and domain name from your stack and import them to be used here, using [something like this](https://gist.github.com/joshbalfour/c0deb95f1e5938434ed6f6117dec8662).",
+  "bugs": {
+    "url": "https://github.com/reapit/ts-cdk-constructs/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reapit/ts-cdk-constructs.git"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "main": "dist/index.js"
+  },
+  "scripts": {
+    "check": "yarn run root:check -p $PWD",
+    "lint": "reapit-cdk-eslint",
+    "test": "yarn run root:test $PWD",
+    "build": "reapit-cdk-tsup",
+    "prepack": "reapit-version-package && yarn build"
+  },
+  "devDependencies": {
+    "@reapit-cdk/eslint-config": "workspace:^",
+    "@reapit-cdk/tsup": "workspace:^",
+    "@reapit-cdk/version-package": "workspace:^",
+    "@types/aws-lambda": "^8.10.121",
+    "aws-lambda": "^1.0.7"
+  },
+  "dependencies": {
+    "@aws-sdk/util-arn-parser": "^3.310.0",
+    "@reapit-cdk/email-receiver-types": "workspace:^"
+  }
+}

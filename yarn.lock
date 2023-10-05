@@ -1965,9 +1965,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@reapit-cdk/active-ruleset@workspace:packages/active-ruleset":
+"@reapit-cdk/active-ruleset@workspace:packages/constructs/active-ruleset":
   version: 0.0.0-use.local
-  resolution: "@reapit-cdk/active-ruleset@workspace:packages/active-ruleset"
+  resolution: "@reapit-cdk/active-ruleset@workspace:packages/constructs/active-ruleset"
   dependencies:
     "@aws-sdk/client-ses": 3.414.0
     "@reapit-cdk/custom-resource-wrapper": "workspace:^"
@@ -1983,9 +1983,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@reapit-cdk/cloudfront-invalidation@workspace:^, @reapit-cdk/cloudfront-invalidation@workspace:packages/cloudfront-invalidation":
+"@reapit-cdk/cloudfront-invalidation@workspace:^, @reapit-cdk/cloudfront-invalidation@workspace:packages/constructs/cloudfront-invalidation":
   version: 0.0.0-use.local
-  resolution: "@reapit-cdk/cloudfront-invalidation@workspace:packages/cloudfront-invalidation"
+  resolution: "@reapit-cdk/cloudfront-invalidation@workspace:packages/constructs/cloudfront-invalidation"
   dependencies:
     "@reapit-cdk/common": "workspace:^"
     "@reapit-cdk/eslint-config": "workspace:^"
@@ -1996,29 +1996,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@reapit-cdk/common@workspace:^, @reapit-cdk/common@workspace:packages/common":
+"@reapit-cdk/common@workspace:^, @reapit-cdk/common@workspace:packages/modules/common":
   version: 0.0.0-use.local
-  resolution: "@reapit-cdk/common@workspace:packages/common"
+  resolution: "@reapit-cdk/common@workspace:packages/modules/common"
   dependencies:
     "@reapit-cdk/eslint-config": "workspace:^"
   languageName: unknown
   linkType: soft
 
-"@reapit-cdk/custom-resource-wrapper@workspace:^, @reapit-cdk/custom-resource-wrapper@workspace:packages/custom-resource-wrapper":
+"@reapit-cdk/custom-resource-wrapper@workspace:^, @reapit-cdk/custom-resource-wrapper@workspace:packages/modules/custom-resource-wrapper":
   version: 0.0.0-use.local
-  resolution: "@reapit-cdk/custom-resource-wrapper@workspace:packages/custom-resource-wrapper"
-  dependencies:
-    "@reapit-cdk/eslint-config": "workspace:^"
-    "@reapit-cdk/tsup": "workspace:^"
-    "@reapit-cdk/version-package": "workspace:^"
-    "@types/aws-lambda": ^8.10.121
-    aws-lambda: ^1.0.7
-  languageName: unknown
-  linkType: soft
-
-"@reapit-cdk/edge-api-sdk@workspace:packages/edge-api-sdk":
-  version: 0.0.0-use.local
-  resolution: "@reapit-cdk/edge-api-sdk@workspace:packages/edge-api-sdk"
+  resolution: "@reapit-cdk/custom-resource-wrapper@workspace:packages/modules/custom-resource-wrapper"
   dependencies:
     "@reapit-cdk/eslint-config": "workspace:^"
     "@reapit-cdk/tsup": "workspace:^"
@@ -2028,9 +2016,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@reapit-cdk/edge-api@workspace:packages/edge-api":
+"@reapit-cdk/edge-api-sdk@workspace:packages/modules/edge-api-sdk":
   version: 0.0.0-use.local
-  resolution: "@reapit-cdk/edge-api@workspace:packages/edge-api"
+  resolution: "@reapit-cdk/edge-api-sdk@workspace:packages/modules/edge-api-sdk"
+  dependencies:
+    "@reapit-cdk/eslint-config": "workspace:^"
+    "@reapit-cdk/tsup": "workspace:^"
+    "@reapit-cdk/version-package": "workspace:^"
+    "@types/aws-lambda": ^8.10.121
+    aws-lambda: ^1.0.7
+  languageName: unknown
+  linkType: soft
+
+"@reapit-cdk/edge-api@workspace:packages/constructs/edge-api":
+  version: 0.0.0-use.local
+  resolution: "@reapit-cdk/edge-api@workspace:packages/constructs/edge-api"
   dependencies:
     "@aws-cdk/aws-apigatewayv2-alpha": 2.96.2-alpha.0
     "@aws-cdk/aws-apigatewayv2-integrations-alpha": 2.96.2-alpha.0
@@ -2048,9 +2048,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@reapit-cdk/email-receiver-client@workspace:packages/email-receiver-client":
+"@reapit-cdk/email-receiver-client@workspace:packages/modules/email-receiver-client":
   version: 0.0.0-use.local
-  resolution: "@reapit-cdk/email-receiver-client@workspace:packages/email-receiver-client"
+  resolution: "@reapit-cdk/email-receiver-client@workspace:packages/modules/email-receiver-client"
   dependencies:
     "@aws-sdk/util-arn-parser": ^3.310.0
     "@reapit-cdk/email-receiver-types": "workspace:^"
@@ -2062,15 +2062,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@reapit-cdk/email-receiver-types@workspace:^, @reapit-cdk/email-receiver-types@workspace:packages/email-receiver-types":
+"@reapit-cdk/email-receiver-types@workspace:^, @reapit-cdk/email-receiver-types@workspace:packages/modules/email-receiver-types":
   version: 0.0.0-use.local
-  resolution: "@reapit-cdk/email-receiver-types@workspace:packages/email-receiver-types"
+  resolution: "@reapit-cdk/email-receiver-types@workspace:packages/modules/email-receiver-types"
   languageName: unknown
   linkType: soft
 
-"@reapit-cdk/email-receiver@workspace:packages/email-receiver":
+"@reapit-cdk/email-receiver@workspace:packages/constructs/email-receiver":
   version: 0.0.0-use.local
-  resolution: "@reapit-cdk/email-receiver@workspace:packages/email-receiver"
+  resolution: "@reapit-cdk/email-receiver@workspace:packages/constructs/email-receiver"
   dependencies:
     "@aws-sdk/client-dynamodb": 3.414.0
     "@aws-sdk/client-secrets-manager": 3.414.0
@@ -2089,9 +2089,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@reapit-cdk/eslint-config@workspace:^, @reapit-cdk/eslint-config@workspace:packages/eslint":
+"@reapit-cdk/eslint-config@workspace:^, @reapit-cdk/eslint-config@workspace:packages/tools/eslint":
   version: 0.0.0-use.local
-  resolution: "@reapit-cdk/eslint-config@workspace:packages/eslint"
+  resolution: "@reapit-cdk/eslint-config@workspace:packages/tools/eslint"
   dependencies:
     "@types/eslint": ^8.44.2
     "@typescript-eslint/eslint-plugin": ^6.7.0
@@ -2105,9 +2105,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@reapit-cdk/integration-tests@workspace:^, @reapit-cdk/integration-tests@workspace:packages/integration-tests":
+"@reapit-cdk/generate-readme@workspace:^, @reapit-cdk/generate-readme@workspace:packages/tools/generate-readme":
   version: 0.0.0-use.local
-  resolution: "@reapit-cdk/integration-tests@workspace:packages/integration-tests"
+  resolution: "@reapit-cdk/generate-readme@workspace:packages/tools/generate-readme"
+  dependencies:
+    "@reapit-cdk/eslint-config": "workspace:^"
+    fast-xml-parser: ^4.3.2
+    ts-node: ^10.9.1
+  bin:
+    reapit-cdk-generate-readme: ./bin/index.js
+  languageName: unknown
+  linkType: soft
+
+"@reapit-cdk/integration-tests@workspace:^, @reapit-cdk/integration-tests@workspace:packages/tools/integration-tests":
+  version: 0.0.0-use.local
+  resolution: "@reapit-cdk/integration-tests@workspace:packages/tools/integration-tests"
   dependencies:
     "@aws-cdk/integ-runner": ^2.96.2-alpha.0
     "@aws-cdk/integ-tests-alpha": ^2.96.2-alpha.0
@@ -2123,9 +2135,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@reapit-cdk/replicated-key@workspace:packages/replicated-key":
+"@reapit-cdk/replicated-key@workspace:packages/constructs/replicated-key":
   version: 0.0.0-use.local
-  resolution: "@reapit-cdk/replicated-key@workspace:packages/replicated-key"
+  resolution: "@reapit-cdk/replicated-key@workspace:packages/constructs/replicated-key"
   dependencies:
     "@aws-sdk/client-kms": 3.414.0
     "@reapit-cdk/common": "workspace:^"
@@ -2140,9 +2152,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@reapit-cdk/replicated-secret@workspace:packages/replicated-secret":
+"@reapit-cdk/replicated-secret@workspace:packages/constructs/replicated-secret":
   version: 0.0.0-use.local
-  resolution: "@reapit-cdk/replicated-secret@workspace:packages/replicated-secret"
+  resolution: "@reapit-cdk/replicated-secret@workspace:packages/constructs/replicated-secret"
   dependencies:
     "@aws-sdk/client-secrets-manager": 3.414.0
     "@reapit-cdk/common": "workspace:^"
@@ -2157,15 +2169,32 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@reapit-cdk/tsconfig@workspace:packages/tsconfig":
+"@reapit-cdk/ts-constructs@workspace:.":
   version: 0.0.0-use.local
-  resolution: "@reapit-cdk/tsconfig@workspace:packages/tsconfig"
+  resolution: "@reapit-cdk/ts-constructs@workspace:."
+  dependencies:
+    "@jest/globals": ^29.7.0
+    "@reapit-cdk/generate-readme": "workspace:^"
+    "@reapit-cdk/integration-tests": "workspace:^"
+    "@types/jest": ^29.5.5
+    aws-cdk: 2.96.2
+    aws-sdk-client-mock: ^3.0.0
+    aws-sdk-client-mock-jest: ^3.0.0
+    jest: ^29.7.0
+    ts-jest: ^29.1.1
+    typescript: ^5.2.2
   languageName: unknown
   linkType: soft
 
-"@reapit-cdk/tsup@workspace:^, @reapit-cdk/tsup@workspace:packages/tsup":
+"@reapit-cdk/tsconfig@workspace:packages/tools/tsconfig":
   version: 0.0.0-use.local
-  resolution: "@reapit-cdk/tsup@workspace:packages/tsup"
+  resolution: "@reapit-cdk/tsconfig@workspace:packages/tools/tsconfig"
+  languageName: unknown
+  linkType: soft
+
+"@reapit-cdk/tsup@workspace:^, @reapit-cdk/tsup@workspace:packages/tools/tsup":
+  version: 0.0.0-use.local
+  resolution: "@reapit-cdk/tsup@workspace:packages/tools/tsup"
   dependencies:
     "@reapit-cdk/eslint-config": "workspace:^"
     tsup: 7.2.0
@@ -2174,9 +2203,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@reapit-cdk/userpool-domain@workspace:packages/userpool-domain":
+"@reapit-cdk/userpool-domain@workspace:packages/constructs/userpool-domain":
   version: 0.0.0-use.local
-  resolution: "@reapit-cdk/userpool-domain@workspace:packages/userpool-domain"
+  resolution: "@reapit-cdk/userpool-domain@workspace:packages/constructs/userpool-domain"
   dependencies:
     "@aws-sdk/client-cognito-identity-provider": 3.414.0
     "@reapit-cdk/custom-resource-wrapper": "workspace:^"
@@ -2190,9 +2219,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@reapit-cdk/version-package@workspace:^, @reapit-cdk/version-package@workspace:packages/version-package":
+"@reapit-cdk/version-package@workspace:^, @reapit-cdk/version-package@workspace:packages/tools/version-package":
   version: 0.0.0-use.local
-  resolution: "@reapit-cdk/version-package@workspace:packages/version-package"
+  resolution: "@reapit-cdk/version-package@workspace:packages/tools/version-package"
   dependencies:
     "@reapit-cdk/eslint-config": "workspace:^"
     semver: ^7.5.4
@@ -2201,9 +2230,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@reapit-cdk/wildcard-certificate@workspace:packages/wildcard-certificate":
+"@reapit-cdk/wildcard-certificate@workspace:packages/constructs/wildcard-certificate":
   version: 0.0.0-use.local
-  resolution: "@reapit-cdk/wildcard-certificate@workspace:packages/wildcard-certificate"
+  resolution: "@reapit-cdk/wildcard-certificate@workspace:packages/constructs/wildcard-certificate"
   dependencies:
     "@aws-sdk/client-acm": 3.414.0
     "@aws-sdk/client-route-53": 3.414.0
@@ -2216,22 +2245,6 @@ __metadata:
     aws-lambda: ^1.0.7
     aws-sdk-client-mock: ^3.0.0
     constructs: 10.2.70
-  languageName: unknown
-  linkType: soft
-
-"@reapit/ts-cdk-constructs@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "@reapit/ts-cdk-constructs@workspace:."
-  dependencies:
-    "@jest/globals": ^29.7.0
-    "@reapit-cdk/integration-tests": "workspace:^"
-    "@types/jest": ^29.5.5
-    aws-cdk: 2.96.2
-    aws-sdk-client-mock: ^3.0.0
-    aws-sdk-client-mock-jest: ^3.0.0
-    jest: ^29.7.0
-    ts-jest: ^29.1.1
-    typescript: ^5.2.2
   languageName: unknown
   linkType: soft
 
@@ -4585,6 +4598,17 @@ __metadata:
   bin:
     fxparser: src/cli/cli.js
   checksum: d32b22005504eeb207249bf40dc82d0994b5bb9ca9dcc731d335a1f425e47fe085b3cace3cf9d32172dd1a5544193c49e8615ca95b4bf95a4a4920a226b06d80
+  languageName: node
+  linkType: hard
+
+"fast-xml-parser@npm:^4.3.2":
+  version: 4.3.2
+  resolution: "fast-xml-parser@npm:4.3.2"
+  dependencies:
+    strnum: ^1.0.5
+  bin:
+    fxparser: src/cli/cli.js
+  checksum: d507ce2efa5fd13d0a5ba28bd76dd68f2fc30ad8748357c37b70f360d19417866d79e35a688af067d5bceaaa796033fa985206aef9692f7a421e1326b6e73309
   languageName: node
   linkType: hard
 

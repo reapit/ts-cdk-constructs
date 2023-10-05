@@ -1,0 +1,33 @@
+{
+  "name": "@reapit-cdk/custom-resource-wrapper",
+  "main": "src/index.ts",
+  "description": "This module helps write custom resource handlers. It's designed to work with the [Custom Resource Provider Framework](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.CustomResource.html). It accepts an object which contains event handlers for `onCreate`, and optionally, `onUpdate`, and `onDelete`. Anything returned from `onCreate` and `onUpdate` is returned as data attributes on the resulting custom resource.",
+  "version": "0.0.0",
+  "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/modules/custom-resource-wrapper",
+  "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/modules/custom-resource-wrapper/readme.md",
+  "bugs": {
+    "url": "https://github.com/reapit/ts-cdk-constructs/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reapit/ts-cdk-constructs.git"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "main": "dist/index.js"
+  },
+  "scripts": {
+    "check": "yarn run root:check -p $PWD",
+    "lint": "reapit-cdk-eslint",
+    "test": "yarn run root:test $PWD",
+    "build": "reapit-cdk-tsup",
+    "prepack": "reapit-version-package && yarn build"
+  },
+  "devDependencies": {
+    "@reapit-cdk/eslint-config": "workspace:^",
+    "@reapit-cdk/tsup": "workspace:^",
+    "@reapit-cdk/version-package": "workspace:^",
+    "@types/aws-lambda": "^8.10.121",
+    "aws-lambda": "^1.0.7"
+  }
+}
