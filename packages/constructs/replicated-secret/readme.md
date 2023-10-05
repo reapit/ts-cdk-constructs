@@ -1,9 +1,11 @@
 # @reapit-cdk/replicated-secret
+
+![npm version](https://img.shields.io/npm/v/@reapit-cdk/replicated-secret) ![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/replicated-secret) ![coverage: 97.17%](https://img.shields.io/badge/coverage-97.17%-green) ![Integ Tests: X](https://img.shields.io/badge/Integ Tests-X-red)
+
 Creates a Secret and replicates it across the given regions. Requires a [ReplicatedKey](../replicated-key/readme.md) be passed in.
 
+## Package Installation:
 
-
-## npm Package Installation:
 ```sh
 yarn add --dev @reapit-cdk/replicated-secret
 # or
@@ -12,8 +14,8 @@ npm install @reapit-cdk/replicated-secret --save-dev
 
 ## Usage
 ```ts
-import { CfnOutput, Stack, App } from 'aws-cdk-lib'
-import { UserPool } from 'aws-cdk-lib/aws-cognito'
+import { Stack, App } from 'aws-cdk-lib'
+import { Function, Runtime, Code } from 'aws-cdk-lib/aws-lambda'
 import { ReplicatedKey } from '@reapit-cdk/replicated-key'
 import { ReplicatedSecret } from '@reapit-cdk/replicated-secret'
 
@@ -30,10 +32,10 @@ const replicatedSecret = new ReplicatedSecret(stack, 'secret', {
   replicaRegions: ['af-south-1', 'cn-north-1'],
   replicatedKey,
 })
-const lambda = new cdk.aws_lambda.Function(stack, 'lambda', {
-  runtime: cdk.aws_lambda.Runtime.NODEJS_18_X,
+const lambda = new Function(stack, 'lambda', {
+  runtime: Runtime.NODEJS_18_X,
   handler: 'lambda.handler',
-  code: cdk.aws_lambda.Code.fromInline('export const handler = () => {}'),
+  code: Code.fromInline('export const handler = () => {}'),
   environment: {
     usSecretArn: replicatedSecret.getRegionalSecret('us-east-1').secretArn,
     afSecretArn: replicatedSecret.getRegionalSecret('af-south-1').secretArn,
@@ -41,4 +43,5 @@ const lambda = new cdk.aws_lambda.Function(stack, 'lambda', {
   },
 })
 replicatedSecret.grantWrite(lambda)
+
 ```

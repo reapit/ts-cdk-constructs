@@ -1,5 +1,8 @@
 import { PackageInfo, RepoInfo } from './types'
-import { makeBadge } from 'badge-maker'
+
+const makeBadge = ({ label, message, color }: { label: string; message: string; color: string }) => {
+  return `![${label}: ${message}](https://img.shields.io/badge/${label}-${message}-${color})`
+}
 
 const makeCoverageBadge = (statements?: number) => {
   let color = 'red'
@@ -50,7 +53,15 @@ const renderUsage = (usage?: string) => {
     return undefined
   }
 
-  return ['## Usage', '```ts', usage, '```']
+  return [
+    '## Usage',
+    '```ts',
+    usage
+      .split('\n')
+      .filter((line) => !line.startsWith('// @ts'))
+      .join('\n'),
+    '```',
+  ].join('\n')
 }
 
 const renderDocs = (docs?: string) => {
@@ -71,12 +82,12 @@ export const renderPackageReadme = (pkg: PackageInfo): string => {
     renderBadges(pkg),
     description,
     '## Package Installation:',
-    installationInstructions(pkgJson.name),
+    installationInstructions({ npmPackageName: pkgJson.name }),
     renderUsage(usage),
     renderDocs(docs),
   ]
     .filter(Boolean)
-    .join('\n')
+    .join('\n\n')
 }
 
 export const renderRootReadme = async ({ packages, rootPkgJson, coverage }: RepoInfo): Promise<string> => {

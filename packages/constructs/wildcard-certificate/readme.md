@@ -1,9 +1,11 @@
 # @reapit-cdk/wildcard-certificate
 
-This construct returns a wildcard certificate valid for subdomains of the given domain names, creating and validating on if it doesn't exist.
-It supports cross-account DNS validation, you can pass in arns of roles from other accounts and it'll assume them whilst doing the Route53 updates.
+![npm version](https://img.shields.io/npm/v/@reapit-cdk/wildcard-certificate) ![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/wildcard-certificate) ![coverage: 97.89%](https://img.shields.io/badge/coverage-97.89%-green) ![Integ Tests: X](https://img.shields.io/badge/Integ Tests-X-red)
 
-## npm Package Installation:
+This construct returns a wildcard certificate valid for subdomains of the given domain names, creating and validating on if it doesn't exist. It supports cross-account DNS validation, you can pass in arns of roles from other accounts and it'll assume them whilst doing the Route53 updates.
+
+## Package Installation:
+
 ```sh
 yarn add --dev @reapit-cdk/wildcard-certificate
 # or
@@ -13,7 +15,6 @@ npm install @reapit-cdk/wildcard-certificate --save-dev
 ## Usage
 ```ts
 import { CfnOutput, Stack, App } from 'aws-cdk-lib'
-import { UserPool } from 'aws-cdk-lib/aws-cognito'
 import { WildcardCertificate } from '@reapit-cdk/wildcard-certificate'
 
 const app = new App()
@@ -34,16 +35,19 @@ new CfnOutput(stack, 'wildcardCertificateArn', {
 })
 
 // cross-account example
-const xAccountWildcardCertificate = new WildcardCertificate(stack, 'xaccount-cert', {
-  domains: [{
-    domainName: 'example.org',
-  }, {
-    domainName: 'example.com',
-    hostedZoneArn: 'arn:partition:route53::account:hostedzone/Id',
-    roleArn: 'arn:aws:iam::account:role/role-name-with-path',
-  }],
+const xAccountWildcardCertificate = new WildcardCertificate(stack, 'x-account-cert', {
+  domains: [
+    {
+      domainName: 'example.org',
+    },
+    {
+      domainName: 'example.com',
+      hostedZoneArn: 'arn:partition:route53::account:hostedzone/Id',
+      roleArn: 'arn:aws:iam::account:role/role-name-with-path',
+    },
+  ],
 })
-new CfnOutput(stack, 'xaccountWildcardCertificateArn', {
+new CfnOutput(stack, 'xAccountWildcardCertificateArn', {
   value: xAccountWildcardCertificate.certificate.certificateArn,
 })
 

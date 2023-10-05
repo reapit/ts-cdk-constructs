@@ -12,7 +12,6 @@
     "reapit-cdk-generate-readme": "./bin/index.js"
   },
   "dependencies": {
-    "badge-maker": "^3.3.1",
     "fast-xml-parser": "^4.3.2"
   }
 }
