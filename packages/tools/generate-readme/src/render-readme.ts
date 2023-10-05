@@ -15,7 +15,7 @@ const makeCoverageBadge = (statements?: number) => {
 
   return makeBadge({
     label: 'coverage',
-    message: statements ? `${statements}%` : '0%',
+    message: statements ? `${statements}%25` : '0%25',
     color,
   })
 }
@@ -45,7 +45,7 @@ const renderBadges = ({ pkgJson, coverage, packageType, hasIntegrationTests }: P
     makeIntegBadge(packageType, hasIntegrationTests),
   ]
     .filter(Boolean)
-    .join('\n')
+    .join(' ')
 }
 
 const renderUsage = (usage?: string) => {
@@ -79,7 +79,7 @@ export const renderPackageReadme = (pkg: PackageInfo): string => {
 
   return [
     `# ${title}`,
-    renderBadges(pkg),
+    '\n' + renderBadges(pkg),
     description,
     '## Package Installation:',
     installationInstructions({ npmPackageName: pkgJson.name }),

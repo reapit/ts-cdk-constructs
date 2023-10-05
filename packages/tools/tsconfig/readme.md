@@ -1,8 +1,7 @@
 # @reapit-cdk/tsconfig
 
-![npm version](https://img.shields.io/npm/v/@reapit-cdk/tsconfig)
-![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/tsconfig)
-![coverage: 0%](https://img.shields.io/badge/coverage-0%-red)
+
+![npm version](https://img.shields.io/npm/v/@reapit-cdk/tsconfig) ![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/tsconfig) ![coverage: 0%25](https://img.shields.io/badge/coverage-0%25-red)
 
 tsconfig for @reapit-cdk.
 

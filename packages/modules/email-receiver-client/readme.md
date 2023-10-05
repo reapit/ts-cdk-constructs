@@ -1,8 +1,7 @@
 # @reapit-cdk/email-receiver-client
 
-![npm version](https://img.shields.io/npm/v/@reapit-cdk/email-receiver-client)
-![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/email-receiver-client)
-![coverage: 99.02%](https://img.shields.io/badge/coverage-99.02%-green)
+
+![npm version](https://img.shields.io/npm/v/@reapit-cdk/email-receiver-client) ![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/email-receiver-client) ![coverage: 99.02%25](https://img.shields.io/badge/coverage-99.02%25-green)
 
 This module helps you write tests which rely on receiving emails. Once you have set up [@reapit-cdk/email-receiver](../../constructs/email-receiver/), this module helps you interact with the dynamodb table it creates. You'll have to export the table arn and domain name from your stack and import them to be used here, using [something like this](https://gist.github.com/joshbalfour/c0deb95f1e5938434ed6f6117dec8662).
 
