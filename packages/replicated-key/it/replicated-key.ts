@@ -9,6 +9,7 @@ const stack = new Stack(app, 'replicated-key-test-stack')
 const key = new ReplicatedKey(stack, 'replicated-key', {
   replicaRegions: ['eu-west-1', 'eu-west-2'],
 })
+
 const integ = new IntegTest(app, 'ReplicatedKeyTest', {
   testCases: [stack],
   cdkCommandOptions: {
@@ -23,7 +24,7 @@ const integ = new IntegTest(app, 'ReplicatedKeyTest', {
 })
 // TODO: cross-region awsApiCall
 const assertion = integ.assertions
-  .awsApiCall('kms', 'DescribeKey', {
+  .awsApiCall('KMS', 'DescribeKey', {
     KeyId: key.getRegionalKey('eu-west-1'),
   })
   .expect(
@@ -35,7 +36,7 @@ const assertion = integ.assertions
   )
   .next(
     integ.assertions
-      .awsApiCall('kms', 'DescribeKey', {
+      .awsApiCall('KMS', 'DescribeKey', {
         KeyId: key.getRegionalKey('eu-west-2'),
       })
       .expect(

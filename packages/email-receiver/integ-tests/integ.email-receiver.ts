@@ -43,7 +43,7 @@ const integ = new IntegTest(app, 'EmailReceiverTest', {
 const recipient = `${randomUUID()}@email.${domainName}`
 
 const assertion = integ.assertions
-  .awsApiCall('ses', 'SendEmail', {
+  .awsApiCall('SES', 'SendEmail', {
     Destination: {
       ToAddresses: [recipient],
       Message: {
@@ -67,7 +67,7 @@ const assertion = integ.assertions
   })
   .next(
     integ.assertions
-      .awsApiCall('dynamodb', 'Query', {
+      .awsApiCall('DynamoDB', 'Query', {
         TableName: emailReceiver.table.tableName,
         KeyConditions: {
           recipient: {

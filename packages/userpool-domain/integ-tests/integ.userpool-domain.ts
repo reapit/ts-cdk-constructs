@@ -26,7 +26,7 @@ const integ = new IntegTest(app, 'UserpoolDomainTest', {
 })
 
 const assertion = integ.assertions
-  .awsApiCall('cognito-idp', 'DescribeUserPool', {
+  .awsApiCall('CognitoIdentity', 'DescribeUserPool', {
     UserPoolId: userPool.userPoolId,
   })
   .expect(

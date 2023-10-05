@@ -9,7 +9,7 @@ const stack = new Stack(app, 'certificate-test-stack')
 const parentDomain = process.env.INTEG_DOMAIN ?? 'integ.dev.paas.reapit.cloud'
 
 const cert = new WildcardCertificate(stack, 'certificate', {
-  domains: [`wildcard-test.${parentDomain}`],
+  domains: [parentDomain],
 })
 
 const integ = new IntegTest(app, 'WildcardCertificateTest', {
@@ -29,7 +29,7 @@ const integ = new IntegTest(app, 'WildcardCertificateTest', {
 })
 
 const assertion = integ.assertions
-  .awsApiCall('acm', 'DescribeCertificate', {
+  .awsApiCall('ACM', 'DescribeCertificate', {
     CertificateArn: cert.certificate.certificateArn,
   })
   .expect(

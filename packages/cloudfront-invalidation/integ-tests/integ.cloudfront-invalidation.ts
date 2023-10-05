@@ -37,7 +37,7 @@ const integ = new IntegTest(app, 'CloudfrontInvalidationTest', {
 
 const assertion = integ.assertions
   .awsApiCall('CloudFront', 'ListInvalidations', {
-    distributionId: distribution.distributionId,
+    DistributionId: distribution.distributionId,
   })
   .expect(
     ExpectedResult.objectLike({

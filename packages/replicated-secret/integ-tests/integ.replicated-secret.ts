@@ -30,7 +30,7 @@ const integ = new IntegTest(app, 'ReplicatedSecretTest', {
 })
 
 const assertion = integ.assertions
-  .awsApiCall('secretsmanager', 'DescribeSecret', {
+  .awsApiCall('SecretsManager', 'DescribeSecret', {
     SecretId: secret.secretArn,
   })
   .expect(
