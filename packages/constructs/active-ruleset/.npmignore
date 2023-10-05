@@ -2,3 +2,10 @@ src
 tests
 .eslintrc.js
 tsconfig.json
+
+# Exclude jsii outdir
+jsii-dist
+
+# Include .jsii and .jsii.gz
+!.jsii
+!.jsii.gz

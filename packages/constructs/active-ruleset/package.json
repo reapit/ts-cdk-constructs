@@ -8,19 +8,30 @@
     "url": "https://github.com/reapit/ts-cdk-constructs/issues"
   },
   "license": "MIT",
+  "author": {
+    "name": "Josh Balfour",
+    "email": "jbalfour@reapit.com"
+  },
+  "repository": {
+    "url": "https://github.com/reapit/ts-cdk-constructs.git"
+  },
   "scripts": {
     "build": "reapit-cdk-tsup --lambda",
     "check": "yarn run root:check -p $PWD",
     "lint": "reapit-cdk-eslint",
     "test": "yarn run root:test $PWD",
     "prepack": "reapit-version-package && yarn build",
-    "integ": "reapit-cdk-integ"
-  },
-  "publishConfig": {
-    "main": "dist/index.js"
+    "integ": "reapit-cdk-integ",
+    "jsii:build": "rm src/index.d.ts && jsii --generate-tsconfig jsii.tsconfig.json --fail-on-warnings",
+    "jsii:package": "jsii-pacmak"
   },
   "main": "src/index.ts",
-  "dependencies": {
+  "types": "src/index.d.ts",
+  "publishConfig": {
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts"
+  },
+  "peerDependencies": {
     "aws-cdk-lib": "2.96.2",
     "constructs": "10.2.70"
   },
@@ -32,7 +43,27 @@
     "@reapit-cdk/tsup": "workspace:^",
     "@reapit-cdk/version-package": "workspace:^",
     "aws-cdk": "2.96.2",
+    "aws-cdk-lib": "2.96.2",
+    "constructs": "10.2.70",
     "aws-lambda": "^1.0.7",
-    "aws-sdk-client-mock": "^3.0.0"
+    "aws-sdk-client-mock": "^3.0.0",
+    "jsii": "^5.2.11",
+    "jsii-pacmak": "^1.89.0"
+  },
+  "stability": "stable",
+  "jsii": {
+    "outdir": "jsii-dist",
+    "versionFormat": "short",
+    "targets": {
+      "python": {
+        "distName": "reapit-cdk.active-ruleset",
+        "module": "reapit_cdk.active_ruleset"
+      },
+      "dotnet": {
+        "namespace": "ReapitCDK.ActiveRuleset",
+        "packageId": "ReapitCDK.ActiveRuleset",
+        "iconUrl": "https://avatars.githubusercontent.com/u/12103471?s=200&v=4"
+      }
+    }
   }
 }

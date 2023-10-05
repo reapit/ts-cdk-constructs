@@ -15,6 +15,13 @@
     "test": "yarn run root:test $PWD",
     "prepack": "reapit-version-package && yarn build"
   },
+  "author": {
+    "name": "Josh Balfour",
+    "email": "jbalfour@reapit.com"
+  },
+  "repository": {
+    "url": "https://github.com/reapit/ts-cdk-constructs.git"
+  },
   "publishConfig": {
     "main": "dist/index.js"
   },
