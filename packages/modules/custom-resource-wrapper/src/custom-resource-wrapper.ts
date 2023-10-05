@@ -10,7 +10,7 @@ const successEvent = (
   event: CloudFormationCustomResourceEvent,
   { data }: { data?: OptionalData },
 ): CloudFormationCustomResourceSuccessResponse => {
-  const { physicalResourceId, ...rest } = data ?? {}
+  const { physicalResourceId, ...rest } = (data as any) ?? {} // TODO: not use any here
   const restData = Object.keys(rest).length ? rest : undefined
 
   return {
