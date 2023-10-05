@@ -65,10 +65,17 @@ const processMetrics = (metrics: Metrics): ParsedMetrics => {
   }
 }
 
+const sumMetrics = (m1: ParsedMetrics, m2: ParsedMetrics): ParsedMetrics => {
+  return {
+    conditionals: round((m1.conditionals + m2.conditionals) / 2),
+    methods: round((m1.methods + m2.methods) / 2),
+    statements: round((m1.statements + m2.statements) / 2),
+  }
+}
+
 export type PackageCoverage = {
   name: string
   metrics: ParsedMetrics
-  lambdaMetrics?: ParsedMetrics
 }
 
 export type PackageTypeCoverage = Record<string, PackageCoverage[]>
@@ -85,10 +92,12 @@ const processCoverage = (project: Project) => {
       packageTypes[packageType] = []
     }
     const lambdaPkg = project.package.find((pkg2) => pkg2['@_name'].split('.')[3]?.startsWith('lambda'))
+
     packageTypes[packageType].push({
-      metrics: processMetrics(pkg.metrics),
+      metrics: lambdaPkg
+        ? sumMetrics(processMetrics(pkg.metrics), processMetrics(lambdaPkg.metrics))
+        : processMetrics(pkg.metrics),
       name,
-      lambdaMetrics: lambdaPkg ? processMetrics(lambdaPkg.metrics) : undefined,
     })
   })
 

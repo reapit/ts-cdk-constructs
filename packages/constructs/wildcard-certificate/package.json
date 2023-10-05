@@ -2,6 +2,7 @@
   "name": "@reapit-cdk/wildcard-certificate",
   "version": "0.0.0",
   "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/wildcard-certificate",
+  "description": "This construct returns a wildcard certificate valid for subdomains of the given domain names, creating and validating on if it doesn't exist. It supports cross-account DNS validation, you can pass in arns of roles from other accounts and it'll assume them whilst doing the Route53 updates.",
   "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/wildcard-certificate/readme.md",
   "bugs": {
     "url": "https://github.com/reapit/ts-cdk-constructs/issues"

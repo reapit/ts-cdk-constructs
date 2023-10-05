@@ -12,23 +12,5 @@ npm install @reapit-cdk/cloudfront-invalidation --save-dev
 
 ## Usage
 ```ts
-import { CfnOutput, Stack, App } from 'aws-cdk-lib'
-import { HostedZone } from 'aws-cdk-lib/aws-route53'
-import { EmailReceiver } from '@reapit-cdk/cloudfront-invalidation'
 
-const app = new App()
-const stack = new Stack(app, 'stack-name', {
-  env: {
-    region: 'us-east-1', // region must be specified
-  },
-})
-const distribution = new Distribution(stack, 'distribution', {
-  defaultBehavior: {
-    origin: new HttpOrigin('example.org'),
-  },
-})
-const invalidation = new CloudfrontInvalidation(stack, 'invalidation', {
-  distribution,
-  items: ['/index.html', '/config.js'], // path patterns you want invalidated
-})
 ```

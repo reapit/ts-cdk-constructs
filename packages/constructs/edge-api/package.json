@@ -1,6 +1,7 @@
 {
   "name": "@reapit-cdk/edge-api",
   "version": "0.0.0",
+  "description": "This construct creates a truly globally available API where code executes at the edge.",
   "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/edge-api",
   "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/edge-api/readme.md",
   "bugs": {

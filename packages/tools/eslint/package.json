@@ -1,5 +1,6 @@
 {
   "name": "@reapit-cdk/eslint-config",
+  "description": "@reapit-cdk eslint config.",
   "main": "index.js",
   "bin": {
     "reapit-cdk-eslint": "bin.js"

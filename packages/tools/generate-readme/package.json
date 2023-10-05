@@ -1,5 +1,6 @@
 {
   "name": "@reapit-cdk/generate-readme",
+  "description": "Generates package readmes.",
   "devDependencies": {
     "@reapit-cdk/eslint-config": "workspace:^",
     "ts-node": "^10.9.1"

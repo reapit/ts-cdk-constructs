@@ -4,9 +4,11 @@ export type PackageJSON = Record<string, any>
 export type PackageInfo = {
   subdir: string
   pkgJson: PackageJSON
-  readme?: string
   coverage?: PackageCoverage
   hasIntegrationTests: boolean
+  packageType: string
+  docs?: string
+  usage?: string
 }
 export type PackageType = {
   packageType: string

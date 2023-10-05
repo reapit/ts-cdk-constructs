@@ -1,6 +1,7 @@
 {
   "name": "@reapit-cdk/email-receiver",
   "version": "0.0.0",
+  "description": "This construct sets up everything necessary to receive email. The emails get stored in a dynamodb table, queryable by recipient. This is designed to be used in end-to-end tests, with the [@reapit-cdk/email-receiver-client](../../libs/email-receiver-client) helper library.",
   "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/email-receiver",
   "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/email-receiver/readme.md",
   "bugs": {

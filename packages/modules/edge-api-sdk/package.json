@@ -1,6 +1,7 @@
 {
   "name": "@reapit-cdk/edge-api-sdk",
   "main": "src/index.ts",
+  "description": "Provides convenience wrappers for accepting and responding to [@reapit-cdk/edge-api]('../../constructs/edge-api/readme.md') lambda requests.",
   "version": "0.0.0",
   "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/modules/edge-api-sdk",
   "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/modules/edge-api-sdk/readme.md",

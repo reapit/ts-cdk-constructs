@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/modules/email-receiver-client",
   "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/modules/email-receiver-client/readme.md",
+  "description": "This module helps you write tests which rely on receiving emails. Once you have set up [@reapit-cdk/email-receiver](../../constructs/email-receiver/), this module helps you interact with the dynamodb table it creates. You'll have to export the table arn and domain name from your stack and import them to be used here, using [something like this](https://gist.github.com/joshbalfour/c0deb95f1e5938434ed6f6117dec8662).",
   "bugs": {
     "url": "https://github.com/reapit/ts-cdk-constructs/issues"
   },

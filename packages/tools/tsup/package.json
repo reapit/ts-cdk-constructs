@@ -1,6 +1,7 @@
 {
   "name": "@reapit-cdk/tsup",
   "type": "module",
+  "description": "Easily build @reapit-cdk constructs and custom resource lambdas.",
   "dependencies": {
     "tsup": "7.2.0"
   },

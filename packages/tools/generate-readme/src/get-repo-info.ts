@@ -8,11 +8,19 @@ const readPkgJson = async (dir: string): Promise<PackageJSON> => {
   return JSON.parse(json)
 }
 
-const readReadme = async (dir: string) => {
+const readDocs = async (dir: string) => {
   try {
-    return await fs.readFile(path.resolve(dir, 'readme.md'), 'utf-8')
+    return await fs.readFile(path.resolve(dir, 'docs.md'), 'utf-8')
   } catch (e) {
-    return 'No readme found'
+    return undefined
+  }
+}
+
+const readUsage = async (dir: string) => {
+  try {
+    return await fs.readFile(path.resolve(dir, 'usage.ts'), 'utf-8')
+  } catch (e) {
+    return undefined
   }
 }
 
@@ -26,19 +34,23 @@ const getSubdirs = async (dir: string) => {
 const getPackageInfo = async (
   parentDir: string,
   subdir: string,
+  packageType: string,
   coverageInfo?: PackageCoverage,
 ): Promise<PackageInfo> => {
   const loc = path.resolve(parentDir, subdir)
   const pkgJson = await readPkgJson(loc)
-  const readme = await readReadme(loc)
+  const docs = await readDocs(loc)
+  const usage = await readUsage(loc)
   const hasIntegrationTests = (await getSubdirs(loc)).includes('integ-tests')
 
   return {
     subdir,
     pkgJson,
-    readme,
+    docs,
+    usage,
     coverage: coverageInfo,
     hasIntegrationTests,
+    packageType,
   }
 }
 
@@ -50,7 +62,9 @@ const getPackageTypeInfo = async (cwd: string, subdir: string, coverage: Package
   return {
     packageType,
     packages: await Promise.all(
-      subdirs.map((subdir) => getPackageInfo(parentDir, subdir, coverageInfo?.find((a) => a.name === subdir))),
+      subdirs.map((subdir) =>
+        getPackageInfo(parentDir, subdir, packageType, coverageInfo?.find((a) => a.name === subdir)),
+      ),
     ),
   }
 }

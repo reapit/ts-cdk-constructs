@@ -1,3 +1,4 @@
 {
-  "name": "@reapit-cdk/tsconfig"
+  "name": "@reapit-cdk/tsconfig",
+  "description": "tsconfig for @reapit-cdk."
 }

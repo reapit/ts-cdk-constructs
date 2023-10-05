@@ -1,6 +1,7 @@
 {
   "name": "@reapit-cdk/version-package",
   "type": "module",
+  "description": "Set package version to the release version before publishing.",
   "bin": {
     "reapit-version-package": "./src/index.js"
   },

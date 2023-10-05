@@ -1,5 +1,6 @@
 {
   "name": "@reapit-cdk/common",
+  "description": "Common types and small utilities.",
   "main": "src",
   "scripts": {
     "lint": "reapit-cdk-eslint",
