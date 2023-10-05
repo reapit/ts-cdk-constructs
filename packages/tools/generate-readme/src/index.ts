@@ -7,7 +7,7 @@ const go = async () => {
   const cwd = path.resolve('.')
   const repoInfo = await getRepoInfo(cwd)
   const readme = await renderReadme(repoInfo)
-  await fs.writeFile(path.resolve(cwd, 'readme.md'), readme)
+  await fs.writeFile(path.resolve(cwd, 'README.md'), readme)
 }
 
 go().catch(console.error)
