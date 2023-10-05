@@ -41,11 +41,9 @@ const assertion = integ.assertions
   })
   .expect(
     ExpectedResult.objectLike({
-      InvalidationList: [
-        {
-          Items: items,
-        },
-      ],
+      InvalidationList: {
+        Items: items,
+      },
     }),
   )
 

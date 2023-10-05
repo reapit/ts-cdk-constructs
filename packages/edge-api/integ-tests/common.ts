@@ -62,8 +62,8 @@ export const edgeAPITest = (devMode?: boolean) => {
   })
 
   api.addEndpoint({
-    pathPattern: '/httpbin',
-    destination: 'httpbin.org/get',
+    pathPattern: '/get',
+    destination: 'httpbin.org',
   })
 
   api.addEndpoint({
@@ -112,7 +112,7 @@ export const edgeAPITest = (devMode?: boolean) => {
       ),
     )
     .next(
-      integ.assertions.httpApiCall(`https://${domainName}/httpbin`).expect(
+      integ.assertions.httpApiCall(`https://${domainName}/get`).expect(
         ExpectedResult.objectLike({
           url: 'https://httpbin.org/get',
         }),
