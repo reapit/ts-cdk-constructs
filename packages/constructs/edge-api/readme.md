@@ -1,6 +1,9 @@
 # @reapit-cdk/edge-api
 
-![npm version](https://img.shields.io/npm/v/@reapit-cdk/edge-api) ![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/edge-api) ![coverage: 98.09%](https://img.shields.io/badge/coverage-98.09%-green) ![Integ Tests: X](https://img.shields.io/badge/Integ Tests-X-red)
+![npm version](https://img.shields.io/npm/v/@reapit-cdk/edge-api)
+![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/edge-api)
+![coverage: 98.09%](https://img.shields.io/badge/coverage-98.09%-green)
+![Integ Tests: X](https://img.shields.io/badge/Integ Tests-X-red)
 
 This construct creates a truly globally available API where code executes at the edge. Because changes take a long time to propagate to all edge locations, there is a `devMode` flag which will instead deploy your API to a [HTTP API](https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api.html). This is compatible with hotswapping, so [`cdk watch`](https://docs.aws.amazon.com/cdk/v2/guide/cli.html#cli-deploy-watch) works very well. In order to make it easy to develop APIs which handle both event formats and work around the environment variable limitation, I recommend you use the lightweight request wrapper [@reapit-cdk/edge-api-sdk](../../modules/edge-api-sdk) which normalises the event format and offers some extra helpers.
 

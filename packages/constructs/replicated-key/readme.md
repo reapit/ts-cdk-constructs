@@ -1,6 +1,9 @@
 # @reapit-cdk/replicated-key
 
-![npm version](https://img.shields.io/npm/v/@reapit-cdk/replicated-key) ![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/replicated-key) ![coverage: 99.02%](https://img.shields.io/badge/coverage-99.02%-green) ![Integ Tests: X](https://img.shields.io/badge/Integ Tests-X-red)
+![npm version](https://img.shields.io/npm/v/@reapit-cdk/replicated-key)
+![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/replicated-key)
+![coverage: 99.02%](https://img.shields.io/badge/coverage-99.02%-green)
+![Integ Tests: X](https://img.shields.io/badge/Integ Tests-X-red)
 
 Creates a KMS key and replicates it to the desired regions. Useful when replicating secrets across regions.
 
