@@ -5,7 +5,7 @@ CDK Constructs Monorepo
 
 <details open>
 
-<summary>Details</summary>
+<summary>Packages</summary>
 
 <h3><a href="packages/construct/active-ruleset">@reapit-cdk/active-ruleset</a></h3>
 
@@ -79,7 +79,7 @@ This construct returns a wildcard certificate valid for subdomains of the given 
 
 <details open>
 
-<summary>Details</summary>
+<summary>Packages</summary>
 
 <h3><a href="packages/module/common">@reapit-cdk/common</a></h3>
 
@@ -124,7 +124,7 @@ This module helps you write tests which rely on receiving emails. Once you have 
 
 <details false>
 
-<summary>Details</summary>
+<summary>Packages</summary>
 
 <h3><a href="packages/tool/eslint">@reapit-cdk/eslint-config</a></h3>
 
