@@ -91,24 +91,30 @@ export const renderPackageReadme = (pkg: PackageInfo): string => {
     .join('\n\n')
 }
 
+const capitalize = (s: string) => s[0].toUpperCase() + s.slice(1)
+
 export const renderRootReadme = async ({ packages, rootPkgJson, coverage }: RepoInfo): Promise<string> => {
   const title = rootPkgJson.name
   const description = rootPkgJson.description
 
-  const packagesDesc = packages.map(
-    ({ packageType, packages }) => `<details ${packageType !== 'tool' && 'open'}>
-    <summary><span style="text-transform: capitalize; font-weight: bold; font-size: 2em;">${packageType}s</span></summary>
-    ${packages
-      .map((pkg) =>
-        [
-          `<h3><a href="packages/${packageType}/${pkg.subdir}">${pkg.pkgJson.name}</a></h3>`,
-          '\n' + renderBadges(pkg),
-          pkg.pkgJson.description,
-        ].join('\n'),
-      )
-      .join('\n')}
-  </details>`,
-  )
+  const packagesDesc = packages.map(({ packageType, packages }) => {
+    return [
+      `## ${capitalize(packageType)}s`,
+      `<details ${packageType !== 'tool' && 'open'}>`,
+      '<summary>Packages</summary>',
+      packages
+        .map((pkg) =>
+          [
+            `<h3><a href="packages/${packageType}/${pkg.subdir}">${pkg.pkgJson.name}</a></h3>`,
+            renderBadges(pkg),
+            pkg.pkgJson.description,
+          ].join('\n\n'),
+        )
+        .join('\n'),
+      '</details>',
+      '',
+    ].join('\n\n')
+  })
 
   return [`# ${title}`, makeCoverageBadge(coverage.statements), description, ...packagesDesc].filter(Boolean).join('\n')
 }
