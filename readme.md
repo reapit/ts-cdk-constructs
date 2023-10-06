@@ -147,6 +147,13 @@ Generates package readmes.
 ![coverage: 0%25](https://img.shields.io/badge/coverage-0%25-red)
 
 Easily run integration tests for CDK constructs.
+<h3><a href="packages/tool/jsii">@reapit-cdk/jsii</a></h3>
+
+![npm version](https://img.shields.io/npm/v/@reapit-cdk/jsii)
+![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/jsii)
+![coverage: 0%25](https://img.shields.io/badge/coverage-0%25-red)
+
+JSII tools for @reapit-cdk.
 <h3><a href="packages/tool/tsconfig">@reapit-cdk/tsconfig</a></h3>
 
 ![npm version](https://img.shields.io/npm/v/@reapit-cdk/tsconfig)
