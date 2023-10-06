@@ -8,31 +8,45 @@
     "url": "https://github.com/reapit/ts-cdk-constructs/issues"
   },
   "license": "MIT",
+  "author": {
+    "name": "Josh Balfour",
+    "email": "jbalfour@reapit.com"
+  },
+  "repository": {
+    "url": "https://github.com/reapit/ts-cdk-constructs.git"
+  },
   "scripts": {
     "build": "reapit-cdk-tsup --lambda",
     "check": "yarn run root:check -p $PWD",
     "lint": "reapit-cdk-eslint",
     "test": "yarn run root:test $PWD",
     "prepack": "reapit-version-package && yarn build",
-    "integ": "reapit-cdk-integ"
-  },
-  "publishConfig": {
-    "main": "dist/index.js"
+    "integ": "reapit-cdk-integ",
+    "jsii:build": "rpt-cdk-jsii",
+    "jsii:publish": "rpt-cdk-jsii --publish"
   },
   "main": "src/index.ts",
-  "dependencies": {
-    "aws-cdk-lib": "2.96.2",
-    "constructs": "10.2.70"
+  "types": "src/index.ts",
+  "publishConfig": {
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts"
+  },
+  "peerDependencies": {
+    "aws-cdk-lib": "^2.96.2",
+    "constructs": "^10.2.70"
   },
   "devDependencies": {
     "@aws-sdk/client-ses": "3.414.0",
     "@reapit-cdk/custom-resource-wrapper": "workspace:^",
     "@reapit-cdk/eslint-config": "workspace:^",
     "@reapit-cdk/integration-tests": "workspace:^",
+    "@reapit-cdk/jsii": "workspace:^",
     "@reapit-cdk/tsup": "workspace:^",
     "@reapit-cdk/version-package": "workspace:^",
     "aws-cdk": "2.96.2",
+    "aws-cdk-lib": "^2.96.2",
     "aws-lambda": "^1.0.7",
-    "aws-sdk-client-mock": "^3.0.0"
+    "aws-sdk-client-mock": "^3.0.0",
+    "constructs": "^10.2.70"
   }
 }

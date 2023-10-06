@@ -1,0 +1,16 @@
+{
+  "name": "@reapit-cdk/jsii",
+  "description": "JSII tools for @reapit-cdk.",
+  "dependencies": {
+    "jsii": "^5.2.11",
+    "jsii-pacmak": "^1.89.0",
+    "publib": "^0.2.737",
+    "ts-node": "^10.9.1"
+  },
+  "devDependencies": {
+    "@reapit-cdk/eslint-config": "workspace:^"
+  },
+  "bin": {
+    "rpt-cdk-jsii": "bin/index.js"
+  }
+}
