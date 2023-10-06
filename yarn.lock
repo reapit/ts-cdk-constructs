@@ -2661,7 +2661,7 @@ __metadata:
     "@reapit-cdk/eslint-config": "workspace:^"
     "@reapit-cdk/tsup": "workspace:^"
     aws-cdk: 2.96.2
-    aws-cdk-lib: 2.96.2
+    aws-cdk-lib: ^2.96.2
     cdk-nag: ^2.27.148
     constructs: 10.2.70
     ts-node: ^10.9.1
@@ -4244,29 +4244,6 @@ __metadata:
   version: 1.0.5
   resolution: "available-typed-arrays@npm:1.0.5"
   checksum: 20eb47b3cefd7db027b9bbb993c658abd36d4edd3fe1060e83699a03ee275b0c9b216cc076ff3f2db29073225fb70e7613987af14269ac1fe2a19803ccc97f1a
-  languageName: node
-  linkType: hard
-
-"aws-cdk-lib@npm:2.96.2":
-  version: 2.96.2
-  resolution: "aws-cdk-lib@npm:2.96.2"
-  dependencies:
-    "@aws-cdk/asset-awscli-v1": ^2.2.200
-    "@aws-cdk/asset-kubectl-v20": ^2.1.2
-    "@aws-cdk/asset-node-proxy-agent-v6": ^2.0.1
-    "@balena/dockerignore": ^1.0.2
-    case: 1.6.3
-    fs-extra: ^11.1.1
-    ignore: ^5.2.4
-    jsonschema: ^1.4.1
-    minimatch: ^3.1.2
-    punycode: ^2.3.0
-    semver: ^7.5.4
-    table: ^6.8.1
-    yaml: 1.10.2
-  peerDependencies:
-    constructs: ^10.0.0
-  checksum: 2d144001472ec5a38418a9ab4b55c2e8d60d269eda539d06e79a83013ab7314fed898666c828a2cf160d16011cd5e190305da2e5b00d67646774dacef040a56e
   languageName: node
   linkType: hard
 
