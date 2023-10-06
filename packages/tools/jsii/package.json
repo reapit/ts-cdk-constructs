@@ -11,6 +11,6 @@
     "@reapit-cdk/eslint-config": "workspace:^"
   },
   "bin": {
-    "rpt-jsii": "bin/index.js"
+    "rpt-cdk-jsii": "bin/index.js"
   }
 }

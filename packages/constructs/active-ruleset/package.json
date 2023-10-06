@@ -22,8 +22,8 @@
     "test": "yarn run root:test $PWD",
     "prepack": "reapit-version-package && yarn build",
     "integ": "reapit-cdk-integ",
-    "jsii:build": "jsii --generate-tsconfig jsii.tsconfig.json --fail-on-warnings && jsii-pacmak",
-    "jsii:publish": "publib-pypi jsii-dist/python"
+    "jsii:build": "rpt-cdk-jsii",
+    "jsii:publish": "rpt-cdk-jsii --publish"
   },
   "main": "src/index.ts",
   "types": "src/index.ts",
@@ -40,6 +40,7 @@
     "@reapit-cdk/custom-resource-wrapper": "workspace:^",
     "@reapit-cdk/eslint-config": "workspace:^",
     "@reapit-cdk/integration-tests": "workspace:^",
+    "@reapit-cdk/jsii": "workspace:^",
     "@reapit-cdk/tsup": "workspace:^",
     "@reapit-cdk/version-package": "workspace:^",
     "aws-cdk": "2.96.2",

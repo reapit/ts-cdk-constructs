@@ -5,8 +5,9 @@ import * as proc from 'child_process'
 const go = async () => {
   const isPublish = process.argv.slice(2).includes('--publish')
   const dir = path.resolve('.')
+  const outdir = 'jsii-dist'
   if (isPublish) {
-    proc.execSync(`publib-pypi ${dir}`, {
+    proc.execSync(`publib-pypi ${dir}/${outdir}/python`, {
       cwd: __dirname,
       stdio: 'inherit',
     })
@@ -15,7 +16,6 @@ const go = async () => {
     const pkgJson = JSON.parse(text)
     const pyDistName = pkgJson.name.replace('@', '').replace('/', '.')
     const pyModule = pkgJson.name.replace('@', '').replace('/', '.').replaceAll('-', '_')
-    const outdir = 'jsii-dist'
 
     await fs.writeFile(
       path.resolve('package.json'),
@@ -37,7 +37,7 @@ const go = async () => {
 
     await fs.writeFile(
       path.resolve('.npmignore'),
-      [await fs.readFile('.npmignore'), 'jsii-dist', '!.jsii', '!.jsii.gz'].join('\n'),
+      [await fs.readFile('.npmignore'), outdir, '!.jsii', '!.jsii.gz'].join('\n'),
     )
 
     proc.execSync(`jsii ${dir} --generate-tsconfig jsii.tsconfig.json --fail-on-warnings`, {

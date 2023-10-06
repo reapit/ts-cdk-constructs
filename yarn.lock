@@ -2492,6 +2492,7 @@ __metadata:
     "@reapit-cdk/custom-resource-wrapper": "workspace:^"
     "@reapit-cdk/eslint-config": "workspace:^"
     "@reapit-cdk/integration-tests": "workspace:^"
+    "@reapit-cdk/jsii": "workspace:^"
     "@reapit-cdk/tsup": "workspace:^"
     "@reapit-cdk/version-package": "workspace:^"
     aws-cdk: 2.96.2
@@ -2499,9 +2500,6 @@ __metadata:
     aws-lambda: ^1.0.7
     aws-sdk-client-mock: ^3.0.0
     constructs: 10.2.70
-    jsii: ^5.2.11
-    jsii-pacmak: ^1.89.0
-    publib: ^0.2.737
   peerDependencies:
     aws-cdk-lib: 2.96.2
     constructs: 10.2.70
@@ -2657,6 +2655,20 @@ __metadata:
     ts-node: ^10.9.1
   bin:
     reapit-cdk-integ: ./bin/index.js
+  languageName: unknown
+  linkType: soft
+
+"@reapit-cdk/jsii@workspace:^, @reapit-cdk/jsii@workspace:packages/tools/jsii":
+  version: 0.0.0-use.local
+  resolution: "@reapit-cdk/jsii@workspace:packages/tools/jsii"
+  dependencies:
+    "@reapit-cdk/eslint-config": "workspace:^"
+    jsii: ^5.2.11
+    jsii-pacmak: ^1.89.0
+    publib: ^0.2.737
+    ts-node: ^10.9.1
+  bin:
+    rpt-cdk-jsii: bin/index.js
   languageName: unknown
   linkType: soft
 
