@@ -22,11 +22,11 @@
     "test": "yarn run root:test $PWD",
     "prepack": "reapit-version-package && yarn build",
     "integ": "reapit-cdk-integ",
-    "jsii:build": "rm src/index.d.ts && jsii --generate-tsconfig jsii.tsconfig.json --fail-on-warnings",
-    "jsii:package": "jsii-pacmak"
+    "jsii:build": "jsii --generate-tsconfig jsii.tsconfig.json --fail-on-warnings && jsii-pacmak",
+    "jsii:publish": "publib-pypi jsii-dist/python"
   },
   "main": "src/index.ts",
-  "types": "src/index.d.ts",
+  "types": "src/index.ts",
   "publishConfig": {
     "main": "dist/index.js",
     "types": "dist/index.d.ts"
@@ -44,11 +44,12 @@
     "@reapit-cdk/version-package": "workspace:^",
     "aws-cdk": "2.96.2",
     "aws-cdk-lib": "2.96.2",
-    "constructs": "10.2.70",
     "aws-lambda": "^1.0.7",
     "aws-sdk-client-mock": "^3.0.0",
+    "constructs": "10.2.70",
     "jsii": "^5.2.11",
-    "jsii-pacmak": "^1.89.0"
+    "jsii-pacmak": "^1.89.0",
+    "publib": "^0.2.737"
   },
   "stability": "stable",
   "jsii": {
@@ -58,11 +59,6 @@
       "python": {
         "distName": "reapit-cdk.active-ruleset",
         "module": "reapit_cdk.active_ruleset"
-      },
-      "dotnet": {
-        "namespace": "ReapitCDK.ActiveRuleset",
-        "packageId": "ReapitCDK.ActiveRuleset",
-        "iconUrl": "https://avatars.githubusercontent.com/u/12103471?s=200&v=4"
       }
     }
   }
