@@ -5,6 +5,7 @@ import {
   ListCertificatesCommand,
   RequestCertificateCommand,
   DescribeCertificateCommand,
+  DeleteCertificateCommand,
 } from '@aws-sdk/client-acm'
 import { ChangeResourceRecordSetsCommand, GetChangeCommand, Route53Client } from '@aws-sdk/client-route-53'
 import { STSClient, AssumeRoleCommand } from '@aws-sdk/client-sts'
@@ -32,6 +33,7 @@ const genEvent = (
   RequestType,
   LogicalResourceId: '123',
   RequestId: '123',
+  PhysicalResourceId: 'physical-resource-id',
   ResourceProperties: {
     ServiceToken: '123',
     domainMappings,
@@ -877,5 +879,34 @@ describe('wildcard-certificate', () => {
     expect(res.Reason?.split('\n')[0]).toBe(
       '[Error] failed to assumed role role-arn: Error: failed to assumed role role-arn',
     )
+  })
+
+  it('onDelete - should delete the cert if its no longer in use', async () => {
+    acmMock.on(DescribeCertificateCommand).resolvesOnce({
+      Certificate: {
+        InUseBy: [],
+      },
+    })
+    await onEvent(genEvent('Delete'))
+    expect(acmMock).toReceiveCommandWith(DescribeCertificateCommand, {
+      CertificateArn: 'physical-resource-id',
+    })
+    expect(acmMock).toReceiveCommandWith(DeleteCertificateCommand, {
+      CertificateArn: 'physical-resource-id',
+    })
+  })
+  it('onDelete - should not delete the cert if its in use', async () => {
+    acmMock.on(DescribeCertificateCommand).resolvesOnce({
+      Certificate: {
+        InUseBy: ['something'],
+      },
+    })
+    await onEvent(genEvent('Delete'))
+    expect(acmMock).toReceiveCommandWith(DescribeCertificateCommand, {
+      CertificateArn: 'physical-resource-id',
+    })
+    expect(acmMock).not.toReceiveCommandWith(DeleteCertificateCommand, {
+      CertificateArn: 'physical-resource-id',
+    })
   })
 })

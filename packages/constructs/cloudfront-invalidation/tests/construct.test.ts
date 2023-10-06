@@ -19,6 +19,7 @@ const synth = (items?: string[]) => {
   const invalidation = new CloudfrontInvalidation(stack, 'invalidation', {
     distribution,
     items,
+    invalidateOnCreation: true,
   })
   const template = () => Template.fromStack(stack)
   return {

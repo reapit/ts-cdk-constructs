@@ -26,7 +26,9 @@
   },
   "devDependencies": {
     "@reapit-cdk/eslint-config": "workspace:^",
+    "@reapit-cdk/integration-tests": "workspace:^",
     "@reapit-cdk/tsup": "workspace:^",
-    "@reapit-cdk/version-package": "workspace:^"
+    "@reapit-cdk/version-package": "workspace:^",
+    "aws-cdk": "2.96.2"
   }
 }

@@ -31,8 +31,10 @@
     "@aws-sdk/client-secrets-manager": "3.414.0",
     "@aws-sdk/lib-dynamodb": "3.414.0",
     "@reapit-cdk/eslint-config": "workspace:^",
+    "@reapit-cdk/integration-tests": "workspace:^",
     "@reapit-cdk/tsup": "workspace:^",
     "@reapit-cdk/version-package": "workspace:^",
+    "aws-cdk": "2.96.2",
     "aws-lambda": "^1.0.7",
     "aws-sdk-client-mock": "^3.0.0"
   }

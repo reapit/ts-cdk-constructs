@@ -10,7 +10,11 @@ export class CloudfrontInvalidation extends Construct {
   constructor(
     scope: Construct,
     id: string,
-    { distribution, items = ['/index.html'] }: { distribution: IDistribution; items?: string[] },
+    {
+      distribution,
+      items = ['/index.html'],
+      invalidateOnCreation,
+    }: { distribution: IDistribution; items?: string[]; invalidateOnCreation?: boolean },
   ) {
     super(scope, id)
 
@@ -49,6 +53,10 @@ export class CloudfrontInvalidation extends Construct {
       ),
     })
 
+    const stateMachine = new SfnStateMachine(createInvalidationStateMachine, {
+      input: RuleTargetInput.fromEventPath('$.id'),
+    })
+
     new Rule(this, 'DeploymentComplete', {
       eventPattern: {
         source: ['aws.cloudformation'],
@@ -59,10 +67,20 @@ export class CloudfrontInvalidation extends Construct {
           },
         },
       },
-    }).addTarget(
-      new SfnStateMachine(createInvalidationStateMachine, {
-        input: RuleTargetInput.fromEventPath('$.id'),
-      }),
-    )
+    }).addTarget(stateMachine)
+
+    if (invalidateOnCreation) {
+      new Rule(this, 'DeploymentCreateComplete', {
+        eventPattern: {
+          source: ['aws.cloudformation'],
+          detail: {
+            'stack-id': [distribution.stack.stackId],
+            'status-details': {
+              status: ['CREATE_COMPLETE'],
+            },
+          },
+        },
+      }).addTarget(stateMachine)
+    }
   }
 }
