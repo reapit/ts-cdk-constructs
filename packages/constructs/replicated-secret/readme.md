@@ -4,7 +4,7 @@
 ![npm version](https://img.shields.io/npm/v/@reapit-cdk/replicated-secret)
 ![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/replicated-secret)
 ![coverage: 97.17%25](https://img.shields.io/badge/coverage-97.17%25-green)
-![Integ Tests: X](https://img.shields.io/badge/Integ%20Tests-X-red)
+![Integ Tests: ✔](https://img.shields.io/badge/Integ%20Tests-%E2%9C%94-green)
 
 Creates a Secret and replicates it across the given regions. Requires a [ReplicatedKey](../replicated-key/readme.md) be passed in.
 
