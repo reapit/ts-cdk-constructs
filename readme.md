@@ -1,5 +1,5 @@
 # @reapit-cdk/ts-constructs
-![coverage: 95.74%25](https://img.shields.io/badge/coverage-95.74%25-green)
+![coverage: 95.79%25](https://img.shields.io/badge/coverage-95.79%25-green)
 CDK Constructs Monorepo
 ## Constructs
 
@@ -20,7 +20,7 @@ This construct returns the currently active SES receipt RuleSet, or creates one.
 ![npm version](https://img.shields.io/npm/v/@reapit-cdk/cloudfront-invalidation)
 ![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/cloudfront-invalidation)
 ![coverage: 99.02%25](https://img.shields.io/badge/coverage-99.02%25-green)
-![Integ Tests: X](https://img.shields.io/badge/Integ%20Tests-X-red)
+![Integ Tests: ✔](https://img.shields.io/badge/Integ%20Tests-%E2%9C%94-green)
 
 CloudFront invalidations are [very error prone](https://github.com/aws/aws-cdk/issues/15891#issuecomment-966456154), making it hard to invalidate distributions reliably. This construct aims to solve this problem by using a step function which is triggered on stack update, and uses exponential backoff to retry the invalidation. Inspired by https://github.com/aws/aws-cdk/issues/15891#issuecomment-1362163142.
 <h3><a href="packages/construct/edge-api">@reapit-cdk/edge-api</a></h3>
@@ -28,7 +28,7 @@ CloudFront invalidations are [very error prone](https://github.com/aws/aws-cdk/i
 ![npm version](https://img.shields.io/npm/v/@reapit-cdk/edge-api)
 ![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/edge-api)
 ![coverage: 98.09%25](https://img.shields.io/badge/coverage-98.09%25-green)
-![Integ Tests: X](https://img.shields.io/badge/Integ%20Tests-X-red)
+![Integ Tests: ✔](https://img.shields.io/badge/Integ%20Tests-%E2%9C%94-green)
 
 This construct creates a truly globally available API where code executes at the edge. Because changes take a long time to propagate to all edge locations, there is a `devMode` flag which will instead deploy your API to a [HTTP API](https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api.html). This is compatible with hotswapping, so [`cdk watch`](https://docs.aws.amazon.com/cdk/v2/guide/cli.html#cli-deploy-watch) works very well. In order to make it easy to develop APIs which handle both event formats and work around the environment variable limitation, I recommend you use the lightweight request wrapper [@reapit-cdk/edge-api-sdk](../../modules/edge-api-sdk) which normalises the event format and offers some extra helpers.
 <h3><a href="packages/construct/email-receiver">@reapit-cdk/email-receiver</a></h3>
@@ -36,7 +36,7 @@ This construct creates a truly globally available API where code executes at the
 ![npm version](https://img.shields.io/npm/v/@reapit-cdk/email-receiver)
 ![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/email-receiver)
 ![coverage: 99.02%25](https://img.shields.io/badge/coverage-99.02%25-green)
-![Integ Tests: X](https://img.shields.io/badge/Integ%20Tests-X-red)
+![Integ Tests: ✔](https://img.shields.io/badge/Integ%20Tests-%E2%9C%94-green)
 
 This construct sets up everything necessary to receive email. The emails get stored in a dynamodb table, queryable by recipient. This is designed to be used in end-to-end tests, with the [@reapit-cdk/email-receiver-client](../../libs/email-receiver-client) helper library.
 <h3><a href="packages/construct/replicated-key">@reapit-cdk/replicated-key</a></h3>
@@ -44,7 +44,7 @@ This construct sets up everything necessary to receive email. The emails get sto
 ![npm version](https://img.shields.io/npm/v/@reapit-cdk/replicated-key)
 ![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/replicated-key)
 ![coverage: 99.02%25](https://img.shields.io/badge/coverage-99.02%25-green)
-![Integ Tests: X](https://img.shields.io/badge/Integ%20Tests-X-red)
+![Integ Tests: ✔](https://img.shields.io/badge/Integ%20Tests-%E2%9C%94-green)
 
 Creates a KMS key and replicates it to the desired regions. Useful when replicating secrets across regions.
 <h3><a href="packages/construct/replicated-secret">@reapit-cdk/replicated-secret</a></h3>
@@ -52,7 +52,7 @@ Creates a KMS key and replicates it to the desired regions. Useful when replicat
 ![npm version](https://img.shields.io/npm/v/@reapit-cdk/replicated-secret)
 ![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/replicated-secret)
 ![coverage: 97.17%25](https://img.shields.io/badge/coverage-97.17%25-green)
-![Integ Tests: X](https://img.shields.io/badge/Integ%20Tests-X-red)
+![Integ Tests: ✔](https://img.shields.io/badge/Integ%20Tests-%E2%9C%94-green)
 
 Creates a Secret and replicates it across the given regions. Requires a [ReplicatedKey](../replicated-key/readme.md) be passed in.
 <h3><a href="packages/construct/userpool-domain">@reapit-cdk/userpool-domain</a></h3>
@@ -60,7 +60,7 @@ Creates a Secret and replicates it across the given regions. Requires a [Replica
 ![npm version](https://img.shields.io/npm/v/@reapit-cdk/userpool-domain)
 ![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/userpool-domain)
 ![coverage: 99.02%25](https://img.shields.io/badge/coverage-99.02%25-green)
-![Integ Tests: X](https://img.shields.io/badge/Integ%20Tests-X-red)
+![Integ Tests: ✔](https://img.shields.io/badge/Integ%20Tests-%E2%9C%94-green)
 
 This construct returns the given Cognito UserPool's UserPoolDomain, or creates one. This resolves an issue with [AWS::Cognito::UserPoolDomain](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-cognito-userpooldomain.html), since that will fail if one already exists.
 <h3><a href="packages/construct/wildcard-certificate">@reapit-cdk/wildcard-certificate</a></h3>
@@ -68,7 +68,7 @@ This construct returns the given Cognito UserPool's UserPoolDomain, or creates o
 ![npm version](https://img.shields.io/npm/v/@reapit-cdk/wildcard-certificate)
 ![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/wildcard-certificate)
 ![coverage: 97.89%25](https://img.shields.io/badge/coverage-97.89%25-green)
-![Integ Tests: X](https://img.shields.io/badge/Integ%20Tests-X-red)
+![Integ Tests: ✔](https://img.shields.io/badge/Integ%20Tests-%E2%9C%94-green)
 
 This construct returns a wildcard certificate valid for subdomains of the given domain names, creating and validating on if it doesn't exist. It supports cross-account DNS validation, you can pass in arns of roles from other accounts and it'll assume them whilst doing the Route53 updates.
 

@@ -4,7 +4,7 @@
 ![npm version](https://img.shields.io/npm/v/@reapit-cdk/wildcard-certificate)
 ![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/wildcard-certificate)
 ![coverage: 97.89%25](https://img.shields.io/badge/coverage-97.89%25-green)
-![Integ Tests: X](https://img.shields.io/badge/Integ%20Tests-X-red)
+![Integ Tests: ✔](https://img.shields.io/badge/Integ%20Tests-%E2%9C%94-green)
 
 This construct returns a wildcard certificate valid for subdomains of the given domain names, creating and validating on if it doesn't exist. It supports cross-account DNS validation, you can pass in arns of roles from other accounts and it'll assume them whilst doing the Route53 updates.
 
