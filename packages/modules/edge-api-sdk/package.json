@@ -17,9 +17,9 @@
     "main": "dist/index.js"
   },
   "scripts": {
-    "check": "yarn run root:check -p $PWD",
+    "check": "yarn run root:check -p $(pwd)",
     "lint": "reapit-cdk-eslint",
-    "test": "yarn run root:test $PWD",
+    "test": "yarn run root:test $(pwd)",
     "build": "reapit-cdk-tsup",
     "prepack": "reapit-version-package && yarn build"
   },

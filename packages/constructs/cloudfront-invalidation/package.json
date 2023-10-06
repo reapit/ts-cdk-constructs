@@ -10,9 +10,9 @@
   "license": "MIT",
   "scripts": {
     "build": "reapit-cdk-tsup",
-    "check": "yarn run root:check -p $PWD",
+    "check": "yarn run root:check -p $(pwd)",
     "lint": "reapit-cdk-eslint",
-    "test": "yarn run root:test $PWD",
+    "test": "yarn run root:test $(pwd)",
     "prepack": "reapit-version-package && yarn build",
     "jsii:build": "rpt-cdk-jsii",
     "jsii:publish": "rpt-cdk-jsii --publish"
