@@ -2496,13 +2496,13 @@ __metadata:
     "@reapit-cdk/tsup": "workspace:^"
     "@reapit-cdk/version-package": "workspace:^"
     aws-cdk: 2.96.2
-    aws-cdk-lib: 2.96.2
+    aws-cdk-lib: ^2.96.2
     aws-lambda: ^1.0.7
     aws-sdk-client-mock: ^3.0.0
-    constructs: 10.2.70
+    constructs: ^10.2.70
   peerDependencies:
-    aws-cdk-lib: 2.96.2
-    constructs: 10.2.70
+    aws-cdk-lib: ^2.96.2
+    constructs: ^10.2.70
   languageName: unknown
   linkType: soft
 
@@ -2512,10 +2512,14 @@ __metadata:
   dependencies:
     "@reapit-cdk/common": "workspace:^"
     "@reapit-cdk/eslint-config": "workspace:^"
+    "@reapit-cdk/jsii": "workspace:^"
     "@reapit-cdk/tsup": "workspace:^"
     "@reapit-cdk/version-package": "workspace:^"
-    aws-cdk-lib: 2.96.2
-    constructs: 10.2.70
+    aws-cdk-lib: ^2.96.2
+    constructs: ^10.2.70
+  peerDependencies:
+    aws-cdk-lib: ^2.96.2
+    constructs: ^10.2.70
   languageName: unknown
   linkType: soft
 
@@ -2562,12 +2566,16 @@ __metadata:
     "@aws-sdk/lib-dynamodb": 3.414.0
     "@reapit-cdk/cloudfront-invalidation": "workspace:^"
     "@reapit-cdk/eslint-config": "workspace:^"
+    "@reapit-cdk/jsii": "workspace:^"
     "@reapit-cdk/tsup": "workspace:^"
     "@reapit-cdk/version-package": "workspace:^"
-    aws-cdk-lib: 2.96.2
+    aws-cdk-lib: ^2.96.2
     aws-lambda: ^1.0.7
     aws-sdk-client-mock: ^3.0.0
-    constructs: 10.2.70
+    constructs: ^10.2.70
+  peerDependencies:
+    aws-cdk-lib: ^2.96.2
+    constructs: ^10.2.70
   languageName: unknown
   linkType: soft
 
@@ -2601,14 +2609,18 @@ __metadata:
     "@reapit-cdk/common": "workspace:^"
     "@reapit-cdk/email-receiver-types": "workspace:^"
     "@reapit-cdk/eslint-config": "workspace:^"
+    "@reapit-cdk/jsii": "workspace:^"
     "@reapit-cdk/tsup": "workspace:^"
     "@reapit-cdk/version-package": "workspace:^"
     "@types/mailparser": ^3.4.0
-    aws-cdk-lib: 2.96.2
+    aws-cdk-lib: ^2.96.2
     aws-lambda: ^1.0.7
     aws-sdk-client-mock: ^3.0.0
-    constructs: 10.2.70
+    constructs: ^10.2.70
     mailparser: ^3.6.5
+  peerDependencies:
+    aws-cdk-lib: ^2.96.2
+    constructs: ^10.2.70
   languageName: unknown
   linkType: soft
 
@@ -2680,12 +2692,16 @@ __metadata:
     "@reapit-cdk/common": "workspace:^"
     "@reapit-cdk/custom-resource-wrapper": "workspace:^"
     "@reapit-cdk/eslint-config": "workspace:^"
+    "@reapit-cdk/jsii": "workspace:^"
     "@reapit-cdk/tsup": "workspace:^"
     "@reapit-cdk/version-package": "workspace:^"
-    aws-cdk-lib: 2.96.2
+    aws-cdk-lib: ^2.96.2
     aws-lambda: ^1.0.7
     aws-sdk-client-mock: ^3.0.0
-    constructs: 10.2.70
+    constructs: ^10.2.70
+  peerDependencies:
+    aws-cdk-lib: ^2.96.2
+    constructs: ^10.2.70
   languageName: unknown
   linkType: soft
 
@@ -2697,12 +2713,16 @@ __metadata:
     "@reapit-cdk/common": "workspace:^"
     "@reapit-cdk/custom-resource-wrapper": "workspace:^"
     "@reapit-cdk/eslint-config": "workspace:^"
+    "@reapit-cdk/jsii": "workspace:^"
     "@reapit-cdk/tsup": "workspace:^"
     "@reapit-cdk/version-package": "workspace:^"
-    aws-cdk-lib: 2.96.2
+    aws-cdk-lib: ^2.96.2
     aws-lambda: ^1.0.7
     aws-sdk-client-mock: ^3.0.0
-    constructs: 10.2.70
+    constructs: ^10.2.70
+  peerDependencies:
+    aws-cdk-lib: ^2.96.2
+    constructs: ^10.2.70
   languageName: unknown
   linkType: soft
 
@@ -2747,12 +2767,16 @@ __metadata:
     "@aws-sdk/client-cognito-identity-provider": 3.414.0
     "@reapit-cdk/custom-resource-wrapper": "workspace:^"
     "@reapit-cdk/eslint-config": "workspace:^"
+    "@reapit-cdk/jsii": "workspace:^"
     "@reapit-cdk/tsup": "workspace:^"
     "@reapit-cdk/version-package": "workspace:^"
-    aws-cdk-lib: 2.96.2
+    aws-cdk-lib: ^2.96.2
     aws-lambda: ^1.0.7
     aws-sdk-client-mock: ^3.0.0
-    constructs: 10.2.70
+    constructs: ^10.2.70
+  peerDependencies:
+    aws-cdk-lib: ^2.96.2
+    constructs: ^10.2.70
   languageName: unknown
   linkType: soft
 
@@ -2776,12 +2800,16 @@ __metadata:
     "@aws-sdk/client-sts": 3.414.0
     "@reapit-cdk/custom-resource-wrapper": "workspace:^"
     "@reapit-cdk/eslint-config": "workspace:^"
+    "@reapit-cdk/jsii": "workspace:^"
     "@reapit-cdk/tsup": "workspace:^"
     "@reapit-cdk/version-package": "workspace:^"
-    aws-cdk-lib: 2.96.2
+    aws-cdk-lib: ^2.96.2
     aws-lambda: ^1.0.7
     aws-sdk-client-mock: ^3.0.0
-    constructs: 10.2.70
+    constructs: ^10.2.70
+  peerDependencies:
+    aws-cdk-lib: ^2.96.2
+    constructs: ^10.2.70
   languageName: unknown
   linkType: soft
 
@@ -4242,6 +4270,29 @@ __metadata:
   languageName: node
   linkType: hard
 
+"aws-cdk-lib@npm:^2.96.2":
+  version: 2.99.1
+  resolution: "aws-cdk-lib@npm:2.99.1"
+  dependencies:
+    "@aws-cdk/asset-awscli-v1": ^2.2.200
+    "@aws-cdk/asset-kubectl-v20": ^2.1.2
+    "@aws-cdk/asset-node-proxy-agent-v6": ^2.0.1
+    "@balena/dockerignore": ^1.0.2
+    case: 1.6.3
+    fs-extra: ^11.1.1
+    ignore: ^5.2.4
+    jsonschema: ^1.4.1
+    minimatch: ^3.1.2
+    punycode: ^2.3.0
+    semver: ^7.5.4
+    table: ^6.8.1
+    yaml: 1.10.2
+  peerDependencies:
+    constructs: ^10.0.0
+  checksum: ed351f197fddd388d7298ff1ccf741dec998c62352ace2728867f59c09bfc828f6aadb86adaa44a1bf4873d7fe47c25f23e83848eb849a5fa76587efabc6426f
+  languageName: node
+  linkType: hard
+
 "aws-cdk@npm:2.96.2":
   version: 2.96.2
   resolution: "aws-cdk@npm:2.96.2"
@@ -4823,7 +4874,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"constructs@npm:10.2.70":
+"constructs@npm:10.2.70, constructs@npm:^10.2.70":
   version: 10.2.70
   resolution: "constructs@npm:10.2.70"
   checksum: 8649ed2c95cb0107d389249285229a2d6594cd36a24af2c106b25630cc4f649c2e628f237ce8da1f26454742ed23cc7f1fcfeab9c3a6592180a48848aa5bf82d

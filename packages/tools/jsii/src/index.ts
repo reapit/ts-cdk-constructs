@@ -22,6 +22,7 @@ const go = async () => {
       JSON.stringify({
         ...pkgJson,
         stability: 'stable',
+        keywords: [...(pkgJson.keywords ?? []), 'awscdk'],
         jsii: {
           outdir,
           versionFormat: 'short',

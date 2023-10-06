@@ -32,8 +32,8 @@
     "types": "dist/index.d.ts"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "2.96.2",
-    "constructs": "10.2.70"
+    "aws-cdk-lib": "^2.96.2",
+    "constructs": "^10.2.70"
   },
   "devDependencies": {
     "@aws-sdk/client-ses": "3.414.0",
@@ -44,9 +44,9 @@
     "@reapit-cdk/tsup": "workspace:^",
     "@reapit-cdk/version-package": "workspace:^",
     "aws-cdk": "2.96.2",
-    "aws-cdk-lib": "2.96.2",
+    "aws-cdk-lib": "^2.96.2",
     "aws-lambda": "^1.0.7",
     "aws-sdk-client-mock": "^3.0.0",
-    "constructs": "10.2.70"
+    "constructs": "^10.2.70"
   }
 }
