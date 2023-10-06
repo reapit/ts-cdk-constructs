@@ -42,7 +42,7 @@ jobs:
         run: |
           yarn workspace ${{ steps.tagName.outputs.package }} run test
 
-      - name: JSII Build
+      - name: JSII Build (if needed)
         run: |
           yarn workspace ${{ steps.tagName.outputs.package }} run jsii:build
 
@@ -54,7 +54,7 @@ jobs:
         run: |
           yarn workspace ${{ steps.tagName.outputs.package }} npm publish
 
-      - name: Publish to PyPI
+      - name: Publish to PyPI (if needed)
         env:
           TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
