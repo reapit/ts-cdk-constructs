@@ -7,6 +7,15 @@ import { build } from 'tsup'
 const hasLambda = process.argv.slice(2).includes('--lambda')
 const hasLambdas = process.argv.slice(2).includes('--lambdas')
 
+if (!hasLambda && !hasLambdas && process.argv.slice(2)[0]) {
+  await build({
+    entry: [process.argv.slice(2)[0]],
+    target: 'node18',
+    clean: true,
+  })
+  process.exit()
+}
+
 await build({
   entry: ['src/index.ts'],
   target: 'node18',

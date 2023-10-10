@@ -1,8 +1,7 @@
 import * as cdk from 'aws-cdk-lib'
 // import { Aspects } from 'aws-cdk-lib'
 // import { AwsSolutionsChecks } from 'cdk-nag'
-export * from '@aws-cdk/integ-tests-alpha'
-import * as integ from '@aws-cdk/integ-tests-alpha'
+export * from './integration-test'
 
 export class App extends cdk.App {
   constructor() {
@@ -17,17 +16,8 @@ export class Stack extends cdk.Stack {
       ...(props ?? {}),
       env: props?.env ?? {
         account: process.env.AWS_ACCOUNT,
-        region: process.env.INTEG_REGION,
+        region: process.env.INTEG_REGION || 'eu-central-1',
       },
-    })
-  }
-}
-
-export class IntegTest extends integ.IntegTest {
-  constructor(app: App, id: string, props: integ.IntegTestProps) {
-    super(app, id, {
-      ...props,
-      assertionStack: props.assertionStack ?? new Stack(app, id + 'Assertions'),
     })
   }
 }

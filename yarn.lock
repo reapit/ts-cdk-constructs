@@ -64,31 +64,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-cdk/integ-runner@npm:^2.96.2-alpha.0":
-  version: 2.96.2-alpha.0
-  resolution: "@aws-cdk/integ-runner@npm:2.96.2-alpha.0"
-  dependencies:
-    aws-cdk: 2.96.2
-    fsevents: 2.3.2
-  dependenciesMeta:
-    fsevents:
-      optional: true
-  bin:
-    integ-runner: bin/integ-runner
-  checksum: 94688b4d941459ef22365f74ebfd447cb2fd63657c36970b399f431d2fa53b7298acece2efe1d3c7b98e62923d845ff79a343e9e0093319c59c508b6e4f70122
-  languageName: node
-  linkType: hard
-
-"@aws-cdk/integ-tests-alpha@npm:^2.96.2-alpha.0":
-  version: 2.96.2-alpha.0
-  resolution: "@aws-cdk/integ-tests-alpha@npm:2.96.2-alpha.0"
-  peerDependencies:
-    aws-cdk-lib: 2.96.2
-    constructs: ^10.0.0
-  checksum: 8f5425a1ecfb0ae270c0e9c7f12ee1be2acaebc27fe024cf9cc17298aeab444352b6f4e0141df3a02f07679fe3189fc7341b905ba5b3df12e3351fa14e066c1f
-  languageName: node
-  linkType: hard
-
 "@aws-crypto/crc32@npm:3.0.0":
   version: 3.0.0
   resolution: "@aws-crypto/crc32@npm:3.0.0"
@@ -2662,17 +2637,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@reapit-cdk/integration-tests@workspace:packages/tools/integration-tests"
   dependencies:
-    "@aws-cdk/integ-runner": ^2.96.2-alpha.0
-    "@aws-cdk/integ-tests-alpha": ^2.96.2-alpha.0
     "@reapit-cdk/eslint-config": "workspace:^"
     "@reapit-cdk/tsup": "workspace:^"
     aws-cdk: 2.96.2
     aws-cdk-lib: ^2.96.2
     cdk-nag: ^2.27.148
     constructs: 10.2.70
+    dir-compare: ^4.2.0
     ts-node: ^10.9.1
-  bin:
-    reapit-cdk-integ: ./bin/index.js
   languageName: unknown
   linkType: soft
 
@@ -5055,6 +5027,16 @@ __metadata:
   version: 5.1.0
   resolution: "diff@npm:5.1.0"
   checksum: c7bf0df7c9bfbe1cf8a678fd1b2137c4fb11be117a67bc18a0e03ae75105e8533dbfb1cda6b46beb3586ef5aed22143ef9d70713977d5fb1f9114e21455fba90
+  languageName: node
+  linkType: hard
+
+"dir-compare@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "dir-compare@npm:4.2.0"
+  dependencies:
+    minimatch: ^3.0.5
+    p-limit: "^3.1.0 "
+  checksum: 138ee3c7716f45c1dc100efdf6b9517459428f1cb83fecda1f0dc633326d911a01f6456ff68333f916209649321c70fa004f448f137531664582ecddde4e2601
   languageName: node
   linkType: hard
 
@@ -7937,7 +7919,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"p-limit@npm:^3.0.2, p-limit@npm:^3.1.0":
+"p-limit@npm:^3.0.2, p-limit@npm:^3.1.0, p-limit@npm:^3.1.0 ":
   version: 3.1.0
   resolution: "p-limit@npm:3.1.0"
   dependencies:

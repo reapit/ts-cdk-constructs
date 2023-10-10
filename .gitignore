@@ -142,3 +142,5 @@ packages/constructs/**/usage.js
 packages/constructs/**/jsii.tsconfig.json
 packages/constructs/**/.jsii
 packages/constructs/**/jsii-dist
+
+cdk.out

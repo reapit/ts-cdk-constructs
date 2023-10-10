@@ -9,19 +9,19 @@
   },
   "license": "MIT",
   "main": "src/index.ts",
-  "bin": {
-    "reapit-cdk-integ": "./bin/index.js"
+  "scripts": {
+    "postinstall": "yarn build",
+    "build": "reapit-cdk-tsup src/jest-environment.ts"
   },
   "dependencies": {
+    "aws-cdk": "2.96.2",
     "aws-cdk-lib": "^2.96.2",
-    "constructs": "10.2.70"
+    "constructs": "10.2.70",
+    "dir-compare": "^4.2.0"
   },
   "devDependencies": {
-    "@aws-cdk/integ-runner": "^2.96.2-alpha.0",
-    "@aws-cdk/integ-tests-alpha": "^2.96.2-alpha.0",
     "@reapit-cdk/eslint-config": "workspace:^",
     "@reapit-cdk/tsup": "workspace:^",
-    "aws-cdk": "2.96.2",
     "cdk-nag": "^2.27.148",
     "ts-node": "^10.9.1"
   }
