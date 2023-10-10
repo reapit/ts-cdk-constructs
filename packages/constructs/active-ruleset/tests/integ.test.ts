@@ -9,24 +9,10 @@ describe('active-rule integration', () => {
     stackName: 'active-ruleset-stack',
   })
 
-  beforeAll(
-    async () => {
-      const runTests = await integ.setup()
-      if (!runTests) {
-        pending('Test skipped - snapshot unchanged')
-      }
-    },
-    5 * 60 * 1000,
-  )
-
-  afterAll(
-    async () => {
-      await integ.teardown()
-    },
-    5 * 60 * 1000,
-  )
-
   it('should output the active receiptRuleSetName', async () => {
+    if (integ.skipped) {
+      return
+    }
     const ses = new SESClient({
       region: 'eu-central-1',
     })

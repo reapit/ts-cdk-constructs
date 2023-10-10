@@ -82,6 +82,20 @@ export class IntegrationTest {
     this.stackName = stackName
     this.forceRun = !!forceRun
     this.noCleanup = !!noCleanup
+
+    beforeAll(
+      async () => {
+        await this.setup()
+      },
+      5 * 60 * 1000,
+    )
+
+    afterAll(
+      async () => {
+        await this.teardown()
+      },
+      5 * 60 * 1000,
+    )
   }
 
   private async mkTmpDir() {

@@ -1,7 +1,7 @@
 import NodeEnvironment from 'jest-environment-node'
 import type { Circus } from '@jest/types'
 
-export const getTestPath = (test: Circus.TestEntry) => {
+const getTestPath = (test: Circus.TestEntry) => {
   const path: string[] = [test.name]
   let parent: Circus.DescribeBlock | undefined = test.parent
   while (parent) {
