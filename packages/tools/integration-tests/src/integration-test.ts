@@ -74,6 +74,7 @@ export class IntegrationTest {
   outDir?: string
   noCleanup: boolean
   skipped?: boolean
+  setupPromise: Promise<any>
 
   constructor(props: IntegrationTestProps) {
     const { stackFile, stackName, forceRun, noCleanup } = props
@@ -82,10 +83,11 @@ export class IntegrationTest {
     this.stackName = stackName
     this.forceRun = !!forceRun
     this.noCleanup = !!noCleanup
+    this.setupPromise = this.setup()
 
     beforeAll(
       async () => {
-        await this.setup()
+        await this.setupPromise
       },
       5 * 60 * 1000,
     )
@@ -95,6 +97,20 @@ export class IntegrationTest {
         await this.teardown()
       },
       5 * 60 * 1000,
+    )
+  }
+
+  async it(name: string, fn: () => any, timeout?: number | undefined) {
+    return it(
+      name,
+      async () => {
+        await this.setupPromise
+        if (this.skipped) {
+          return
+        }
+        return fn()
+      },
+      timeout,
     )
   }
 
