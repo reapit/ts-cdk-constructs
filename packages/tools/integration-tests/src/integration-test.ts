@@ -100,7 +100,7 @@ export class IntegrationTest {
     )
   }
 
-  async it(name: string, fn: () => any, timeout?: number | undefined) {
+  it(name: string, fn: () => any, timeout?: number | undefined) {
     return it(
       name,
       async () => {
