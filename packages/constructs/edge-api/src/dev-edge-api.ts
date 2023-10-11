@@ -72,7 +72,7 @@ export class DevEdgeAPI extends Construct {
       const methods = endpoint.methods ?? [HttpMethod.ANY]
       this.api.addRoutes({
         path: endpoint.pathPattern.replace('*', '{proxy+}'),
-        integration: new HttpUrlIntegration('proxy-integration', endpoint.destination + '/{proxy}'),
+        integration: new HttpUrlIntegration('proxy-integration', 'https://' + endpoint.destination + '/{proxy}'),
         methods,
       })
     }

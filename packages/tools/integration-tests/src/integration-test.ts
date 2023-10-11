@@ -185,7 +185,7 @@ export class IntegrationTest {
       return
     }
     if (!this.outDir) {
-      throw new Error('this.outDir not set')
+      return
     }
 
     if (!this.noCleanup) {
