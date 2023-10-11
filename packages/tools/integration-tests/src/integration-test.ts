@@ -26,7 +26,7 @@ const snapshotDir = (file: string) => `${file}.snapshot`
 
 const diff = async (dir: string, file: string, stackName: string, outDir: string) => {
   return run(
-    `yarn cdk diff --output=${outDir} --template ${snapshotDir(
+    `cdk diff --output=${outDir} --template ${snapshotDir(
       file,
     )}/${stackName}.template.json --app "node -r ts-node/register ${file}" ${stackName}`,
     dir,
