@@ -1,0 +1,167 @@
+{
+  "version": "34.0.0",
+  "artifacts": {
+    "replicated-secret-test-stack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "replicated-secret-test-stack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "replicated-secret-test-stack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://028446965111/eu-central-1",
+      "properties": {
+        "templateFile": "replicated-secret-test-stack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-deploy-role-028446965111-eu-central-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-cfn-exec-role-028446965111-eu-central-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-028446965111-eu-central-1/adfa8fcb601a29f5b86924b789a187016ff86e79fa05f4494642ccb6ff1c5004.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "replicated-secret-test-stack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-lookup-role-028446965111-eu-central-1",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "replicated-secret-test-stack.assets"
+      ],
+      "metadata": {
+        "/replicated-secret-test-stack/replicated-key/resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "replicatedkeyresourceF8E6CC22"
+          }
+        ],
+        "/replicated-secret-test-stack/replicated-key/lambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "replicatedkeylambdaServiceRole40CD9B58"
+          }
+        ],
+        "/replicated-secret-test-stack/replicated-key/lambda/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "replicatedkeylambdaServiceRoleDefaultPolicyCED25CB6"
+          }
+        ],
+        "/replicated-secret-test-stack/replicated-key/lambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "replicatedkeylambda5BD89BE0"
+          }
+        ],
+        "/replicated-secret-test-stack/replicated-key/provider/framework-onEvent/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "replicatedkeyproviderframeworkonEventServiceRoleE96D5E95"
+          }
+        ],
+        "/replicated-secret-test-stack/replicated-key/provider/framework-onEvent/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "replicatedkeyproviderframeworkonEventServiceRoleDefaultPolicy39CF52FC"
+          }
+        ],
+        "/replicated-secret-test-stack/replicated-key/provider/framework-onEvent/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "replicatedkeyproviderframeworkonEvent6D9848B2"
+          }
+        ],
+        "/replicated-secret-test-stack/replicated-key/custom-resource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "replicatedkeycustomresource14851569"
+          }
+        ],
+        "/replicated-secret-test-stack/certificate/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "certificateEC031123"
+          }
+        ],
+        "/replicated-secret-test-stack/certificate/lambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "certificatelambdaServiceRole3D8A4895"
+          }
+        ],
+        "/replicated-secret-test-stack/certificate/lambda/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "certificatelambdaServiceRoleDefaultPolicy2F432B03"
+          }
+        ],
+        "/replicated-secret-test-stack/certificate/lambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "certificatelambdaBAAB8405"
+          }
+        ],
+        "/replicated-secret-test-stack/certificate/provider/framework-onEvent/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "certificateproviderframeworkonEventServiceRoleCAA3788D"
+          }
+        ],
+        "/replicated-secret-test-stack/certificate/provider/framework-onEvent/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "certificateproviderframeworkonEventServiceRoleDefaultPolicy8E1BF84D"
+          }
+        ],
+        "/replicated-secret-test-stack/certificate/provider/framework-onEvent/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "certificateproviderframeworkonEvent618151B4"
+          }
+        ],
+        "/replicated-secret-test-stack/certificate/wait-for-replication/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "certificatewaitforreplication5633A2B8"
+          }
+        ],
+        "/replicated-secret-test-stack/output": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "output"
+          }
+        ],
+        "/replicated-secret-test-stack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/replicated-secret-test-stack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/replicated-secret-test-stack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "replicated-secret-test-stack"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "version": "34.0.0",
+  "files": {
+    "ae75dd26f798f053f589f9da73e9bd8e8cece08890b6f8f2aa2e4f6ce03883a5": {
+      "source": {
+        "path": "cloudfront-invalidation-stack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "028446965111-eu-central-1": {
+          "bucketName": "cdk-hnb659fds-assets-028446965111-eu-central-1",
+          "objectKey": "ae75dd26f798f053f589f9da73e9bd8e8cece08890b6f8f2aa2e4f6ce03883a5.json",
+          "region": "eu-central-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-file-publishing-role-028446965111-eu-central-1"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}

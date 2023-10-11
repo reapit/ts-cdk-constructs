@@ -1,0 +1,209 @@
+{
+  "version": "34.0.0",
+  "artifacts": {
+    "email-receiver-test-stack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "email-receiver-test-stack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "email-receiver-test-stack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://028446965111/eu-central-1",
+      "properties": {
+        "templateFile": "email-receiver-test-stack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-deploy-role-028446965111-eu-central-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-cfn-exec-role-028446965111-eu-central-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-028446965111-eu-central-1/0e122ab5f26dab2baa1f2d919636abfa9bb3d53f6e252aea56a4433be546529f.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "email-receiver-test-stack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-lookup-role-028446965111-eu-central-1",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "email-receiver-test-stack.assets"
+      ],
+      "metadata": {
+        "/email-receiver-test-stack/email-receiver/table/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "emailreceivertable3541E29B"
+          }
+        ],
+        "/email-receiver-test-stack/email-receiver/topic/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "emailreceivertopic881EE052"
+          }
+        ],
+        "/email-receiver-test-stack/email-receiver/Identity/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "emailreceiverIdentity03A11FD4"
+          }
+        ],
+        "/email-receiver-test-stack/email-receiver/dkim-0": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "emailreceiverdkim0DD4CDE11"
+          }
+        ],
+        "/email-receiver-test-stack/email-receiver/dkim-1": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "emailreceiverdkim19B44D564"
+          }
+        ],
+        "/email-receiver-test-stack/email-receiver/dkim-2": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "emailreceiverdkim2BE3F8F9A"
+          }
+        ],
+        "/email-receiver-test-stack/email-receiver/receiver-lambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "emailreceiverreceiverlambdaServiceRole31EBA2D1"
+          }
+        ],
+        "/email-receiver-test-stack/email-receiver/receiver-lambda/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "emailreceiverreceiverlambdaServiceRoleDefaultPolicy132B6381"
+          }
+        ],
+        "/email-receiver-test-stack/email-receiver/receiver-lambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "emailreceiverreceiverlambda4E894AC5"
+          }
+        ],
+        "/email-receiver-test-stack/email-receiver/receiver-lambda/AllowInvoke:emailreceiverteststackemailreceivertopic4D1F3568": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "emailreceiverreceiverlambdaAllowInvokeemailreceiverteststackemailreceivertopic4D1F3568888E0177"
+          }
+        ],
+        "/email-receiver-test-stack/email-receiver/receiver-lambda/topic/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "emailreceiverreceiverlambdatopicBD4018AE"
+          }
+        ],
+        "/email-receiver-test-stack/email-receiver/mx-record/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "emailreceivermxrecord548ABDB8"
+          }
+        ],
+        "/email-receiver-test-stack/email-receiver/mx-record/DeleteExistingRecordSetCustomResource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "emailreceivermxrecordDeleteExistingRecordSetCustomResourceD69213C2"
+          }
+        ],
+        "/email-receiver-test-stack/email-receiver/active-ruleset/lambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "emailreceiveractiverulesetlambdaServiceRole8B362495"
+          }
+        ],
+        "/email-receiver-test-stack/email-receiver/active-ruleset/lambda/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "emailreceiveractiverulesetlambdaServiceRoleDefaultPolicy247173C4"
+          }
+        ],
+        "/email-receiver-test-stack/email-receiver/active-ruleset/lambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "emailreceiveractiverulesetlambda583A8FB2"
+          }
+        ],
+        "/email-receiver-test-stack/email-receiver/active-ruleset/provider/framework-onEvent/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "emailreceiveractiverulesetproviderframeworkonEventServiceRoleA0E588EE"
+          }
+        ],
+        "/email-receiver-test-stack/email-receiver/active-ruleset/provider/framework-onEvent/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "emailreceiveractiverulesetproviderframeworkonEventServiceRoleDefaultPolicy634030B7"
+          }
+        ],
+        "/email-receiver-test-stack/email-receiver/active-ruleset/provider/framework-onEvent/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "emailreceiveractiverulesetproviderframeworkonEvent284C50E0"
+          }
+        ],
+        "/email-receiver-test-stack/email-receiver/active-ruleset/resource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "emailreceiveractiverulesetresourceEFFDB5EB"
+          }
+        ],
+        "/email-receiver-test-stack/email-receiver/active-ruleset/ses-ruleset/ruleset/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "emailreceiveractiverulesetsesruleset6FB862FB"
+          }
+        ],
+        "/email-receiver-test-stack/Custom::DeleteExistingRecordSetCustomResourceProvider/Role": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomDeleteExistingRecordSetCustomResourceProviderRole03A7ED08"
+          }
+        ],
+        "/email-receiver-test-stack/Custom::DeleteExistingRecordSetCustomResourceProvider/Handler": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomDeleteExistingRecordSetCustomResourceProviderHandlerAD00231E"
+          }
+        ],
+        "/email-receiver-test-stack/output": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "output"
+          }
+        ],
+        "/email-receiver-test-stack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/email-receiver-test-stack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/email-receiver-test-stack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "email-receiver-test-stack"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}
