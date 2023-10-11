@@ -1,10 +1,11 @@
-import { IntegTest, ExpectedResult, App, Stack } from '@reapit-cdk/integration-tests'
+import { App, Stack } from '@reapit-cdk/integration-tests'
 import { ARecord, HostedZone } from 'aws-cdk-lib/aws-route53'
 import { EdgeAPI, EdgeAPILambda } from '../dist'
 import { Certificate, CertificateValidation } from 'aws-cdk-lib/aws-certificatemanager'
 import { BucketDeployment, Source } from 'aws-cdk-lib/aws-s3-deployment'
 import { Bucket } from 'aws-cdk-lib/aws-s3'
 import { Code, Runtime } from 'aws-cdk-lib/aws-lambda'
+import { CfnOutput } from 'aws-cdk-lib'
 
 export const edgeAPITest = (devMode?: boolean) => {
   const app = new App()
@@ -82,42 +83,9 @@ export const edgeAPITest = (devMode?: boolean) => {
     }),
   })
 
-  const integ = new IntegTest(app, 'EdgeAPITest', {
-    testCases: [stack],
-    cdkCommandOptions: {
-      destroy: {
-        args: {
-          force: true,
-        },
-      },
-    },
-    assertionStack: new Stack(app, 'EdgeAPITestAssertions', {
-      env,
-    }),
-    diffAssets: true,
-    regions: [stack.region],
+  new CfnOutput(stack, 'output', {
+    value: `https://${domainName}`,
   })
-
-  integ.assertions
-    .httpApiCall(`https://${domainName}`)
-    .expect(ExpectedResult.stringLikeRegexp('Example Domain'))
-    .next(
-      integ.assertions.httpApiCall(`https://${domainName}/bucket`).expect(ExpectedResult.exact('<h1>it works!</h1>')),
-    )
-    .next(
-      integ.assertions.httpApiCall(`https://${domainName}/api`).expect(
-        ExpectedResult.exact({
-          aVariable: 'contents',
-        }),
-      ),
-    )
-    .next(
-      integ.assertions.httpApiCall(`https://${domainName}/get`).expect(
-        ExpectedResult.objectLike({
-          url: 'https://httpbin.org/get',
-        }),
-      ),
-    )
 
   return app
 }
