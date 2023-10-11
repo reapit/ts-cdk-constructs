@@ -10,7 +10,9 @@ describe('replicated-secret integration', () => {
   })
 
   void integ.it('should replicate the secret', async () => {
-    const client = new SecretsManagerClient()
+    const client = new SecretsManagerClient({
+      region: 'eu-central-1',
+    })
     const result = await client.send(
       new DescribeSecretCommand({
         SecretId: integ.outputs.output,

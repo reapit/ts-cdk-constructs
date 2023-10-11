@@ -10,7 +10,9 @@ describe('userpool-domain integration', () => {
   })
 
   void integ.it('should return the domain', async () => {
-    const client = new CognitoIdentityProviderClient()
+    const client = new CognitoIdentityProviderClient({
+      region: 'eu-central-1',
+    })
     const domain = integ.outputs.output
     const result = await client.send(
       new DescribeUserPoolCommand({

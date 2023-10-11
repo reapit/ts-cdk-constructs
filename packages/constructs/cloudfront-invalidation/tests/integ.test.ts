@@ -10,7 +10,9 @@ describe('cloudfront-invalidation integration', () => {
   })
 
   integ.it('should output the active receiptRuleSetName', async () => {
-    const client = new CloudFrontClient()
+    const client = new CloudFrontClient({
+      region: 'us-east-1',
+    })
     const result = await client.send(
       new ListInvalidationsCommand({
         DistributionId: integ.outputs.output,
