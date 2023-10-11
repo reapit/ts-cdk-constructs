@@ -41,7 +41,9 @@ const getPackageInfo = async (
   const pkgJson = await readPkgJson(loc)
   const docs = await readDocs(loc)
   const usage = await readUsage(loc)
-  const hasIntegrationTests = (await getSubdirs(loc)).includes('integ-tests')
+  const hasIntegrationTests = (await getSubdirs(path.resolve(loc, 'tests'))).some(
+    (fileName) => fileName.includes('integ.') && fileName.endsWith('.test.ts'),
+  )
 
   return {
     subdir,
