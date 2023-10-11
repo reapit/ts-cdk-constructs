@@ -89,14 +89,14 @@ export class IntegrationTest {
       async () => {
         await this.setupPromise
       },
-      5 * 60 * 1000,
+      60 * 60 * 1000,
     )
 
     afterAll(
       async () => {
         await this.teardown()
       },
-      5 * 60 * 1000,
+      60 * 60 * 1000,
     )
   }
 
@@ -198,7 +198,7 @@ export class IntegrationTest {
     }
 
     // @ts-ignore
-    const promoteSnapshot = !Object.values(global.testStatuses).filter(Boolean).length
+    const promoteSnapshot = !expect.getState().error && !Object.values(global.testStatuses).filter(Boolean).length
     if (promoteSnapshot) {
       console.log('promoting snapshot')
 
