@@ -3,7 +3,9 @@ import { randomUUID } from 'crypto'
 import { EmailMessage, EmailReceiverClient } from '@reapit-cdk/email-receiver-client'
 
 export const sendTestEmail = async () => {
-  const client = new SESClient()
+  const client = new SESClient({
+    region: 'eu-central-1',
+  })
   const domainName = process.env.INTEG_DOMAIN ?? ''
   const recipient = `${randomUUID()}@email.${domainName}`
   await client.send(
@@ -61,6 +63,7 @@ const waitForEmail = async (
 export const waitForTestEmail = async (tableArn: string, receiver: string) => {
   const client = new EmailReceiverClient({
     tableArn,
+    region: 'eu-central-1',
   })
 
   const email = await waitForEmail((message) => message.subject === 'Test email', client, receiver)
