@@ -75,7 +75,7 @@ export class IntegrationTest {
   noCleanup: boolean
   skipped?: boolean
   setupPromise: Promise<any>
-  setupSuccess: boolean
+  setupSuccess?: boolean
 
   constructor(props: IntegrationTestProps) {
     const { stackFile, stackName, forceRun, noCleanup } = props

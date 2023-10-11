@@ -19,7 +19,7 @@
   "scripts": {
     "check": "yarn run root:check -p $(pwd)",
     "lint": "reapit-cdk-eslint",
-    "test": "yarn run root:test $(pwd)",
+    "test": "yarn run root:test -- $(pwd)",
     "build": "reapit-cdk-tsup",
     "prepack": "reapit-version-package && yarn build"
   },
