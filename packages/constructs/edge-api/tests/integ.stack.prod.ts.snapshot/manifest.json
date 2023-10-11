@@ -1,0 +1,263 @@
+{
+  "version": "34.0.0",
+  "artifacts": {
+    "edge-api-test-stack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "edge-api-test-stack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "edge-api-test-stack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://028446965111/us-east-1",
+      "properties": {
+        "templateFile": "edge-api-test-stack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-deploy-role-028446965111-us-east-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-cfn-exec-role-028446965111-us-east-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-028446965111-us-east-1/7c7f8d430cb28e65bc0febf0cca884abdf532e27c8f671ba1122d78a69254351.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "edge-api-test-stack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-lookup-role-028446965111-us-east-1",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "edge-api-test-stack.assets"
+      ],
+      "metadata": {
+        "/edge-api-test-stack/cert/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "cert56CA94EB"
+          }
+        ],
+        "/edge-api-test-stack/api/api/bucket/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apibucketF0F7D0F9"
+          }
+        ],
+        "/edge-api-test-stack/api/api/bucket/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apibucketPolicy0C3E7407"
+          }
+        ],
+        "/edge-api-test-stack/api/api/oia/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apioia76883CD0"
+          }
+        ],
+        "/edge-api-test-stack/api/api/rewriter-example.org/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apirewriterexampleorgServiceRole43DE3251"
+          }
+        ],
+        "/edge-api-test-stack/api/api/rewriter-example.org/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apirewriterexampleorgB8C2B627"
+          }
+        ],
+        "/edge-api-test-stack/api/api/rewriter-example.org/CurrentVersion/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apirewriterexampleorgCurrentVersion228118CDf2967a8733077769d013e0a435e42ef2"
+          }
+        ],
+        "/edge-api-test-stack/api/api/Resource/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiA7AF3C70"
+          }
+        ],
+        "/edge-api-test-stack/api/api/invalidation/CreateInvalidationStateMachine/Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiinvalidationCreateInvalidationStateMachineRoleB28D3973"
+          }
+        ],
+        "/edge-api-test-stack/api/api/invalidation/CreateInvalidationStateMachine/Role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiinvalidationCreateInvalidationStateMachineRoleDefaultPolicyCB75106F"
+          }
+        ],
+        "/edge-api-test-stack/api/api/invalidation/CreateInvalidationStateMachine/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiinvalidationCreateInvalidationStateMachineF69F77E3"
+          }
+        ],
+        "/edge-api-test-stack/api/api/invalidation/CreateInvalidationStateMachine/EventsRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiinvalidationCreateInvalidationStateMachineEventsRoleF05059D8"
+          }
+        ],
+        "/edge-api-test-stack/api/api/invalidation/CreateInvalidationStateMachine/EventsRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiinvalidationCreateInvalidationStateMachineEventsRoleDefaultPolicy6D7E9EA0"
+          }
+        ],
+        "/edge-api-test-stack/api/api/invalidation/DeploymentComplete/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiinvalidationDeploymentCompleteC35E3F9C"
+          }
+        ],
+        "/edge-api-test-stack/api/api/s3-qs-redirect/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apis3qsredirectServiceRole9987230B"
+          }
+        ],
+        "/edge-api-test-stack/api/api/s3-qs-redirect/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apis3qsredirect8BFA9647"
+          }
+        ],
+        "/edge-api-test-stack/api/api/s3-qs-redirect/CurrentVersion/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apis3qsredirectCurrentVersion201EBAF5d7e8c03ff8cd3b300a37463ffed0c862"
+          }
+        ],
+        "/edge-api-test-stack/api/api/rewriter-httpbin.org/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apirewriterhttpbinorgServiceRoleFFFBFAA0"
+          }
+        ],
+        "/edge-api-test-stack/api/api/rewriter-httpbin.org/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apirewriterhttpbinorg976F5BBD"
+          }
+        ],
+        "/edge-api-test-stack/api/api/rewriter-httpbin.org/CurrentVersion/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apirewriterhttpbinorgCurrentVersion801D905B44131d101f611c3099eabffa75a11159"
+          }
+        ],
+        "/edge-api-test-stack/arecord/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "arecord63C095BE"
+          }
+        ],
+        "/edge-api-test-stack/AWSCloudFrontPartitionHostedZoneIdMap": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AWSCloudFrontPartitionHostedZoneIdMap"
+          }
+        ],
+        "/edge-api-test-stack/bucket/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "bucket43879C71"
+          }
+        ],
+        "/edge-api-test-stack/bucket/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "bucketPolicy638F945D"
+          }
+        ],
+        "/edge-api-test-stack/deployment/AwsCliLayer/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "deploymentAwsCliLayer437C1CEF"
+          }
+        ],
+        "/edge-api-test-stack/deployment/CustomResource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "deploymentCustomResourceEDB139B7"
+          }
+        ],
+        "/edge-api-test-stack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRole89A01265"
+          }
+        ],
+        "/edge-api-test-stack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRoleDefaultPolicy88902FDF"
+          }
+        ],
+        "/edge-api-test-stack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C81C01536"
+          }
+        ],
+        "/edge-api-test-stack/lambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "lambdaServiceRole494E4CA6"
+          }
+        ],
+        "/edge-api-test-stack/lambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "lambda8B5974B5"
+          }
+        ],
+        "/edge-api-test-stack/lambda/CurrentVersion/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "lambdaCurrentVersionD18FDC35742150562c5e698fcd1ff4372ebf16b2"
+          }
+        ],
+        "/edge-api-test-stack/output": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "output"
+          }
+        ],
+        "/edge-api-test-stack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/edge-api-test-stack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/edge-api-test-stack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "edge-api-test-stack"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}
