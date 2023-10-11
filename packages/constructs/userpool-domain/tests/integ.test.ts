@@ -19,6 +19,7 @@ describe('userpool-domain integration', () => {
         UserPoolId: integ.outputs.userpoolid,
       }),
     )
-    expect(result.UserPool?.Domain).toBe(domain)
+
+    expect(`https://${result.UserPool?.Domain}.auth.eu-central-1.amazoncognito.com`).toBe(domain)
   })
 })

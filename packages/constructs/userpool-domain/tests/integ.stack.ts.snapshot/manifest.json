@@ -1,0 +1,125 @@
+{
+  "version": "34.0.0",
+  "artifacts": {
+    "userpool-domain-test-stack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "userpool-domain-test-stack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "userpool-domain-test-stack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/eu-central-1",
+      "properties": {
+        "templateFile": "userpool-domain-test-stack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-eu-central-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-eu-central-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-eu-central-1/c156255ae9256e22baf3b6a7a9d8702580ba08aeda687a9a9976dd5fcb27c331.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "userpool-domain-test-stack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-eu-central-1",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "userpool-domain-test-stack.assets"
+      ],
+      "metadata": {
+        "/userpool-domain-test-stack/userpool/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "userpool0AC4AA96"
+          }
+        ],
+        "/userpool-domain-test-stack/domain/lambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "domainlambdaServiceRole2B5B308D"
+          }
+        ],
+        "/userpool-domain-test-stack/domain/lambda/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "domainlambdaServiceRoleDefaultPolicy1ECA1459"
+          }
+        ],
+        "/userpool-domain-test-stack/domain/lambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "domainlambda424AFAA3"
+          }
+        ],
+        "/userpool-domain-test-stack/domain/provider/framework-onEvent/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "domainproviderframeworkonEventServiceRoleD72643C8"
+          }
+        ],
+        "/userpool-domain-test-stack/domain/provider/framework-onEvent/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "domainproviderframeworkonEventServiceRoleDefaultPolicyB1012EC2"
+          }
+        ],
+        "/userpool-domain-test-stack/domain/provider/framework-onEvent/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "domainproviderframeworkonEventF5DD79D2"
+          }
+        ],
+        "/userpool-domain-test-stack/domain/resource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "domainresourceC8FFFCEA"
+          }
+        ],
+        "/userpool-domain-test-stack/output": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "output"
+          }
+        ],
+        "/userpool-domain-test-stack/userpoolid": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "userpoolid"
+          }
+        ],
+        "/userpool-domain-test-stack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/userpool-domain-test-stack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/userpool-domain-test-stack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "userpool-domain-test-stack"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}
