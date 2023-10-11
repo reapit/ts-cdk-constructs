@@ -14,6 +14,7 @@
     "lint": "reapit-cdk-eslint",
     "test": "yarn run root:test $(pwd)",
     "prepack": "reapit-version-package && yarn build",
+    "integ": "yarn run root:integ $(pwd)",
     "jsii:build": "rpt-cdk-jsii",
     "jsii:publish": "rpt-cdk-jsii --publish"
   },
@@ -42,7 +43,6 @@
     "@reapit-cdk/jsii": "workspace:^",
     "@reapit-cdk/tsup": "workspace:^",
     "@reapit-cdk/version-package": "workspace:^",
-    "aws-cdk": "2.96.2",
     "aws-cdk-lib": "^2.96.2",
     "constructs": "^10.2.70"
   }
