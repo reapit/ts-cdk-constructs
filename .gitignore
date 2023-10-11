@@ -144,3 +144,6 @@ packages/constructs/**/.jsii
 packages/constructs/**/jsii-dist
 
 cdk.out
+
+
+!packages/constructs/**/*.snapshot/**/*
