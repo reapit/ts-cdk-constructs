@@ -11,5 +11,5 @@ const key = new ReplicatedKey(stack, 'replicated-key', {
 })
 
 new CfnOutput(stack, 'output', {
-  value: key.getRegionalKey('ca-central-1').keyId,
+  value: key.getRegionalKey('eu-central-1').keyId,
 })

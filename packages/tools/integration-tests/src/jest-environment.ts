@@ -17,7 +17,7 @@ export default class CustomEnvironment extends NodeEnvironment {
 
     switch (event.name) {
       case 'test_fn_failure': {
-        // @ts-expect-error
+        // @ts-ignore
         this.global.testStatuses[getTestPath(event.test).join('/')] = 'failed'
         break
       }
