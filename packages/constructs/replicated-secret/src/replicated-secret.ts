@@ -83,7 +83,7 @@ export class ReplicatedSecret extends Secret {
     })
 
     const lambda = new Function(this, 'lambda', {
-      code: Code.fromAsset(path.join(__dirname, 'lambda')),
+      code: Code.fromAsset(path.join(__dirname, '..', 'dist', 'lambda')),
       handler: 'lambda.onEvent',
       runtime: Runtime.NODEJS_18_X,
       timeout: Duration.minutes(15),

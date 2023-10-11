@@ -25,7 +25,7 @@ export class WildcardCertificate extends Construct {
       handler: 'lambda.onEvent',
       timeout: Duration.minutes(7), // 5 min timeout for cert + 1 min timeout for r53 record change + 1 min wiggle room
       runtime: Runtime.NODEJS_18_X,
-      code: Code.fromAsset(path.join(__dirname, 'lambda')),
+      code: Code.fromAsset(path.join(__dirname, '..', 'dist', 'lambda')),
     })
     lambda.addToRolePolicy(
       new PolicyStatement({

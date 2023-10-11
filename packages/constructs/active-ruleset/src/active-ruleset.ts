@@ -16,7 +16,7 @@ export class ActiveRuleset extends Construct {
       handler: 'lambda.onEvent',
       timeout: Duration.seconds(60),
       runtime: Runtime.NODEJS_18_X,
-      code: Code.fromAsset(path.join(__dirname, 'lambda')),
+      code: Code.fromAsset(path.join(__dirname, '..', 'dist', 'lambda')),
     })
 
     const provider = new Provider(this, 'provider', {

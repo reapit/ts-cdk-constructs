@@ -58,7 +58,7 @@ export class EmailReceiver extends Construct {
     const receiverLambda = new Function(this, 'receiver-lambda', {
       handler: 'lambda.onEvent',
       runtime: Runtime.NODEJS_18_X,
-      code: Code.fromAsset(path.join(__dirname, 'lambda')),
+      code: Code.fromAsset(path.join(__dirname, '..', 'dist', 'lambda')),
       environment: {
         TABLE_NAME: this.table.tableName,
       },
