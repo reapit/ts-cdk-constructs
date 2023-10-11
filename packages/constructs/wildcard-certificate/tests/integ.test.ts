@@ -19,7 +19,7 @@ describe('wildcard-certificate integration', () => {
         CertificateArn: integ.outputs.output,
       }),
     )
-    expect(result.Certificate?.DomainName).toBe(`wildcard-test.${parentDomain}`)
+    expect(result.Certificate?.DomainName).toBe(`*.${parentDomain}`)
     expect(result.Certificate?.Status).toBe(CertificateStatus.ISSUED)
   })
 })

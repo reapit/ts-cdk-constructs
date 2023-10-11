@@ -1,0 +1,113 @@
+{
+  "version": "34.0.0",
+  "artifacts": {
+    "certificate-test-stack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "certificate-test-stack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "certificate-test-stack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://028446965111/eu-central-1",
+      "properties": {
+        "templateFile": "certificate-test-stack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-deploy-role-028446965111-eu-central-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-cfn-exec-role-028446965111-eu-central-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-028446965111-eu-central-1/9e0df9823e96cac93f177dba68b95192f1fc37f175cdd5a4571eb3d6af220b8a.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "certificate-test-stack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-lookup-role-028446965111-eu-central-1",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "certificate-test-stack.assets"
+      ],
+      "metadata": {
+        "/certificate-test-stack/certificate/lambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "certificatelambdaServiceRole3D8A4895"
+          }
+        ],
+        "/certificate-test-stack/certificate/lambda/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "certificatelambdaServiceRoleDefaultPolicy2F432B03"
+          }
+        ],
+        "/certificate-test-stack/certificate/lambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "certificatelambdaBAAB8405"
+          }
+        ],
+        "/certificate-test-stack/certificate/provider/framework-onEvent/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "certificateproviderframeworkonEventServiceRoleCAA3788D"
+          }
+        ],
+        "/certificate-test-stack/certificate/provider/framework-onEvent/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "certificateproviderframeworkonEventServiceRoleDefaultPolicy8E1BF84D"
+          }
+        ],
+        "/certificate-test-stack/certificate/provider/framework-onEvent/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "certificateproviderframeworkonEvent618151B4"
+          }
+        ],
+        "/certificate-test-stack/certificate/resource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "certificateresource9344DC19"
+          }
+        ],
+        "/certificate-test-stack/output": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "output"
+          }
+        ],
+        "/certificate-test-stack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/certificate-test-stack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/certificate-test-stack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "certificate-test-stack"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}

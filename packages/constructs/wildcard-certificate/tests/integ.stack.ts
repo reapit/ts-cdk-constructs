@@ -7,9 +7,15 @@ const app = new App()
 const stack = new Stack(app, 'certificate-test-stack')
 
 const parentDomain = process.env.INTEG_DOMAIN ?? 'integ.dev.paas.reapit.cloud'
+const hostedZoneId = process.env.INTEG_ZONE_ID
 
 const cert = new WildcardCertificate(stack, 'certificate', {
-  domains: [parentDomain],
+  domains: [
+    {
+      domainName: parentDomain,
+      hostedZoneArn: hostedZoneId && `arn:aws:route53:::/hostedzone/${hostedZoneId}`,
+    },
+  ],
 })
 
 new CfnOutput(stack, 'output', {
