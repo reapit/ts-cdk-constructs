@@ -1,0 +1,119 @@
+{
+  "version": "34.0.0",
+  "artifacts": {
+    "cloudfront-invalidation-stack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "cloudfront-invalidation-stack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "cloudfront-invalidation-stack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/eu-central-1",
+      "properties": {
+        "templateFile": "cloudfront-invalidation-stack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-eu-central-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-eu-central-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-eu-central-1/b019e4ff644d2db8b973c9dd31bea3fb3ed521f90169ba4b69c77a1b8e7bab0a.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "cloudfront-invalidation-stack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-eu-central-1",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "cloudfront-invalidation-stack.assets"
+      ],
+      "metadata": {
+        "/cloudfront-invalidation-stack/distribution/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "distribution114A0A2A"
+          }
+        ],
+        "/cloudfront-invalidation-stack/invalidation/CreateInvalidationStateMachine/Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "invalidationCreateInvalidationStateMachineRole53AD914E"
+          }
+        ],
+        "/cloudfront-invalidation-stack/invalidation/CreateInvalidationStateMachine/Role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "invalidationCreateInvalidationStateMachineRoleDefaultPolicy22FDD312"
+          }
+        ],
+        "/cloudfront-invalidation-stack/invalidation/CreateInvalidationStateMachine/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "invalidationCreateInvalidationStateMachine140A049E"
+          }
+        ],
+        "/cloudfront-invalidation-stack/invalidation/CreateInvalidationStateMachine/EventsRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "invalidationCreateInvalidationStateMachineEventsRoleA79E34A1"
+          }
+        ],
+        "/cloudfront-invalidation-stack/invalidation/CreateInvalidationStateMachine/EventsRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "invalidationCreateInvalidationStateMachineEventsRoleDefaultPolicyB475C479"
+          }
+        ],
+        "/cloudfront-invalidation-stack/invalidation/DeploymentComplete/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "invalidationDeploymentComplete2D966570"
+          }
+        ],
+        "/cloudfront-invalidation-stack/invalidation/DeploymentCreateComplete/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "invalidationDeploymentCreateComplete77BC35A5"
+          }
+        ],
+        "/cloudfront-invalidation-stack/output": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "output"
+          }
+        ],
+        "/cloudfront-invalidation-stack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/cloudfront-invalidation-stack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/cloudfront-invalidation-stack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "cloudfront-invalidation-stack"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}

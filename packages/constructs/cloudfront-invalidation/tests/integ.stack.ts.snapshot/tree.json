@@ -1,0 +1,484 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "cloudfront-invalidation-stack": {
+        "id": "cloudfront-invalidation-stack",
+        "path": "cloudfront-invalidation-stack",
+        "children": {
+          "distribution": {
+            "id": "distribution",
+            "path": "cloudfront-invalidation-stack/distribution",
+            "children": {
+              "Origin1": {
+                "id": "Origin1",
+                "path": "cloudfront-invalidation-stack/distribution/Origin1",
+                "constructInfo": {
+                  "fqn": "constructs.Construct",
+                  "version": "10.2.70"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "cloudfront-invalidation-stack/distribution/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::CloudFront::Distribution",
+                  "aws:cdk:cloudformation:props": {
+                    "distributionConfig": {
+                      "enabled": true,
+                      "origins": [
+                        {
+                          "domainName": "example.org",
+                          "id": "cloudfrontinvalidationstackdistributionOrigin12FF80073",
+                          "customOriginConfig": {
+                            "originSslProtocols": [
+                              "TLSv1.2"
+                            ],
+                            "originProtocolPolicy": "https-only"
+                          }
+                        }
+                      ],
+                      "defaultCacheBehavior": {
+                        "pathPattern": "*",
+                        "targetOriginId": "cloudfrontinvalidationstackdistributionOrigin12FF80073",
+                        "cachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
+                        "compress": true,
+                        "viewerProtocolPolicy": "allow-all"
+                      },
+                      "httpVersion": "http2",
+                      "ipv6Enabled": true,
+                      "priceClass": "PriceClass_100"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_cloudfront.CfnDistribution",
+                  "version": "2.99.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_cloudfront.Distribution",
+              "version": "2.99.1"
+            }
+          },
+          "invalidation": {
+            "id": "invalidation",
+            "path": "cloudfront-invalidation-stack/invalidation",
+            "children": {
+              "CreateInvalidation": {
+                "id": "CreateInvalidation",
+                "path": "cloudfront-invalidation-stack/invalidation/CreateInvalidation",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_stepfunctions_tasks.CallAwsService",
+                  "version": "2.99.1"
+                }
+              },
+              "CreateInvalidationStateMachine": {
+                "id": "CreateInvalidationStateMachine",
+                "path": "cloudfront-invalidation-stack/invalidation/CreateInvalidationStateMachine",
+                "children": {
+                  "Role": {
+                    "id": "Role",
+                    "path": "cloudfront-invalidation-stack/invalidation/CreateInvalidationStateMachine/Role",
+                    "children": {
+                      "ImportRole": {
+                        "id": "ImportRole",
+                        "path": "cloudfront-invalidation-stack/invalidation/CreateInvalidationStateMachine/Role/ImportRole",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.Resource",
+                          "version": "2.99.1"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "cloudfront-invalidation-stack/invalidation/CreateInvalidationStateMachine/Role/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                          "aws:cdk:cloudformation:props": {
+                            "assumeRolePolicyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "sts:AssumeRole",
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "Service": "states.eu-central-1.amazonaws.com"
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                          "version": "2.99.1"
+                        }
+                      },
+                      "DefaultPolicy": {
+                        "id": "DefaultPolicy",
+                        "path": "cloudfront-invalidation-stack/invalidation/CreateInvalidationStateMachine/Role/DefaultPolicy",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "cloudfront-invalidation-stack/invalidation/CreateInvalidationStateMachine/Role/DefaultPolicy/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                              "aws:cdk:cloudformation:props": {
+                                "policyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": "cloudfront:createInvalidation",
+                                      "Effect": "Allow",
+                                      "Resource": {
+                                        "Fn::Join": [
+                                          "",
+                                          [
+                                            "arn:aws:cloudfront::",
+                                            {
+                                              "Ref": "AWS::AccountId"
+                                            },
+                                            ":distribution/",
+                                            {
+                                              "Ref": "distribution114A0A2A"
+                                            }
+                                          ]
+                                        ]
+                                      }
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "policyName": "invalidationCreateInvalidationStateMachineRoleDefaultPolicy22FDD312",
+                                "roles": [
+                                  {
+                                    "Ref": "invalidationCreateInvalidationStateMachineRole53AD914E"
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                              "version": "2.99.1"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Policy",
+                          "version": "2.99.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Role",
+                      "version": "2.99.1"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "cloudfront-invalidation-stack/invalidation/CreateInvalidationStateMachine/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::StepFunctions::StateMachine",
+                      "aws:cdk:cloudformation:props": {
+                        "definitionString": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "{\"StartAt\":\"CreateInvalidation\",\"States\":{\"CreateInvalidation\":{\"End\":true,\"Retry\":[{\"ErrorEquals\":[\"CloudFront.CloudFrontException\"],\"IntervalSeconds\":5,\"MaxAttempts\":10,\"BackoffRate\":2}],\"Type\":\"Task\",\"Resource\":\"arn:",
+                              {
+                                "Ref": "AWS::Partition"
+                              },
+                              ":states:::aws-sdk:cloudfront:createInvalidation\",\"Parameters\":{\"DistributionId\":\"",
+                              {
+                                "Ref": "distribution114A0A2A"
+                              },
+                              "\",\"InvalidationBatch\":{\"CallerReference.$\":\"$\",\"Paths\":{\"Items\":[\"/index.html\",\"/something-else\"],\"Quantity\":2}}}}}}"
+                            ]
+                          ]
+                        },
+                        "roleArn": {
+                          "Fn::GetAtt": [
+                            "invalidationCreateInvalidationStateMachineRole53AD914E",
+                            "Arn"
+                          ]
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_stepfunctions.CfnStateMachine",
+                      "version": "2.99.1"
+                    }
+                  },
+                  "EventsRole": {
+                    "id": "EventsRole",
+                    "path": "cloudfront-invalidation-stack/invalidation/CreateInvalidationStateMachine/EventsRole",
+                    "children": {
+                      "ImportEventsRole": {
+                        "id": "ImportEventsRole",
+                        "path": "cloudfront-invalidation-stack/invalidation/CreateInvalidationStateMachine/EventsRole/ImportEventsRole",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.Resource",
+                          "version": "2.99.1"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "cloudfront-invalidation-stack/invalidation/CreateInvalidationStateMachine/EventsRole/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                          "aws:cdk:cloudformation:props": {
+                            "assumeRolePolicyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "sts:AssumeRole",
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "Service": "events.amazonaws.com"
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                          "version": "2.99.1"
+                        }
+                      },
+                      "DefaultPolicy": {
+                        "id": "DefaultPolicy",
+                        "path": "cloudfront-invalidation-stack/invalidation/CreateInvalidationStateMachine/EventsRole/DefaultPolicy",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "cloudfront-invalidation-stack/invalidation/CreateInvalidationStateMachine/EventsRole/DefaultPolicy/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                              "aws:cdk:cloudformation:props": {
+                                "policyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": "states:StartExecution",
+                                      "Effect": "Allow",
+                                      "Resource": {
+                                        "Ref": "invalidationCreateInvalidationStateMachine140A049E"
+                                      }
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "policyName": "invalidationCreateInvalidationStateMachineEventsRoleDefaultPolicyB475C479",
+                                "roles": [
+                                  {
+                                    "Ref": "invalidationCreateInvalidationStateMachineEventsRoleA79E34A1"
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                              "version": "2.99.1"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Policy",
+                          "version": "2.99.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Role",
+                      "version": "2.99.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_stepfunctions.StateMachine",
+                  "version": "2.99.1"
+                }
+              },
+              "DeploymentComplete": {
+                "id": "DeploymentComplete",
+                "path": "cloudfront-invalidation-stack/invalidation/DeploymentComplete",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "cloudfront-invalidation-stack/invalidation/DeploymentComplete/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Events::Rule",
+                      "aws:cdk:cloudformation:props": {
+                        "eventPattern": {
+                          "source": [
+                            "aws.cloudformation"
+                          ],
+                          "detail": {
+                            "stack-id": [
+                              {
+                                "Ref": "AWS::StackId"
+                              }
+                            ],
+                            "status-details": {
+                              "status": [
+                                "UPDATE_COMPLETE"
+                              ]
+                            }
+                          }
+                        },
+                        "state": "ENABLED",
+                        "targets": [
+                          {
+                            "id": "Target0",
+                            "arn": {
+                              "Ref": "invalidationCreateInvalidationStateMachine140A049E"
+                            },
+                            "roleArn": {
+                              "Fn::GetAtt": [
+                                "invalidationCreateInvalidationStateMachineEventsRoleA79E34A1",
+                                "Arn"
+                              ]
+                            },
+                            "inputPath": "$.id"
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_events.CfnRule",
+                      "version": "2.99.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_events.Rule",
+                  "version": "2.99.1"
+                }
+              },
+              "DeploymentCreateComplete": {
+                "id": "DeploymentCreateComplete",
+                "path": "cloudfront-invalidation-stack/invalidation/DeploymentCreateComplete",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "cloudfront-invalidation-stack/invalidation/DeploymentCreateComplete/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Events::Rule",
+                      "aws:cdk:cloudformation:props": {
+                        "eventPattern": {
+                          "source": [
+                            "aws.cloudformation"
+                          ],
+                          "detail": {
+                            "stack-id": [
+                              {
+                                "Ref": "AWS::StackId"
+                              }
+                            ],
+                            "status-details": {
+                              "status": [
+                                "CREATE_COMPLETE"
+                              ]
+                            }
+                          }
+                        },
+                        "state": "ENABLED",
+                        "targets": [
+                          {
+                            "id": "Target0",
+                            "arn": {
+                              "Ref": "invalidationCreateInvalidationStateMachine140A049E"
+                            },
+                            "roleArn": {
+                              "Fn::GetAtt": [
+                                "invalidationCreateInvalidationStateMachineEventsRoleA79E34A1",
+                                "Arn"
+                              ]
+                            },
+                            "inputPath": "$.id"
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_events.CfnRule",
+                      "version": "2.99.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_events.Rule",
+                  "version": "2.99.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.2.70"
+            }
+          },
+          "output": {
+            "id": "output",
+            "path": "cloudfront-invalidation-stack/output",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.99.1"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "cloudfront-invalidation-stack/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "cloudfront-invalidation-stack/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.99.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.2.70"
+            }
+          },
+          "BootstrapVersion": {
+            "id": "BootstrapVersion",
+            "path": "cloudfront-invalidation-stack/BootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.99.1"
+            }
+          },
+          "CheckBootstrapVersion": {
+            "id": "CheckBootstrapVersion",
+            "path": "cloudfront-invalidation-stack/CheckBootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnRule",
+              "version": "2.99.1"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.99.1"
+        }
+      },
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree",
+        "constructInfo": {
+          "fqn": "constructs.Construct",
+          "version": "10.2.70"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "aws-cdk-lib.App",
+      "version": "2.99.1"
+    }
+  }
+}
