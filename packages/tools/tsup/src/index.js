@@ -21,6 +21,7 @@ await build({
   target: 'node18',
   dts: true,
   clean: true,
+  external: [/@reapit-cdk\/(.*)/],
 })
 
 if (hasLambda || hasLambdas) {
