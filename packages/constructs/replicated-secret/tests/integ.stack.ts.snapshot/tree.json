@@ -1,0 +1,1157 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "replicated-secret-test-stack": {
+        "id": "replicated-secret-test-stack",
+        "path": "replicated-secret-test-stack",
+        "children": {
+          "replicated-key": {
+            "id": "replicated-key",
+            "path": "replicated-secret-test-stack/replicated-key",
+            "children": {
+              "resource": {
+                "id": "resource",
+                "path": "replicated-secret-test-stack/replicated-key/resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::KMS::Key",
+                  "aws:cdk:cloudformation:props": {
+                    "keyPolicy": {
+                      "Statement": [
+                        {
+                          "Action": [
+                            "kms:Encrypt",
+                            "kms:Decrypt",
+                            "kms:ReEncrypt*",
+                            "kms:CreateGrant",
+                            "kms:DescribeKey"
+                          ],
+                          "Condition": {
+                            "StringEquals": {
+                              "kms:CallerAccount": "028446965111",
+                              "kms:ViaService": "secretsmanager.eu-central-1.amazonaws.com"
+                            }
+                          },
+                          "Effect": "Allow",
+                          "Principal": {
+                            "AWS": "*"
+                          },
+                          "Resource": "*",
+                          "Sid": "Allow access through AWS Secrets Manager for all principals in the account that are authorized to use AWS Secrets Manager"
+                        },
+                        {
+                          "Action": "kms:GenerateDataKey*",
+                          "Condition": {
+                            "StringEquals": {
+                              "kms:CallerAccount": "028446965111"
+                            },
+                            "StringLike": {
+                              "kms:ViaService": "secretsmanager.eu-central-1.amazonaws.com"
+                            }
+                          },
+                          "Effect": "Allow",
+                          "Principal": {
+                            "AWS": "*"
+                          },
+                          "Resource": "*",
+                          "Sid": "Allow access through AWS Secrets Manager for all principals in the account that are authorized to use AWS Secrets Manager"
+                        },
+                        {
+                          "Action": "kms:*",
+                          "Effect": "Allow",
+                          "Principal": {
+                            "AWS": "arn:aws:iam::028446965111:root"
+                          },
+                          "Resource": "*",
+                          "Sid": "Allow direct access to key to the account"
+                        }
+                      ],
+                      "Version": "2012-10-17"
+                    },
+                    "multiRegion": true
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_kms.CfnKey",
+                  "version": "2.99.1"
+                }
+              },
+              "master-key": {
+                "id": "master-key",
+                "path": "replicated-secret-test-stack/replicated-key/master-key",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.Resource",
+                  "version": "2.99.1"
+                }
+              },
+              "lambda": {
+                "id": "lambda",
+                "path": "replicated-secret-test-stack/replicated-key/lambda",
+                "children": {
+                  "ServiceRole": {
+                    "id": "ServiceRole",
+                    "path": "replicated-secret-test-stack/replicated-key/lambda/ServiceRole",
+                    "children": {
+                      "ImportServiceRole": {
+                        "id": "ImportServiceRole",
+                        "path": "replicated-secret-test-stack/replicated-key/lambda/ServiceRole/ImportServiceRole",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.Resource",
+                          "version": "2.99.1"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "replicated-secret-test-stack/replicated-key/lambda/ServiceRole/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                          "aws:cdk:cloudformation:props": {
+                            "assumeRolePolicyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "sts:AssumeRole",
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "Service": "lambda.amazonaws.com"
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "managedPolicyArns": [
+                              {
+                                "Fn::Join": [
+                                  "",
+                                  [
+                                    "arn:",
+                                    {
+                                      "Ref": "AWS::Partition"
+                                    },
+                                    ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                                  ]
+                                ]
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                          "version": "2.99.1"
+                        }
+                      },
+                      "DefaultPolicy": {
+                        "id": "DefaultPolicy",
+                        "path": "replicated-secret-test-stack/replicated-key/lambda/ServiceRole/DefaultPolicy",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "replicated-secret-test-stack/replicated-key/lambda/ServiceRole/DefaultPolicy/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                              "aws:cdk:cloudformation:props": {
+                                "policyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": [
+                                        "kms:DescribeKey",
+                                        "kms:ReplicateKey"
+                                      ],
+                                      "Effect": "Allow",
+                                      "Resource": {
+                                        "Fn::GetAtt": [
+                                          "replicatedkeyresourceF8E6CC22",
+                                          "Arn"
+                                        ]
+                                      }
+                                    },
+                                    {
+                                      "Action": "kms:CreateKey",
+                                      "Effect": "Allow",
+                                      "Resource": "*"
+                                    },
+                                    {
+                                      "Action": [
+                                        "kms:DescribeKey",
+                                        "kms:ScheduleKeyDeletion",
+                                        "kms:CancelKeyDeletion",
+                                        "kms:PutKeyPolicy"
+                                      ],
+                                      "Effect": "Allow",
+                                      "Resource": [
+                                        {
+                                          "Fn::Join": [
+                                            "",
+                                            [
+                                              "arn:",
+                                              {
+                                                "Ref": "AWS::Partition"
+                                              },
+                                              ":kms:eu-west-1:028446965111:key/",
+                                              {
+                                                "Fn::Select": [
+                                                  1,
+                                                  {
+                                                    "Fn::Split": [
+                                                      "/",
+                                                      {
+                                                        "Fn::Select": [
+                                                          5,
+                                                          {
+                                                            "Fn::Split": [
+                                                              ":",
+                                                              {
+                                                                "Fn::GetAtt": [
+                                                                  "replicatedkeyresourceF8E6CC22",
+                                                                  "Arn"
+                                                                ]
+                                                              }
+                                                            ]
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          ]
+                                        },
+                                        {
+                                          "Fn::Join": [
+                                            "",
+                                            [
+                                              "arn:",
+                                              {
+                                                "Ref": "AWS::Partition"
+                                              },
+                                              ":kms:eu-west-2:028446965111:key/",
+                                              {
+                                                "Fn::Select": [
+                                                  1,
+                                                  {
+                                                    "Fn::Split": [
+                                                      "/",
+                                                      {
+                                                        "Fn::Select": [
+                                                          5,
+                                                          {
+                                                            "Fn::Split": [
+                                                              ":",
+                                                              {
+                                                                "Fn::GetAtt": [
+                                                                  "replicatedkeyresourceF8E6CC22",
+                                                                  "Arn"
+                                                                ]
+                                                              }
+                                                            ]
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "policyName": "replicatedkeylambdaServiceRoleDefaultPolicyCED25CB6",
+                                "roles": [
+                                  {
+                                    "Ref": "replicatedkeylambdaServiceRole40CD9B58"
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                              "version": "2.99.1"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Policy",
+                          "version": "2.99.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Role",
+                      "version": "2.99.1"
+                    }
+                  },
+                  "Code": {
+                    "id": "Code",
+                    "path": "replicated-secret-test-stack/replicated-key/lambda/Code",
+                    "children": {
+                      "Stage": {
+                        "id": "Stage",
+                        "path": "replicated-secret-test-stack/replicated-key/lambda/Code/Stage",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.AssetStaging",
+                          "version": "2.99.1"
+                        }
+                      },
+                      "AssetBucket": {
+                        "id": "AssetBucket",
+                        "path": "replicated-secret-test-stack/replicated-key/lambda/Code/AssetBucket",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                          "version": "2.99.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                      "version": "2.99.1"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "replicated-secret-test-stack/replicated-key/lambda/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                      "aws:cdk:cloudformation:props": {
+                        "code": {
+                          "s3Bucket": "cdk-hnb659fds-assets-028446965111-eu-central-1",
+                          "s3Key": "1db4a39a0a1cb4c0fe6ac0f493fe76359ba09058a28ad9e28df50273c518d870.zip"
+                        },
+                        "handler": "lambda.onEvent",
+                        "role": {
+                          "Fn::GetAtt": [
+                            "replicatedkeylambdaServiceRole40CD9B58",
+                            "Arn"
+                          ]
+                        },
+                        "runtime": "nodejs18.x",
+                        "timeout": 900
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                      "version": "2.99.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.Function",
+                  "version": "2.99.1"
+                }
+              },
+              "provider": {
+                "id": "provider",
+                "path": "replicated-secret-test-stack/replicated-key/provider",
+                "children": {
+                  "framework-onEvent": {
+                    "id": "framework-onEvent",
+                    "path": "replicated-secret-test-stack/replicated-key/provider/framework-onEvent",
+                    "children": {
+                      "ServiceRole": {
+                        "id": "ServiceRole",
+                        "path": "replicated-secret-test-stack/replicated-key/provider/framework-onEvent/ServiceRole",
+                        "children": {
+                          "ImportServiceRole": {
+                            "id": "ImportServiceRole",
+                            "path": "replicated-secret-test-stack/replicated-key/provider/framework-onEvent/ServiceRole/ImportServiceRole",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.Resource",
+                              "version": "2.99.1"
+                            }
+                          },
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "replicated-secret-test-stack/replicated-key/provider/framework-onEvent/ServiceRole/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                              "aws:cdk:cloudformation:props": {
+                                "assumeRolePolicyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": "sts:AssumeRole",
+                                      "Effect": "Allow",
+                                      "Principal": {
+                                        "Service": "lambda.amazonaws.com"
+                                      }
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "managedPolicyArns": [
+                                  {
+                                    "Fn::Join": [
+                                      "",
+                                      [
+                                        "arn:",
+                                        {
+                                          "Ref": "AWS::Partition"
+                                        },
+                                        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                                      ]
+                                    ]
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                              "version": "2.99.1"
+                            }
+                          },
+                          "DefaultPolicy": {
+                            "id": "DefaultPolicy",
+                            "path": "replicated-secret-test-stack/replicated-key/provider/framework-onEvent/ServiceRole/DefaultPolicy",
+                            "children": {
+                              "Resource": {
+                                "id": "Resource",
+                                "path": "replicated-secret-test-stack/replicated-key/provider/framework-onEvent/ServiceRole/DefaultPolicy/Resource",
+                                "attributes": {
+                                  "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                                  "aws:cdk:cloudformation:props": {
+                                    "policyDocument": {
+                                      "Statement": [
+                                        {
+                                          "Action": "lambda:InvokeFunction",
+                                          "Effect": "Allow",
+                                          "Resource": [
+                                            {
+                                              "Fn::GetAtt": [
+                                                "replicatedkeylambda5BD89BE0",
+                                                "Arn"
+                                              ]
+                                            },
+                                            {
+                                              "Fn::Join": [
+                                                "",
+                                                [
+                                                  {
+                                                    "Fn::GetAtt": [
+                                                      "replicatedkeylambda5BD89BE0",
+                                                      "Arn"
+                                                    ]
+                                                  },
+                                                  ":*"
+                                                ]
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ],
+                                      "Version": "2012-10-17"
+                                    },
+                                    "policyName": "replicatedkeyproviderframeworkonEventServiceRoleDefaultPolicy39CF52FC",
+                                    "roles": [
+                                      {
+                                        "Ref": "replicatedkeyproviderframeworkonEventServiceRoleE96D5E95"
+                                      }
+                                    ]
+                                  }
+                                },
+                                "constructInfo": {
+                                  "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                                  "version": "2.99.1"
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.Policy",
+                              "version": "2.99.1"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Role",
+                          "version": "2.99.1"
+                        }
+                      },
+                      "Code": {
+                        "id": "Code",
+                        "path": "replicated-secret-test-stack/replicated-key/provider/framework-onEvent/Code",
+                        "children": {
+                          "Stage": {
+                            "id": "Stage",
+                            "path": "replicated-secret-test-stack/replicated-key/provider/framework-onEvent/Code/Stage",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.AssetStaging",
+                              "version": "2.99.1"
+                            }
+                          },
+                          "AssetBucket": {
+                            "id": "AssetBucket",
+                            "path": "replicated-secret-test-stack/replicated-key/provider/framework-onEvent/Code/AssetBucket",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                              "version": "2.99.1"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                          "version": "2.99.1"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "replicated-secret-test-stack/replicated-key/provider/framework-onEvent/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                          "aws:cdk:cloudformation:props": {
+                            "code": {
+                              "s3Bucket": "cdk-hnb659fds-assets-028446965111-eu-central-1",
+                              "s3Key": "7382a0addb9f34974a1ea6c6c9b063882af874828f366f5c93b2b7b64db15c94.zip"
+                            },
+                            "description": "AWS CDK resource provider framework - onEvent (replicated-secret-test-stack/replicated-key/provider)",
+                            "environment": {
+                              "variables": {
+                                "USER_ON_EVENT_FUNCTION_ARN": {
+                                  "Fn::GetAtt": [
+                                    "replicatedkeylambda5BD89BE0",
+                                    "Arn"
+                                  ]
+                                }
+                              }
+                            },
+                            "handler": "framework.onEvent",
+                            "role": {
+                              "Fn::GetAtt": [
+                                "replicatedkeyproviderframeworkonEventServiceRoleE96D5E95",
+                                "Arn"
+                              ]
+                            },
+                            "runtime": "nodejs18.x",
+                            "timeout": 900
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                          "version": "2.99.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.Function",
+                      "version": "2.99.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.custom_resources.Provider",
+                  "version": "2.99.1"
+                }
+              },
+              "custom-resource": {
+                "id": "custom-resource",
+                "path": "replicated-secret-test-stack/replicated-key/custom-resource",
+                "children": {
+                  "Default": {
+                    "id": "Default",
+                    "path": "replicated-secret-test-stack/replicated-key/custom-resource/Default",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CfnResource",
+                      "version": "2.99.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CustomResource",
+                  "version": "2.99.1"
+                }
+              },
+              "replica-eu-west-1": {
+                "id": "replica-eu-west-1",
+                "path": "replicated-secret-test-stack/replicated-key/replica-eu-west-1",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.Resource",
+                  "version": "2.99.1"
+                }
+              },
+              "replica-eu-west-2": {
+                "id": "replica-eu-west-2",
+                "path": "replicated-secret-test-stack/replicated-key/replica-eu-west-2",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.Resource",
+                  "version": "2.99.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.2.70"
+            }
+          },
+          "certificate": {
+            "id": "certificate",
+            "path": "replicated-secret-test-stack/certificate",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "replicated-secret-test-stack/certificate/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::SecretsManager::Secret",
+                  "aws:cdk:cloudformation:props": {
+                    "generateSecretString": {},
+                    "kmsKeyId": {
+                      "Fn::GetAtt": [
+                        "replicatedkeyresourceF8E6CC22",
+                        "Arn"
+                      ]
+                    },
+                    "replicaRegions": [
+                      {
+                        "region": "eu-west-1",
+                        "kmsKeyId": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "arn:",
+                              {
+                                "Ref": "AWS::Partition"
+                              },
+                              ":kms:eu-west-1:028446965111:key/",
+                              {
+                                "Fn::Select": [
+                                  1,
+                                  {
+                                    "Fn::Split": [
+                                      "/",
+                                      {
+                                        "Fn::Select": [
+                                          5,
+                                          {
+                                            "Fn::Split": [
+                                              ":",
+                                              {
+                                                "Fn::GetAtt": [
+                                                  "replicatedkeyresourceF8E6CC22",
+                                                  "Arn"
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          ]
+                        }
+                      },
+                      {
+                        "region": "eu-west-2",
+                        "kmsKeyId": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "arn:",
+                              {
+                                "Ref": "AWS::Partition"
+                              },
+                              ":kms:eu-west-2:028446965111:key/",
+                              {
+                                "Fn::Select": [
+                                  1,
+                                  {
+                                    "Fn::Split": [
+                                      "/",
+                                      {
+                                        "Fn::Select": [
+                                          5,
+                                          {
+                                            "Fn::Split": [
+                                              ":",
+                                              {
+                                                "Fn::GetAtt": [
+                                                  "replicatedkeyresourceF8E6CC22",
+                                                  "Arn"
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_secretsmanager.CfnSecret",
+                  "version": "2.99.1"
+                }
+              },
+              "eu-west-1-replica-secret": {
+                "id": "eu-west-1-replica-secret",
+                "path": "replicated-secret-test-stack/certificate/eu-west-1-replica-secret",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.Resource",
+                  "version": "2.99.1"
+                }
+              },
+              "eu-west-2-replica-secret": {
+                "id": "eu-west-2-replica-secret",
+                "path": "replicated-secret-test-stack/certificate/eu-west-2-replica-secret",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.Resource",
+                  "version": "2.99.1"
+                }
+              },
+              "lambda": {
+                "id": "lambda",
+                "path": "replicated-secret-test-stack/certificate/lambda",
+                "children": {
+                  "ServiceRole": {
+                    "id": "ServiceRole",
+                    "path": "replicated-secret-test-stack/certificate/lambda/ServiceRole",
+                    "children": {
+                      "ImportServiceRole": {
+                        "id": "ImportServiceRole",
+                        "path": "replicated-secret-test-stack/certificate/lambda/ServiceRole/ImportServiceRole",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.Resource",
+                          "version": "2.99.1"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "replicated-secret-test-stack/certificate/lambda/ServiceRole/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                          "aws:cdk:cloudformation:props": {
+                            "assumeRolePolicyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "sts:AssumeRole",
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "Service": "lambda.amazonaws.com"
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "managedPolicyArns": [
+                              {
+                                "Fn::Join": [
+                                  "",
+                                  [
+                                    "arn:",
+                                    {
+                                      "Ref": "AWS::Partition"
+                                    },
+                                    ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                                  ]
+                                ]
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                          "version": "2.99.1"
+                        }
+                      },
+                      "DefaultPolicy": {
+                        "id": "DefaultPolicy",
+                        "path": "replicated-secret-test-stack/certificate/lambda/ServiceRole/DefaultPolicy",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "replicated-secret-test-stack/certificate/lambda/ServiceRole/DefaultPolicy/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                              "aws:cdk:cloudformation:props": {
+                                "policyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": "secretsmanager:DescribeSecret",
+                                      "Effect": "Allow",
+                                      "Resource": {
+                                        "Ref": "certificateEC031123"
+                                      }
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "policyName": "certificatelambdaServiceRoleDefaultPolicy2F432B03",
+                                "roles": [
+                                  {
+                                    "Ref": "certificatelambdaServiceRole3D8A4895"
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                              "version": "2.99.1"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Policy",
+                          "version": "2.99.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Role",
+                      "version": "2.99.1"
+                    }
+                  },
+                  "Code": {
+                    "id": "Code",
+                    "path": "replicated-secret-test-stack/certificate/lambda/Code",
+                    "children": {
+                      "Stage": {
+                        "id": "Stage",
+                        "path": "replicated-secret-test-stack/certificate/lambda/Code/Stage",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.AssetStaging",
+                          "version": "2.99.1"
+                        }
+                      },
+                      "AssetBucket": {
+                        "id": "AssetBucket",
+                        "path": "replicated-secret-test-stack/certificate/lambda/Code/AssetBucket",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                          "version": "2.99.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                      "version": "2.99.1"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "replicated-secret-test-stack/certificate/lambda/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                      "aws:cdk:cloudformation:props": {
+                        "code": {
+                          "s3Bucket": "cdk-hnb659fds-assets-028446965111-eu-central-1",
+                          "s3Key": "fac8d4e0734f89e95d77891e501fa796e6699e576cf4608c53708d8b87197e00.zip"
+                        },
+                        "handler": "lambda.onEvent",
+                        "role": {
+                          "Fn::GetAtt": [
+                            "certificatelambdaServiceRole3D8A4895",
+                            "Arn"
+                          ]
+                        },
+                        "runtime": "nodejs18.x",
+                        "timeout": 900
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                      "version": "2.99.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.Function",
+                  "version": "2.99.1"
+                }
+              },
+              "provider": {
+                "id": "provider",
+                "path": "replicated-secret-test-stack/certificate/provider",
+                "children": {
+                  "framework-onEvent": {
+                    "id": "framework-onEvent",
+                    "path": "replicated-secret-test-stack/certificate/provider/framework-onEvent",
+                    "children": {
+                      "ServiceRole": {
+                        "id": "ServiceRole",
+                        "path": "replicated-secret-test-stack/certificate/provider/framework-onEvent/ServiceRole",
+                        "children": {
+                          "ImportServiceRole": {
+                            "id": "ImportServiceRole",
+                            "path": "replicated-secret-test-stack/certificate/provider/framework-onEvent/ServiceRole/ImportServiceRole",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.Resource",
+                              "version": "2.99.1"
+                            }
+                          },
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "replicated-secret-test-stack/certificate/provider/framework-onEvent/ServiceRole/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                              "aws:cdk:cloudformation:props": {
+                                "assumeRolePolicyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": "sts:AssumeRole",
+                                      "Effect": "Allow",
+                                      "Principal": {
+                                        "Service": "lambda.amazonaws.com"
+                                      }
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "managedPolicyArns": [
+                                  {
+                                    "Fn::Join": [
+                                      "",
+                                      [
+                                        "arn:",
+                                        {
+                                          "Ref": "AWS::Partition"
+                                        },
+                                        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                                      ]
+                                    ]
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                              "version": "2.99.1"
+                            }
+                          },
+                          "DefaultPolicy": {
+                            "id": "DefaultPolicy",
+                            "path": "replicated-secret-test-stack/certificate/provider/framework-onEvent/ServiceRole/DefaultPolicy",
+                            "children": {
+                              "Resource": {
+                                "id": "Resource",
+                                "path": "replicated-secret-test-stack/certificate/provider/framework-onEvent/ServiceRole/DefaultPolicy/Resource",
+                                "attributes": {
+                                  "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                                  "aws:cdk:cloudformation:props": {
+                                    "policyDocument": {
+                                      "Statement": [
+                                        {
+                                          "Action": "lambda:InvokeFunction",
+                                          "Effect": "Allow",
+                                          "Resource": [
+                                            {
+                                              "Fn::GetAtt": [
+                                                "certificatelambdaBAAB8405",
+                                                "Arn"
+                                              ]
+                                            },
+                                            {
+                                              "Fn::Join": [
+                                                "",
+                                                [
+                                                  {
+                                                    "Fn::GetAtt": [
+                                                      "certificatelambdaBAAB8405",
+                                                      "Arn"
+                                                    ]
+                                                  },
+                                                  ":*"
+                                                ]
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ],
+                                      "Version": "2012-10-17"
+                                    },
+                                    "policyName": "certificateproviderframeworkonEventServiceRoleDefaultPolicy8E1BF84D",
+                                    "roles": [
+                                      {
+                                        "Ref": "certificateproviderframeworkonEventServiceRoleCAA3788D"
+                                      }
+                                    ]
+                                  }
+                                },
+                                "constructInfo": {
+                                  "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                                  "version": "2.99.1"
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.Policy",
+                              "version": "2.99.1"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Role",
+                          "version": "2.99.1"
+                        }
+                      },
+                      "Code": {
+                        "id": "Code",
+                        "path": "replicated-secret-test-stack/certificate/provider/framework-onEvent/Code",
+                        "children": {
+                          "Stage": {
+                            "id": "Stage",
+                            "path": "replicated-secret-test-stack/certificate/provider/framework-onEvent/Code/Stage",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.AssetStaging",
+                              "version": "2.99.1"
+                            }
+                          },
+                          "AssetBucket": {
+                            "id": "AssetBucket",
+                            "path": "replicated-secret-test-stack/certificate/provider/framework-onEvent/Code/AssetBucket",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                              "version": "2.99.1"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                          "version": "2.99.1"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "replicated-secret-test-stack/certificate/provider/framework-onEvent/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                          "aws:cdk:cloudformation:props": {
+                            "code": {
+                              "s3Bucket": "cdk-hnb659fds-assets-028446965111-eu-central-1",
+                              "s3Key": "7382a0addb9f34974a1ea6c6c9b063882af874828f366f5c93b2b7b64db15c94.zip"
+                            },
+                            "description": "AWS CDK resource provider framework - onEvent (replicated-secret-test-stack/certificate/provider)",
+                            "environment": {
+                              "variables": {
+                                "USER_ON_EVENT_FUNCTION_ARN": {
+                                  "Fn::GetAtt": [
+                                    "certificatelambdaBAAB8405",
+                                    "Arn"
+                                  ]
+                                }
+                              }
+                            },
+                            "handler": "framework.onEvent",
+                            "role": {
+                              "Fn::GetAtt": [
+                                "certificateproviderframeworkonEventServiceRoleCAA3788D",
+                                "Arn"
+                              ]
+                            },
+                            "runtime": "nodejs18.x",
+                            "timeout": 900
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                          "version": "2.99.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.Function",
+                      "version": "2.99.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.custom_resources.Provider",
+                  "version": "2.99.1"
+                }
+              },
+              "wait-for-replication": {
+                "id": "wait-for-replication",
+                "path": "replicated-secret-test-stack/certificate/wait-for-replication",
+                "children": {
+                  "Default": {
+                    "id": "Default",
+                    "path": "replicated-secret-test-stack/certificate/wait-for-replication/Default",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CfnResource",
+                      "version": "2.99.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CustomResource",
+                  "version": "2.99.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_secretsmanager.Secret",
+              "version": "2.99.1"
+            }
+          },
+          "output": {
+            "id": "output",
+            "path": "replicated-secret-test-stack/output",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.99.1"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "replicated-secret-test-stack/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "replicated-secret-test-stack/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.99.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.2.70"
+            }
+          },
+          "BootstrapVersion": {
+            "id": "BootstrapVersion",
+            "path": "replicated-secret-test-stack/BootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.99.1"
+            }
+          },
+          "CheckBootstrapVersion": {
+            "id": "CheckBootstrapVersion",
+            "path": "replicated-secret-test-stack/CheckBootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnRule",
+              "version": "2.99.1"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.99.1"
+        }
+      },
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree",
+        "constructInfo": {
+          "fqn": "constructs.Construct",
+          "version": "10.2.70"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "aws-cdk-lib.App",
+      "version": "2.99.1"
+    }
+  }
+}
