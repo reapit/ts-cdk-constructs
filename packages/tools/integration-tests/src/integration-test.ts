@@ -75,6 +75,7 @@ export class IntegrationTest {
   noCleanup: boolean
   skipped?: boolean
   setupPromise: Promise<any>
+  setupSuccess: boolean
 
   constructor(props: IntegrationTestProps) {
     const { stackFile, stackName, forceRun, noCleanup } = props
@@ -176,10 +177,15 @@ export class IntegrationTest {
     const outputs = JSON.parse(await fs.readFile(outputFileLoc, 'utf-8'))
     this.outputs = outputs[stackName]
     console.log('outputs', outputs, this.outputs)
+    this.setupSuccess = true
     return this.outputs
   }
 
   async teardown() {
+    if (!this.setupSuccess) {
+      console.log('setup did not complete successfully')
+      return
+    }
     if (this.skipped) {
       console.log('test skipped')
       return
