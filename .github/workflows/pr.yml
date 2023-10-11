@@ -85,5 +85,6 @@ jobs:
           INTEG_ZONE_ID: Z085471422JPU7GT84QN4
 
       - uses: stefanzweifel/git-auto-commit-action@v4
+        if: always()
         with:
-          commit_message: Apply cdk integration test changes
+          commit_message: Apply integration test snapshot changes
