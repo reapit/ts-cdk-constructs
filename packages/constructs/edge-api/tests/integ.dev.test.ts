@@ -6,7 +6,6 @@ describe('edge-api dev integration', () => {
   const integ = new IntegrationTest({
     stackFile: path.resolve(__dirname, './integ.stack.dev.ts'),
     stackName: 'edge-api-test-stack-dev',
-    noCleanup: true,
   })
 
   void integ.it('root - should proxy', async () => {
