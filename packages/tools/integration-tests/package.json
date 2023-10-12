@@ -16,8 +16,7 @@
   "dependencies": {
     "aws-cdk": "2.96.2",
     "aws-cdk-lib": "^2.96.2",
-    "constructs": "10.2.70",
-    "dir-compare": "^4.2.0"
+    "constructs": "10.2.70"
   },
   "devDependencies": {
     "@aws-sdk/client-s3": "3.414.0",
