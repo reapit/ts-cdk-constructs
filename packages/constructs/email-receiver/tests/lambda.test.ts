@@ -2,7 +2,7 @@ import { mockClient } from 'aws-sdk-client-mock'
 import 'aws-sdk-client-mock-jest'
 import { PutCommand, DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb'
 
-import { onEvent } from '../src/lambda/lambda'
+import { onEvent } from '../src/lambdas/lambda'
 const ddbMock = mockClient(DynamoDBDocumentClient)
 
 process.env.AWS_REGION = 'eu-west-2'

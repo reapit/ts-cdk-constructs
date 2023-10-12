@@ -48,7 +48,7 @@ const waitForEmail = async (
     throw new Error(`waitForEmail took more than ${limit} iterations`)
   }
   const emails = await client.getRecipientEmails(emailAddress)
-  const email = emails.find((message) => message.subject === 'Welcome to Reapit Connect')
+  const email = emails.find(comparator)
   if (!email) {
     await new Promise((resolve) => setTimeout(resolve, 2000))
     return waitForEmail(comparator, client, emailAddress, ctr + 1, limit)
