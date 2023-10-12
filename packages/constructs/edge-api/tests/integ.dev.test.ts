@@ -30,9 +30,9 @@ describe('edge-api dev integration', () => {
     expect(resJson).toHaveProperty('aVariable', 'contents')
   })
 
-  void integ.it('/get - should proxy to httpbin', async () => {
+  void integ.it('/httpbin/get - should proxy to httpbin', async () => {
     const endpoint = integ.outputs.output
-    const res = await fetch(`${endpoint}/get`)
+    const res = await fetch(`${endpoint}/httpbin/get`)
     const resJson = await res.json()
     expect(resJson).toBeDefined()
     expect(resJson).toHaveProperty('url', 'https://httpbin.org/get')

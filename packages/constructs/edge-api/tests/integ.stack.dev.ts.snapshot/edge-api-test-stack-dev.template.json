@@ -1,0 +1,1012 @@
+{
+ "Resources": {
+  "cert56CA94EB": {
+   "Type": "AWS::CertificateManager::Certificate",
+   "Properties": {
+    "DomainName": "edge-api-test-dev.integ.dev.paas.reapit.cloud",
+    "DomainValidationOptions": [
+     {
+      "DomainName": "edge-api-test-dev.integ.dev.paas.reapit.cloud",
+      "HostedZoneId": "Z085471422JPU7GT84QN4"
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "edge-api-test-stack-dev/cert"
+     }
+    ],
+    "ValidationMethod": "DNS"
+   },
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/cert/Resource"
+   }
+  },
+  "apidomainedgeapitestdevintegdevpaasreapitcloudF71BAB99": {
+   "Type": "AWS::ApiGatewayV2::DomainName",
+   "Properties": {
+    "DomainName": "edge-api-test-dev.integ.dev.paas.reapit.cloud",
+    "DomainNameConfigurations": [
+     {
+      "CertificateArn": {
+       "Ref": "cert56CA94EB"
+      },
+      "EndpointType": "REGIONAL"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/api/api/domain-edge-api-test-dev.integ.dev.paas.reapit.cloud/Resource"
+   }
+  },
+  "api215E4D4B": {
+   "Type": "AWS::ApiGatewayV2::Api",
+   "Properties": {
+    "Name": "api",
+    "ProtocolType": "HTTP"
+   },
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/Resource"
+   }
+  },
+  "apiDefaultStage4E8CD7D8": {
+   "Type": "AWS::ApiGatewayV2::Stage",
+   "Properties": {
+    "ApiId": {
+     "Ref": "api215E4D4B"
+    },
+    "AutoDeploy": true,
+    "StageName": "$default"
+   },
+   "DependsOn": [
+    "apidomainedgeapitestdevintegdevpaasreapitcloudF71BAB99"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/DefaultStage/Resource"
+   }
+  },
+  "apiDefaultStageedgeapiteststackdevapiapidomainedgeapitestdevintegdevpaasreapitcloudundefined0BAB110A": {
+   "Type": "AWS::ApiGatewayV2::ApiMapping",
+   "Properties": {
+    "ApiId": {
+     "Ref": "api215E4D4B"
+    },
+    "DomainName": {
+     "Ref": "apidomainedgeapitestdevintegdevpaasreapitcloudF71BAB99"
+    },
+    "Stage": "$default"
+   },
+   "DependsOn": [
+    "apiDefaultStage4E8CD7D8",
+    "apidomainedgeapitestdevintegdevpaasreapitcloudF71BAB99"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/DefaultStage/edge-api-test-stack-dev--api--api--domain-edge-api-test-dev.integ.dev.paas.reapit.cloudundefined/Resource"
+   }
+  },
+  "apiANYproxyintegrationE17A74F8": {
+   "Type": "AWS::ApiGatewayV2::Integration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "api215E4D4B"
+    },
+    "IntegrationMethod": "ANY",
+    "IntegrationType": "HTTP_PROXY",
+    "IntegrationUri": "https://example.org",
+    "PayloadFormatVersion": "1.0"
+   },
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/ANY--/proxy-integration/Resource"
+   }
+  },
+  "apiANY135AFC9D": {
+   "Type": "AWS::ApiGatewayV2::Route",
+   "Properties": {
+    "ApiId": {
+     "Ref": "api215E4D4B"
+    },
+    "AuthorizationType": "NONE",
+    "RouteKey": "ANY /",
+    "Target": {
+     "Fn::Join": [
+      "",
+      [
+       "integrations/",
+       {
+        "Ref": "apiANYproxyintegrationE17A74F8"
+       }
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/ANY--/Resource"
+   }
+  },
+  "apiANYproxyproxyintegration0A1C13F3": {
+   "Type": "AWS::ApiGatewayV2::Integration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "api215E4D4B"
+    },
+    "IntegrationMethod": "ANY",
+    "IntegrationType": "HTTP_PROXY",
+    "IntegrationUri": "https://example.org/{proxy}",
+    "PayloadFormatVersion": "1.0"
+   },
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/ANY--{proxy+}/proxy-integration/Resource"
+   }
+  },
+  "apiANYproxyD2E33F60": {
+   "Type": "AWS::ApiGatewayV2::Route",
+   "Properties": {
+    "ApiId": {
+     "Ref": "api215E4D4B"
+    },
+    "AuthorizationType": "NONE",
+    "RouteKey": "ANY /{proxy+}",
+    "Target": {
+     "Fn::Join": [
+      "",
+      [
+       "integrations/",
+       {
+        "Ref": "apiANYproxyproxyintegration0A1C13F3"
+       }
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/ANY--{proxy+}/Resource"
+   }
+  },
+  "apiGETbucketbucketintegration66187BCF": {
+   "Type": "AWS::ApiGatewayV2::Integration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "api215E4D4B"
+    },
+    "IntegrationType": "AWS_PROXY",
+    "IntegrationUri": {
+     "Fn::GetAtt": [
+      "apiredirect5F095797",
+      "Arn"
+     ]
+    },
+    "PayloadFormatVersion": "2.0",
+    "RequestParameters": {
+     "overwrite:header.env": {
+      "Fn::Base64": {
+       "Fn::Join": [
+        "",
+        [
+         "{\"destination\":\"",
+         {
+          "Fn::GetAtt": [
+           "bucket43879C71",
+           "WebsiteURL"
+          ]
+         },
+         "\"}"
+        ]
+       ]
+      }
+     }
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/GET--bucket/--bucket-integration/Resource"
+   }
+  },
+  "apiGETbucketbucketintegrationPermission9DBD776B": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "apiredirect5F095797",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:eu-central-1:",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "api215E4D4B"
+       },
+       "/*/*/bucket"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/GET--bucket/--bucket-integration-Permission"
+   }
+  },
+  "apiGETbucketD6697F0C": {
+   "Type": "AWS::ApiGatewayV2::Route",
+   "Properties": {
+    "ApiId": {
+     "Ref": "api215E4D4B"
+    },
+    "AuthorizationType": "NONE",
+    "RouteKey": "GET /bucket",
+    "Target": {
+     "Fn::Join": [
+      "",
+      [
+       "integrations/",
+       {
+        "Ref": "apiGETbucketbucketintegration66187BCF"
+       }
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/GET--bucket/Resource"
+   }
+  },
+  "apiGETbucketproxybucketintegrationPermissionFFC9EFDF": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "apiredirect5F095797",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:eu-central-1:",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "api215E4D4B"
+       },
+       "/*/*/bucket/{proxy+}"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/GET--bucket--{proxy+}/--bucket-integration-Permission"
+   }
+  },
+  "apiGETbucketproxy0D03EE2F": {
+   "Type": "AWS::ApiGatewayV2::Route",
+   "Properties": {
+    "ApiId": {
+     "Ref": "api215E4D4B"
+    },
+    "AuthorizationType": "NONE",
+    "RouteKey": "GET /bucket/{proxy+}",
+    "Target": {
+     "Fn::Join": [
+      "",
+      [
+       "integrations/",
+       {
+        "Ref": "apiGETbucketbucketintegration66187BCF"
+       }
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/GET--bucket--{proxy+}/Resource"
+   }
+  },
+  "apiGETbucketconfigjsproxyintegration3D84D755": {
+   "Type": "AWS::ApiGatewayV2::Integration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "api215E4D4B"
+    },
+    "IntegrationMethod": "ANY",
+    "IntegrationType": "HTTP_PROXY",
+    "IntegrationUri": {
+     "Fn::Join": [
+      "",
+      [
+       {
+        "Fn::GetAtt": [
+         "bucket43879C71",
+         "WebsiteURL"
+        ]
+       },
+       "/bucket/config.js"
+      ]
+     ]
+    },
+    "PayloadFormatVersion": "1.0"
+   },
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/GET--bucket--config.js/proxy-integration/Resource"
+   }
+  },
+  "apiGETbucketconfigjs7F2CAF77": {
+   "Type": "AWS::ApiGatewayV2::Route",
+   "Properties": {
+    "ApiId": {
+     "Ref": "api215E4D4B"
+    },
+    "AuthorizationType": "NONE",
+    "RouteKey": "GET /bucket/config.js",
+    "Target": {
+     "Fn::Join": [
+      "",
+      [
+       "integrations/",
+       {
+        "Ref": "apiGETbucketconfigjsproxyintegration3D84D755"
+       }
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/GET--bucket--config.js/Resource"
+   }
+  },
+  "apiANYhttpbinproxyintegration20C78D20": {
+   "Type": "AWS::ApiGatewayV2::Integration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "api215E4D4B"
+    },
+    "IntegrationMethod": "ANY",
+    "IntegrationType": "HTTP_PROXY",
+    "IntegrationUri": "https://httpbin.org",
+    "PayloadFormatVersion": "1.0"
+   },
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/ANY--httpbin/proxy-integration/Resource"
+   }
+  },
+  "apiANYhttpbin80B692D3": {
+   "Type": "AWS::ApiGatewayV2::Route",
+   "Properties": {
+    "ApiId": {
+     "Ref": "api215E4D4B"
+    },
+    "AuthorizationType": "NONE",
+    "RouteKey": "ANY /httpbin",
+    "Target": {
+     "Fn::Join": [
+      "",
+      [
+       "integrations/",
+       {
+        "Ref": "apiANYhttpbinproxyintegration20C78D20"
+       }
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/ANY--httpbin/Resource"
+   }
+  },
+  "apiANYhttpbinproxyproxyintegration39931AB5": {
+   "Type": "AWS::ApiGatewayV2::Integration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "api215E4D4B"
+    },
+    "IntegrationMethod": "ANY",
+    "IntegrationType": "HTTP_PROXY",
+    "IntegrationUri": "https://httpbin.org/{proxy}",
+    "PayloadFormatVersion": "1.0"
+   },
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/ANY--httpbin--{proxy+}/proxy-integration/Resource"
+   }
+  },
+  "apiANYhttpbinproxy16DE03FD": {
+   "Type": "AWS::ApiGatewayV2::Route",
+   "Properties": {
+    "ApiId": {
+     "Ref": "api215E4D4B"
+    },
+    "AuthorizationType": "NONE",
+    "RouteKey": "ANY /httpbin/{proxy+}",
+    "Target": {
+     "Fn::Join": [
+      "",
+      [
+       "integrations/",
+       {
+        "Ref": "apiANYhttpbinproxyproxyintegration39931AB5"
+       }
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/ANY--httpbin--{proxy+}/Resource"
+   }
+  },
+  "apiANYapiapiintegration6D34E9B1": {
+   "Type": "AWS::ApiGatewayV2::Integration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "api215E4D4B"
+    },
+    "IntegrationType": "AWS_PROXY",
+    "IntegrationUri": {
+     "Fn::GetAtt": [
+      "lambda8B5974B5",
+      "Arn"
+     ]
+    },
+    "PayloadFormatVersion": "2.0",
+    "RequestParameters": {
+     "overwrite:header.env": {
+      "Fn::Base64": "{\"aVariable\":\"contents\"}"
+     }
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/ANY--api/--api-integration/Resource"
+   }
+  },
+  "apiANYapiapiintegrationPermission6FFE9E8F": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "lambda8B5974B5",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:eu-central-1:",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "api215E4D4B"
+       },
+       "/*/*/api"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/ANY--api/--api-integration-Permission"
+   }
+  },
+  "apiANYapi0BF5EBED": {
+   "Type": "AWS::ApiGatewayV2::Route",
+   "Properties": {
+    "ApiId": {
+     "Ref": "api215E4D4B"
+    },
+    "AuthorizationType": "NONE",
+    "RouteKey": "ANY /api",
+    "Target": {
+     "Fn::Join": [
+      "",
+      [
+       "integrations/",
+       {
+        "Ref": "apiANYapiapiintegration6D34E9B1"
+       }
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/ANY--api/Resource"
+   }
+  },
+  "apiredirectServiceRole981B3F00": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/api/api/redirect/ServiceRole/Resource"
+   }
+  },
+  "apiredirect5F095797": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-eu-central-1"
+     },
+     "S3Key": "bac1bd7a64f3d6d01d6caa8387a57ec28f7630f9de4c2d333d11d3124e542868.zip"
+    },
+    "Handler": "redirector.handler",
+    "Role": {
+     "Fn::GetAtt": [
+      "apiredirectServiceRole981B3F00",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs18.x"
+   },
+   "DependsOn": [
+    "apiredirectServiceRole981B3F00"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/api/api/redirect/Resource",
+    "aws:asset:path": "asset.bac1bd7a64f3d6d01d6caa8387a57ec28f7630f9de4c2d333d11d3124e542868",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "arecord63C095BE": {
+   "Type": "AWS::Route53::RecordSet",
+   "Properties": {
+    "AliasTarget": {
+     "DNSName": {
+      "Fn::GetAtt": [
+       "apidomainedgeapitestdevintegdevpaasreapitcloudF71BAB99",
+       "RegionalDomainName"
+      ]
+     },
+     "HostedZoneId": {
+      "Fn::GetAtt": [
+       "apidomainedgeapitestdevintegdevpaasreapitcloudF71BAB99",
+       "RegionalHostedZoneId"
+      ]
+     }
+    },
+    "HostedZoneId": "Z085471422JPU7GT84QN4",
+    "Name": "edge-api-test-dev.integ.dev.paas.reapit.cloud.",
+    "Type": "A"
+   },
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/arecord/Resource"
+   }
+  },
+  "bucket43879C71": {
+   "Type": "AWS::S3::Bucket",
+   "Properties": {
+    "PublicAccessBlockConfiguration": {
+     "BlockPublicAcls": false,
+     "BlockPublicPolicy": false,
+     "IgnorePublicAcls": false,
+     "RestrictPublicBuckets": false
+    },
+    "Tags": [
+     {
+      "Key": "aws-cdk:cr-owned:1f24e066",
+      "Value": "true"
+     }
+    ],
+    "WebsiteConfiguration": {
+     "ErrorDocument": "index.html",
+     "IndexDocument": "index.html"
+    }
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/bucket/Resource"
+   }
+  },
+  "bucketPolicy638F945D": {
+   "Type": "AWS::S3::BucketPolicy",
+   "Properties": {
+    "Bucket": {
+     "Ref": "bucket43879C71"
+    },
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "s3:GetObject",
+       "Effect": "Allow",
+       "Principal": {
+        "AWS": "*"
+       },
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          {
+           "Fn::GetAtt": [
+            "bucket43879C71",
+            "Arn"
+           ]
+          },
+          "/*"
+         ]
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/bucket/Policy/Resource"
+   }
+  },
+  "deploymentAwsCliLayer437C1CEF": {
+   "Type": "AWS::Lambda::LayerVersion",
+   "Properties": {
+    "Content": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-eu-central-1"
+     },
+     "S3Key": "e2277687077a2abf9ae1af1cc9565e6715e2ebb62f79ec53aa75a1af9298f642.zip"
+    },
+    "Description": "/opt/awscli/aws"
+   },
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/deployment/AwsCliLayer/Resource",
+    "aws:asset:path": "asset.e2277687077a2abf9ae1af1cc9565e6715e2ebb62f79ec53aa75a1af9298f642.zip",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Content"
+   }
+  },
+  "deploymentCustomResourceEDB139B7": {
+   "Type": "Custom::CDKBucketDeployment",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C81C01536",
+      "Arn"
+     ]
+    },
+    "SourceBucketNames": [
+     {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-eu-central-1"
+     }
+    ],
+    "SourceObjectKeys": [
+     "3f6744d9421e8efa10e991c97d00e523594a2abf230a1eaefafccb43d79d42e8.zip"
+    ],
+    "SourceMarkers": [
+     {}
+    ],
+    "DestinationBucketName": {
+     "Ref": "bucket43879C71"
+    },
+    "Prune": true
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/deployment/CustomResource/Default"
+   }
+  },
+  "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRole89A01265": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/ServiceRole/Resource"
+   }
+  },
+  "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRoleDefaultPolicy88902FDF": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "s3:GetObject*",
+        "s3:GetBucket*",
+        "s3:List*"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":s3:::",
+           {
+            "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-eu-central-1"
+           }
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":s3:::",
+           {
+            "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-eu-central-1"
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "s3:GetObject*",
+        "s3:GetBucket*",
+        "s3:List*",
+        "s3:DeleteObject*",
+        "s3:PutObject",
+        "s3:PutObjectLegalHold",
+        "s3:PutObjectRetention",
+        "s3:PutObjectTagging",
+        "s3:PutObjectVersionTagging",
+        "s3:Abort*"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "bucket43879C71",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "bucket43879C71",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRoleDefaultPolicy88902FDF",
+    "Roles": [
+     {
+      "Ref": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRole89A01265"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C81C01536": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-eu-central-1"
+     },
+     "S3Key": "9eb41a5505d37607ac419321497a4f8c21cf0ee1f9b4a6b29aa04301aea5c7fd.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "AWS_CA_BUNDLE": "/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem"
+     }
+    },
+    "Handler": "index.handler",
+    "Layers": [
+     {
+      "Ref": "deploymentAwsCliLayer437C1CEF"
+     }
+    ],
+    "Role": {
+     "Fn::GetAtt": [
+      "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRole89A01265",
+      "Arn"
+     ]
+    },
+    "Runtime": "python3.9",
+    "Timeout": 900
+   },
+   "DependsOn": [
+    "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRoleDefaultPolicy88902FDF",
+    "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRole89A01265"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/Resource",
+    "aws:asset:path": "asset.9eb41a5505d37607ac419321497a4f8c21cf0ee1f9b4a6b29aa04301aea5c7fd",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "lambdaServiceRole494E4CA6": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/lambda/ServiceRole/Resource"
+   }
+  },
+  "lambda8B5974B5": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "ZipFile": "module.exports = { handler: async (event) => JSON.parse(Buffer.from(event.headers.env, \"base64\").toString(\"utf-8\")) }"
+    },
+    "Handler": "index.handler",
+    "Role": {
+     "Fn::GetAtt": [
+      "lambdaServiceRole494E4CA6",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs18.x"
+   },
+   "DependsOn": [
+    "lambdaServiceRole494E4CA6"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/lambda/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/01S2WrDMBD8lrzLylFamrfmoLTQIzjQ17CRN64SHUaSE4zxv1crp4nBMLOrYa/xjLfzOZ+O4OIzUZwyJfe83QYQJ5ajt7UTyOLbrhXogjxIAQE1GCjR8XZ1z7HVwQzCjkEly0gu0JxnUXkwa6tBmi/QSbuoJEHsVP7Hn1BV0pQUvZuApYMgraEwtzWVVKD3BaRiG3Raek/vr7UR/8Ih/4AG3Q+6JNrGwgqDvSk6JkHzNrcK+w4RN1ZJ0VDYs475h10L3mPwfEHACqyUbTSawJe1OGFY3xKk5m2fXYJH1lMqd2U93LsM4445WvIxlljkKKwr0liJbTF0HUsD0L3oRv0pdop23EV/hJJ8cfErJdPabFX7YPXNwVTqzr/rUNVx4PkTn2Wgql/gk9HL9RcYEw7duyragYFvIVTkIGFv4cA/SibHEhtYGZcwtkB+9OPz9JnHbzI6eikzV5sgNfK8xz8kr/D+lAIAAA=="
+   },
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/CDKMetadata/Default"
+   }
+  }
+ },
+ "Outputs": {
+  "output": {
+   "Value": "https://edge-api-test-dev.integ.dev.paas.reapit.cloud"
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

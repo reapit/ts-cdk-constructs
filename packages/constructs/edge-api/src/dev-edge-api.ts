@@ -70,11 +70,19 @@ export class DevEdgeAPI extends Construct {
   addEndpoint(endpoint: Endpoint) {
     if (endpointIsProxyEndpoint(endpoint)) {
       const methods = endpoint.methods ?? [HttpMethod.ANY]
+      const strip = endpoint.pathPattern.replace('*', '').endsWith('/') && endpoint.pathPattern !== '/*'
       this.api.addRoutes({
-        path: endpoint.pathPattern.replace('*', '{proxy+}'),
-        integration: new HttpUrlIntegration('proxy-integration', 'https://' + endpoint.destination + '/{proxy}'),
+        path: strip ? endpoint.pathPattern.replace('/*', '').replace('*', '') : endpoint.pathPattern.replace('*', ''),
+        integration: new HttpUrlIntegration('proxy-integration', 'https://' + endpoint.destination),
         methods,
       })
+      if (endpoint.pathPattern.includes('*')) {
+        this.api.addRoutes({
+          path: endpoint.pathPattern.replace('*', '{proxy+}'),
+          integration: new HttpUrlIntegration('proxy-integration', 'https://' + endpoint.destination + '/{proxy}'),
+          methods,
+        })
+      }
     }
     if (endpointIsLambdaEndpoint(endpoint)) {
       const { pathPattern, lambda } = endpoint
@@ -93,18 +101,21 @@ export class DevEdgeAPI extends Construct {
         parameterMapping: this.generateParameterMapping({ destination: bucket.bucketWebsiteUrl }),
       })
       this.api.addRoutes({
-        path: pathPattern,
+        path: pathPattern.replace('*', ''),
         integration,
         methods: [HttpMethod.GET],
       })
       this.api.addRoutes({
-        path: pathPattern + '/{proxy+}',
+        path: pathPattern.replace('*', '') + '/{proxy+}',
         integration,
         methods: [HttpMethod.GET],
       })
       this.api.addRoutes({
-        path: pathPattern + '/config.js',
-        integration: new HttpUrlIntegration('proxy-integration', bucket.bucketWebsiteUrl + pathPattern + '/config.js'),
+        path: pathPattern.replace('*', '') + '/config.js',
+        integration: new HttpUrlIntegration(
+          'proxy-integration',
+          bucket.bucketWebsiteUrl + pathPattern.replace('*', '') + '/config.js',
+        ),
         methods: [HttpMethod.GET],
       })
     }

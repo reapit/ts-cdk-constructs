@@ -5,7 +5,7 @@ import { Certificate, CertificateValidation } from 'aws-cdk-lib/aws-certificatem
 import { BucketDeployment, Source } from 'aws-cdk-lib/aws-s3-deployment'
 import { Bucket } from 'aws-cdk-lib/aws-s3'
 import { Code, Runtime } from 'aws-cdk-lib/aws-lambda'
-import { CfnOutput } from 'aws-cdk-lib'
+import { CfnOutput, RemovalPolicy } from 'aws-cdk-lib'
 
 export const edgeAPITest = (devMode?: boolean) => {
   const app = new App()
@@ -51,7 +51,18 @@ export const edgeAPITest = (devMode?: boolean) => {
     target: api.route53Target,
   })
 
-  const bucket = new Bucket(stack, 'bucket')
+  const bucket = new Bucket(stack, 'bucket', {
+    websiteIndexDocument: 'index.html',
+    websiteErrorDocument: 'index.html',
+    removalPolicy: RemovalPolicy.RETAIN, // otherwise deletion will fail on stack destroy due to non-empty bucket
+    publicReadAccess: true,
+    blockPublicAccess: {
+      blockPublicAcls: false,
+      blockPublicPolicy: false,
+      ignorePublicAcls: false,
+      restrictPublicBuckets: false,
+    },
+  })
   new BucketDeployment(stack, 'deployment', {
     destinationBucket: bucket,
     sources: [Source.data('index.html', '<h1>it works!</h1>')],
@@ -63,7 +74,7 @@ export const edgeAPITest = (devMode?: boolean) => {
   })
 
   api.addEndpoint({
-    pathPattern: '/get',
+    pathPattern: '/httpbin/*',
     destination: 'httpbin.org',
   })
 
@@ -72,8 +83,8 @@ export const edgeAPITest = (devMode?: boolean) => {
     lambda: new EdgeAPILambda(stack, 'lambda', {
       code: Code.fromInline(
         devMode
-          ? 'export const handler = async (event) => JSON.parse(Buffer.from(event.headers.env, "base64").toString("utf-8"))'
-          : 'export const handler = async (event) => ({ status: 200, bodyEncoding: "text", body: JSON.stringify(JSON.parse(event.Records[0].cf.request.origin.s3.customHeaders.env[0].value)) })',
+          ? 'module.exports = { handler: async (event) => JSON.parse(Buffer.from(event.headers.env, "base64").toString("utf-8")) }'
+          : 'module.exports = { handler: async (event) => ({ status: 200, bodyEncoding: "text", body: JSON.stringify(JSON.parse(event.Records[0].cf.request.origin.s3.customHeaders.env[0].value)) }) }',
       ),
       handler: 'index.handler',
       runtime: Runtime.NODEJS_18_X,
