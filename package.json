@@ -7,7 +7,7 @@
     "packages/*/*"
   ],
   "scripts": {
-    "test": "jest --ignoreProjects 'integration tests'",
+    "test": "jest --ignoreProjects 'integration tests' --coverage",
     "check": "tsc packages/**/*.ts --noEmit",
     "build": "yarn workspaces foreach -v run build",
     "lint": "yarn workspaces foreach -v run lint",

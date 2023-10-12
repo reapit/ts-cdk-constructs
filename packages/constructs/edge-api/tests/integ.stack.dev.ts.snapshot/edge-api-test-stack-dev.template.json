@@ -372,7 +372,7 @@
     "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/GET--bucket--config.js/Resource"
    }
   },
-  "apiANYhttpbinproxyintegration20C78D20": {
+  "apiANYgetproxyintegrationBE08D089": {
    "Type": "AWS::ApiGatewayV2::Integration",
    "Properties": {
     "ApiId": {
@@ -380,38 +380,38 @@
     },
     "IntegrationMethod": "ANY",
     "IntegrationType": "HTTP_PROXY",
-    "IntegrationUri": "https://httpbin.org",
+    "IntegrationUri": "https://httpbin.org/get",
     "PayloadFormatVersion": "1.0"
    },
    "Metadata": {
-    "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/ANY--httpbin/proxy-integration/Resource"
+    "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/ANY--get/proxy-integration/Resource"
    }
   },
-  "apiANYhttpbin80B692D3": {
+  "apiANYgetCE1D4C90": {
    "Type": "AWS::ApiGatewayV2::Route",
    "Properties": {
     "ApiId": {
      "Ref": "api215E4D4B"
     },
     "AuthorizationType": "NONE",
-    "RouteKey": "ANY /httpbin",
+    "RouteKey": "ANY /get",
     "Target": {
      "Fn::Join": [
       "",
       [
        "integrations/",
        {
-        "Ref": "apiANYhttpbinproxyintegration20C78D20"
+        "Ref": "apiANYgetproxyintegrationBE08D089"
        }
       ]
      ]
     }
    },
    "Metadata": {
-    "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/ANY--httpbin/Resource"
+    "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/ANY--get/Resource"
    }
   },
-  "apiANYhttpbinproxyproxyintegration39931AB5": {
+  "apiANYgetproxyproxyintegrationCAD963EE": {
    "Type": "AWS::ApiGatewayV2::Integration",
    "Properties": {
     "ApiId": {
@@ -419,35 +419,35 @@
     },
     "IntegrationMethod": "ANY",
     "IntegrationType": "HTTP_PROXY",
-    "IntegrationUri": "https://httpbin.org/{proxy}",
+    "IntegrationUri": "https://httpbin.org/get/{proxy}",
     "PayloadFormatVersion": "1.0"
    },
    "Metadata": {
-    "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/ANY--httpbin--{proxy+}/proxy-integration/Resource"
+    "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/ANY--get--{proxy+}/proxy-integration/Resource"
    }
   },
-  "apiANYhttpbinproxy16DE03FD": {
+  "apiANYgetproxy69ED9EB0": {
    "Type": "AWS::ApiGatewayV2::Route",
    "Properties": {
     "ApiId": {
      "Ref": "api215E4D4B"
     },
     "AuthorizationType": "NONE",
-    "RouteKey": "ANY /httpbin/{proxy+}",
+    "RouteKey": "ANY /get/{proxy+}",
     "Target": {
      "Fn::Join": [
       "",
       [
        "integrations/",
        {
-        "Ref": "apiANYhttpbinproxyproxyintegration39931AB5"
+        "Ref": "apiANYgetproxyproxyintegrationCAD963EE"
        }
       ]
      ]
     }
    },
    "Metadata": {
-    "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/ANY--httpbin--{proxy+}/Resource"
+    "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/ANY--get--{proxy+}/Resource"
    }
   },
   "apiANYapiapiintegration6D34E9B1": {

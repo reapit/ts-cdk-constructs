@@ -18,7 +18,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-eu-central-1",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-eu-central-1",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-eu-central-1/38ce782e6071730d7a927d34f5cecc92d7122d81087893c8a2b9c30b321d20aa.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-eu-central-1/57a0619a8cb178d34405ecda386337ed5d48d0d59dd71f359451764e9073682d.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -130,28 +130,28 @@
             "data": "apiGETbucketconfigjs7F2CAF77"
           }
         ],
-        "/edge-api-test-stack-dev/api/api/api/ANY--httpbin/proxy-integration/Resource": [
+        "/edge-api-test-stack-dev/api/api/api/ANY--get/proxy-integration/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "apiANYhttpbinproxyintegration20C78D20"
+            "data": "apiANYgetproxyintegrationBE08D089"
           }
         ],
-        "/edge-api-test-stack-dev/api/api/api/ANY--httpbin/Resource": [
+        "/edge-api-test-stack-dev/api/api/api/ANY--get/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "apiANYhttpbin80B692D3"
+            "data": "apiANYgetCE1D4C90"
           }
         ],
-        "/edge-api-test-stack-dev/api/api/api/ANY--httpbin--{proxy+}/proxy-integration/Resource": [
+        "/edge-api-test-stack-dev/api/api/api/ANY--get--{proxy+}/proxy-integration/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "apiANYhttpbinproxyproxyintegration39931AB5"
+            "data": "apiANYgetproxyproxyintegrationCAD963EE"
           }
         ],
-        "/edge-api-test-stack-dev/api/api/api/ANY--httpbin--{proxy+}/Resource": [
+        "/edge-api-test-stack-dev/api/api/api/ANY--get--{proxy+}/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "apiANYhttpbinproxy16DE03FD"
+            "data": "apiANYgetproxy69ED9EB0"
           }
         ],
         "/edge-api-test-stack-dev/api/api/api/ANY--api/--api-integration/Resource": [
