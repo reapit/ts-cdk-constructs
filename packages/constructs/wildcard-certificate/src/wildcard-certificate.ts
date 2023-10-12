@@ -94,7 +94,7 @@ export class WildcardCertificate extends Construct {
         return mapping
       })
       .map((mapping) => {
-        const account = mapping.account || scopeAccount
+        const account = mapping.account ?? scopeAccount
         if (account !== scopeAccount && !mapping.roleArn) {
           throw new Error('roleArn must be provided when hosted zone is cross-account')
         }

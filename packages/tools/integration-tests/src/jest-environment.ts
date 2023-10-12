@@ -15,13 +15,9 @@ export default class CustomEnvironment extends NodeEnvironment {
   handleTestEvent(event: Circus.Event) {
     if (!this.global.testStatuses) this.global.testStatuses = {}
 
-    switch (event.name) {
-      case 'test_fn_failure': {
-        // @ts-ignore
-        this.global.testStatuses[getTestPath(event.test).join('/')] = 'failed'
-        break
-      }
-      // I also used test_fn_start and test_fn_success
+    if (event.name === 'test_fn_failure') {
+      // @ts-ignore
+      this.global.testStatuses[getTestPath(event.test).join('/')] = 'failed'
     }
   }
 }
