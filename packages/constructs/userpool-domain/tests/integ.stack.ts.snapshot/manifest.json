@@ -11,21 +11,21 @@
     },
     "userpool-domain-test-stack": {
       "type": "aws:cloudformation:stack",
-      "environment": "aws://unknown-account/eu-central-1",
+      "environment": "aws://028446965111/eu-central-1",
       "properties": {
         "templateFile": "userpool-domain-test-stack.template.json",
         "terminationProtection": false,
         "validateOnSynth": false,
-        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-eu-central-1",
-        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-eu-central-1",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-eu-central-1/c156255ae9256e22baf3b6a7a9d8702580ba08aeda687a9a9976dd5fcb27c331.json",
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-deploy-role-028446965111-eu-central-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-cfn-exec-role-028446965111-eu-central-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-028446965111-eu-central-1/dfe2f6a459a93ee71673a92aa5c2221790411d98080232b40f751d8b500ab43a.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
           "userpool-domain-test-stack.assets"
         ],
         "lookupRole": {
-          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-eu-central-1",
+          "arn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-lookup-role-028446965111-eu-central-1",
           "requiresBootstrapStackVersion": 8,
           "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
         }

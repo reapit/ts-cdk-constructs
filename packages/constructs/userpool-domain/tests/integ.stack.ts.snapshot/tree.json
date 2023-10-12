@@ -200,10 +200,8 @@
                       "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
                       "aws:cdk:cloudformation:props": {
                         "code": {
-                          "s3Bucket": {
-                            "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-eu-central-1"
-                          },
-                          "s3Key": "ca81947f7408173dc60f2e818df27796f93daa44028b9c784165897d9316cded.zip"
+                          "s3Bucket": "cdk-hnb659fds-assets-028446965111-eu-central-1",
+                          "s3Key": "b93196e157e2b38be8e72a84a11f98f758e3f2cf320673a38552464cf6733154.zip"
                         },
                         "handler": "lambda.onEvent",
                         "role": {
@@ -385,9 +383,7 @@
                           "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
                           "aws:cdk:cloudformation:props": {
                             "code": {
-                              "s3Bucket": {
-                                "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-eu-central-1"
-                              },
+                              "s3Bucket": "cdk-hnb659fds-assets-028446965111-eu-central-1",
                               "s3Key": "7382a0addb9f34974a1ea6c6c9b063882af874828f366f5c93b2b7b64db15c94.zip"
                             },
                             "description": "AWS CDK resource provider framework - onEvent (userpool-domain-test-stack/domain/provider)",
