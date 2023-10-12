@@ -2,7 +2,8 @@ import { Construct } from 'constructs'
 import { Code, Function, Runtime } from 'aws-cdk-lib/aws-lambda'
 import * as path from 'path'
 import { Provider } from 'aws-cdk-lib/custom-resources'
-import { CustomResource, Duration } from 'aws-cdk-lib'
+import { Arn, ArnFormat, CustomResource, Duration, Stack } from 'aws-cdk-lib'
+import { PolicyStatement } from 'aws-cdk-lib/aws-iam'
 
 interface VerificationWaiterProps {
   emailIdentityName: string
@@ -31,6 +32,24 @@ export class EmailIdentityVerificationWaiter extends Construct {
         emailIdentityName: props.emailIdentityName,
       },
     })
+
+    lambda.addToRolePolicy(
+      new PolicyStatement({
+        actions: ['ses:GetEmailIdentity'],
+        resources: [
+          Arn.format(
+            {
+              service: 'ses',
+              region: Stack.of(this).region,
+              resource: 'identity',
+              resourceName: props.emailIdentityName,
+              arnFormat: ArnFormat.SLASH_RESOURCE_NAME,
+            },
+            Stack.of(this),
+          ),
+        ],
+      }),
+    )
 
     this.dependable = cr
   }
