@@ -141,13 +141,22 @@ var customResourceWrapper = (handler2) => {
         }
         case "Delete": {
           if (handler2.onDelete) {
-            await handler2.onDelete(augmentedRP);
+            await handler2.onDelete({
+              ...augmentedRP,
+              physicalResourceId: event.PhysicalResourceId
+            });
           }
           return successEvent(event, {});
         }
         case "Update": {
           if (handler2.onUpdate) {
-            const data = await handler2.onUpdate(augmentedRP, event.OldResourceProperties);
+            const data = await handler2.onUpdate(
+              {
+                ...augmentedRP,
+                physicalResourceId: event.PhysicalResourceId
+              },
+              event.OldResourceProperties
+            );
             return successEvent(event, { data });
           }
           return successEvent(event, {});

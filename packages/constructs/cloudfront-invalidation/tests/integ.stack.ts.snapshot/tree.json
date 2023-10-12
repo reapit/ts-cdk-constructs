@@ -136,11 +136,7 @@
                                         "Fn::Join": [
                                           "",
                                           [
-                                            "arn:aws:cloudfront::",
-                                            {
-                                              "Ref": "AWS::AccountId"
-                                            },
-                                            ":distribution/",
+                                            "arn:aws:cloudfront::028446965111:distribution/",
                                             {
                                               "Ref": "distribution114A0A2A"
                                             }

@@ -151,10 +151,8 @@
                       "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
                       "aws:cdk:cloudformation:props": {
                         "code": {
-                          "s3Bucket": {
-                            "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-eu-central-1"
-                          },
-                          "s3Key": "64c60f796d5d92bdc873e9d87918b89b9010f4db6739299c2131abc25ab0229f.zip"
+                          "s3Bucket": "cdk-hnb659fds-assets-028446965111-eu-central-1",
+                          "s3Key": "70101dd19c992c1007677c27312173fdfc3e1d7e0cc89c841a125b4b7d455b89.zip"
                         },
                         "handler": "lambda.onEvent",
                         "role": {
@@ -336,9 +334,7 @@
                           "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
                           "aws:cdk:cloudformation:props": {
                             "code": {
-                              "s3Bucket": {
-                                "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-eu-central-1"
-                              },
+                              "s3Bucket": "cdk-hnb659fds-assets-028446965111-eu-central-1",
                               "s3Key": "7382a0addb9f34974a1ea6c6c9b063882af874828f366f5c93b2b7b64db15c94.zip"
                             },
                             "description": "AWS CDK resource provider framework - onEvent (active-ruleset-stack/active-ruleset/provider)",

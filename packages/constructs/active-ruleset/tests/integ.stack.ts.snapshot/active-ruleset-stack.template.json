@@ -68,10 +68,8 @@
    "Type": "AWS::Lambda::Function",
    "Properties": {
     "Code": {
-     "S3Bucket": {
-      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-eu-central-1"
-     },
-     "S3Key": "64c60f796d5d92bdc873e9d87918b89b9010f4db6739299c2131abc25ab0229f.zip"
+     "S3Bucket": "cdk-hnb659fds-assets-028446965111-eu-central-1",
+     "S3Key": "70101dd19c992c1007677c27312173fdfc3e1d7e0cc89c841a125b4b7d455b89.zip"
     },
     "Handler": "lambda.onEvent",
     "Role": {
@@ -89,7 +87,7 @@
    ],
    "Metadata": {
     "aws:cdk:path": "active-ruleset-stack/active-ruleset/lambda/Resource",
-    "aws:asset:path": "asset.64c60f796d5d92bdc873e9d87918b89b9010f4db6739299c2131abc25ab0229f",
+    "aws:asset:path": "asset.70101dd19c992c1007677c27312173fdfc3e1d7e0cc89c841a125b4b7d455b89",
     "aws:asset:is-bundled": false,
     "aws:asset:property": "Code"
    }
@@ -177,9 +175,7 @@
    "Type": "AWS::Lambda::Function",
    "Properties": {
     "Code": {
-     "S3Bucket": {
-      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-eu-central-1"
-     },
+     "S3Bucket": "cdk-hnb659fds-assets-028446965111-eu-central-1",
      "S3Key": "7382a0addb9f34974a1ea6c6c9b063882af874828f366f5c93b2b7b64db15c94.zip"
     },
     "Description": "AWS CDK resource provider framework - onEvent (active-ruleset-stack/active-ruleset/provider)",

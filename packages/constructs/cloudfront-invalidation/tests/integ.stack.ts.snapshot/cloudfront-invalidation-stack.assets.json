@@ -1,17 +1,17 @@
 {
   "version": "34.0.0",
   "files": {
-    "b019e4ff644d2db8b973c9dd31bea3fb3ed521f90169ba4b69c77a1b8e7bab0a": {
+    "ae75dd26f798f053f589f9da73e9bd8e8cece08890b6f8f2aa2e4f6ce03883a5": {
       "source": {
         "path": "cloudfront-invalidation-stack.template.json",
         "packaging": "file"
       },
       "destinations": {
-        "current_account-eu-central-1": {
-          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-eu-central-1",
-          "objectKey": "b019e4ff644d2db8b973c9dd31bea3fb3ed521f90169ba4b69c77a1b8e7bab0a.json",
+        "028446965111-eu-central-1": {
+          "bucketName": "cdk-hnb659fds-assets-028446965111-eu-central-1",
+          "objectKey": "ae75dd26f798f053f589f9da73e9bd8e8cece08890b6f8f2aa2e4f6ce03883a5.json",
           "region": "eu-central-1",
-          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-eu-central-1"
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-file-publishing-role-028446965111-eu-central-1"
         }
       }
     }
