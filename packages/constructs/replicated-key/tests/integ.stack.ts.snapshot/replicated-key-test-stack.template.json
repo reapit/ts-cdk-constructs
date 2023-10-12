@@ -15,9 +15,7 @@
        ],
        "Condition": {
         "StringEquals": {
-         "kms:CallerAccount": {
-          "Ref": "AWS::AccountId"
-         },
+         "kms:CallerAccount": "028446965111",
          "kms:ViaService": "secretsmanager.eu-central-1.amazonaws.com"
         }
        },
@@ -32,9 +30,7 @@
        "Action": "kms:GenerateDataKey*",
        "Condition": {
         "StringEquals": {
-         "kms:CallerAccount": {
-          "Ref": "AWS::AccountId"
-         }
+         "kms:CallerAccount": "028446965111"
         },
         "StringLike": {
          "kms:ViaService": "secretsmanager.eu-central-1.amazonaws.com"
@@ -51,18 +47,7 @@
        "Action": "kms:*",
        "Effect": "Allow",
        "Principal": {
-        "AWS": {
-         "Fn::Join": [
-          "",
-          [
-           "arn:aws:iam::",
-           {
-            "Ref": "AWS::AccountId"
-           },
-           ":root"
-          ]
-         ]
-        }
+        "AWS": "arn:aws:iam::028446965111:root"
        },
        "Resource": "*",
        "Sid": "Allow direct access to key to the account"
@@ -150,11 +135,7 @@
            {
             "Ref": "AWS::Partition"
            },
-           ":kms:eu-west-1:",
-           {
-            "Ref": "AWS::AccountId"
-           },
-           ":key/",
+           ":kms:eu-west-1:028446965111:key/",
            {
             "Fn::Select": [
              1,
@@ -192,11 +173,7 @@
            {
             "Ref": "AWS::Partition"
            },
-           ":kms:eu-west-2:",
-           {
-            "Ref": "AWS::AccountId"
-           },
-           ":key/",
+           ":kms:eu-west-2:028446965111:key/",
            {
             "Fn::Select": [
              1,
@@ -246,9 +223,7 @@
    "Type": "AWS::Lambda::Function",
    "Properties": {
     "Code": {
-     "S3Bucket": {
-      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-eu-central-1"
-     },
+     "S3Bucket": "cdk-hnb659fds-assets-028446965111-eu-central-1",
      "S3Key": "9aead741412b4610bff42612fab8dabcb56784f594ba90ca1bc2b5390528859e.zip"
     },
     "Handler": "lambda.onEvent",
@@ -355,9 +330,7 @@
    "Type": "AWS::Lambda::Function",
    "Properties": {
     "Code": {
-     "S3Bucket": {
-      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-eu-central-1"
-     },
+     "S3Bucket": "cdk-hnb659fds-assets-028446965111-eu-central-1",
      "S3Key": "7382a0addb9f34974a1ea6c6c9b063882af874828f366f5c93b2b7b64db15c94.zip"
     },
     "Description": "AWS CDK resource provider framework - onEvent (replicated-key-test-stack/replicated-key/provider)",

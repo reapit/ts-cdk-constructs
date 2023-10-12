@@ -65,15 +65,15 @@ var ensureUserPoolDomain = async (userPoolId) => {
   return domain;
 };
 
-// ../custom-resource-wrapper/src/custom-resource-wrapper.ts
+// ../../modules/custom-resource-wrapper/src/custom-resource-wrapper.ts
 var successEvent = (event, { data }) => {
-  const { physicalResourceId, ...rest } = data || {};
+  const { physicalResourceId, ...rest } = data ?? {};
   const restData = Object.keys(rest).length ? rest : void 0;
   return {
     ...event,
     Status: "SUCCESS",
     Data: restData,
-    PhysicalResourceId: physicalResourceId || event.PhysicalResourceId || event.LogicalResourceId
+    PhysicalResourceId: physicalResourceId ?? event.PhysicalResourceId ?? event.LogicalResourceId
   };
 };
 var failureEvent = (event, { reason }) => {
@@ -104,13 +104,22 @@ var customResourceWrapper = (handler) => {
         }
         case "Delete": {
           if (handler.onDelete) {
-            await handler.onDelete(augmentedRP);
+            await handler.onDelete({
+              ...augmentedRP,
+              physicalResourceId: event.PhysicalResourceId
+            });
           }
           return successEvent(event, {});
         }
         case "Update": {
           if (handler.onUpdate) {
-            const data = await handler.onUpdate(augmentedRP, event.OldResourceProperties);
+            const data = await handler.onUpdate(
+              {
+                ...augmentedRP,
+                physicalResourceId: event.PhysicalResourceId
+              },
+              event.OldResourceProperties
+            );
             return successEvent(event, { data });
           }
           return successEvent(event, {});

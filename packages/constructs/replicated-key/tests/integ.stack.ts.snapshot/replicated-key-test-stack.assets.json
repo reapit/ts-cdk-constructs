@@ -7,11 +7,11 @@
         "packaging": "zip"
       },
       "destinations": {
-        "current_account-eu-central-1": {
-          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-eu-central-1",
+        "028446965111-eu-central-1": {
+          "bucketName": "cdk-hnb659fds-assets-028446965111-eu-central-1",
           "objectKey": "9aead741412b4610bff42612fab8dabcb56784f594ba90ca1bc2b5390528859e.zip",
           "region": "eu-central-1",
-          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-eu-central-1"
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-file-publishing-role-028446965111-eu-central-1"
         }
       }
     },
@@ -21,25 +21,25 @@
         "packaging": "zip"
       },
       "destinations": {
-        "current_account-eu-central-1": {
-          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-eu-central-1",
+        "028446965111-eu-central-1": {
+          "bucketName": "cdk-hnb659fds-assets-028446965111-eu-central-1",
           "objectKey": "7382a0addb9f34974a1ea6c6c9b063882af874828f366f5c93b2b7b64db15c94.zip",
           "region": "eu-central-1",
-          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-eu-central-1"
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-file-publishing-role-028446965111-eu-central-1"
         }
       }
     },
-    "72c7347103b2d8ade7b3fe228a42dac2ec1a909c891728ccbf7c7de9b8d486f9": {
+    "58398b17d54541a3016a28419dfe8214398c509bc2cc874edec2736be5aecc13": {
       "source": {
         "path": "replicated-key-test-stack.template.json",
         "packaging": "file"
       },
       "destinations": {
-        "current_account-eu-central-1": {
-          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-eu-central-1",
-          "objectKey": "72c7347103b2d8ade7b3fe228a42dac2ec1a909c891728ccbf7c7de9b8d486f9.json",
+        "028446965111-eu-central-1": {
+          "bucketName": "cdk-hnb659fds-assets-028446965111-eu-central-1",
+          "objectKey": "58398b17d54541a3016a28419dfe8214398c509bc2cc874edec2736be5aecc13.json",
           "region": "eu-central-1",
-          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-eu-central-1"
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-file-publishing-role-028446965111-eu-central-1"
         }
       }
     }
