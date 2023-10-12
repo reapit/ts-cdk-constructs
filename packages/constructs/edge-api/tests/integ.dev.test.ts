@@ -6,6 +6,7 @@ describe('edge-api dev integration', () => {
   const integ = new IntegrationTest({
     stackFile: path.resolve(__dirname, './integ.stack.dev.ts'),
     stackName: 'edge-api-test-stack-dev',
+    noCleanup: true,
   })
 
   void integ.it('root - should proxy', async () => {
@@ -30,9 +31,9 @@ describe('edge-api dev integration', () => {
     expect(resJson).toHaveProperty('aVariable', 'contents')
   })
 
-  void integ.it('/httpbin/get - should proxy to httpbin', async () => {
+  void integ.it('/get - should proxy to httpbin', async () => {
     const endpoint = integ.outputs.output
-    const res = await fetch(`${endpoint}/httpbin/get`)
+    const res = await fetch(`${endpoint}/get`)
     const resJson = await res.json()
     expect(resJson).toBeDefined()
     expect(resJson).toHaveProperty('url', 'https://httpbin.org/get')

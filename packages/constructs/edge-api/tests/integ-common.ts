@@ -74,7 +74,7 @@ export const edgeAPITest = (devMode?: boolean) => {
   })
 
   api.addEndpoint({
-    pathPattern: '/httpbin/*',
+    pathPattern: '/get/*',
     destination: 'httpbin.org',
   })
 
