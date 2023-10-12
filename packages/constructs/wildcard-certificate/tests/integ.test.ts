@@ -9,7 +9,7 @@ describe('wildcard-certificate integration', () => {
     stackName: 'certificate-test-stack',
   })
 
-  void integ.it('should create the wildcard certificate', async () => {
+  integ.it('should create the wildcard certificate', async () => {
     const parentDomain = process.env.INTEG_DOMAIN ?? 'integ.dev.paas.reapit.cloud'
     const client = new ACMClient({
       region: 'eu-central-1',

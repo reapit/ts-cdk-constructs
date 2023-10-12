@@ -9,7 +9,7 @@ describe('active-rule integration', () => {
     stackName: 'active-ruleset-stack',
   })
 
-  void integ.it('should output the active receiptRuleSetName', async () => {
+  integ.it('should output the active receiptRuleSetName', async () => {
     const ses = new SESClient({
       region: 'eu-central-1',
     })

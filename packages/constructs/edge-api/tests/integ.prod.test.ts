@@ -8,21 +8,21 @@ describe('edge-api prod integration', () => {
     stackName: 'edge-api-test-stack',
   })
 
-  void integ.it('root - should proxy', async () => {
+  integ.it('root - should proxy', async () => {
     const endpoint = integ.outputs.output
     const res = await fetch(endpoint)
     const resTxt = await res.text()
     expect(resTxt).toContain('Example Domain')
   })
 
-  void integ.it('/bucket - should be bucket contents', async () => {
+  integ.it('/bucket - should be bucket contents', async () => {
     const endpoint = integ.outputs.output
     const res = await fetch(`${endpoint}/bucket`)
     const resTxt = await res.text()
     expect(resTxt).toBe('<h1>it works!</h1>')
   })
 
-  void integ.it('/api - should run lambda and return env', async () => {
+  integ.it('/api - should run lambda and return env', async () => {
     const endpoint = integ.outputs.output
     const res = await fetch(`${endpoint}/api`)
     const resJson = await res.json()
@@ -30,7 +30,7 @@ describe('edge-api prod integration', () => {
     expect(resJson).toHaveProperty('aVariable', 'contents')
   })
 
-  void integ.it('/get - should proxy to httpbin', async () => {
+  integ.it('/get - should proxy to httpbin', async () => {
     const endpoint = integ.outputs.output
     const res = await fetch(`${endpoint}/get`)
     const resJson = await res.json()

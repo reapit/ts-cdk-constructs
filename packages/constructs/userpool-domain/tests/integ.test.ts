@@ -9,7 +9,7 @@ describe('userpool-domain integration', () => {
     stackName: 'userpool-domain-test-stack',
   })
 
-  void integ.it('should return the domain', async () => {
+  integ.it('should return the domain', async () => {
     const client = new CognitoIdentityProviderClient({
       region: 'eu-central-1',
     })

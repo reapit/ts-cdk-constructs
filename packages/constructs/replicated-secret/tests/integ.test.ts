@@ -9,7 +9,7 @@ describe('replicated-secret integration', () => {
     stackName: 'replicated-secret-test-stack',
   })
 
-  void integ.it('should replicate the secret', async () => {
+  integ.it('should replicate the secret', async () => {
     const client = new SecretsManagerClient({
       region: 'eu-central-1',
     })

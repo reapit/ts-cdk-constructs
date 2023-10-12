@@ -21,7 +21,7 @@ describe('active-rule integration', () => {
     stackName: 'test-stack',
   })
 
-  void integ.it('should create the bucket', async () => {
+  integ.it('should create the bucket', async () => {
     const s3 = new S3Client({
       region: 'eu-central-1',
     })

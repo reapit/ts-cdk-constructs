@@ -20,7 +20,7 @@ describe('replicated-key integration', () => {
     stackName: 'replicated-key-test-stack',
   })
 
-  void integ.it('should replicate the key', async () => {
+  integ.it('should replicate the key', async () => {
     const keyId = integ.outputs.output
 
     const masterKeyState = await getKeyStatus('eu-central-1', keyId)

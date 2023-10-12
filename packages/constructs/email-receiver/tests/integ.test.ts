@@ -9,7 +9,7 @@ describe('email-receiver integration', () => {
     stackName: 'email-receiver-test-stack',
   })
 
-  void integ.it(
+  integ.it(
     'should should receive the email and put it in the dynamodb table',
     async () => {
       const { recipient } = await sendTestEmail()
