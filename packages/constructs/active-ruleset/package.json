@@ -20,7 +20,7 @@
     "check": "yarn run root:check -p $(pwd)",
     "lint": "reapit-cdk-eslint",
     "test": "yarn run root:test  -- $(pwd)",
-    "prepack": "reapit-version-package && yarn build",
+    "prepack": "reapit-version-package",
     "integ": "yarn run root:integ -- $(pwd)",
     "jsii:build": "rpt-cdk-jsii",
     "jsii:publish": "rpt-cdk-jsii --publish"

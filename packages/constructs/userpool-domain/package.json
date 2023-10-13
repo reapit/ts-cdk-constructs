@@ -14,7 +14,7 @@
     "lint": "reapit-cdk-eslint",
     "test": "yarn run root:test -- $(pwd)",
     "integ": "yarn run root:integ -- $(pwd)",
-    "prepack": "reapit-version-package && yarn build",
+    "prepack": "reapit-version-package",
     "jsii:build": "rpt-cdk-jsii",
     "jsii:publish": "rpt-cdk-jsii --publish"
   },
