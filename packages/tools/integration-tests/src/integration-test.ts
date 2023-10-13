@@ -135,7 +135,7 @@ export class IntegrationTest {
     console.log('diff starting')
     const outDir = await this.mkTmpDir()
     const diffResult = await diff(this.dir, this.file, this.stackName, outDir)
-    console.log('diff complete', diffResult)
+    console.log('diff complete', JSON.stringify(diffResult))
     const hasDifferences = !diffResult.toLowerCase().includes('there were no differences')
 
     if (hasDifferences) {
