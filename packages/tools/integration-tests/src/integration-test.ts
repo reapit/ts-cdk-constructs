@@ -136,7 +136,7 @@ export class IntegrationTest {
     const outDir = await this.mkTmpDir()
     const diffResult = await diff(this.dir, this.file, this.stackName, outDir)
     console.log('diff complete', diffResult)
-    const hasDifferences = diffResult.split('\n')[0].trim() !== 'There were no differences'
+    const hasDifferences = !diffResult.toLowerCase().includes('there were no differences')
 
     if (hasDifferences) {
       throw new Error('has diff')
