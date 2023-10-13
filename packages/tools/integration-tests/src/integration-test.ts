@@ -139,6 +139,7 @@ export class IntegrationTest {
     const hasDifferences = diffResult.split('\n')[0].trim() !== 'There were no differences'
 
     if (hasDifferences) {
+      throw new Error('has diff')
       this.outDir = outDir
       return {
         shouldSkip: false,

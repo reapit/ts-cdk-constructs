@@ -14,7 +14,6 @@
     "build": "reapit-cdk-tsup src/jest-environment.ts"
   },
   "dependencies": {
-    "aws-cdk": "2.96.2",
     "aws-cdk-lib": "^2.96.2",
     "constructs": "10.2.70"
   },
