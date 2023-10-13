@@ -6,15 +6,17 @@ import { DefinitionBody, JsonPath, StateMachine } from 'aws-cdk-lib/aws-stepfunc
 import { CallAwsService } from 'aws-cdk-lib/aws-stepfunctions-tasks'
 import { Construct } from 'constructs'
 
+export interface CloudfrontInvalidationProps {
+  readonly distribution: IDistribution
+  items?: string[]
+  invalidateOnCreation?: boolean
+}
+
 export class CloudfrontInvalidation extends Construct {
   constructor(
     scope: Construct,
     id: string,
-    {
-      distribution,
-      items = ['/index.html'],
-      invalidateOnCreation,
-    }: { distribution: IDistribution; items?: string[]; invalidateOnCreation?: boolean },
+    { distribution, items = ['/index.html'], invalidateOnCreation }: CloudfrontInvalidationProps,
   ) {
     super(scope, id)
 

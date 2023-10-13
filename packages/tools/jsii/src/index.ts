@@ -7,7 +7,7 @@ const go = async () => {
   const dir = path.resolve('.')
   const outdir = 'jsii-dist'
   if (isPublish) {
-    proc.execSync(`publib-pypi ${dir}/${outdir}/python`, {
+    proc.execSync(`yarn publib-pypi ${dir}/${outdir}/python`, {
       cwd: __dirname,
       stdio: 'inherit',
     })
@@ -19,21 +19,26 @@ const go = async () => {
 
     await fs.writeFile(
       path.resolve('package.json'),
-      JSON.stringify({
-        ...pkgJson,
-        stability: 'stable',
-        keywords: [...(pkgJson.keywords ?? []), 'awscdk'],
-        jsii: {
-          outdir,
-          versionFormat: 'short',
-          targets: {
-            python: {
-              distName: pyDistName,
-              module: pyModule,
+      JSON.stringify(
+        {
+          ...pkgJson,
+          stability: 'stable',
+          types: 'src/index.ts',
+          keywords: [...(pkgJson.keywords ?? []), 'awscdk'],
+          jsii: {
+            outdir,
+            versionFormat: 'short',
+            targets: {
+              python: {
+                distName: pyDistName,
+                module: pyModule,
+              },
             },
           },
         },
-      }),
+        null,
+        2,
+      ) + '\n',
     )
 
     await fs.writeFile(
@@ -41,11 +46,11 @@ const go = async () => {
       [await fs.readFile('.npmignore'), outdir, '!.jsii', '!.jsii.gz'].join('\n'),
     )
 
-    proc.execSync(`jsii ${dir} --generate-tsconfig jsii.tsconfig.json --fail-on-warnings`, {
+    proc.execSync(`yarn jsii ${dir} --generate-tsconfig jsii.tsconfig.json --fail-on-warnings`, {
       cwd: __dirname,
       stdio: 'inherit',
     })
-    proc.execSync(`jsii-pacmak ${dir}`, {
+    proc.execSync(`yarn jsii-pacmak ${dir}`, {
       cwd: __dirname,
       stdio: 'inherit',
     })
