@@ -8,8 +8,8 @@ import { Construct } from 'constructs'
 
 export interface CloudfrontInvalidationProps {
   readonly distribution: IDistribution
-  items?: string[]
-  invalidateOnCreation?: boolean
+  readonly items?: string[]
+  readonly invalidateOnCreation?: boolean
 }
 
 export class CloudfrontInvalidation extends Construct {

@@ -24,9 +24,10 @@ const go = async () => {
           ...pkgJson,
           stability: 'stable',
           types: 'src/index.ts',
-          keywords: [...(pkgJson.keywords ?? []), 'awscdk'],
+          keywords: [...new Set([...(pkgJson.keywords ?? []), 'awscdk'])],
           jsii: {
             outdir,
+            excludeTypescript: ['*.snapshot', '*.test.*'],
             versionFormat: 'short',
             targets: {
               python: {
@@ -41,10 +42,13 @@ const go = async () => {
       ) + '\n',
     )
 
-    await fs.writeFile(
-      path.resolve('.npmignore'),
-      [await fs.readFile('.npmignore'), outdir, '!.jsii', '!.jsii.gz'].join('\n'),
-    )
+    const npmignore = (await fs.readFile('.npmignore'), 'utf-8')
+    if (!npmignore.split('\n').includes('!.jsii') && !npmignore.split('\n').includes('!.jsii.gz')) {
+      await fs.writeFile(
+        path.resolve('.npmignore'),
+        [await fs.readFile('.npmignore'), outdir, '!.jsii', '!.jsii.gz'].join('\n'),
+      )
+    }
 
     proc.execSync(`yarn jsii ${dir} --generate-tsconfig jsii.tsconfig.json --fail-on-warnings`, {
       cwd: __dirname,
