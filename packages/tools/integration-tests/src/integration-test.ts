@@ -171,7 +171,7 @@ export class IntegrationTest {
 
     const outputFileLoc = path.resolve(await this.mkTmpDir(), 'outputs.json')
     console.log('deploying')
-    const deployRes = await deploy(dir, stackName, outputFileLoc, outDir)
+    const deployRes = await deploy(dir, stackName, outputFileLoc, outDir as string)
     console.log(deployRes)
     console.log('deployed')
 
