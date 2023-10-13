@@ -213,6 +213,8 @@ export class IntegrationTest {
 
       await fs.rename(this.outDir, absSnapshotDir)
 
+      this.outDir = absSnapshotDir
+
       console.log('promoted snapshot')
     }
 
