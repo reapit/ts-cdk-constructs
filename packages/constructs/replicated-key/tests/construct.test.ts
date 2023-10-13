@@ -1,7 +1,6 @@
 import { Template } from 'aws-cdk-lib/assertions'
 import * as cdk from 'aws-cdk-lib'
 import { ReplicatedKey } from '../src'
-import { AWSRegion } from '@reapit-cdk/common'
 
 const synth = () => {
   const app = new cdk.App()
@@ -21,7 +20,7 @@ const synth = () => {
   }
 }
 
-const regionalKeyArn = (masterLogicalId: string, region: AWSRegion) => ({
+const regionalKeyArn = (masterLogicalId: string, region: string) => ({
   'Fn::Join': [
     '',
     [

@@ -6,11 +6,10 @@ import {
   ScheduleKeyDeletionCommand,
   KMSClient,
 } from '@aws-sdk/client-kms'
-import { AWSRegion } from '@reapit-cdk/common'
 import { generateKeyPolicy } from '../generate-key-policy'
 import { parseArn } from './utils'
 
-const unDeleteKeyIfExists = async (keyId: string, region: AWSRegion) => {
+const unDeleteKeyIfExists = async (keyId: string, region: string) => {
   console.log(region, keyId, 'checking if exists')
   const client = new KMSClient({ region })
   try {
@@ -44,7 +43,7 @@ const wait = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
-const waitForReplicaKeyEnabled = async (keyId: string, replicaRegion: AWSRegion, iteration = 0): Promise<boolean> => {
+const waitForReplicaKeyEnabled = async (keyId: string, replicaRegion: string, iteration = 0): Promise<boolean> => {
   if (iteration > 100) {
     throw new Error(`Replica key ${keyId} in ${replicaRegion} did not become enabled in time.`)
   }
@@ -71,7 +70,7 @@ const waitForReplicaKeyEnabled = async (keyId: string, replicaRegion: AWSRegion,
   }
 }
 
-export const replicateKey = async (keyArn: string, replicaRegion: AWSRegion) => {
+export const replicateKey = async (keyArn: string, replicaRegion: string) => {
   const { region, keyId, account } = parseArn(keyArn)
 
   const exists = await unDeleteKeyIfExists(keyId, replicaRegion)
@@ -93,7 +92,7 @@ export const replicateKey = async (keyArn: string, replicaRegion: AWSRegion) => 
   return ReplicaKeyMetadata
 }
 
-export const deleteKey = async (keyId: string, region: AWSRegion) => {
+export const deleteKey = async (keyId: string, region: string) => {
   console.log(region, keyId, 'deleting key')
   const client = new KMSClient({ region })
   await client.send(
