@@ -7,10 +7,15 @@ import { PolicyStatement } from 'aws-cdk-lib/aws-iam'
 import * as path from 'path'
 import { HostedZone } from 'aws-cdk-lib/aws-route53'
 
-type DetailedDomain = { domainName: string; hostedZoneArn?: string; account?: string; roleArn?: string }
+export interface DetailedDomain {
+  readonly domainName: string
+  readonly hostedZoneArn?: string
+  readonly account?: string
+  readonly roleArn?: string
+}
 type Domain = DetailedDomain | string
 export interface WildcardCertificateProps {
-  domains: Domain[]
+  readonly domains: Domain[]
 }
 
 const strIsDefined = (str: string | undefined): str is string => !!str

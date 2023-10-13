@@ -2760,7 +2760,6 @@ __metadata:
   resolution: "@reapit-cdk/cloudfront-invalidation@workspace:packages/constructs/cloudfront-invalidation"
   dependencies:
     "@aws-sdk/client-cloudfront": 3.414.0
-    "@reapit-cdk/common": "workspace:^"
     "@reapit-cdk/eslint-config": "workspace:^"
     "@reapit-cdk/integration-tests": "workspace:^"
     "@reapit-cdk/jsii": "workspace:^"
@@ -2771,14 +2770,6 @@ __metadata:
   peerDependencies:
     aws-cdk-lib: ^2.96.2
     constructs: ^10.2.70
-  languageName: unknown
-  linkType: soft
-
-"@reapit-cdk/common@workspace:^, @reapit-cdk/common@workspace:packages/modules/common":
-  version: 0.0.0-use.local
-  resolution: "@reapit-cdk/common@workspace:packages/modules/common"
-  dependencies:
-    "@reapit-cdk/eslint-config": "workspace:^"
   languageName: unknown
   linkType: soft
 
@@ -2859,7 +2850,6 @@ __metadata:
     "@aws-sdk/client-secrets-manager": 3.414.0
     "@aws-sdk/client-sesv2": 3.414.0
     "@aws-sdk/lib-dynamodb": 3.414.0
-    "@reapit-cdk/common": "workspace:^"
     "@reapit-cdk/custom-resource-wrapper": "workspace:^"
     "@reapit-cdk/email-receiver-types": "workspace:^"
     "@reapit-cdk/eslint-config": "workspace:^"
@@ -2935,12 +2925,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@reapit-cdk/replicated-key@workspace:packages/constructs/replicated-key":
+"@reapit-cdk/replicated-key@workspace:^, @reapit-cdk/replicated-key@workspace:packages/constructs/replicated-key":
   version: 0.0.0-use.local
   resolution: "@reapit-cdk/replicated-key@workspace:packages/constructs/replicated-key"
   dependencies:
     "@aws-sdk/client-kms": 3.414.0
-    "@reapit-cdk/common": "workspace:^"
     "@reapit-cdk/custom-resource-wrapper": "workspace:^"
     "@reapit-cdk/eslint-config": "workspace:^"
     "@reapit-cdk/integration-tests": "workspace:^"
@@ -2962,11 +2951,11 @@ __metadata:
   resolution: "@reapit-cdk/replicated-secret@workspace:packages/constructs/replicated-secret"
   dependencies:
     "@aws-sdk/client-secrets-manager": 3.414.0
-    "@reapit-cdk/common": "workspace:^"
     "@reapit-cdk/custom-resource-wrapper": "workspace:^"
     "@reapit-cdk/eslint-config": "workspace:^"
     "@reapit-cdk/integration-tests": "workspace:^"
     "@reapit-cdk/jsii": "workspace:^"
+    "@reapit-cdk/replicated-key": "workspace:^"
     "@reapit-cdk/tsup": "workspace:^"
     "@reapit-cdk/version-package": "workspace:^"
     aws-cdk-lib: ^2.96.2
@@ -2974,6 +2963,7 @@ __metadata:
     aws-sdk-client-mock: ^3.0.0
     constructs: ^10.2.70
   peerDependencies:
+    "@reapit-cdk/replicated-key": "workspace:^"
     aws-cdk-lib: ^2.96.2
     constructs: ^10.2.70
   languageName: unknown

@@ -8,8 +8,8 @@ import { Code, Function, Runtime } from 'aws-cdk-lib/aws-lambda'
 import * as path from 'path'
 
 export interface MultiRegionSecretProps {
-  replicatedKey: ReplicatedKey
-  replicaRegions: string[]
+  readonly replicatedKey: ReplicatedKey
+  readonly replicaRegions: string[]
 }
 
 const secretArnToNameWithSuffix = (secret: ISecret) => {
