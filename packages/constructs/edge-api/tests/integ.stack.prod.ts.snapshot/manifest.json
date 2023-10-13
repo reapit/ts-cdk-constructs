@@ -11,21 +11,21 @@
     },
     "edge-api-test-stack": {
       "type": "aws:cloudformation:stack",
-      "environment": "aws://unknown-account/us-east-1",
+      "environment": "aws://028446965111/us-east-1",
       "properties": {
         "templateFile": "edge-api-test-stack.template.json",
         "terminationProtection": false,
         "validateOnSynth": false,
-        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-us-east-1",
-        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-us-east-1",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-us-east-1/a5be9c5ac1126e5d4294f47799ffa1af369324dacfd173b769bbaf54a8f5e7b9.json",
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-deploy-role-028446965111-us-east-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-cfn-exec-role-028446965111-us-east-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-028446965111-us-east-1/072b2ed0e5e9cb7a29399528ca25114e8054f5f84f4e0a8aa6746dc9602ae262.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
           "edge-api-test-stack.assets"
         ],
         "lookupRole": {
-          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-us-east-1",
+          "arn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-lookup-role-028446965111-us-east-1",
           "requiresBootstrapStackVersion": 8,
           "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
         }
@@ -133,7 +133,7 @@
         "/edge-api-test-stack/api/api/s3-qs-redirect/CurrentVersion/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "apis3qsredirectCurrentVersion201EBAF5079f8bab086f4b4de238f57d4373dd23"
+            "data": "apis3qsredirectCurrentVersion201EBAF5d7e8c03ff8cd3b300a37463ffed0c862"
           }
         ],
         "/edge-api-test-stack/api/api/rewriter-httpbin.org/ServiceRole/Resource": [
