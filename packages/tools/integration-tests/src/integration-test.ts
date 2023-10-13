@@ -16,7 +16,10 @@ const run = async (command: string, cwd: string): Promise<string> => {
         if (err) {
           return reject(err)
         }
-        return resolve(stderr ?? stdout)
+        if (stderr.trim().length) {
+          return resolve(stderr)
+        }
+        return resolve(stdout)
       },
     )
   })
