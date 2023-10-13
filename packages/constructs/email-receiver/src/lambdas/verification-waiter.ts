@@ -1,5 +1,7 @@
 import { customResourceWrapper } from '@reapit-cdk/custom-resource-wrapper'
-import { SESv2Client, GetEmailIdentityCommand, VerificationStatus } from '@aws-sdk/client-sesv2'
+import { SESv2Client, GetEmailIdentityCommand } from '@aws-sdk/client-sesv2'
+// @aws-sdk/client-sesv2 version too low in lambda so enum does not exist :(
+import type { VerificationStatus } from '@aws-sdk/client-sesv2'
 
 const client = new SESv2Client()
 
@@ -25,21 +27,21 @@ const waitForVerification = async (emailIdentityName: string, iter: number = 0):
     }),
   )
 
-  switch (identity.VerificationStatus) {
-    case VerificationStatus.FAILED: {
+  switch (identity.VerificationStatus as VerificationStatus) {
+    case 'FAILED': {
       throw new Error('AWS reports verification failed')
     }
-    case VerificationStatus.SUCCESS: {
+    case 'SUCCESS': {
       if (!identity.VerifiedForSendingStatus) {
         await wait(5000)
 
         return await waitForVerification(emailIdentityName, iter + 1)
       }
-      return identity.VerificationStatus
+      return 'SUCCESS'
     }
-    case VerificationStatus.TEMPORARY_FAILURE:
-    case VerificationStatus.NOT_STARTED:
-    case VerificationStatus.PENDING: {
+    case 'TEMPORARY_FAILURE':
+    case 'NOT_STARTED':
+    case 'PENDING': {
       await wait(5000)
 
       return await waitForVerification(emailIdentityName, iter + 1)
