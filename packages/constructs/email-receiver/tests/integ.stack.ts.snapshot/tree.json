@@ -1,0 +1,1448 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "email-receiver-test-stack": {
+        "id": "email-receiver-test-stack",
+        "path": "email-receiver-test-stack",
+        "children": {
+          "zone": {
+            "id": "zone",
+            "path": "email-receiver-test-stack/zone",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.Resource",
+              "version": "2.99.1"
+            }
+          },
+          "email-receiver": {
+            "id": "email-receiver",
+            "path": "email-receiver-test-stack/email-receiver",
+            "children": {
+              "table": {
+                "id": "table",
+                "path": "email-receiver-test-stack/email-receiver/table",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "email-receiver-test-stack/email-receiver/table/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::DynamoDB::Table",
+                      "aws:cdk:cloudformation:props": {
+                        "attributeDefinitions": [
+                          {
+                            "attributeName": "recipient",
+                            "attributeType": "S"
+                          },
+                          {
+                            "attributeName": "id",
+                            "attributeType": "S"
+                          }
+                        ],
+                        "keySchema": [
+                          {
+                            "attributeName": "recipient",
+                            "keyType": "HASH"
+                          },
+                          {
+                            "attributeName": "id",
+                            "keyType": "RANGE"
+                          }
+                        ],
+                        "provisionedThroughput": {
+                          "readCapacityUnits": 5,
+                          "writeCapacityUnits": 5
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_dynamodb.CfnTable",
+                      "version": "2.99.1"
+                    }
+                  },
+                  "ScalingRole": {
+                    "id": "ScalingRole",
+                    "path": "email-receiver-test-stack/email-receiver/table/ScalingRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.99.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_dynamodb.Table",
+                  "version": "2.99.1"
+                }
+              },
+              "topic": {
+                "id": "topic",
+                "path": "email-receiver-test-stack/email-receiver/topic",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "email-receiver-test-stack/email-receiver/topic/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::SNS::Topic",
+                      "aws:cdk:cloudformation:props": {}
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_sns.CfnTopic",
+                      "version": "2.99.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_sns.Topic",
+                  "version": "2.99.1"
+                }
+              },
+              "Identity": {
+                "id": "Identity",
+                "path": "email-receiver-test-stack/email-receiver/Identity",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "email-receiver-test-stack/email-receiver/Identity/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::SES::EmailIdentity",
+                      "aws:cdk:cloudformation:props": {
+                        "emailIdentity": "email.integ.dev.paas.reapit.cloud"
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_ses.CfnEmailIdentity",
+                      "version": "2.99.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ses.EmailIdentity",
+                  "version": "2.99.1"
+                }
+              },
+              "dkim-0": {
+                "id": "dkim-0",
+                "path": "email-receiver-test-stack/email-receiver/dkim-0",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Route53::RecordSet",
+                  "aws:cdk:cloudformation:props": {
+                    "hostedZoneId": "Z085471422JPU7GT84QN4",
+                    "name": {
+                      "Fn::GetAtt": [
+                        "emailreceiverIdentity03A11FD4",
+                        "DkimDNSTokenName1"
+                      ]
+                    },
+                    "resourceRecords": [
+                      {
+                        "Fn::GetAtt": [
+                          "emailreceiverIdentity03A11FD4",
+                          "DkimDNSTokenValue1"
+                        ]
+                      }
+                    ],
+                    "ttl": "1800",
+                    "type": "CNAME"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_route53.CfnRecordSet",
+                  "version": "2.99.1"
+                }
+              },
+              "dkim-1": {
+                "id": "dkim-1",
+                "path": "email-receiver-test-stack/email-receiver/dkim-1",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Route53::RecordSet",
+                  "aws:cdk:cloudformation:props": {
+                    "hostedZoneId": "Z085471422JPU7GT84QN4",
+                    "name": {
+                      "Fn::GetAtt": [
+                        "emailreceiverIdentity03A11FD4",
+                        "DkimDNSTokenName2"
+                      ]
+                    },
+                    "resourceRecords": [
+                      {
+                        "Fn::GetAtt": [
+                          "emailreceiverIdentity03A11FD4",
+                          "DkimDNSTokenValue2"
+                        ]
+                      }
+                    ],
+                    "ttl": "1800",
+                    "type": "CNAME"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_route53.CfnRecordSet",
+                  "version": "2.99.1"
+                }
+              },
+              "dkim-2": {
+                "id": "dkim-2",
+                "path": "email-receiver-test-stack/email-receiver/dkim-2",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Route53::RecordSet",
+                  "aws:cdk:cloudformation:props": {
+                    "hostedZoneId": "Z085471422JPU7GT84QN4",
+                    "name": {
+                      "Fn::GetAtt": [
+                        "emailreceiverIdentity03A11FD4",
+                        "DkimDNSTokenName3"
+                      ]
+                    },
+                    "resourceRecords": [
+                      {
+                        "Fn::GetAtt": [
+                          "emailreceiverIdentity03A11FD4",
+                          "DkimDNSTokenValue3"
+                        ]
+                      }
+                    ],
+                    "ttl": "1800",
+                    "type": "CNAME"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_route53.CfnRecordSet",
+                  "version": "2.99.1"
+                }
+              },
+              "mx-record": {
+                "id": "mx-record",
+                "path": "email-receiver-test-stack/email-receiver/mx-record",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "email-receiver-test-stack/email-receiver/mx-record/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Route53::RecordSet",
+                      "aws:cdk:cloudformation:props": {
+                        "hostedZoneId": "Z085471422JPU7GT84QN4",
+                        "name": "email.integ.dev.paas.reapit.cloud.",
+                        "resourceRecords": [
+                          "10 inbound-smtp.eu-central-1.amazonaws.com"
+                        ],
+                        "ttl": "1800",
+                        "type": "MX"
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_route53.CfnRecordSet",
+                      "version": "2.99.1"
+                    }
+                  },
+                  "DeleteExistingRecordSetCustomResource": {
+                    "id": "DeleteExistingRecordSetCustomResource",
+                    "path": "email-receiver-test-stack/email-receiver/mx-record/DeleteExistingRecordSetCustomResource",
+                    "children": {
+                      "Default": {
+                        "id": "Default",
+                        "path": "email-receiver-test-stack/email-receiver/mx-record/DeleteExistingRecordSetCustomResource/Default",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.CfnResource",
+                          "version": "2.99.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CustomResource",
+                      "version": "2.99.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_route53.MxRecord",
+                  "version": "2.99.1"
+                }
+              },
+              "waiter": {
+                "id": "waiter",
+                "path": "email-receiver-test-stack/email-receiver/waiter",
+                "children": {
+                  "lambda": {
+                    "id": "lambda",
+                    "path": "email-receiver-test-stack/email-receiver/waiter/lambda",
+                    "children": {
+                      "ServiceRole": {
+                        "id": "ServiceRole",
+                        "path": "email-receiver-test-stack/email-receiver/waiter/lambda/ServiceRole",
+                        "children": {
+                          "ImportServiceRole": {
+                            "id": "ImportServiceRole",
+                            "path": "email-receiver-test-stack/email-receiver/waiter/lambda/ServiceRole/ImportServiceRole",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.Resource",
+                              "version": "2.99.1"
+                            }
+                          },
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "email-receiver-test-stack/email-receiver/waiter/lambda/ServiceRole/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                              "aws:cdk:cloudformation:props": {
+                                "assumeRolePolicyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": "sts:AssumeRole",
+                                      "Effect": "Allow",
+                                      "Principal": {
+                                        "Service": "lambda.amazonaws.com"
+                                      }
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "managedPolicyArns": [
+                                  {
+                                    "Fn::Join": [
+                                      "",
+                                      [
+                                        "arn:",
+                                        {
+                                          "Ref": "AWS::Partition"
+                                        },
+                                        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                                      ]
+                                    ]
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                              "version": "2.99.1"
+                            }
+                          },
+                          "DefaultPolicy": {
+                            "id": "DefaultPolicy",
+                            "path": "email-receiver-test-stack/email-receiver/waiter/lambda/ServiceRole/DefaultPolicy",
+                            "children": {
+                              "Resource": {
+                                "id": "Resource",
+                                "path": "email-receiver-test-stack/email-receiver/waiter/lambda/ServiceRole/DefaultPolicy/Resource",
+                                "attributes": {
+                                  "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                                  "aws:cdk:cloudformation:props": {
+                                    "policyDocument": {
+                                      "Statement": [
+                                        {
+                                          "Action": "ses:GetEmailIdentity",
+                                          "Effect": "Allow",
+                                          "Resource": {
+                                            "Fn::Join": [
+                                              "",
+                                              [
+                                                "arn:",
+                                                {
+                                                  "Ref": "AWS::Partition"
+                                                },
+                                                ":ses:eu-central-1:028446965111:identity/",
+                                                {
+                                                  "Ref": "emailreceiverIdentity03A11FD4"
+                                                }
+                                              ]
+                                            ]
+                                          }
+                                        }
+                                      ],
+                                      "Version": "2012-10-17"
+                                    },
+                                    "policyName": "emailreceiverwaiterlambdaServiceRoleDefaultPolicy11487EAD",
+                                    "roles": [
+                                      {
+                                        "Ref": "emailreceiverwaiterlambdaServiceRole1FB413AF"
+                                      }
+                                    ]
+                                  }
+                                },
+                                "constructInfo": {
+                                  "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                                  "version": "2.99.1"
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.Policy",
+                              "version": "2.99.1"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Role",
+                          "version": "2.99.1"
+                        }
+                      },
+                      "Code": {
+                        "id": "Code",
+                        "path": "email-receiver-test-stack/email-receiver/waiter/lambda/Code",
+                        "children": {
+                          "Stage": {
+                            "id": "Stage",
+                            "path": "email-receiver-test-stack/email-receiver/waiter/lambda/Code/Stage",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.AssetStaging",
+                              "version": "2.99.1"
+                            }
+                          },
+                          "AssetBucket": {
+                            "id": "AssetBucket",
+                            "path": "email-receiver-test-stack/email-receiver/waiter/lambda/Code/AssetBucket",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                              "version": "2.99.1"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                          "version": "2.99.1"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "email-receiver-test-stack/email-receiver/waiter/lambda/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                          "aws:cdk:cloudformation:props": {
+                            "code": {
+                              "s3Bucket": "cdk-hnb659fds-assets-028446965111-eu-central-1",
+                              "s3Key": "cfa281d1e696e61ca92349c05c0ed1fc64177a582ab9a8947c1f43602bf484d7.zip"
+                            },
+                            "handler": "verification-waiter.onEvent",
+                            "role": {
+                              "Fn::GetAtt": [
+                                "emailreceiverwaiterlambdaServiceRole1FB413AF",
+                                "Arn"
+                              ]
+                            },
+                            "runtime": "nodejs18.x",
+                            "timeout": 360
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                          "version": "2.99.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.Function",
+                      "version": "2.99.1"
+                    }
+                  },
+                  "provider": {
+                    "id": "provider",
+                    "path": "email-receiver-test-stack/email-receiver/waiter/provider",
+                    "children": {
+                      "framework-onEvent": {
+                        "id": "framework-onEvent",
+                        "path": "email-receiver-test-stack/email-receiver/waiter/provider/framework-onEvent",
+                        "children": {
+                          "ServiceRole": {
+                            "id": "ServiceRole",
+                            "path": "email-receiver-test-stack/email-receiver/waiter/provider/framework-onEvent/ServiceRole",
+                            "children": {
+                              "ImportServiceRole": {
+                                "id": "ImportServiceRole",
+                                "path": "email-receiver-test-stack/email-receiver/waiter/provider/framework-onEvent/ServiceRole/ImportServiceRole",
+                                "constructInfo": {
+                                  "fqn": "aws-cdk-lib.Resource",
+                                  "version": "2.99.1"
+                                }
+                              },
+                              "Resource": {
+                                "id": "Resource",
+                                "path": "email-receiver-test-stack/email-receiver/waiter/provider/framework-onEvent/ServiceRole/Resource",
+                                "attributes": {
+                                  "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                                  "aws:cdk:cloudformation:props": {
+                                    "assumeRolePolicyDocument": {
+                                      "Statement": [
+                                        {
+                                          "Action": "sts:AssumeRole",
+                                          "Effect": "Allow",
+                                          "Principal": {
+                                            "Service": "lambda.amazonaws.com"
+                                          }
+                                        }
+                                      ],
+                                      "Version": "2012-10-17"
+                                    },
+                                    "managedPolicyArns": [
+                                      {
+                                        "Fn::Join": [
+                                          "",
+                                          [
+                                            "arn:",
+                                            {
+                                              "Ref": "AWS::Partition"
+                                            },
+                                            ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                                          ]
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                },
+                                "constructInfo": {
+                                  "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                                  "version": "2.99.1"
+                                }
+                              },
+                              "DefaultPolicy": {
+                                "id": "DefaultPolicy",
+                                "path": "email-receiver-test-stack/email-receiver/waiter/provider/framework-onEvent/ServiceRole/DefaultPolicy",
+                                "children": {
+                                  "Resource": {
+                                    "id": "Resource",
+                                    "path": "email-receiver-test-stack/email-receiver/waiter/provider/framework-onEvent/ServiceRole/DefaultPolicy/Resource",
+                                    "attributes": {
+                                      "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                                      "aws:cdk:cloudformation:props": {
+                                        "policyDocument": {
+                                          "Statement": [
+                                            {
+                                              "Action": "lambda:InvokeFunction",
+                                              "Effect": "Allow",
+                                              "Resource": [
+                                                {
+                                                  "Fn::GetAtt": [
+                                                    "emailreceiverwaiterlambdaCD24DF6F",
+                                                    "Arn"
+                                                  ]
+                                                },
+                                                {
+                                                  "Fn::Join": [
+                                                    "",
+                                                    [
+                                                      {
+                                                        "Fn::GetAtt": [
+                                                          "emailreceiverwaiterlambdaCD24DF6F",
+                                                          "Arn"
+                                                        ]
+                                                      },
+                                                      ":*"
+                                                    ]
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ],
+                                          "Version": "2012-10-17"
+                                        },
+                                        "policyName": "emailreceiverwaiterproviderframeworkonEventServiceRoleDefaultPolicyE71F32D7",
+                                        "roles": [
+                                          {
+                                            "Ref": "emailreceiverwaiterproviderframeworkonEventServiceRole54AB4822"
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    "constructInfo": {
+                                      "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                                      "version": "2.99.1"
+                                    }
+                                  }
+                                },
+                                "constructInfo": {
+                                  "fqn": "aws-cdk-lib.aws_iam.Policy",
+                                  "version": "2.99.1"
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.Role",
+                              "version": "2.99.1"
+                            }
+                          },
+                          "Code": {
+                            "id": "Code",
+                            "path": "email-receiver-test-stack/email-receiver/waiter/provider/framework-onEvent/Code",
+                            "children": {
+                              "Stage": {
+                                "id": "Stage",
+                                "path": "email-receiver-test-stack/email-receiver/waiter/provider/framework-onEvent/Code/Stage",
+                                "constructInfo": {
+                                  "fqn": "aws-cdk-lib.AssetStaging",
+                                  "version": "2.99.1"
+                                }
+                              },
+                              "AssetBucket": {
+                                "id": "AssetBucket",
+                                "path": "email-receiver-test-stack/email-receiver/waiter/provider/framework-onEvent/Code/AssetBucket",
+                                "constructInfo": {
+                                  "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                                  "version": "2.99.1"
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                              "version": "2.99.1"
+                            }
+                          },
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "email-receiver-test-stack/email-receiver/waiter/provider/framework-onEvent/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                              "aws:cdk:cloudformation:props": {
+                                "code": {
+                                  "s3Bucket": "cdk-hnb659fds-assets-028446965111-eu-central-1",
+                                  "s3Key": "7382a0addb9f34974a1ea6c6c9b063882af874828f366f5c93b2b7b64db15c94.zip"
+                                },
+                                "description": "AWS CDK resource provider framework - onEvent (email-receiver-test-stack/email-receiver/waiter/provider)",
+                                "environment": {
+                                  "variables": {
+                                    "USER_ON_EVENT_FUNCTION_ARN": {
+                                      "Fn::GetAtt": [
+                                        "emailreceiverwaiterlambdaCD24DF6F",
+                                        "Arn"
+                                      ]
+                                    }
+                                  }
+                                },
+                                "handler": "framework.onEvent",
+                                "role": {
+                                  "Fn::GetAtt": [
+                                    "emailreceiverwaiterproviderframeworkonEventServiceRole54AB4822",
+                                    "Arn"
+                                  ]
+                                },
+                                "runtime": "nodejs18.x",
+                                "timeout": 900
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                              "version": "2.99.1"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.Function",
+                          "version": "2.99.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.custom_resources.Provider",
+                      "version": "2.99.1"
+                    }
+                  },
+                  "resource": {
+                    "id": "resource",
+                    "path": "email-receiver-test-stack/email-receiver/waiter/resource",
+                    "children": {
+                      "Default": {
+                        "id": "Default",
+                        "path": "email-receiver-test-stack/email-receiver/waiter/resource/Default",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.CfnResource",
+                          "version": "2.99.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CustomResource",
+                      "version": "2.99.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "constructs.Construct",
+                  "version": "10.2.70"
+                }
+              },
+              "receiver-lambda": {
+                "id": "receiver-lambda",
+                "path": "email-receiver-test-stack/email-receiver/receiver-lambda",
+                "children": {
+                  "ServiceRole": {
+                    "id": "ServiceRole",
+                    "path": "email-receiver-test-stack/email-receiver/receiver-lambda/ServiceRole",
+                    "children": {
+                      "ImportServiceRole": {
+                        "id": "ImportServiceRole",
+                        "path": "email-receiver-test-stack/email-receiver/receiver-lambda/ServiceRole/ImportServiceRole",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.Resource",
+                          "version": "2.99.1"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "email-receiver-test-stack/email-receiver/receiver-lambda/ServiceRole/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                          "aws:cdk:cloudformation:props": {
+                            "assumeRolePolicyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "sts:AssumeRole",
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "Service": "lambda.amazonaws.com"
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "managedPolicyArns": [
+                              {
+                                "Fn::Join": [
+                                  "",
+                                  [
+                                    "arn:",
+                                    {
+                                      "Ref": "AWS::Partition"
+                                    },
+                                    ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                                  ]
+                                ]
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                          "version": "2.99.1"
+                        }
+                      },
+                      "DefaultPolicy": {
+                        "id": "DefaultPolicy",
+                        "path": "email-receiver-test-stack/email-receiver/receiver-lambda/ServiceRole/DefaultPolicy",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "email-receiver-test-stack/email-receiver/receiver-lambda/ServiceRole/DefaultPolicy/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                              "aws:cdk:cloudformation:props": {
+                                "policyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": [
+                                        "dynamodb:BatchWriteItem",
+                                        "dynamodb:PutItem",
+                                        "dynamodb:UpdateItem",
+                                        "dynamodb:DeleteItem",
+                                        "dynamodb:DescribeTable"
+                                      ],
+                                      "Effect": "Allow",
+                                      "Resource": [
+                                        {
+                                          "Fn::GetAtt": [
+                                            "emailreceivertable3541E29B",
+                                            "Arn"
+                                          ]
+                                        },
+                                        {
+                                          "Ref": "AWS::NoValue"
+                                        }
+                                      ]
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "policyName": "emailreceiverreceiverlambdaServiceRoleDefaultPolicy132B6381",
+                                "roles": [
+                                  {
+                                    "Ref": "emailreceiverreceiverlambdaServiceRole31EBA2D1"
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                              "version": "2.99.1"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Policy",
+                          "version": "2.99.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Role",
+                      "version": "2.99.1"
+                    }
+                  },
+                  "Code": {
+                    "id": "Code",
+                    "path": "email-receiver-test-stack/email-receiver/receiver-lambda/Code",
+                    "children": {
+                      "Stage": {
+                        "id": "Stage",
+                        "path": "email-receiver-test-stack/email-receiver/receiver-lambda/Code/Stage",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.AssetStaging",
+                          "version": "2.99.1"
+                        }
+                      },
+                      "AssetBucket": {
+                        "id": "AssetBucket",
+                        "path": "email-receiver-test-stack/email-receiver/receiver-lambda/Code/AssetBucket",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                          "version": "2.99.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                      "version": "2.99.1"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "email-receiver-test-stack/email-receiver/receiver-lambda/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                      "aws:cdk:cloudformation:props": {
+                        "code": {
+                          "s3Bucket": "cdk-hnb659fds-assets-028446965111-eu-central-1",
+                          "s3Key": "cfa281d1e696e61ca92349c05c0ed1fc64177a582ab9a8947c1f43602bf484d7.zip"
+                        },
+                        "environment": {
+                          "variables": {
+                            "TABLE_NAME": {
+                              "Ref": "emailreceivertable3541E29B"
+                            }
+                          }
+                        },
+                        "handler": "lambda.onEvent",
+                        "role": {
+                          "Fn::GetAtt": [
+                            "emailreceiverreceiverlambdaServiceRole31EBA2D1",
+                            "Arn"
+                          ]
+                        },
+                        "runtime": "nodejs18.x"
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                      "version": "2.99.1"
+                    }
+                  },
+                  "AllowInvoke:emailreceiverteststackemailreceivertopic4D1F3568": {
+                    "id": "AllowInvoke:emailreceiverteststackemailreceivertopic4D1F3568",
+                    "path": "email-receiver-test-stack/email-receiver/receiver-lambda/AllowInvoke:emailreceiverteststackemailreceivertopic4D1F3568",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                      "aws:cdk:cloudformation:props": {
+                        "action": "lambda:InvokeFunction",
+                        "functionName": {
+                          "Fn::GetAtt": [
+                            "emailreceiverreceiverlambda4E894AC5",
+                            "Arn"
+                          ]
+                        },
+                        "principal": "sns.amazonaws.com",
+                        "sourceArn": {
+                          "Ref": "emailreceivertopic881EE052"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                      "version": "2.99.1"
+                    }
+                  },
+                  "topic": {
+                    "id": "topic",
+                    "path": "email-receiver-test-stack/email-receiver/receiver-lambda/topic",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "email-receiver-test-stack/email-receiver/receiver-lambda/topic/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::SNS::Subscription",
+                          "aws:cdk:cloudformation:props": {
+                            "endpoint": {
+                              "Fn::GetAtt": [
+                                "emailreceiverreceiverlambda4E894AC5",
+                                "Arn"
+                              ]
+                            },
+                            "protocol": "lambda",
+                            "topicArn": {
+                              "Ref": "emailreceivertopic881EE052"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_sns.CfnSubscription",
+                          "version": "2.99.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_sns.Subscription",
+                      "version": "2.99.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.Function",
+                  "version": "2.99.1"
+                }
+              },
+              "active-ruleset": {
+                "id": "active-ruleset",
+                "path": "email-receiver-test-stack/email-receiver/active-ruleset",
+                "children": {
+                  "lambda": {
+                    "id": "lambda",
+                    "path": "email-receiver-test-stack/email-receiver/active-ruleset/lambda",
+                    "children": {
+                      "ServiceRole": {
+                        "id": "ServiceRole",
+                        "path": "email-receiver-test-stack/email-receiver/active-ruleset/lambda/ServiceRole",
+                        "children": {
+                          "ImportServiceRole": {
+                            "id": "ImportServiceRole",
+                            "path": "email-receiver-test-stack/email-receiver/active-ruleset/lambda/ServiceRole/ImportServiceRole",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.Resource",
+                              "version": "2.99.1"
+                            }
+                          },
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "email-receiver-test-stack/email-receiver/active-ruleset/lambda/ServiceRole/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                              "aws:cdk:cloudformation:props": {
+                                "assumeRolePolicyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": "sts:AssumeRole",
+                                      "Effect": "Allow",
+                                      "Principal": {
+                                        "Service": "lambda.amazonaws.com"
+                                      }
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "managedPolicyArns": [
+                                  {
+                                    "Fn::Join": [
+                                      "",
+                                      [
+                                        "arn:",
+                                        {
+                                          "Ref": "AWS::Partition"
+                                        },
+                                        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                                      ]
+                                    ]
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                              "version": "2.99.1"
+                            }
+                          },
+                          "DefaultPolicy": {
+                            "id": "DefaultPolicy",
+                            "path": "email-receiver-test-stack/email-receiver/active-ruleset/lambda/ServiceRole/DefaultPolicy",
+                            "children": {
+                              "Resource": {
+                                "id": "Resource",
+                                "path": "email-receiver-test-stack/email-receiver/active-ruleset/lambda/ServiceRole/DefaultPolicy/Resource",
+                                "attributes": {
+                                  "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                                  "aws:cdk:cloudformation:props": {
+                                    "policyDocument": {
+                                      "Statement": [
+                                        {
+                                          "Action": [
+                                            "ses:DescribeActiveReceiptRuleSet",
+                                            "ses:CreateReceiptRuleSet",
+                                            "ses:SetActiveReceiptRuleSet",
+                                            "ses:DescribeReceiptRuleSet",
+                                            "ses:DeleteReceiptRuleSet"
+                                          ],
+                                          "Effect": "Allow",
+                                          "Resource": "*"
+                                        }
+                                      ],
+                                      "Version": "2012-10-17"
+                                    },
+                                    "policyName": "emailreceiveractiverulesetlambdaServiceRoleDefaultPolicy247173C4",
+                                    "roles": [
+                                      {
+                                        "Ref": "emailreceiveractiverulesetlambdaServiceRole8B362495"
+                                      }
+                                    ]
+                                  }
+                                },
+                                "constructInfo": {
+                                  "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                                  "version": "2.99.1"
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.Policy",
+                              "version": "2.99.1"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Role",
+                          "version": "2.99.1"
+                        }
+                      },
+                      "Code": {
+                        "id": "Code",
+                        "path": "email-receiver-test-stack/email-receiver/active-ruleset/lambda/Code",
+                        "children": {
+                          "Stage": {
+                            "id": "Stage",
+                            "path": "email-receiver-test-stack/email-receiver/active-ruleset/lambda/Code/Stage",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.AssetStaging",
+                              "version": "2.99.1"
+                            }
+                          },
+                          "AssetBucket": {
+                            "id": "AssetBucket",
+                            "path": "email-receiver-test-stack/email-receiver/active-ruleset/lambda/Code/AssetBucket",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                              "version": "2.99.1"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                          "version": "2.99.1"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "email-receiver-test-stack/email-receiver/active-ruleset/lambda/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                          "aws:cdk:cloudformation:props": {
+                            "code": {
+                              "s3Bucket": "cdk-hnb659fds-assets-028446965111-eu-central-1",
+                              "s3Key": "70101dd19c992c1007677c27312173fdfc3e1d7e0cc89c841a125b4b7d455b89.zip"
+                            },
+                            "handler": "lambda.onEvent",
+                            "role": {
+                              "Fn::GetAtt": [
+                                "emailreceiveractiverulesetlambdaServiceRole8B362495",
+                                "Arn"
+                              ]
+                            },
+                            "runtime": "nodejs18.x",
+                            "timeout": 60
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                          "version": "2.99.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.Function",
+                      "version": "2.99.1"
+                    }
+                  },
+                  "provider": {
+                    "id": "provider",
+                    "path": "email-receiver-test-stack/email-receiver/active-ruleset/provider",
+                    "children": {
+                      "framework-onEvent": {
+                        "id": "framework-onEvent",
+                        "path": "email-receiver-test-stack/email-receiver/active-ruleset/provider/framework-onEvent",
+                        "children": {
+                          "ServiceRole": {
+                            "id": "ServiceRole",
+                            "path": "email-receiver-test-stack/email-receiver/active-ruleset/provider/framework-onEvent/ServiceRole",
+                            "children": {
+                              "ImportServiceRole": {
+                                "id": "ImportServiceRole",
+                                "path": "email-receiver-test-stack/email-receiver/active-ruleset/provider/framework-onEvent/ServiceRole/ImportServiceRole",
+                                "constructInfo": {
+                                  "fqn": "aws-cdk-lib.Resource",
+                                  "version": "2.99.1"
+                                }
+                              },
+                              "Resource": {
+                                "id": "Resource",
+                                "path": "email-receiver-test-stack/email-receiver/active-ruleset/provider/framework-onEvent/ServiceRole/Resource",
+                                "attributes": {
+                                  "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                                  "aws:cdk:cloudformation:props": {
+                                    "assumeRolePolicyDocument": {
+                                      "Statement": [
+                                        {
+                                          "Action": "sts:AssumeRole",
+                                          "Effect": "Allow",
+                                          "Principal": {
+                                            "Service": "lambda.amazonaws.com"
+                                          }
+                                        }
+                                      ],
+                                      "Version": "2012-10-17"
+                                    },
+                                    "managedPolicyArns": [
+                                      {
+                                        "Fn::Join": [
+                                          "",
+                                          [
+                                            "arn:",
+                                            {
+                                              "Ref": "AWS::Partition"
+                                            },
+                                            ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                                          ]
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                },
+                                "constructInfo": {
+                                  "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                                  "version": "2.99.1"
+                                }
+                              },
+                              "DefaultPolicy": {
+                                "id": "DefaultPolicy",
+                                "path": "email-receiver-test-stack/email-receiver/active-ruleset/provider/framework-onEvent/ServiceRole/DefaultPolicy",
+                                "children": {
+                                  "Resource": {
+                                    "id": "Resource",
+                                    "path": "email-receiver-test-stack/email-receiver/active-ruleset/provider/framework-onEvent/ServiceRole/DefaultPolicy/Resource",
+                                    "attributes": {
+                                      "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                                      "aws:cdk:cloudformation:props": {
+                                        "policyDocument": {
+                                          "Statement": [
+                                            {
+                                              "Action": "lambda:InvokeFunction",
+                                              "Effect": "Allow",
+                                              "Resource": [
+                                                {
+                                                  "Fn::GetAtt": [
+                                                    "emailreceiveractiverulesetlambda583A8FB2",
+                                                    "Arn"
+                                                  ]
+                                                },
+                                                {
+                                                  "Fn::Join": [
+                                                    "",
+                                                    [
+                                                      {
+                                                        "Fn::GetAtt": [
+                                                          "emailreceiveractiverulesetlambda583A8FB2",
+                                                          "Arn"
+                                                        ]
+                                                      },
+                                                      ":*"
+                                                    ]
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ],
+                                          "Version": "2012-10-17"
+                                        },
+                                        "policyName": "emailreceiveractiverulesetproviderframeworkonEventServiceRoleDefaultPolicy634030B7",
+                                        "roles": [
+                                          {
+                                            "Ref": "emailreceiveractiverulesetproviderframeworkonEventServiceRoleA0E588EE"
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    "constructInfo": {
+                                      "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                                      "version": "2.99.1"
+                                    }
+                                  }
+                                },
+                                "constructInfo": {
+                                  "fqn": "aws-cdk-lib.aws_iam.Policy",
+                                  "version": "2.99.1"
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.Role",
+                              "version": "2.99.1"
+                            }
+                          },
+                          "Code": {
+                            "id": "Code",
+                            "path": "email-receiver-test-stack/email-receiver/active-ruleset/provider/framework-onEvent/Code",
+                            "children": {
+                              "Stage": {
+                                "id": "Stage",
+                                "path": "email-receiver-test-stack/email-receiver/active-ruleset/provider/framework-onEvent/Code/Stage",
+                                "constructInfo": {
+                                  "fqn": "aws-cdk-lib.AssetStaging",
+                                  "version": "2.99.1"
+                                }
+                              },
+                              "AssetBucket": {
+                                "id": "AssetBucket",
+                                "path": "email-receiver-test-stack/email-receiver/active-ruleset/provider/framework-onEvent/Code/AssetBucket",
+                                "constructInfo": {
+                                  "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                                  "version": "2.99.1"
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                              "version": "2.99.1"
+                            }
+                          },
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "email-receiver-test-stack/email-receiver/active-ruleset/provider/framework-onEvent/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                              "aws:cdk:cloudformation:props": {
+                                "code": {
+                                  "s3Bucket": "cdk-hnb659fds-assets-028446965111-eu-central-1",
+                                  "s3Key": "7382a0addb9f34974a1ea6c6c9b063882af874828f366f5c93b2b7b64db15c94.zip"
+                                },
+                                "description": "AWS CDK resource provider framework - onEvent (email-receiver-test-stack/email-receiver/active-ruleset/provider)",
+                                "environment": {
+                                  "variables": {
+                                    "USER_ON_EVENT_FUNCTION_ARN": {
+                                      "Fn::GetAtt": [
+                                        "emailreceiveractiverulesetlambda583A8FB2",
+                                        "Arn"
+                                      ]
+                                    }
+                                  }
+                                },
+                                "handler": "framework.onEvent",
+                                "role": {
+                                  "Fn::GetAtt": [
+                                    "emailreceiveractiverulesetproviderframeworkonEventServiceRoleA0E588EE",
+                                    "Arn"
+                                  ]
+                                },
+                                "runtime": "nodejs18.x",
+                                "timeout": 900
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                              "version": "2.99.1"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.Function",
+                          "version": "2.99.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.custom_resources.Provider",
+                      "version": "2.99.1"
+                    }
+                  },
+                  "resource": {
+                    "id": "resource",
+                    "path": "email-receiver-test-stack/email-receiver/active-ruleset/resource",
+                    "children": {
+                      "Default": {
+                        "id": "Default",
+                        "path": "email-receiver-test-stack/email-receiver/active-ruleset/resource/Default",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.CfnResource",
+                          "version": "2.99.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CustomResource",
+                      "version": "2.99.1"
+                    }
+                  },
+                  "ses-ruleset": {
+                    "id": "ses-ruleset",
+                    "path": "email-receiver-test-stack/email-receiver/active-ruleset/ses-ruleset",
+                    "children": {
+                      "ruleset": {
+                        "id": "ruleset",
+                        "path": "email-receiver-test-stack/email-receiver/active-ruleset/ses-ruleset/ruleset",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "email-receiver-test-stack/email-receiver/active-ruleset/ses-ruleset/ruleset/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::SES::ReceiptRule",
+                              "aws:cdk:cloudformation:props": {
+                                "rule": {
+                                  "actions": [
+                                    {
+                                      "snsAction": {
+                                        "encoding": "Base64",
+                                        "topicArn": {
+                                          "Ref": "emailreceivertopic881EE052"
+                                        }
+                                      }
+                                    }
+                                  ],
+                                  "enabled": true,
+                                  "recipients": [
+                                    "email.integ.dev.paas.reapit.cloud"
+                                  ]
+                                },
+                                "ruleSetName": {
+                                  "Fn::GetAtt": [
+                                    "emailreceiveractiverulesetresourceEFFDB5EB",
+                                    "ruleSetName"
+                                  ]
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_ses.CfnReceiptRule",
+                              "version": "2.99.1"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_ses.ReceiptRule",
+                          "version": "2.99.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.99.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "constructs.Construct",
+                  "version": "10.2.70"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.2.70"
+            }
+          },
+          "Custom::DeleteExistingRecordSetCustomResourceProvider": {
+            "id": "Custom::DeleteExistingRecordSetCustomResourceProvider",
+            "path": "email-receiver-test-stack/Custom::DeleteExistingRecordSetCustomResourceProvider",
+            "children": {
+              "Staging": {
+                "id": "Staging",
+                "path": "email-receiver-test-stack/Custom::DeleteExistingRecordSetCustomResourceProvider/Staging",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.AssetStaging",
+                  "version": "2.99.1"
+                }
+              },
+              "Role": {
+                "id": "Role",
+                "path": "email-receiver-test-stack/Custom::DeleteExistingRecordSetCustomResourceProvider/Role",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.99.1"
+                }
+              },
+              "Handler": {
+                "id": "Handler",
+                "path": "email-receiver-test-stack/Custom::DeleteExistingRecordSetCustomResourceProvider/Handler",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.99.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CustomResourceProvider",
+              "version": "2.99.1"
+            }
+          },
+          "output": {
+            "id": "output",
+            "path": "email-receiver-test-stack/output",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.99.1"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "email-receiver-test-stack/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "email-receiver-test-stack/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.99.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.2.70"
+            }
+          },
+          "BootstrapVersion": {
+            "id": "BootstrapVersion",
+            "path": "email-receiver-test-stack/BootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.99.1"
+            }
+          },
+          "CheckBootstrapVersion": {
+            "id": "CheckBootstrapVersion",
+            "path": "email-receiver-test-stack/CheckBootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnRule",
+              "version": "2.99.1"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.99.1"
+        }
+      },
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree",
+        "constructInfo": {
+          "fqn": "constructs.Construct",
+          "version": "10.2.70"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "aws-cdk-lib.App",
+      "version": "2.99.1"
+    }
+  }
+}

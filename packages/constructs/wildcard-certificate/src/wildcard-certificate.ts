@@ -1,4 +1,4 @@
-import { Arn, ArnFormat, CustomResource, Duration, Stack, Token } from 'aws-cdk-lib'
+import { Arn, CustomResource, Duration, Stack, Token } from 'aws-cdk-lib'
 import { Provider } from 'aws-cdk-lib/custom-resources'
 import { Construct } from 'constructs'
 import { Code, Function, Runtime } from 'aws-cdk-lib/aws-lambda'
@@ -7,7 +7,7 @@ import { PolicyStatement } from 'aws-cdk-lib/aws-iam'
 import * as path from 'path'
 import { HostedZone } from 'aws-cdk-lib/aws-route53'
 
-type DetailedDomain = { domainName: string; hostedZoneArn?: string; roleArn?: string }
+type DetailedDomain = { domainName: string; hostedZoneArn?: string; account?: string; roleArn?: string }
 type Domain = DetailedDomain | string
 export interface WildcardCertificateProps {
   domains: Domain[]
@@ -25,7 +25,7 @@ export class WildcardCertificate extends Construct {
       handler: 'lambda.onEvent',
       timeout: Duration.minutes(7), // 5 min timeout for cert + 1 min timeout for r53 record change + 1 min wiggle room
       runtime: Runtime.NODEJS_18_X,
-      code: Code.fromAsset(path.join(__dirname, 'lambda')),
+      code: Code.fromAsset(path.join(__dirname, '..', 'dist', 'lambda')),
     })
     lambda.addToRolePolicy(
       new PolicyStatement({
@@ -94,9 +94,7 @@ export class WildcardCertificate extends Construct {
         return mapping
       })
       .map((mapping) => {
-        const account = mapping.hostedZoneArn
-          ? Arn.split(mapping.hostedZoneArn, ArnFormat.SLASH_RESOURCE_NAME).account
-          : scopeAccount
+        const account = mapping.account ?? scopeAccount
         if (account !== scopeAccount && !mapping.roleArn) {
           throw new Error('roleArn must be provided when hosted zone is cross-account')
         }

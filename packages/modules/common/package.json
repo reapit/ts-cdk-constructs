@@ -4,7 +4,7 @@
   "main": "src",
   "scripts": {
     "lint": "reapit-cdk-eslint",
-    "check": "yarn run root:check -p $PWD"
+    "check": "yarn run root:check -p $(pwd)"
   },
   "devDependencies": {
     "@reapit-cdk/eslint-config": "workspace:^"

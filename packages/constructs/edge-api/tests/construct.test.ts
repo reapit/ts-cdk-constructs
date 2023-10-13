@@ -693,7 +693,7 @@ describe('edge-api', () => {
         },
         IntegrationMethod: 'ANY',
         IntegrationType: 'HTTP_PROXY',
-        IntegrationUri: 'example.com/{proxy}',
+        IntegrationUri: 'https://example.com/{proxy}',
       })
       result.hasResourceProperties('AWS::ApiGatewayV2::DomainName', {
         DomainName: 'example.org',
@@ -920,7 +920,7 @@ describe('edge-api', () => {
         },
         IntegrationMethod: 'ANY',
         IntegrationType: 'HTTP_PROXY',
-        IntegrationUri: 'google.com/{proxy}',
+        IntegrationUri: 'https://google.com/google',
         PayloadFormatVersion: '1.0',
       })
     })

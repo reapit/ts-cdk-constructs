@@ -103,6 +103,14 @@ describe('email-receiver', () => {
       ResourceRecords: ['10 inbound-smtp.eu-west-2.amazonaws.com'],
     })
   })
+  test('creates the waiter', () => {
+    const { template } = synth()
+    template.hasResourceProperties('Custom::EmailIdentityVerificationWaiter', {
+      emailIdentityName: {
+        Ref: 'domainIdentityC6435A28',
+      },
+    })
+  })
   test('errors when stack region is unresolved', () => {
     const app = new cdk.App()
     const stack = new cdk.Stack(app, 'stack')

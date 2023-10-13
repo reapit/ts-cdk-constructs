@@ -98,7 +98,8 @@ describe('wildcard-certificate', () => {
         domains: [
           {
             domainName: 'example.org',
-            hostedZoneArn: 'arn:partition:route53::12345:hostedzone/Id',
+            account: '12345',
+            hostedZoneArn: 'arn:partition:route53:::hostedzone/Id',
           },
         ],
       })

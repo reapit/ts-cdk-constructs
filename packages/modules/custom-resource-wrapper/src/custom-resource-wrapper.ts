@@ -42,10 +42,10 @@ type Properties = Record<string, any> & { serviceToken: string; requestId: strin
 
 type CreateHandler = (properties: Properties) => OptionalData | Promise<OptionalData>
 type UpdateHandler = (
-  properties: Properties,
+  properties: Properties & { physicalResourceId?: string },
   oldProperties: CloudFormationCustomResourceUpdateEvent['OldResourceProperties'],
 ) => OptionalData | Promise<OptionalData>
-type DeleteHandler = (properties: Properties) => void | Promise<void>
+type DeleteHandler = (properties: Properties & { physicalResourceId?: string }) => void | Promise<void>
 
 type Handler = {
   onCreate: CreateHandler
@@ -70,13 +70,22 @@ export const customResourceWrapper = (handler: Handler) => {
         }
         case 'Delete': {
           if (handler.onDelete) {
-            await handler.onDelete(augmentedRP)
+            await handler.onDelete({
+              ...augmentedRP,
+              physicalResourceId: event.PhysicalResourceId,
+            })
           }
           return successEvent(event, {})
         }
         case 'Update': {
           if (handler.onUpdate) {
-            const data = await handler.onUpdate(augmentedRP, event.OldResourceProperties)
+            const data = await handler.onUpdate(
+              {
+                ...augmentedRP,
+                physicalResourceId: event.PhysicalResourceId,
+              },
+              event.OldResourceProperties,
+            )
             return successEvent(event, { data: data })
           }
           return successEvent(event, {})

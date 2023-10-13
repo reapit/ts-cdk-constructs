@@ -1,0 +1,284 @@
+{
+ "Resources": {
+  "activerulesetlambdaServiceRole7474A4F6": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "active-ruleset-stack/active-ruleset/lambda/ServiceRole/Resource"
+   }
+  },
+  "activerulesetlambdaServiceRoleDefaultPolicyBDADC6F0": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "ses:DescribeActiveReceiptRuleSet",
+        "ses:CreateReceiptRuleSet",
+        "ses:SetActiveReceiptRuleSet",
+        "ses:DescribeReceiptRuleSet",
+        "ses:DeleteReceiptRuleSet"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "activerulesetlambdaServiceRoleDefaultPolicyBDADC6F0",
+    "Roles": [
+     {
+      "Ref": "activerulesetlambdaServiceRole7474A4F6"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "active-ruleset-stack/active-ruleset/lambda/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "activerulesetlambda1F6A4182": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-028446965111-eu-central-1",
+     "S3Key": "70101dd19c992c1007677c27312173fdfc3e1d7e0cc89c841a125b4b7d455b89.zip"
+    },
+    "Handler": "lambda.onEvent",
+    "Role": {
+     "Fn::GetAtt": [
+      "activerulesetlambdaServiceRole7474A4F6",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs18.x",
+    "Timeout": 60
+   },
+   "DependsOn": [
+    "activerulesetlambdaServiceRoleDefaultPolicyBDADC6F0",
+    "activerulesetlambdaServiceRole7474A4F6"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "active-ruleset-stack/active-ruleset/lambda/Resource",
+    "aws:asset:path": "asset.70101dd19c992c1007677c27312173fdfc3e1d7e0cc89c841a125b4b7d455b89",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "activerulesetproviderframeworkonEventServiceRoleC29CF607": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "active-ruleset-stack/active-ruleset/provider/framework-onEvent/ServiceRole/Resource"
+   }
+  },
+  "activerulesetproviderframeworkonEventServiceRoleDefaultPolicy9B45AADC": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "activerulesetlambda1F6A4182",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "activerulesetlambda1F6A4182",
+             "Arn"
+            ]
+           },
+           ":*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "activerulesetproviderframeworkonEventServiceRoleDefaultPolicy9B45AADC",
+    "Roles": [
+     {
+      "Ref": "activerulesetproviderframeworkonEventServiceRoleC29CF607"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "active-ruleset-stack/active-ruleset/provider/framework-onEvent/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "activerulesetproviderframeworkonEvent585AFC28": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-028446965111-eu-central-1",
+     "S3Key": "7382a0addb9f34974a1ea6c6c9b063882af874828f366f5c93b2b7b64db15c94.zip"
+    },
+    "Description": "AWS CDK resource provider framework - onEvent (active-ruleset-stack/active-ruleset/provider)",
+    "Environment": {
+     "Variables": {
+      "USER_ON_EVENT_FUNCTION_ARN": {
+       "Fn::GetAtt": [
+        "activerulesetlambda1F6A4182",
+        "Arn"
+       ]
+      }
+     }
+    },
+    "Handler": "framework.onEvent",
+    "Role": {
+     "Fn::GetAtt": [
+      "activerulesetproviderframeworkonEventServiceRoleC29CF607",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs18.x",
+    "Timeout": 900
+   },
+   "DependsOn": [
+    "activerulesetproviderframeworkonEventServiceRoleDefaultPolicy9B45AADC",
+    "activerulesetproviderframeworkonEventServiceRoleC29CF607"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "active-ruleset-stack/active-ruleset/provider/framework-onEvent/Resource",
+    "aws:asset:path": "asset.7382a0addb9f34974a1ea6c6c9b063882af874828f366f5c93b2b7b64db15c94",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "activerulesetresourceB9A9E74D": {
+   "Type": "AWS::CloudFormation::CustomResource",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "activerulesetproviderframeworkonEvent585AFC28",
+      "Arn"
+     ]
+    },
+    "test": 1
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "active-ruleset-stack/active-ruleset/resource/Default"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/02NyQrCQBBEv8V7p90u5qiCV0P8gDCZtKGzzMj0TERC/t0sKkJDvaqiqR3GMW5X6imRLuqo4Rz7m1e6hjHK+ka1eaGwvwSjPVsD57v58gCsWuxT29AUz5rYhvVrsgsNIPtMiZAXPE4yejwFXZM/KaEBUhIbnCaY23G5ZFOCDuJtm7lPKZg423FBDs5z8/uadv/4Gvwj+AGMLQgrWXfbA463WVXCHLlgPLeE6aJvEoqmS/sAAAA="
+   },
+   "Metadata": {
+    "aws:cdk:path": "active-ruleset-stack/CDKMetadata/Default"
+   }
+  }
+ },
+ "Outputs": {
+  "output": {
+   "Value": {
+    "Fn::GetAtt": [
+     "activerulesetresourceB9A9E74D",
+     "ruleSetName"
+    ]
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

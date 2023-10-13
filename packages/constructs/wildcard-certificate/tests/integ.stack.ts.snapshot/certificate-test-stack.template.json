@@ -1,0 +1,292 @@
+{
+ "Resources": {
+  "certificatelambdaServiceRole3D8A4895": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "certificate-test-stack/certificate/lambda/ServiceRole/Resource"
+   }
+  },
+  "certificatelambdaServiceRoleDefaultPolicy2F432B03": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "acm:DescribeCertificate",
+        "acm:ListCertificates",
+        "acm:RequestCertificate"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "route53:ChangeResourceRecordSets",
+       "Effect": "Allow",
+       "Resource": "arn:aws:route53:::/hostedzone/Z085471422JPU7GT84QN4"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "certificatelambdaServiceRoleDefaultPolicy2F432B03",
+    "Roles": [
+     {
+      "Ref": "certificatelambdaServiceRole3D8A4895"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "certificate-test-stack/certificate/lambda/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "certificatelambdaBAAB8405": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-028446965111-eu-central-1",
+     "S3Key": "b2250e994c12e54c55a0b1559e20bc93be1d248226bea980cdbb921e4b86a94e.zip"
+    },
+    "Handler": "lambda.onEvent",
+    "Role": {
+     "Fn::GetAtt": [
+      "certificatelambdaServiceRole3D8A4895",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs18.x",
+    "Timeout": 420
+   },
+   "DependsOn": [
+    "certificatelambdaServiceRoleDefaultPolicy2F432B03",
+    "certificatelambdaServiceRole3D8A4895"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "certificate-test-stack/certificate/lambda/Resource",
+    "aws:asset:path": "asset.b2250e994c12e54c55a0b1559e20bc93be1d248226bea980cdbb921e4b86a94e",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "certificateproviderframeworkonEventServiceRoleCAA3788D": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "certificate-test-stack/certificate/provider/framework-onEvent/ServiceRole/Resource"
+   }
+  },
+  "certificateproviderframeworkonEventServiceRoleDefaultPolicy8E1BF84D": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "certificatelambdaBAAB8405",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "certificatelambdaBAAB8405",
+             "Arn"
+            ]
+           },
+           ":*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "certificateproviderframeworkonEventServiceRoleDefaultPolicy8E1BF84D",
+    "Roles": [
+     {
+      "Ref": "certificateproviderframeworkonEventServiceRoleCAA3788D"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "certificate-test-stack/certificate/provider/framework-onEvent/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "certificateproviderframeworkonEvent618151B4": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-028446965111-eu-central-1",
+     "S3Key": "7382a0addb9f34974a1ea6c6c9b063882af874828f366f5c93b2b7b64db15c94.zip"
+    },
+    "Description": "AWS CDK resource provider framework - onEvent (certificate-test-stack/certificate/provider)",
+    "Environment": {
+     "Variables": {
+      "USER_ON_EVENT_FUNCTION_ARN": {
+       "Fn::GetAtt": [
+        "certificatelambdaBAAB8405",
+        "Arn"
+       ]
+      }
+     }
+    },
+    "Handler": "framework.onEvent",
+    "Role": {
+     "Fn::GetAtt": [
+      "certificateproviderframeworkonEventServiceRoleCAA3788D",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs18.x",
+    "Timeout": 900
+   },
+   "DependsOn": [
+    "certificateproviderframeworkonEventServiceRoleDefaultPolicy8E1BF84D",
+    "certificateproviderframeworkonEventServiceRoleCAA3788D"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "certificate-test-stack/certificate/provider/framework-onEvent/Resource",
+    "aws:asset:path": "asset.7382a0addb9f34974a1ea6c6c9b063882af874828f366f5c93b2b7b64db15c94",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "certificateresource9344DC19": {
+   "Type": "AWS::CloudFormation::CustomResource",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "certificateproviderframeworkonEvent618151B4",
+      "Arn"
+     ]
+    },
+    "domainMappings": [
+     {
+      "parentDomainName": "integ.dev.paas.reapit.cloud",
+      "hostedZoneId": "Z085471422JPU7GT84QN4"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "certificate-test-stack/certificate/resource/Default"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/02NyQrCQBBEv8V7p90u5qiCV0P8gDCZtKGzzMj0TERC/t0sKkJDvaqiqR3GMW5X6imRLuqo4Rz7m1e6hjHK+ka1eaGwvwSjPVsD57v58gCsWuxT29AUz5rYhvVrsgsNIPtMiZAXPE4yejwFXZM/KaEBUhIbnCaY23G5ZFOCDuJtm7lPKZg423FBDs5z8/uadv/4Gvwj+AGMLQgrWXfbA463WVXCHLlgPLeE6aJvEoqmS/sAAAA="
+   },
+   "Metadata": {
+    "aws:cdk:path": "certificate-test-stack/CDKMetadata/Default"
+   }
+  }
+ },
+ "Outputs": {
+  "output": {
+   "Value": {
+    "Fn::GetAtt": [
+     "certificateresource9344DC19",
+     "certificateArn"
+    ]
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

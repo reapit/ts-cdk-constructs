@@ -1,6 +1,6 @@
 {
   "name": "@reapit-cdk/integration-tests",
-  "description": "Easily run integration tests for CDK constructs.",
+  "description": "Easily run integration tests for CDK constructs using Jest. On successful test suite run, snapshots the stack which gets stored in your repo alongside the test. Subsequent test runs will diff the stack against the snapshot, and only run the tests if something changes.",
   "version": "0.0.0",
   "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/tools/integration-tests",
   "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/tools/integration-tests/readme.md",
@@ -9,19 +9,18 @@
   },
   "license": "MIT",
   "main": "src/index.ts",
-  "bin": {
-    "reapit-cdk-integ": "./bin/index.js"
+  "scripts": {
+    "postinstall": "yarn build",
+    "build": "reapit-cdk-tsup src/jest-environment.ts"
   },
   "dependencies": {
     "aws-cdk-lib": "^2.96.2",
     "constructs": "10.2.70"
   },
   "devDependencies": {
-    "@aws-cdk/integ-runner": "^2.96.2-alpha.0",
-    "@aws-cdk/integ-tests-alpha": "^2.96.2-alpha.0",
+    "@aws-sdk/client-s3": "3.414.0",
     "@reapit-cdk/eslint-config": "workspace:^",
     "@reapit-cdk/tsup": "workspace:^",
-    "aws-cdk": "2.96.2",
     "cdk-nag": "^2.27.148",
     "ts-node": "^10.9.1"
   }

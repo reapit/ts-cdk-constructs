@@ -1,6 +1,6 @@
 import { EmailIdentity, Identity } from 'aws-cdk-lib/aws-ses'
 import * as actions from 'aws-cdk-lib/aws-ses-actions'
-import { Construct } from 'constructs'
+import { Construct, DependencyGroup } from 'constructs'
 import { AttributeType, Table } from 'aws-cdk-lib/aws-dynamodb'
 import { CfnRecordSet, IHostedZone, MxRecord } from 'aws-cdk-lib/aws-route53'
 import { Topic } from 'aws-cdk-lib/aws-sns'
@@ -10,6 +10,7 @@ import { EmailEncoding } from 'aws-cdk-lib/aws-ses-actions'
 import { Lazy, Stack, Token } from 'aws-cdk-lib'
 import { Code, Function, Runtime } from 'aws-cdk-lib/aws-lambda'
 import * as path from 'path'
+import { EmailIdentityVerificationWaiter } from './email-identity-verification-waiter'
 
 export class EmailReceiver extends Construct {
   table: Table
@@ -45,37 +46,46 @@ export class EmailReceiver extends Construct {
       identity: Identity.domain(domain),
     })
 
+    const records = new DependencyGroup()
     verification.dkimRecords.forEach((record, idx) => {
-      new CfnRecordSet(this, `dkim-${idx}`, {
+      const recordSet = new CfnRecordSet(this, `dkim-${idx}`, {
         hostedZoneId: props.hostedZone.hostedZoneId,
         type: 'CNAME',
         name: Lazy.string({ produce: () => record.name }),
         resourceRecords: [Lazy.string({ produce: () => record.value })],
         ttl: '1800',
       })
+      records.add(recordSet)
     })
+
+    records.add(
+      new MxRecord(this, 'mx-record', {
+        values: [
+          {
+            hostName: `inbound-smtp.${Stack.of(this).region}.amazonaws.com`,
+            priority: 10,
+          },
+        ],
+        zone: props.hostedZone,
+        recordName: domain,
+        deleteExisting: true,
+      }),
+    )
+
+    const waiter = new EmailIdentityVerificationWaiter(this, 'waiter', {
+      emailIdentityName: verification.emailIdentityName,
+    })
+    waiter.dependable.node.addDependency(records)
 
     const receiverLambda = new Function(this, 'receiver-lambda', {
       handler: 'lambda.onEvent',
       runtime: Runtime.NODEJS_18_X,
-      code: Code.fromAsset(path.join(__dirname, 'lambda')),
+      code: Code.fromAsset(path.join(__dirname, '..', 'dist', 'lambdas')),
       environment: {
         TABLE_NAME: this.table.tableName,
       },
     })
     this.table.grantWriteData(receiverLambda)
-
-    new MxRecord(this, 'mx-record', {
-      values: [
-        {
-          hostName: `inbound-smtp.${Stack.of(this).region}.amazonaws.com`,
-          priority: 10,
-        },
-      ],
-      zone: props.hostedZone,
-      recordName: domain,
-      deleteExisting: true,
-    })
 
     topic.addSubscription(new LambdaSubscription(receiverLambda))
 

@@ -181,7 +181,7 @@ export class ProductionEdgeAPI extends Construct {
 
     return Code.fromInline(
       generateLambda('rewriter', [
-        ["var ['example.org']", 'var domains = ' + JSON.stringify(domains)],
+        ['var domains = ["example.org"]', 'var domains = ' + JSON.stringify(domains)],
         ['var doCookieRewrite = true', 'var doCookieRewrite = ' + doCookieRewrite],
         ['var doRedirectRewrite = true', 'var doRedirectRewrite = ' + doRedirectRewrite],
       ]),
@@ -213,13 +213,23 @@ export class ProductionEdgeAPI extends Construct {
         ],
       }
 
-      return [
+      const opts: EndpointBehaviorOptions[] = [
         {
           origin,
           addBehaviorOptions,
           pathPattern: endpoint.pathPattern,
         },
       ]
+
+      if (endpoint.pathPattern.endsWith('/*')) {
+        opts.push({
+          origin,
+          addBehaviorOptions,
+          pathPattern: endpoint.pathPattern.replace('/*', ''),
+        })
+      }
+
+      return opts
     }
 
     const origin = new HttpOrigin('example.org', {

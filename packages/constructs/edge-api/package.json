@@ -10,9 +10,10 @@
   "license": "MIT",
   "scripts": {
     "build": "reapit-cdk-tsup --lambdas",
-    "check": "yarn run root:check -p $PWD",
+    "check": "yarn run root:check -p $(pwd)",
     "lint": "reapit-cdk-eslint",
-    "test": "yarn run root:test $PWD",
+    "test": "yarn run root:test -- $(pwd)",
+    "integ": "yarn run root:integ -- $(pwd)",
     "prepack": "reapit-version-package && yarn build",
     "jsii:build": "rpt-cdk-jsii",
     "jsii:publish": "rpt-cdk-jsii --publish"
@@ -42,6 +43,7 @@
     "@aws-sdk/client-secrets-manager": "3.414.0",
     "@aws-sdk/lib-dynamodb": "3.414.0",
     "@reapit-cdk/eslint-config": "workspace:^",
+    "@reapit-cdk/integration-tests": "workspace:^",
     "@reapit-cdk/jsii": "workspace:^",
     "@reapit-cdk/tsup": "workspace:^",
     "@reapit-cdk/version-package": "workspace:^",

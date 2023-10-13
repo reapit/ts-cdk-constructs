@@ -4,6 +4,7 @@ import {
   DescribeCertificateCommand,
   ListCertificatesCommand,
   RequestCertificateCommand,
+  DeleteCertificateCommand,
   ResourceRecord,
   waitUntilCertificateValidated,
 } from '@aws-sdk/client-acm'
@@ -165,4 +166,22 @@ export const ensureWildcardCertificate = async (
     }),
   )
   throw new Error('Something went wrong')
+}
+
+export const deleteIfUnused = async (certificateArn: string) => {
+  const cert = await client.send(
+    new DescribeCertificateCommand({
+      CertificateArn: certificateArn,
+    }),
+  )
+  if (cert.Certificate?.InUseBy?.length) {
+    console.log('skipping delection: cert stil in use')
+    return
+  }
+
+  await client.send(
+    new DeleteCertificateCommand({
+      CertificateArn: certificateArn,
+    }),
+  )
 }
