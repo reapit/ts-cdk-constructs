@@ -142,7 +142,6 @@ export class IntegrationTest {
     const hasDifferences = !diffResult.toLowerCase().includes('there were no differences')
 
     if (hasDifferences) {
-      throw new Error('has diff')
       this.outDir = outDir
       return {
         shouldSkip: false,
@@ -174,7 +173,7 @@ export class IntegrationTest {
 
     const outputFileLoc = path.resolve(await this.mkTmpDir(), 'outputs.json')
     console.log('deploying')
-    const deployRes = await deploy(dir, stackName, outputFileLoc, outDir as string)
+    const deployRes = await deploy(dir, stackName, outputFileLoc, outDir)
     console.log(deployRes)
     console.log('deployed')
 
