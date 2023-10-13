@@ -11,21 +11,21 @@
     },
     "email-receiver-test-stack": {
       "type": "aws:cloudformation:stack",
-      "environment": "aws://unknown-account/eu-central-1",
+      "environment": "aws://028446965111/eu-central-1",
       "properties": {
         "templateFile": "email-receiver-test-stack.template.json",
         "terminationProtection": false,
         "validateOnSynth": false,
-        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-eu-central-1",
-        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-eu-central-1",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-eu-central-1/413d6c8a806e16f079a51ad828dd6d2699fa7525131603a1703c2a5a0101b3d6.json",
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-deploy-role-028446965111-eu-central-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-cfn-exec-role-028446965111-eu-central-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-028446965111-eu-central-1/59768c911885941ee4e31a86508cf6fc2488b90985436deec2465ebf983824e6.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
           "email-receiver-test-stack.assets"
         ],
         "lookupRole": {
-          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-eu-central-1",
+          "arn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-lookup-role-028446965111-eu-central-1",
           "requiresBootstrapStackVersion": 8,
           "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
         }
@@ -86,6 +86,12 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "emailreceiverwaiterlambdaServiceRole1FB413AF"
+          }
+        ],
+        "/email-receiver-test-stack/email-receiver/waiter/lambda/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "emailreceiverwaiterlambdaServiceRoleDefaultPolicy11487EAD"
           }
         ],
         "/email-receiver-test-stack/email-receiver/waiter/lambda/Resource": [

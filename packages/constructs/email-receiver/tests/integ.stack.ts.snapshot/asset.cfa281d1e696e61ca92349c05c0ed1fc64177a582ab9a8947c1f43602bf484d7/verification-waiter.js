@@ -95,6 +95,14 @@ var customResourceWrapper = (handler) => {
 var import_client_sesv2 = require("@aws-sdk/client-sesv2");
 var client = new import_client_sesv2.SESv2Client();
 var max = 30;
+var wait = async (ms) => {
+  await new Promise((resolve) => {
+    if (process.env.TEST) {
+      return resolve();
+    }
+    setTimeout(resolve, ms);
+  });
+};
 var waitForVerification = async (emailIdentityName, iter = 0) => {
   if (iter > max) {
     throw new Error("wait for verification timed out");
@@ -105,21 +113,20 @@ var waitForVerification = async (emailIdentityName, iter = 0) => {
     })
   );
   switch (identity.VerificationStatus) {
-    case import_client_sesv2.VerificationStatus.FAILED: {
+    case "FAILED": {
       throw new Error("AWS reports verification failed");
     }
-    case import_client_sesv2.VerificationStatus.SUCCESS: {
-      return identity.VerificationStatus;
+    case "SUCCESS": {
+      if (!identity.VerifiedForSendingStatus) {
+        await wait(5e3);
+        return await waitForVerification(emailIdentityName, iter + 1);
+      }
+      return "SUCCESS";
     }
-    case import_client_sesv2.VerificationStatus.TEMPORARY_FAILURE:
-    case import_client_sesv2.VerificationStatus.NOT_STARTED:
-    case import_client_sesv2.VerificationStatus.PENDING: {
-      await new Promise((resolve) => {
-        if (process.env.TEST) {
-          return resolve();
-        }
-        setTimeout(resolve, 5e3);
-      });
+    case "TEMPORARY_FAILURE":
+    case "NOT_STARTED":
+    case "PENDING": {
+      await wait(5e3);
       return await waitForVerification(emailIdentityName, iter + 1);
     }
     default: {

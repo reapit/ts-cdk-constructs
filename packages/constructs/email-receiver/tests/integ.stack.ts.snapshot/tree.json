@@ -317,6 +317,59 @@
                               "fqn": "aws-cdk-lib.aws_iam.CfnRole",
                               "version": "2.99.1"
                             }
+                          },
+                          "DefaultPolicy": {
+                            "id": "DefaultPolicy",
+                            "path": "email-receiver-test-stack/email-receiver/waiter/lambda/ServiceRole/DefaultPolicy",
+                            "children": {
+                              "Resource": {
+                                "id": "Resource",
+                                "path": "email-receiver-test-stack/email-receiver/waiter/lambda/ServiceRole/DefaultPolicy/Resource",
+                                "attributes": {
+                                  "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                                  "aws:cdk:cloudformation:props": {
+                                    "policyDocument": {
+                                      "Statement": [
+                                        {
+                                          "Action": "ses:GetEmailIdentity",
+                                          "Effect": "Allow",
+                                          "Resource": {
+                                            "Fn::Join": [
+                                              "",
+                                              [
+                                                "arn:",
+                                                {
+                                                  "Ref": "AWS::Partition"
+                                                },
+                                                ":ses:eu-central-1:028446965111:identity/",
+                                                {
+                                                  "Ref": "emailreceiverIdentity03A11FD4"
+                                                }
+                                              ]
+                                            ]
+                                          }
+                                        }
+                                      ],
+                                      "Version": "2012-10-17"
+                                    },
+                                    "policyName": "emailreceiverwaiterlambdaServiceRoleDefaultPolicy11487EAD",
+                                    "roles": [
+                                      {
+                                        "Ref": "emailreceiverwaiterlambdaServiceRole1FB413AF"
+                                      }
+                                    ]
+                                  }
+                                },
+                                "constructInfo": {
+                                  "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                                  "version": "2.99.1"
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.Policy",
+                              "version": "2.99.1"
+                            }
                           }
                         },
                         "constructInfo": {
@@ -357,10 +410,8 @@
                           "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
                           "aws:cdk:cloudformation:props": {
                             "code": {
-                              "s3Bucket": {
-                                "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-eu-central-1"
-                              },
-                              "s3Key": "11a348afd72aa76300064a4f7e3cb6f775f6753d2b6c443d2ee458817427fda9.zip"
+                              "s3Bucket": "cdk-hnb659fds-assets-028446965111-eu-central-1",
+                              "s3Key": "cfa281d1e696e61ca92349c05c0ed1fc64177a582ab9a8947c1f43602bf484d7.zip"
                             },
                             "handler": "verification-waiter.onEvent",
                             "role": {
@@ -542,9 +593,7 @@
                               "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
                               "aws:cdk:cloudformation:props": {
                                 "code": {
-                                  "s3Bucket": {
-                                    "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-eu-central-1"
-                                  },
+                                  "s3Bucket": "cdk-hnb659fds-assets-028446965111-eu-central-1",
                                   "s3Key": "7382a0addb9f34974a1ea6c6c9b063882af874828f366f5c93b2b7b64db15c94.zip"
                                 },
                                 "description": "AWS CDK resource provider framework - onEvent (email-receiver-test-stack/email-receiver/waiter/provider)",
@@ -759,10 +808,8 @@
                       "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
                       "aws:cdk:cloudformation:props": {
                         "code": {
-                          "s3Bucket": {
-                            "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-eu-central-1"
-                          },
-                          "s3Key": "11a348afd72aa76300064a4f7e3cb6f775f6753d2b6c443d2ee458817427fda9.zip"
+                          "s3Bucket": "cdk-hnb659fds-assets-028446965111-eu-central-1",
+                          "s3Key": "cfa281d1e696e61ca92349c05c0ed1fc64177a582ab9a8947c1f43602bf484d7.zip"
                         },
                         "environment": {
                           "variables": {
@@ -992,9 +1039,7 @@
                           "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
                           "aws:cdk:cloudformation:props": {
                             "code": {
-                              "s3Bucket": {
-                                "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-eu-central-1"
-                              },
+                              "s3Bucket": "cdk-hnb659fds-assets-028446965111-eu-central-1",
                               "s3Key": "70101dd19c992c1007677c27312173fdfc3e1d7e0cc89c841a125b4b7d455b89.zip"
                             },
                             "handler": "lambda.onEvent",
@@ -1177,9 +1222,7 @@
                               "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
                               "aws:cdk:cloudformation:props": {
                                 "code": {
-                                  "s3Bucket": {
-                                    "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-eu-central-1"
-                                  },
+                                  "s3Bucket": "cdk-hnb659fds-assets-028446965111-eu-central-1",
                                   "s3Key": "7382a0addb9f34974a1ea6c6c9b063882af874828f366f5c93b2b7b64db15c94.zip"
                                 },
                                 "description": "AWS CDK resource provider framework - onEvent (email-receiver-test-stack/email-receiver/active-ruleset/provider)",
