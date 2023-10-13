@@ -4,24 +4,20 @@ import { CfnKey, IKey, Key } from 'aws-cdk-lib/aws-kms'
 import { Provider } from 'aws-cdk-lib/custom-resources'
 import { Construct, IDependable } from 'constructs'
 import { generateKeyPolicy } from './generate-key-policy'
-import { AWSRegion, stringIsAWSRegion } from '@reapit-cdk/common'
 import { Code, Function, Runtime } from 'aws-cdk-lib/aws-lambda'
 import * as path from 'path'
 
 export class ReplicatedKey extends Construct {
   private masterKey: IKey
-  private keys: Partial<Record<AWSRegion, IKey>> = {}
+  private keys: Partial<Record<string, IKey>> = {}
   dependable: IDependable
 
-  constructor(scope: Construct, id: string, props: { replicaRegions: AWSRegion[] }) {
+  constructor(scope: Construct, id: string, props: { replicaRegions: string[] }) {
     super(scope, id)
     const stack = Stack.of(this)
     const masterRegion = stack.region
     if (Token.isUnresolved(masterRegion)) {
       throw new Error('stack region is unresolved, please explicitly specify')
-    }
-    if (!stringIsAWSRegion(masterRegion)) {
-      throw new Error('stack region is invalid')
     }
     const cfnKey = new CfnKey(this, 'resource', {
       multiRegion: true,
@@ -76,21 +72,21 @@ export class ReplicatedKey extends Construct {
 
   grantDecrypt(grantee: IGrantable) {
     Object.values(this.keys).forEach((key) => {
-      key.grantDecrypt(grantee)
+      key?.grantDecrypt(grantee)
     })
   }
   grantEncrypt(grantee: IGrantable) {
     Object.values(this.keys).forEach((key) => {
-      key.grantEncrypt(grantee)
+      key?.grantEncrypt(grantee)
     })
   }
   grantEncryptDecrypt(grantee: IGrantable) {
     Object.values(this.keys).forEach((key) => {
-      key.grantEncryptDecrypt(grantee)
+      key?.grantEncryptDecrypt(grantee)
     })
   }
 
-  getRegionalKey(region: AWSRegion): IKey {
+  getRegionalKey(region: string): IKey {
     const key = this.keys[region]
     if (!key) {
       throw new Error('No key in region ' + region)
@@ -98,12 +94,12 @@ export class ReplicatedKey extends Construct {
     return key
   }
 
-  tryGetRegionalKey(region: AWSRegion): IKey | undefined {
+  tryGetRegionalKey(region: string): IKey | undefined {
     const key = this.keys[region]
     return key
   }
 
-  private getReplicaArn(region: AWSRegion) {
+  private getReplicaArn(region: string) {
     return Arn.format(
       {
         region,
