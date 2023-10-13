@@ -9672,11 +9672,11 @@ __metadata:
 
 "typescript@patch:typescript@next#~builtin<compat/typescript>":
   version: 5.3.0-dev.20231005
-  resolution: "typescript@patch:typescript@npm%3A5.3.0-dev.20231005#~builtin<compat/typescript>::version=5.3.0-dev.20231005&hash=f3b441"
+  resolution: "typescript@patch:typescript@npm%3A5.3.0-dev.20231005#~builtin<compat/typescript>::version=5.3.0-dev.20231005&hash=29ae49"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 8b1e121dab054b3e662ed8120432236a478dbae5a7150a108e1abcbd6bdc73582e76f9f56cf6a43b9835d0557480d10ecb5b452b24e3ed1b2eecf0b550c4df8e
+  checksum: 9ac0d203dc6f6a77773a04b7c31a6f245bb412ee60bef8581e86da5c747853e43352dacda0bdde0043a7bdaec65e6c8c6114aa94a6774c2a430644102582dfe2
   languageName: node
   linkType: hard
 

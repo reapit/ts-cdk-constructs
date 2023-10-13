@@ -1,7 +1,7 @@
 {
   "name": "@reapit-cdk/ts-constructs",
   "description": "CDK Constructs Monorepo",
-  "packageManager": "yarn@3.6.3",
+  "packageManager": "yarn@3.6.4",
   "private": true,
   "workspaces": [
     "packages/*/*"
