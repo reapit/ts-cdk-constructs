@@ -197,15 +197,6 @@ export class IntegrationTest {
       return
     }
 
-    if (!this.noCleanup) {
-      console.log('tearing down')
-      const res = await destroy(this.dir, this.stackName, this.outDir)
-      console.log(res)
-      console.log('torn down')
-    } else {
-      console.log('teardown skipped')
-    }
-
     // @ts-ignore
     const promoteSnapshot = !expect.getState().error && !Object.values(global.testStatuses).filter(Boolean).length
     if (promoteSnapshot) {
@@ -223,6 +214,15 @@ export class IntegrationTest {
       await fs.rename(this.outDir, absSnapshotDir)
 
       console.log('promoted snapshot')
+    }
+
+    if (!this.noCleanup) {
+      console.log('tearing down')
+      const res = await destroy(this.dir, this.stackName, this.outDir)
+      console.log(res)
+      console.log('torn down')
+    } else {
+      console.log('teardown skipped')
     }
   }
 }
