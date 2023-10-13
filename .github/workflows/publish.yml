@@ -45,9 +45,9 @@ jobs:
         run: |
           yarn workspace ${{ steps.tagName.outputs.package }} run test
 
-      - name: JSII Build (if needed)
-        run: |
-          yarn workspace ${{ steps.tagName.outputs.package }} run jsii:build
+      # - name: JSII Build (if needed)
+      #   run: |
+      #     yarn workspace ${{ steps.tagName.outputs.package }} run jsii:build
 
       - name: Authenticate with NPM
         run: |
@@ -57,9 +57,9 @@ jobs:
         run: |
           yarn workspace ${{ steps.tagName.outputs.package }} npm publish
 
-      - name: Publish to PyPI (if needed)
-        env:
-          TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
-          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-        run: |
-          yarn workspace ${{ steps.tagName.outputs.package }} run jsii:publish
+      # - name: Publish to PyPI (if needed)
+      #   env:
+      #     TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+      #     TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+      #   run: |
+      #     yarn workspace ${{ steps.tagName.outputs.package }} run jsii:publish
