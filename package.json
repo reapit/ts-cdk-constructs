@@ -1,7 +1,7 @@
 {
   "name": "@reapit-cdk/ts-constructs",
   "description": "CDK Constructs Monorepo",
-  "packageManager": "yarn@3.6.4",
+  "packageManager": "yarn@4.0.0",
   "private": true,
   "workspaces": [
     "packages/*/*"
@@ -9,8 +9,8 @@
   "scripts": {
     "test": "jest --ignoreProjects 'integration tests' --coverage",
     "check": "tsc packages/**/*.ts --noEmit",
-    "build": "yarn workspaces foreach -v run build",
-    "lint": "yarn workspaces foreach -v run lint",
+    "build": "yarn workspaces foreach --all -v run build",
+    "lint": "yarn workspaces foreach --all -v run lint",
     "integ": "jest --ignoreProjects 'unit tests' --silent false",
     "root:test": "jest --ignoreProjects 'integration tests'",
     "root:integ": "jest --ignoreProjects 'unit tests' --silent false",
