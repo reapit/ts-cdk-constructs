@@ -1,8 +1,8 @@
 import { ComparisonOperator, DynamoDBClient, DynamoDBClientConfig } from '@aws-sdk/client-dynamodb'
 import { QueryCommand, DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb'
 import { validate } from '@aws-sdk/util-arn-parser'
-import type { EmailMessage } from '../../email-receiver-types/src'
-export type { EmailMessage } from '../../email-receiver-types/src'
+import type { EmailMessage } from '@reapit-cdk/email-receiver-types'
+export type { EmailMessage } from '@reapit-cdk/email-receiver-types'
 
 export class EmailReceiverClient {
   private docClient: DynamoDBDocumentClient

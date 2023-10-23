@@ -1,4 +1,23 @@
 {
   "name": "@reapit-cdk/email-receiver-types",
-  "main": "src/index.ts"
+  "description": "Types for @reapit-cdk/email-receiver and client.",
+  "main": "src/index.ts",
+  "version": "0.0.0",
+  "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/modules/email-receiver-types",
+  "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/modules/email-receiver-types/readme.md",
+  "bugs": {
+    "url": "https://github.com/reapit/ts-cdk-constructs/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reapit/ts-cdk-constructs.git"
+  },
+  "scripts": {
+    "lint": "reapit-cdk-eslint",
+    "prepack": "reapit-version-package"
+  },
+  "devDependencies": {
+    "@reapit-cdk/eslint-config": "workspace:^",
+    "@reapit-cdk/version-package": "workspace:^"
+  }
 }
