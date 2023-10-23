@@ -15,7 +15,7 @@
   "scripts": {
     "lint": "reapit-cdk-eslint",
     "prepack": "reapit-version-package",
-    "test": "skipping..."
+    "test": "echo 'skipping...'"
   },
   "devDependencies": {
     "@reapit-cdk/eslint-config": "workspace:^",
