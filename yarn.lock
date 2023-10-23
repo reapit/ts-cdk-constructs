@@ -2817,6 +2817,7 @@ __metadata:
     aws-sdk-client-mock: "npm:^3.0.0"
     constructs: "npm:^10.2.70"
   peerDependencies:
+    "@reapit-cdk/cloudfront-invalidation": ^0.0.1
     aws-cdk-lib: ^2.96.2
     constructs: ^10.2.70
   languageName: unknown
