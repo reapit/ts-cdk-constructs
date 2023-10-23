@@ -105,7 +105,7 @@ export const renderRootReadme = async ({ packages, rootPkgJson, coverage }: Repo
       packages
         .map((pkg) =>
           [
-            `<h3><a href="packages/${packageType}/${pkg.subdir}">${pkg.pkgJson.name}</a></h3>`,
+            `<h3><a href="packages/${packageType}s/${pkg.subdir}">${pkg.pkgJson.name}</a></h3>`,
             renderBadges(pkg),
             pkg.pkgJson.description,
           ].join('\n\n'),
