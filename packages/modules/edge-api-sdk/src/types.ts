@@ -1,4 +1,3 @@
-import { AWSRegion } from '../../common/src'
 import {
   APIGatewayProxyEventV2,
   APIGatewayProxyResultV2,
@@ -24,7 +23,7 @@ export type RCRequest<EnvType> = {
   cookies: string[]
   query?: RCQuery
   env: EnvType
-  region: AWSRegion
+  region: string
 }
 
 export type JSONRequest<EnvType, BodyType> = Omit<RCRequest<EnvType>, 'body'> & {
