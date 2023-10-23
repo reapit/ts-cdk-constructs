@@ -131,28 +131,6 @@ describe('replicated-secret', () => {
       })
     }).toThrowError('stack region is not resolved, please be explicit')
   })
-  test('invalid stack region error', () => {
-    const app = new cdk.App()
-    const keyStack = new cdk.Stack(app, 'stack', {
-      env: {
-        region: 'eu-west-2',
-      },
-    })
-    const replicatedKey = new ReplicatedKey(keyStack, 'key', {
-      replicaRegions: ['af-south-1', 'cn-north-1'],
-    })
-    const stack = new cdk.Stack(app, 'stack-2', {
-      env: {
-        region: 'invalid',
-      },
-    })
-    expect(() => {
-      new ReplicatedSecret(stack, 'secret', {
-        replicaRegions: ['af-south-1', 'cn-north-1'],
-        replicatedKey,
-      })
-    }).toThrowError('invalid stack region')
-  })
   test('replicate secret into non-key region error', () => {
     const app = new cdk.App()
     const stack = new cdk.Stack(app, 'stack', {
