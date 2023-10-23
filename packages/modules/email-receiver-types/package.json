@@ -14,7 +14,8 @@
   },
   "scripts": {
     "lint": "reapit-cdk-eslint",
-    "prepack": "reapit-version-package"
+    "prepack": "reapit-version-package",
+    "test": "skipping..."
   },
   "devDependencies": {
     "@reapit-cdk/eslint-config": "workspace:^",
