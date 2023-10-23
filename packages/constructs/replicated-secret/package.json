@@ -30,6 +30,7 @@
   },
   "main": "src/index.ts",
   "peerDependencies": {
+    "@reapit-cdk/replicated-key": "^0.0.2",
     "aws-cdk-lib": "^2.96.2",
     "constructs": "^10.2.70"
   },

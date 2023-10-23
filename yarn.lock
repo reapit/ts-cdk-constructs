@@ -2867,6 +2867,7 @@ __metadata:
     constructs: "npm:^10.2.70"
     mailparser: "npm:^3.6.5"
   peerDependencies:
+    "@reapit-cdk/active-ruleset": ^0.0.1
     aws-cdk-lib: ^2.96.2
     constructs: ^10.2.70
   languageName: unknown
@@ -2965,6 +2966,7 @@ __metadata:
     aws-sdk-client-mock: "npm:^3.0.0"
     constructs: "npm:^10.2.70"
   peerDependencies:
+    "@reapit-cdk/replicated-key": ^0.0.2
     aws-cdk-lib: ^2.96.2
     constructs: ^10.2.70
   languageName: unknown
