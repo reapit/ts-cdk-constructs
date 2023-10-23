@@ -1,6 +1,4 @@
-import { AWSRegion } from '@reapit-cdk/common'
-
-export const generateKeyPolicy = (account: string, region: AWSRegion) => {
+export const generateKeyPolicy = (account: string, region: string) => {
   return {
     Id: 'auto-secretsmanager-2',
     Version: '2012-10-17',

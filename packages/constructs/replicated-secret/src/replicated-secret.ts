@@ -2,7 +2,6 @@ import { Arn, ArnFormat, CustomResource, Duration, PhysicalName, Stack, Token } 
 import { ISecret, Secret } from 'aws-cdk-lib/aws-secretsmanager'
 import { Construct, IDependable } from 'constructs'
 import { ReplicatedKey } from '@reapit-cdk/replicated-key'
-import { AWSRegion, stringIsAWSRegion } from '@reapit-cdk/common'
 import { Grant, IGrantable, PolicyStatement } from 'aws-cdk-lib/aws-iam'
 import { Provider } from 'aws-cdk-lib/custom-resources'
 import { Code, Function, Runtime } from 'aws-cdk-lib/aws-lambda'
@@ -10,7 +9,7 @@ import * as path from 'path'
 
 export interface MultiRegionSecretProps {
   replicatedKey: ReplicatedKey
-  replicaRegions: AWSRegion[]
+  replicaRegions: string[]
 }
 
 const secretArnToNameWithSuffix = (secret: ISecret) => {
@@ -21,7 +20,7 @@ const secretArnToNameWithSuffix = (secret: ISecret) => {
   return resourceName
 }
 
-const secretReplicaArn = (secret: ISecret, replicaRegion: AWSRegion) => {
+const secretReplicaArn = (secret: ISecret, replicaRegion: string) => {
   return Arn.format(
     {
       region: replicaRegion,
@@ -35,9 +34,9 @@ const secretReplicaArn = (secret: ISecret, replicaRegion: AWSRegion) => {
 }
 
 export class ReplicatedSecret extends Secret {
-  private secrets: Partial<Record<AWSRegion, ISecret>> = {}
+  private secrets: Partial<Record<string, ISecret>> = {}
   private replicatedKey: ReplicatedKey
-  masterRegion: AWSRegion
+  masterRegion: string
   dependable: IDependable
 
   constructor(scope: Construct, id: string, props: MultiRegionSecretProps) {
@@ -45,9 +44,6 @@ export class ReplicatedSecret extends Secret {
 
     if (Token.isUnresolved(stackRegion)) {
       throw new Error('stack region is not resolved, please be explicit')
-    }
-    if (!stringIsAWSRegion(stackRegion)) {
-      throw new Error('invalid stack region')
     }
 
     const { replicatedKey, replicaRegions } = props
@@ -108,7 +104,7 @@ export class ReplicatedSecret extends Secret {
     })
   }
 
-  getRegionalSecret(region: AWSRegion): ISecret {
+  getRegionalSecret(region: string): ISecret {
     const secret = this.secrets[region]
     if (region === this.masterRegion) {
       return this
@@ -121,7 +117,7 @@ export class ReplicatedSecret extends Secret {
 
   grantWrite(grantee: IGrantable): Grant {
     Object.values(this.secrets).forEach((secret) => {
-      secret.grantWrite(grantee)
+      secret?.grantWrite(grantee)
     })
     this.replicatedKey.grantEncryptDecrypt(grantee)
     return super.grantWrite(grantee)
@@ -129,7 +125,7 @@ export class ReplicatedSecret extends Secret {
 
   grantRead(grantee: IGrantable): Grant {
     Object.values(this.secrets).forEach((secret) => {
-      secret.grantRead(grantee)
+      secret?.grantRead(grantee)
     })
     this.replicatedKey.grantDecrypt(grantee)
     return super.grantRead(grantee)
