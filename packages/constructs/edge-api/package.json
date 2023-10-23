@@ -31,12 +31,12 @@
   "main": "src/index.ts",
   "dependencies": {
     "@aws-cdk/aws-apigatewayv2-alpha": "2.96.2-alpha.0",
-    "@aws-cdk/aws-apigatewayv2-integrations-alpha": "2.96.2-alpha.0",
-    "@reapit-cdk/cloudfront-invalidation": "workspace:^"
+    "@aws-cdk/aws-apigatewayv2-integrations-alpha": "2.96.2-alpha.0"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.96.2",
-    "constructs": "^10.2.70"
+    "constructs": "^10.2.70",
+    "@reapit-cdk/cloudfront-invalidation": "^0.0.1"
   },
   "devDependencies": {
     "@aws-sdk/client-dynamodb": "3.414.0",
@@ -44,6 +44,7 @@
     "@aws-sdk/lib-dynamodb": "3.414.0",
     "@reapit-cdk/eslint-config": "workspace:^",
     "@reapit-cdk/integration-tests": "workspace:^",
+    "@reapit-cdk/cloudfront-invalidation": "workspace:^",
     "@reapit-cdk/jsii": "workspace:^",
     "@reapit-cdk/tsup": "workspace:^",
     "@reapit-cdk/version-package": "workspace:^",
