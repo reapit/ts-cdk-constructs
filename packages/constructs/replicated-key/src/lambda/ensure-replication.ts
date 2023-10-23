@@ -1,4 +1,3 @@
-import { AWSRegion, stringIsAWSRegion } from '@reapit-cdk/common'
 import {
   KMSClient,
   DescribeKeyCommand,
@@ -8,7 +7,7 @@ import {
 import { deleteKey, replicateKey } from './key'
 import { strIsDefined, parseArn } from './utils'
 
-const validateKeyMetadata = (keyMetadata?: KeyMetadata): AWSRegion[] => {
+const validateKeyMetadata = (keyMetadata?: KeyMetadata): string[] => {
   if (!keyMetadata) {
     throw new Error('key metadata undefined')
   }
@@ -22,16 +21,14 @@ const validateKeyMetadata = (keyMetadata?: KeyMetadata): AWSRegion[] => {
       throw new Error('given key is not multiregion primary key')
     }
     if (ReplicaKeys) {
-      const existingRegions = ReplicaKeys.map((key) => key.Region)
-        .filter(strIsDefined)
-        .filter(stringIsAWSRegion)
+      const existingRegions = ReplicaKeys.map((key) => key.Region).filter(strIsDefined)
       return existingRegions
     }
   }
   throw new Error('given key is multiregion but no multiregion configuration was found')
 }
 
-export const ensureReplication = async (keyArn: string, regions: AWSRegion[]) => {
+export const ensureReplication = async (keyArn: string, regions: string[]) => {
   const { region, keyId } = parseArn(keyArn)
   const client = new KMSClient({
     region,
@@ -56,7 +53,7 @@ export const ensureReplication = async (keyArn: string, regions: AWSRegion[]) =>
   await Promise.all(regionsToReplicate.map((region) => replicateKey(keyArn, region)))
 }
 
-export const deleteReplicas = async (keyArn: string, regions: AWSRegion[]) => {
+export const deleteReplicas = async (keyArn: string, regions: string[]) => {
   const { region, keyId } = parseArn(keyArn)
   const client = new KMSClient({
     region,
