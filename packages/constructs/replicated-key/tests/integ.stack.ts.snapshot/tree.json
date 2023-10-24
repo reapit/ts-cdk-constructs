@@ -320,7 +320,7 @@
                       "aws:cdk:cloudformation:props": {
                         "code": {
                           "s3Bucket": "cdk-hnb659fds-assets-028446965111-eu-central-1",
-                          "s3Key": "9aead741412b4610bff42612fab8dabcb56784f594ba90ca1bc2b5390528859e.zip"
+                          "s3Key": "267357306b1240f4ef0ecd17c41ef4d476ac1eac104f98b86f12026d7c8d21c5.zip"
                         },
                         "handler": "lambda.onEvent",
                         "role": {
