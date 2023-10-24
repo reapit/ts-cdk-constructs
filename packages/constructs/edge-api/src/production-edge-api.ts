@@ -255,19 +255,7 @@ export class ProductionEdgeAPI extends Construct {
       },
     })
 
-    const key = crypto.createHash('sha256').update(JSON.stringify(endpoint.destination)).digest('hex').substring(0, 6)
-
-    const rewriterLambda = new EdgeAPILambda(this, 'rewriter-' + key, {
-      runtime: Runtime.NODEJS_18_X,
-      handler: 'index.handler',
-      code: this.generateRewriter(
-        endpoint.disableBuiltInMiddlewares,
-        Object.values(endpoint.destination).map((destination) => {
-          return typeof destination === 'string' ? destination : destination.destination
-        }),
-        endpoint.customMiddlewares?.filter(isResponseMiddleware),
-      ),
-    })
+    const rewriterLambda = this.getRewriter(endpoint)
 
     const addBehaviorOptions: AddBehaviorOptions = {
       ...baseAddBehaviorOptions,
@@ -295,6 +283,38 @@ export class ProductionEdgeAPI extends Construct {
         origin,
       },
     ]
+  }
+
+  private rewriterCache: Record<string, EdgeAPILambda> = {}
+  private getRewriter(endpoint: ProxyEndpoint) {
+    const key = crypto
+      .createHash('sha256')
+      .update(
+        JSON.stringify([
+          endpoint.disableBuiltInMiddlewares,
+          endpoint.destination,
+          endpoint.customMiddlewares?.filter(isResponseMiddleware),
+        ]),
+      )
+      .digest('hex')
+      .substring(0, 6)
+
+    if (!this.rewriterCache[key]) {
+      const code = this.generateRewriter(
+        endpoint.disableBuiltInMiddlewares,
+        Object.values(endpoint.destination).map((destination) => {
+          return typeof destination === 'string' ? destination : destination.destination
+        }),
+        endpoint.customMiddlewares?.filter(isResponseMiddleware),
+      )
+      this.rewriterCache[key] = new EdgeAPILambda(this, 'rewriter-' + key, {
+        runtime: Runtime.NODEJS_18_X,
+        handler: 'index.handler',
+        code,
+      })
+    }
+
+    return this.rewriterCache[key]
   }
 
   private endpointToAddBehaviorOptions(endpoint: Endpoint): EndpointBehaviorOptions[] {
