@@ -255,7 +255,9 @@ export class ProductionEdgeAPI extends Construct {
       },
     })
 
-    const rewriterLambda = new EdgeAPILambda(this, 'rewriter-' + endpoint.destination, {
+    const key = crypto.createHash('sha256').update(JSON.stringify(endpoint.destination)).digest('hex').substring(0, 6)
+
+    const rewriterLambda = new EdgeAPILambda(this, 'rewriter-' + key, {
       runtime: Runtime.NODEJS_18_X,
       handler: 'index.handler',
       code: this.generateRewriter(
