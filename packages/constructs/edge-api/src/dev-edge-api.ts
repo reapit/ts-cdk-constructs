@@ -18,7 +18,7 @@ interface DevEdgeAPIProps extends EdgeAPIProps {}
 
 export class DevEdgeAPI extends Construct {
   r53Target: RecordTarget
-  private api: HttpApi
+  api: HttpApi
   private redirector?: Function
 
   constructor(scope: Construct, id: string, props: DevEdgeAPIProps) {

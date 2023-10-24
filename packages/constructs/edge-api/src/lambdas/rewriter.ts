@@ -1,4 +1,4 @@
-import { CloudFrontResponseEvent, CloudFrontResponseResult } from 'aws-lambda'
+import { CloudFrontRequest, CloudFrontResponseEvent, CloudFrontResponseResult } from 'aws-lambda'
 
 const rewriteCookie = (header: string, host: string) => {
   return header
@@ -15,6 +15,7 @@ const rewriteCookie = (header: string, host: string) => {
 const domains: string[] = ['example.org']
 const doCookieRewrite = true
 const doRedirectRewrite = true
+const middlewares: string[] = []
 
 const rewriteLocationHeader = (location: string, host: string) => {
   try {
@@ -27,6 +28,12 @@ const rewriteLocationHeader = (location: string, host: string) => {
     console.error(e)
   }
   return location
+}
+
+const getEnv = (event: CloudFrontRequest): Record<string, any> => {
+  const header = event.origin?.custom?.customHeaders['env']
+  const str = header ? header[0].value : undefined
+  return str ? JSON.parse(str) : {}
 }
 
 export const handler = async (event: CloudFrontResponseEvent): Promise<CloudFrontResponseResult> => {
@@ -42,5 +49,16 @@ export const handler = async (event: CloudFrontResponseEvent): Promise<CloudFron
   if (doRedirectRewrite && res.headers['location']) {
     res.headers['location'][0].value = rewriteLocationHeader(res.headers['location'][0].value, host)
   }
+  const { domainMapping } = getEnv(req)
+  const mapping = domainMapping ? domainMapping[host] : {}
+
+  middlewares.forEach((middleware) => {
+    try {
+      eval(middleware)(req, res, mapping)
+    } catch (e) {
+      console.error(e)
+    }
+  })
+
   return res
 }

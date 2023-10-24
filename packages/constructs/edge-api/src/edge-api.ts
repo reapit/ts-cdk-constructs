@@ -4,7 +4,6 @@ import { EdgeAPIProps, Endpoint } from './types'
 import { ProductionEdgeAPI } from './production-edge-api'
 import { RecordTarget } from 'aws-cdk-lib/aws-route53'
 import { DevEdgeAPI } from './dev-edge-api'
-
 export class EdgeAPI extends Construct {
   private api: ProductionEdgeAPI | DevEdgeAPI
   route53Target: RecordTarget

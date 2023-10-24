@@ -20,10 +20,13 @@ import {
   HttpMethod,
   LambdaEndpoint,
   ProxyEndpoint,
-  ProxyMiddleware,
+  RequestMiddleware,
+  ResponseMiddleware,
   endpointIsFrontendEndpoint,
   endpointIsLambdaEndpoint,
   endpointIsProxyEndpoint,
+  isRequestMiddleware,
+  isResponseMiddleware,
 } from './types'
 import { CloudFrontTarget } from 'aws-cdk-lib/aws-route53-targets'
 import { RecordTarget } from 'aws-cdk-lib/aws-route53'
@@ -50,7 +53,7 @@ export class ProductionEdgeAPI extends Construct {
   private bucket: Bucket
   private originAccessIdentity: OriginAccessIdentity
   private invalidationPaths: string[] = []
-  private distribution: Distribution
+  distribution: Distribution
 
   constructor(scope: Construct, id: string, props: ProductionEdgeAPIProps) {
     super(scope, id)
@@ -175,15 +178,22 @@ export class ProductionEdgeAPI extends Construct {
     ]
   }
 
-  private generateRewriter(config: DisableBuiltInMiddlewares | undefined, domains: string[]) {
+  private generateRewriter(
+    config: DisableBuiltInMiddlewares | undefined,
+    domains: string[],
+    middlewares: ResponseMiddleware[] = [],
+  ) {
     const doRedirectRewrite = !config?.redirect
     const doCookieRewrite = !config?.cookie
+
+    const str = JSON.stringify(middlewares.map((fn) => fn.toString()))
 
     return Code.fromInline(
       generateLambda('rewriter', [
         ['var domains = ["example.org"]', 'var domains = ' + JSON.stringify(domains)],
         ['var doCookieRewrite = true', 'var doCookieRewrite = ' + doCookieRewrite],
         ['var doRedirectRewrite = true', 'var doRedirectRewrite = ' + doRedirectRewrite],
+        ['var middlewares = []', `var middlewares = ${str}`],
       ]),
     )
   }
@@ -201,7 +211,11 @@ export class ProductionEdgeAPI extends Construct {
       const rewriterLambda = new EdgeAPILambda(this, 'rewriter-' + endpoint.destination, {
         runtime: Runtime.NODEJS_18_X,
         handler: 'index.handler',
-        code: this.generateRewriter(endpoint.disableBuiltInMiddlewares, [endpoint.destination]),
+        code: this.generateRewriter(
+          endpoint.disableBuiltInMiddlewares,
+          [endpoint.destination],
+          endpoint.customMiddlewares?.filter(isResponseMiddleware),
+        ),
       })
       const addBehaviorOptions: AddBehaviorOptions = {
         ...baseAddBehaviorOptions,
@@ -249,6 +263,7 @@ export class ProductionEdgeAPI extends Construct {
         Object.values(endpoint.destination).map((destination) => {
           return typeof destination === 'string' ? destination : destination.destination
         }),
+        endpoint.customMiddlewares?.filter(isResponseMiddleware),
       ),
     })
 
@@ -261,7 +276,8 @@ export class ProductionEdgeAPI extends Construct {
         },
         {
           eventType: LambdaEdgeEventType.ORIGIN_REQUEST,
-          functionVersion: this.getOriginSelectorLambda(endpoint.customMiddlewares).currentVersion,
+          functionVersion: this.getOriginSelectorLambda(endpoint.customMiddlewares?.filter(isRequestMiddleware) ?? [])
+            .currentVersion,
         },
         {
           eventType: LambdaEdgeEventType.VIEWER_RESPONSE,
@@ -329,7 +345,7 @@ export class ProductionEdgeAPI extends Construct {
 
   private originSelectorLambda?: EdgeAPILambda
   private originSelectorLambdas: Record<string, EdgeAPILambda> = {}
-  private getOriginSelectorLambda(customMiddlewares?: ProxyMiddleware[]): EdgeAPILambda {
+  private getOriginSelectorLambda(customMiddlewares?: RequestMiddleware[]): EdgeAPILambda {
     if (customMiddlewares?.length) {
       const str = JSON.stringify(customMiddlewares.map((fn) => fn.toString()))
       const key = crypto.createHash('sha256').update(str).digest('hex').substring(0, 6)

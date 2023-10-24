@@ -1,7 +1,7 @@
 import { Bucket } from 'aws-cdk-lib/aws-s3'
 import { EdgeAPILambda } from './edge-api-lambda'
 import { ICertificate } from 'aws-cdk-lib/aws-certificatemanager'
-import { CloudFrontRequest } from 'aws-lambda'
+import { CloudFrontRequest, CloudFrontResponse } from 'aws-lambda'
 import { HttpMethod } from '@aws-cdk/aws-apigatewayv2-alpha'
 export { HttpMethod } from '@aws-cdk/aws-apigatewayv2-alpha'
 
@@ -20,7 +20,20 @@ export interface FrontendEndpoint extends BaseEndpoint {
   invalidationItems?: string[]
 }
 
-export type ProxyMiddleware = (req: CloudFrontRequest, mapping: Destination) => void
+export type RequestMiddleware = (req: CloudFrontRequest, mapping: Destination) => void
+export type ResponseMiddleware = (req: CloudFrontRequest, res: CloudFrontResponse, mapping: Destination) => void
+
+export const isResponseMiddleware = (
+  middleware: RequestMiddleware | ResponseMiddleware,
+): middleware is ResponseMiddleware => {
+  const numArgs = middleware.toString().split(')')[1].split(',').length
+  return numArgs === 3
+}
+export const isRequestMiddleware = (
+  middleware: RequestMiddleware | ResponseMiddleware,
+): middleware is RequestMiddleware => {
+  return !isResponseMiddleware(middleware)
+}
 
 type Destination = string | Record<string, string | { destination: string; [k: string]: string }>
 
@@ -31,7 +44,7 @@ export type DisableBuiltInMiddlewares = {
 
 export interface ProxyEndpoint extends BaseEndpoint {
   destination: Destination
-  customMiddlewares?: ProxyMiddleware[]
+  customMiddlewares?: (RequestMiddleware | ResponseMiddleware)[]
   disableBuiltInMiddlewares?: DisableBuiltInMiddlewares
   methods?: HttpMethod[]
 }
