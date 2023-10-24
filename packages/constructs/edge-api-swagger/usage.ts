@@ -3,6 +3,7 @@ import { EdgeAPI, EdgeAPILambda } from '@reapit-cdk/edge-api'
 import { Code, Runtime } from 'aws-cdk-lib/aws-lambda'
 import { EdgeAPISwaggerEndpoint } from '@reapit-cdk/edge-api-swagger'
 import { Certificate } from 'aws-cdk-lib/aws-certificatemanager'
+import * as path from 'path'
 
 const app = new App()
 const stack = new Stack(app, 'stack-name')
@@ -20,8 +21,8 @@ const api = new EdgeAPI(stack, 'api', {
 })
 
 const lambda = new EdgeAPILambda(stack, 'lambda', {
-  code: Code.fromAsset('./codebase/lambda'),
-  codePath: './codebase/lambda', // gets added to the docs
+  code: Code.fromAsset(path.resolve('../lambda/dist')),
+  codePath: path.resolve('../lambda/src/index.ts'), // gets added to the docs
   handler: 'index.handler',
   runtime: Runtime.NODEJS_18_X,
   environment: {

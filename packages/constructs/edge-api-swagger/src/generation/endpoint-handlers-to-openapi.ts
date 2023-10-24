@@ -9,6 +9,7 @@ import {
   SchemaObjectType,
 } from 'openapi3-ts/oas30'
 import { EndpointHandlerInfo, ResolvedProperty, ReturnType } from './types'
+import { Destination } from '@reapit-cdk/edge-api'
 
 export const endpointHandlersToOpenApi = (
   endpointHandlersInfo: EndpointHandlerInfo[],
@@ -114,8 +115,43 @@ const returnTypeToResponse = (returnType?: ReturnType): ResponseObject => {
   }
 }
 
+const destinationToDescription = (destination: Destination) => {
+  if (typeof destination === 'string') {
+    return `Proxy to ${destination}`
+  }
+  return `Domain mapped Proxy ${Object.entries(destination)
+    .map(([domain, mapping]) => {
+      if (typeof mapping === 'string') {
+        return `from ${domain} to ${mapping}`
+      }
+      return `from ${domain} to ${mapping.destination}${
+        Object.keys(mapping).length > 1 ? ' with mapping object ' + JSON.stringify(mapping) : ''
+      }`
+    })
+    .join(', ')}`
+}
+
 const transformEndpointHandler = (endpointInfo: EndpointHandlerInfo): { path: string; pathItem: PathItemObject } => {
-  const { bodyType, returnType, isFormRequestHandler, description } = endpointInfo
+  const { bodyType, returnType, isFormRequestHandler, description, isProxy, isFrontend, proxyDestination } =
+    endpointInfo
+  if (isProxy) {
+    if (!proxyDestination) {
+      throw new Error('proxy but no proxy destination for endpoint' + endpointInfo.pathPattern)
+    }
+    return {
+      path: endpointInfo.pathPattern,
+      pathItem: {
+        get: {
+          description: destinationToDescription(proxyDestination),
+          responses: {
+            default: {
+              description: 'proxy',
+            },
+          },
+        },
+      },
+    }
+  }
   if (bodyType) {
     return {
       path: endpointInfo.pathPattern,
@@ -126,6 +162,20 @@ const transformEndpointHandler = (endpointInfo: EndpointHandlerInfo): { path: st
             default: returnTypeToResponse(returnType),
           },
           requestBody: transformBody(bodyType, isFormRequestHandler),
+        },
+      },
+    }
+  }
+
+  if (isFrontend) {
+    return {
+      path: endpointInfo.pathPattern,
+      pathItem: {
+        get: {
+          description: 'Serves bucket contents.',
+          responses: {
+            default: returnTypeToResponse(returnType),
+          },
         },
       },
     }
