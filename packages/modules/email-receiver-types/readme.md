@@ -5,6 +5,8 @@
 ![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/email-receiver-types)
 ![coverage: 0%25](https://img.shields.io/badge/coverage-0%25-red)
 
+Types for @reapit-cdk/email-receiver and client.
+
 ## Package Installation:
 
 ```sh

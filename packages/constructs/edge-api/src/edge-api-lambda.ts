@@ -4,11 +4,19 @@ import { EdgeFunctionProps } from 'aws-cdk-lib/aws-cloudfront/lib/experimental'
 
 export class EdgeAPILambda extends Function {
   edgeEnvironment: FunctionProps['environment']
-  constructor(scope: Construct, id: string, props: EdgeFunctionProps & { environment?: FunctionProps['environment'] }) {
-    const { environment, ...rest } = props
+  codePath?: string
+
+  constructor(
+    scope: Construct,
+    id: string,
+    props: EdgeFunctionProps & { environment?: FunctionProps['environment']; codePath?: string },
+  ) {
+    const { environment, codePath, ...rest } = props
     super(scope, id, rest)
     this.edgeEnvironment = environment
+    this.codePath = codePath
   }
+
   addEnvironment(key: string, value: any): this {
     if (!this.edgeEnvironment) {
       this.edgeEnvironment = {}

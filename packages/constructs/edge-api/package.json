@@ -39,9 +39,6 @@
     "constructs": "^10.2.70"
   },
   "devDependencies": {
-    "@aws-sdk/client-dynamodb": "3.414.0",
-    "@aws-sdk/client-secrets-manager": "3.414.0",
-    "@aws-sdk/lib-dynamodb": "3.414.0",
     "@reapit-cdk/cloudfront-invalidation": "workspace:^",
     "@reapit-cdk/eslint-config": "workspace:^",
     "@reapit-cdk/integration-tests": "workspace:^",
