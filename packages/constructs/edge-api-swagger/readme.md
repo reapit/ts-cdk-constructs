@@ -1,31 +1,73 @@
-# @reapit-cdk/active-ruleset
+# @reapit-cdk/edge-api-swagger
 
 
-![npm version](https://img.shields.io/npm/v/@reapit-cdk/active-ruleset)
-![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/active-ruleset)
-![coverage: 99.02%25](https://img.shields.io/badge/coverage-99.02%25-green)
-![Integ Tests: ✔](https://img.shields.io/badge/Integ%20Tests-%E2%9C%94-green)
+![npm version](https://img.shields.io/npm/v/@reapit-cdk/edge-api-swagger)
+![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/edge-api-swagger)
+![coverage: 0%25](https://img.shields.io/badge/coverage-0%25-red)
+![Integ Tests: X](https://img.shields.io/badge/Integ%20Tests-X-red)
 
-This construct returns the currently active SES receipt RuleSet, or creates one. This enables you to add rules to it.
+Add a swagger endpoint to your EdgeAPI
 
 ## Package Installation:
 
 ```sh
-yarn add --dev @reapit-cdk/active-ruleset
+yarn add --dev @reapit-cdk/edge-api-swagger
 # or
-npm install @reapit-cdk/active-ruleset --save-dev
+npm install @reapit-cdk/edge-api-swagger --save-dev
 ```
 
 ## Usage
 ```ts
-import { CfnOutput, Stack, App } from 'aws-cdk-lib'
-import { ActiveRuleset } from '@reapit-cdk/active-ruleset'
+import { Stack, App } from 'aws-cdk-lib'
+import { EdgeAPI, EdgeAPILambda } from '@reapit-cdk/edge-api'
+import { Code, Runtime } from 'aws-cdk-lib/aws-lambda'
+import { EdgeAPISwaggerEndpoint } from '@reapit-cdk/edge-api-swagger'
+import { Certificate } from 'aws-cdk-lib/aws-certificatemanager'
+import * as path from 'path'
 
 const app = new App()
 const stack = new Stack(app, 'stack-name')
-const activeRuleset = new ActiveRuleset(stack, 'active-ruleset')
-new CfnOutput(stack, 'activeRulesetName', {
-  value: activeRuleset.receiptRuleSet.receiptRuleSetName,
+
+const certificate = new Certificate(stack, 'certificate', {
+  domainName: 'example.org',
 })
+const api = new EdgeAPI(stack, 'api', {
+  certificate,
+  domains: ['example.org', 'example.com'],
+  devMode: false,
+  defaultEndpoint: {
+    destination: 'example.com',
+  },
+})
+
+const lambda = new EdgeAPILambda(stack, 'lambda', {
+  code: Code.fromAsset(path.resolve('../lambda/dist')),
+  codePath: path.resolve('../lambda/src/index.ts'), // gets added to the docs
+  handler: 'index.handler',
+  runtime: Runtime.NODEJS_18_X,
+  environment: {
+    aVariable: 'contents',
+  },
+})
+
+api.addEndpoint({
+  pathPattern: '/api/lambda',
+  lambda,
+})
+
+api.addEndpoint(
+  new EdgeAPISwaggerEndpoint(stack, 'docs', {
+    api,
+    url: 'https://example.org',
+
+    pathPattern: '/swagger', // optional, defaults to /swagger
+
+    // optional
+    info: {
+      title: '', // defaults to Edge API
+      version: '', // defaults to 1.0.0
+    },
+  }),
+)
 
 ```
