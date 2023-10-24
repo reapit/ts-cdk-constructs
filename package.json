@@ -22,6 +22,7 @@
     "@reapit-cdk/generate-readme": "workspace:^",
     "@reapit-cdk/integration-tests": "workspace:^",
     "@types/jest": "^29.5.5",
+    "@types/swagger-ui-dist": "^3.30.3",
     "aws-cdk": "2.100.0",
     "aws-sdk-client-mock": "^3.0.0",
     "aws-sdk-client-mock-jest": "^3.0.0",

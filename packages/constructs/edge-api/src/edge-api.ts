@@ -9,9 +9,12 @@ import { HttpApi } from '@aws-cdk/aws-apigatewayv2-alpha'
 
 export class EdgeAPI extends Construct {
   private api: ProductionEdgeAPI | DevEdgeAPI
+
   route53Target: RecordTarget
+
   _distribution?: Distribution
   _httpApi?: HttpApi
+  _endpoints: Endpoint[]
 
   constructor(scope: Construct, id: string, props: EdgeAPIProps) {
     super(scope, id)
@@ -25,6 +28,7 @@ export class EdgeAPI extends Construct {
     if (props.devMode && props.webAclId) {
       console.warn('devMode enabled, ignoring webAclId')
     }
+    this._endpoints = []
     this.api = props.devMode ? new DevEdgeAPI(this, 'api', props) : new ProductionEdgeAPI(this, 'api', props)
     this.route53Target = this.api.r53Target
     if (this.api instanceof ProductionEdgeAPI) {
@@ -37,5 +41,6 @@ export class EdgeAPI extends Construct {
 
   addEndpoint(endpoint: Endpoint) {
     this.api.addEndpoint(endpoint)
+    this._endpoints.push(endpoint)
   }
 }

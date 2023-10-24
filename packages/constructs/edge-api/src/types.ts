@@ -35,7 +35,7 @@ export const isRequestMiddleware = (
   return !isResponseMiddleware(middleware)
 }
 
-type Destination = string | Record<string, string | { destination: string; [k: string]: string }>
+export type Destination = string | Record<string, string | { destination: string; [k: string]: string }>
 
 export type DisableBuiltInMiddlewares = {
   cookie?: boolean
