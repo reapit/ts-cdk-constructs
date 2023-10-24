@@ -109,9 +109,11 @@ export class ProductionEdgeAPI extends Construct {
   private lambdaEndpointToAddBehaviorOptions(endpoint: LambdaEndpoint): EndpointBehaviorOptions[] {
     const origin = new S3Origin(this.bucket, {
       originAccessIdentity: this.originAccessIdentity,
-      customHeaders: {
-        env: Fn.toJsonString(endpoint.lambda.edgeEnvironment),
-      },
+      customHeaders: endpoint.lambda.edgeEnvironment
+        ? {
+            env: Fn.toJsonString(endpoint.lambda.edgeEnvironment),
+          }
+        : undefined,
     })
     const addBehaviorOptions: AddBehaviorOptions = {
       allowedMethods: this.methodsToAllowedMethods(endpoint.methods),
