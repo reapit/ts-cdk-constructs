@@ -7,13 +7,13 @@
     "packages/*/*"
   ],
   "scripts": {
-    "test": "jest --ignoreProjects 'integration tests' --coverage",
+    "test": "jest --passWithNoTests --ignoreProjects 'integration tests' --coverage",
     "check": "tsc packages/**/*.ts --noEmit",
     "build": "yarn workspaces foreach --all -v run build",
     "lint": "yarn workspaces foreach --all -v run lint",
-    "integ": "jest --ignoreProjects 'unit tests' --silent false",
-    "root:test": "jest --ignoreProjects 'integration tests'",
-    "root:integ": "jest --ignoreProjects 'unit tests' --silent false",
+    "integ": "jest --passWithNoTests --ignoreProjects 'unit tests' --silent false",
+    "root:test": "jest --passWithNoTests --ignoreProjects 'integration tests'",
+    "root:integ": "jest --passWithNoTests --ignoreProjects 'unit tests' --silent false",
     "root:check": "tsc",
     "generate-readme": "reapit-cdk-generate-readme"
   },
