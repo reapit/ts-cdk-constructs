@@ -153,4 +153,26 @@ describe('origin selector', () => {
     expect(result2.origin.custom?.domainName).toBe('somewhere.com')
     expect(result2.headers['host'][0].value).toBe('somewhere.com')
   })
+
+  it('should filter the host from the url', async () => {
+    const env = {
+      domainMapping: {
+        'example.org': 'https://somewhere.org',
+        'example.com': 'https://somewhere.com/',
+      },
+    }
+    const result = await handler(genEvent('example.org', env) as any)
+    if (!result.origin) {
+      throw new Error('no origin on result')
+    }
+    expect(result.origin.custom?.domainName).toBe('somewhere.org')
+    expect(result.headers['host'][0].value).toBe('somewhere.org')
+
+    const result2 = await handler(genEvent('example.com', env) as any)
+    if (!result2.origin) {
+      throw new Error('no origin on result')
+    }
+    expect(result2.origin.custom?.domainName).toBe('somewhere.com')
+    expect(result2.headers['host'][0].value).toBe('somewhere.com')
+  })
 })
