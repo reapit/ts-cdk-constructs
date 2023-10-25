@@ -37,13 +37,13 @@ export const handler = async (event: CloudFrontRequestEvent): Promise<CloudFront
   req.origin = {
     custom: {
       ...req.origin.custom,
-      domainName: mapping.domain,
+      domainName: mapping.destination,
     },
   }
   req.headers['host'] = [
     {
       key: 'host',
-      value: mapping.domain,
+      value: mapping.destination,
     },
   ]
 
