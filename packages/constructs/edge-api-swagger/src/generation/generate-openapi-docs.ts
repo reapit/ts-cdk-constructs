@@ -5,11 +5,13 @@ export const generateOpenAPIDocs = ({
   endpointsInput,
   url,
   info,
+  repoRoot,
 }: {
   endpointsInput: EndpointsInput
   url: string
   info?: InfoObject
+  repoRoot?: string
 }) => {
-  const endpointHandlerInfo = getEndpointHandlerInfo(endpointsInput)
+  const endpointHandlerInfo = getEndpointHandlerInfo(endpointsInput, repoRoot)
   return endpointHandlersToOpenApi(endpointHandlerInfo, url, info).getSpec()
 }

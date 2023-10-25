@@ -14,6 +14,7 @@ interface EdgeAPISwaggerEndpointProps {
   url: string
   pathPattern?: string
   info?: InfoObject
+  repoRoot?: string
 }
 
 const swaggerHtml = (urlPrefix: string) => `<!DOCTYPE html>
@@ -71,6 +72,7 @@ export class EdgeAPISwaggerEndpoint extends Construct implements FrontendEndpoin
     const openapiJson = generateOpenAPIDocs({
       url: props.url,
       info: props.info,
+      repoRoot: props.repoRoot,
       endpointsInput: props.api._endpoints.map((endpoint): EndpointInputItem => {
         if (endpointIsLambdaEndpoint(endpoint)) {
           return {

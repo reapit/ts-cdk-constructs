@@ -160,8 +160,9 @@ const getHandler = (node: ts.Node) => {
   return handlerVariableStatement
 }
 
-const getTsStuff = (handlerFileLocation: string) => {
+const getTsStuff = (handlerFileLocation: string, repoRoot?: string) => {
   const file = path.resolve(handlerFileLocation)
+  const relativeHandlerFileLocation = repoRoot ? path.relative(repoRoot, file) : repoRoot
   const program = ts.createProgram([file], { allowJs: true })
   const sourceFile = program.getSourceFile(file)
   const typeChecker = program.getTypeChecker()!
@@ -188,7 +189,7 @@ const getTsStuff = (handlerFileLocation: string) => {
   const isJsonRequestHandler = initializer.expression.escapedText === 'jsonRequestHandler'
   const isFormRequestHandler = initializer.expression.escapedText === 'formRequestHandler'
 
-  const comments: string[] = [`Found in ${handlerFileLocation}`]
+  const comments: string[] = [`Found in ${relativeHandlerFileLocation}`]
   ts.forEachLeadingCommentRange(sourceFile.text, handler.getFullStart(), (pos, end, kind) => {
     const comment =
       kind === ts.SyntaxKind.MultiLineCommentTrivia
@@ -212,12 +213,12 @@ const getTsStuff = (handlerFileLocation: string) => {
   }
 }
 
-export const getEndpointHandlerInfo = (endpoints: EndpointsInput): EndpointHandlerInfo[] => {
+export const getEndpointHandlerInfo = (endpoints: EndpointsInput, repoRoot?: string): EndpointHandlerInfo[] => {
   return endpoints.map(({ codePath, ...rest }) => {
     if (!codePath) {
       return rest
     }
-    const handlerInfo = getTsStuff(codePath)
+    const handlerInfo = getTsStuff(codePath, repoRoot)
 
     return {
       codePath,
