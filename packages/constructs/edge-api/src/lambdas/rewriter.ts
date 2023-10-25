@@ -20,7 +20,7 @@ const middlewares: string[] = []
 const rewriteLocationHeader = (location: string, host: string) => {
   try {
     const url = new URL(location)
-    if (url.hostname !== host && domains.find((domain) => url.hostname.endsWith(domain))) {
+    if (url.hostname !== host && domains.find((domain) => url.hostname.endsWith(new URL(domain).hostname))) {
       url.hostname = host
     }
     return url.toString()
