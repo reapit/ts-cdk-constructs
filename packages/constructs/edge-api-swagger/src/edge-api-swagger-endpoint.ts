@@ -67,6 +67,7 @@ export class EdgeAPISwaggerEndpoint extends Construct implements FrontendEndpoin
       },
     })
 
+    console.log('edge-api: Generating OpenAPI documentation...')
     const openapiJson = generateOpenAPIDocs({
       url: props.url,
       info: props.info,
@@ -91,12 +92,15 @@ export class EdgeAPISwaggerEndpoint extends Construct implements FrontendEndpoin
         }
       }),
     })
+    console.log('edge-api: Generated OpenAPI documentation.')
 
     new BucketDeployment(this, 'deployment', {
       sources: [
+        Source.asset(getAbsoluteFSPath(), {
+          exclude: ['index.html'],
+        }),
         Source.data('index.html', swaggerHtml(`${props.url}/${destinationKeyPrefix}`)),
         Source.jsonData('openapi.json', openapiJson),
-        Source.asset(getAbsoluteFSPath()),
       ],
       destinationBucket: this.bucket,
       destinationKeyPrefix,
