@@ -106,15 +106,37 @@ const genEvent = (reqHost: string, env: any) => ({
 })
 
 describe('origin selector', () => {
-  it('should select the origin based on the req-host and env headers', async () => {
+  it('should select a domain-mapped origin based on the req-host and env headers', async () => {
     const env = {
       domainMapping: {
         'example.org': {
-          domain: 'somewhere.org',
+          destination: 'somewhere.org',
         },
         'example.com': {
-          domain: 'somewhere.com',
+          destination: 'somewhere.com',
         },
+      },
+    }
+    const result = await handler(genEvent('example.org', env) as any)
+    if (!result.origin) {
+      throw new Error('no origin on result')
+    }
+    expect(result.origin.custom?.domainName).toBe('somewhere.org')
+    expect(result.headers['host'][0].value).toBe('somewhere.org')
+
+    const result2 = await handler(genEvent('example.com', env) as any)
+    if (!result2.origin) {
+      throw new Error('no origin on result')
+    }
+    expect(result2.origin.custom?.domainName).toBe('somewhere.com')
+    expect(result2.headers['host'][0].value).toBe('somewhere.com')
+  })
+
+  it('should select a domain-mapped origin based on the req-host and env headers', async () => {
+    const env = {
+      domainMapping: {
+        'example.org': 'somewhere.org',
+        'example.com': 'somewhere.com',
       },
     }
     const result = await handler(genEvent('example.org', env) as any)

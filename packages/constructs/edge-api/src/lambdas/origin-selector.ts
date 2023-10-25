@@ -34,16 +34,17 @@ export const handler = async (event: CloudFrontRequestEvent): Promise<CloudFront
   if (!mapping) {
     throw new Error(`no domain mapping found for host ${host}`)
   }
+  const domainName = typeof mapping === 'string' ? mapping : mapping.destination
   req.origin = {
     custom: {
       ...req.origin.custom,
-      domainName: mapping.destination,
+      domainName,
     },
   }
   req.headers['host'] = [
     {
       key: 'host',
-      value: mapping.destination,
+      value: domainName,
     },
   ]
 
