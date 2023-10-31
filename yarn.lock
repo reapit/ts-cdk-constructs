@@ -2073,6 +2073,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.12.5":
+  version: 7.23.2
+  resolution: "@babel/runtime@npm:7.23.2"
+  dependencies:
+    regenerator-runtime: "npm:^0.14.0"
+  checksum: abdcbdd590c7e31762e1bdab94dd466823c8bcedd3ff2fde85eeb94dac7cccaef151ac37c428bda7018ededd27c9a82b4dfeb621f978ad934232475a902f8e3a
+  languageName: node
+  linkType: hard
+
 "@babel/template@npm:^7.22.15, @babel/template@npm:^7.22.5, @babel/template@npm:^7.3.3":
   version: 7.22.15
   resolution: "@babel/template@npm:7.22.15"
@@ -2724,6 +2733,32 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@microsoft/microsoft-graph-client@npm:^3.0.7":
+  version: 3.0.7
+  resolution: "@microsoft/microsoft-graph-client@npm:3.0.7"
+  dependencies:
+    "@babel/runtime": "npm:^7.12.5"
+    tslib: "npm:^2.2.0"
+  peerDependenciesMeta:
+    "@azure/identity":
+      optional: true
+    "@azure/msal-browser":
+      optional: true
+    buffer:
+      optional: true
+    stream-browserify:
+      optional: true
+  checksum: 4486c5071c71bffe564828966bce3748e3d6e890abf1cd1c8ea685cafca3bb30913d7731a18c9e9ae04c91c3d3eeed9505ecae7d225b626a0acc57842de4e76a
+  languageName: node
+  linkType: hard
+
+"@microsoft/microsoft-graph-types@npm:^2.38.0":
+  version: 2.38.0
+  resolution: "@microsoft/microsoft-graph-types@npm:2.38.0"
+  checksum: d77217109e7e0fed0a4875e303b4edf06e05d6231d4911142e71559ee8d0b4be05004fd4df798ce799bc84cea0b0760727b0f7fb17c772ba28655681624eb152
+  languageName: node
+  linkType: hard
+
 "@nodelib/fs.scandir@npm:2.1.5":
   version: 2.1.5
   resolution: "@nodelib/fs.scandir@npm:2.1.5"
@@ -2956,6 +2991,29 @@ __metadata:
     mailparser: "npm:^3.6.5"
   peerDependencies:
     "@reapit-cdk/active-ruleset": ^0.0.1
+    aws-cdk-lib: ^2.96.2
+    constructs: ^10.2.70
+  languageName: unknown
+  linkType: soft
+
+"@reapit-cdk/entra-id-application@workspace:packages/constructs/entra-id-application":
+  version: 0.0.0-use.local
+  resolution: "@reapit-cdk/entra-id-application@workspace:packages/constructs/entra-id-application"
+  dependencies:
+    "@aws-sdk/client-secrets-manager": "npm:3.414.0"
+    "@microsoft/microsoft-graph-client": "npm:^3.0.7"
+    "@microsoft/microsoft-graph-types": "npm:^2.38.0"
+    "@reapit-cdk/custom-resource-wrapper": "workspace:^"
+    "@reapit-cdk/eslint-config": "workspace:^"
+    "@reapit-cdk/integration-tests": "workspace:^"
+    "@reapit-cdk/jsii": "workspace:^"
+    "@reapit-cdk/tsup": "workspace:^"
+    "@reapit-cdk/version-package": "workspace:^"
+    aws-cdk-lib: "npm:^2.96.2"
+    aws-lambda: "npm:^1.0.7"
+    aws-sdk-client-mock: "npm:^3.0.0"
+    constructs: "npm:^10.2.70"
+  peerDependencies:
     aws-cdk-lib: ^2.96.2
     constructs: ^10.2.70
   languageName: unknown
@@ -8847,6 +8905,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"regenerator-runtime@npm:^0.14.0":
+  version: 0.14.0
+  resolution: "regenerator-runtime@npm:0.14.0"
+  checksum: 6c19495baefcf5fbb18a281b56a97f0197b5f219f42e571e80877f095320afac0bdb31dab8f8186858e6126950068c3f17a1226437881e3e70446ea66751897c
+  languageName: node
+  linkType: hard
+
 "require-directory@npm:^2.1.1":
   version: 2.1.1
   resolution: "require-directory@npm:2.1.1"
@@ -9662,7 +9727,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.1.0, tslib@npm:^2.3.1, tslib@npm:^2.5.0, tslib@npm:^2.6.0":
+"tslib@npm:^2.1.0, tslib@npm:^2.2.0, tslib@npm:^2.3.1, tslib@npm:^2.5.0, tslib@npm:^2.6.0":
   version: 2.6.2
   resolution: "tslib@npm:2.6.2"
   checksum: bd26c22d36736513980091a1e356378e8b662ded04204453d353a7f34a4c21ed0afc59b5f90719d4ba756e581a162ecbf93118dc9c6be5acf70aa309188166ca
