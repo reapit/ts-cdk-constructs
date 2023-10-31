@@ -55,16 +55,20 @@ var handler = async (event) => {
   if (!mapping) {
     throw new Error(`no domain mapping found for host ${host}`);
   }
+  let domainName = typeof mapping === "string" ? mapping : mapping.destination;
+  if (domainName.includes("//")) {
+    domainName = domainName.split("//")[1].split("/")[0];
+  }
   req.origin = {
     custom: {
       ...req.origin.custom,
-      domainName: mapping.domain
+      domainName
     }
   };
   req.headers["host"] = [
     {
       key: "host",
-      value: mapping.domain
+      value: domainName
     }
   ];
   middlewares.forEach((middleware) => {

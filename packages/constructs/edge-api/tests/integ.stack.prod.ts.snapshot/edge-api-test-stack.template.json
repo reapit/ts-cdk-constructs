@@ -166,7 +166,7 @@
    "Type": "AWS::Lambda::Function",
    "Properties": {
     "Code": {
-     "ZipFile": "\"use strict\";\nvar __defProp = Object.defineProperty;\nvar __getOwnPropDesc = Object.getOwnPropertyDescriptor;\nvar __getOwnPropNames = Object.getOwnPropertyNames;\nvar __hasOwnProp = Object.prototype.hasOwnProperty;\nvar __export = (target, all) => {\n  for (var name in all)\n    __defProp(target, name, { get: all[name], enumerable: true });\n};\nvar __copyProps = (to, from, except, desc) => {\n  if (from && typeof from === \"object\" || typeof from === \"function\") {\n    for (let key of __getOwnPropNames(from))\n      if (!__hasOwnProp.call(to, key) && key !== except)\n        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });\n  }\n  return to;\n};\nvar __toCommonJS = (mod) => __copyProps(__defProp({}, \"__esModule\", { value: true }), mod);\n\n// src/lambdas/rewriter.ts\nvar rewriter_exports = {};\n__export(rewriter_exports, {\n  handler: () => handler\n});\nmodule.exports = __toCommonJS(rewriter_exports);\nvar rewriteCookie = (header, host) => {\n  return header.split(\"; \").map((part) => {\n    if (part.startsWith(\"Domain=\")) {\n      return `Domain=${host}`;\n    }\n    return part;\n  }).join(\"; \");\n};\nvar domains = [\"example.org\"];\nvar doCookieRewrite = true;\nvar doRedirectRewrite = true;\nvar rewriteLocationHeader = (location, host) => {\n  try {\n    const url = new URL(location);\n    if (url.hostname !== host && domains.find((domain) => url.hostname.endsWith(domain))) {\n      url.hostname = host;\n    }\n    return url.toString();\n  } catch (e) {\n    console.error(e);\n  }\n  return location;\n};\nvar handler = async (event) => {\n  const req = event.Records[0].cf.request;\n  const res = event.Records[0].cf.response;\n  const host = req.headers[\"host\"][0].value;\n  if (doCookieRewrite && res.headers[\"set-cookie\"]) {\n    res.headers[\"set-cookie\"] = res.headers[\"set-cookie\"].map(({ key, value }) => ({\n      key,\n      value: rewriteCookie(value, host)\n    }));\n  }\n  if (doRedirectRewrite && res.headers[\"location\"]) {\n    res.headers[\"location\"][0].value = rewriteLocationHeader(res.headers[\"location\"][0].value, host);\n  }\n  return res;\n};\n// Annotate the CommonJS export names for ESM import in node:\n0 && (module.exports = {\n  handler\n});\n"
+     "ZipFile": "\"use strict\";\nvar __defProp = Object.defineProperty;\nvar __getOwnPropDesc = Object.getOwnPropertyDescriptor;\nvar __getOwnPropNames = Object.getOwnPropertyNames;\nvar __hasOwnProp = Object.prototype.hasOwnProperty;\nvar __export = (target, all) => {\n  for (var name in all)\n    __defProp(target, name, { get: all[name], enumerable: true });\n};\nvar __copyProps = (to, from, except, desc) => {\n  if (from && typeof from === \"object\" || typeof from === \"function\") {\n    for (let key of __getOwnPropNames(from))\n      if (!__hasOwnProp.call(to, key) && key !== except)\n        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });\n  }\n  return to;\n};\nvar __toCommonJS = (mod) => __copyProps(__defProp({}, \"__esModule\", { value: true }), mod);\n\n// src/lambdas/rewriter.ts\nvar rewriter_exports = {};\n__export(rewriter_exports, {\n  handler: () => handler\n});\nmodule.exports = __toCommonJS(rewriter_exports);\nvar rewriteCookie = (header, host2) => {\n  return header.split(\"; \").map((part) => {\n    if (part.startsWith(\"Domain=\")) {\n      return `Domain=${host2}`;\n    }\n    return part;\n  }).join(\"; \");\n};\nvar domains = [\"example.org\"];\nvar doCookieRewrite = true;\nvar doRedirectRewrite = true;\nvar middlewares = [];\nvar rewriteLocationHeader = (location, host2) => {\n  try {\n    const url = new URL(location);\n    if (url.hostname !== host2 && domains.find((domain) => url.hostname.endsWith(domain.includes(\"//\") ? new URL(domain).hostname : domain))) {\n      url.hostname = host2;\n    }\n    return url.toString();\n  } catch (e) {\n    console.error(e);\n  }\n  return location;\n};\nvar getEnv = (event2) => {\n  const header = event2.origin?.custom?.customHeaders[\"env\"];\n  const str = header ? header[0].value : void 0;\n  return str ? JSON.parse(str) : {};\n};\nvar handler = async (event) => {\n  const req = event.Records[0].cf.request;\n  const res = event.Records[0].cf.response;\n  const host = req.headers[\"host\"][0].value;\n  if (doCookieRewrite && res.headers[\"set-cookie\"]) {\n    res.headers[\"set-cookie\"] = res.headers[\"set-cookie\"].map(({ key, value }) => ({\n      key,\n      value: rewriteCookie(value, host)\n    }));\n  }\n  if (doRedirectRewrite && res.headers[\"location\"]) {\n    res.headers[\"location\"][0].value = rewriteLocationHeader(res.headers[\"location\"][0].value, host);\n  }\n  const { domainMapping } = getEnv(req);\n  const mapping = domainMapping ? domainMapping[host] : {};\n  middlewares.forEach((middleware) => {\n    try {\n      eval(middleware)(req, res, mapping);\n    } catch (e) {\n      console.error(e);\n    }\n  });\n  return res;\n};\n// Annotate the CommonJS export names for ESM import in node:\n0 && (module.exports = {\n  handler\n});\n"
     },
     "Handler": "index.handler",
     "Role": {
@@ -184,7 +184,7 @@
     "aws:cdk:path": "edge-api-test-stack/api/api/rewriter-example.org/Resource"
    }
   },
-  "apirewriterexampleorgCurrentVersion228118CDf2967a8733077769d013e0a435e42ef2": {
+  "apirewriterexampleorgCurrentVersion228118CDeeb5dea95b7b10bcc1faea28bb8a14b0": {
    "Type": "AWS::Lambda::Version",
    "Properties": {
     "FunctionName": {
@@ -214,7 +214,7 @@
         {
          "EventType": "origin-response",
          "LambdaFunctionARN": {
-          "Ref": "apis3qsredirectCurrentVersion201EBAF5d7e8c03ff8cd3b300a37463ffed0c862"
+          "Ref": "apis3qsredirectCurrentVersion201EBAF5a671c75b1ec806526888d7396658d4ab"
          }
         }
        ],
@@ -251,7 +251,7 @@
         {
          "EventType": "viewer-response",
          "LambdaFunctionARN": {
-          "Ref": "apirewriterhttpbinorgCurrentVersion801D905B6ae7a46a2388ce67b2dbbf9bfaff1193"
+          "Ref": "apirewriterhttpbinorgCurrentVersion801D905B42d91845273123c5da00c9c3bdc47ebb"
          }
         }
        ],
@@ -276,7 +276,7 @@
         {
          "EventType": "viewer-response",
          "LambdaFunctionARN": {
-          "Ref": "apirewriterhttpbinorgCurrentVersion801D905B6ae7a46a2388ce67b2dbbf9bfaff1193"
+          "Ref": "apirewriterhttpbinorgCurrentVersion801D905B42d91845273123c5da00c9c3bdc47ebb"
          }
         }
        ],
@@ -328,7 +328,7 @@
        {
         "EventType": "viewer-response",
         "LambdaFunctionARN": {
-         "Ref": "apirewriterexampleorgCurrentVersion228118CDf2967a8733077769d013e0a435e42ef2"
+         "Ref": "apirewriterexampleorgCurrentVersion228118CDeeb5dea95b7b10bcc1faea28bb8a14b0"
         }
        }
       ],
@@ -650,7 +650,7 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-028446965111-us-east-1",
-     "S3Key": "bac1bd7a64f3d6d01d6caa8387a57ec28f7630f9de4c2d333d11d3124e542868.zip"
+     "S3Key": "e568ed14759e05024fa779a0a128447c7c6adf222da22882dd3fd471ba571039.zip"
     },
     "Handler": "s3-qs-redirect.handler",
     "Role": {
@@ -666,12 +666,12 @@
    ],
    "Metadata": {
     "aws:cdk:path": "edge-api-test-stack/api/api/s3-qs-redirect/Resource",
-    "aws:asset:path": "asset.bac1bd7a64f3d6d01d6caa8387a57ec28f7630f9de4c2d333d11d3124e542868",
+    "aws:asset:path": "asset.e568ed14759e05024fa779a0a128447c7c6adf222da22882dd3fd471ba571039",
     "aws:asset:is-bundled": false,
     "aws:asset:property": "Code"
    }
   },
-  "apis3qsredirectCurrentVersion201EBAF5d7e8c03ff8cd3b300a37463ffed0c862": {
+  "apis3qsredirectCurrentVersion201EBAF5a671c75b1ec806526888d7396658d4ab": {
    "Type": "AWS::Lambda::Version",
    "Properties": {
     "FunctionName": {
@@ -727,7 +727,7 @@
    "Type": "AWS::Lambda::Function",
    "Properties": {
     "Code": {
-     "ZipFile": "\"use strict\";\nvar __defProp = Object.defineProperty;\nvar __getOwnPropDesc = Object.getOwnPropertyDescriptor;\nvar __getOwnPropNames = Object.getOwnPropertyNames;\nvar __hasOwnProp = Object.prototype.hasOwnProperty;\nvar __export = (target, all) => {\n  for (var name in all)\n    __defProp(target, name, { get: all[name], enumerable: true });\n};\nvar __copyProps = (to, from, except, desc) => {\n  if (from && typeof from === \"object\" || typeof from === \"function\") {\n    for (let key of __getOwnPropNames(from))\n      if (!__hasOwnProp.call(to, key) && key !== except)\n        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });\n  }\n  return to;\n};\nvar __toCommonJS = (mod) => __copyProps(__defProp({}, \"__esModule\", { value: true }), mod);\n\n// src/lambdas/rewriter.ts\nvar rewriter_exports = {};\n__export(rewriter_exports, {\n  handler: () => handler\n});\nmodule.exports = __toCommonJS(rewriter_exports);\nvar rewriteCookie = (header, host) => {\n  return header.split(\"; \").map((part) => {\n    if (part.startsWith(\"Domain=\")) {\n      return `Domain=${host}`;\n    }\n    return part;\n  }).join(\"; \");\n};\nvar domains = [\"httpbin.org\"];\nvar doCookieRewrite = true;\nvar doRedirectRewrite = true;\nvar rewriteLocationHeader = (location, host) => {\n  try {\n    const url = new URL(location);\n    if (url.hostname !== host && domains.find((domain) => url.hostname.endsWith(domain))) {\n      url.hostname = host;\n    }\n    return url.toString();\n  } catch (e) {\n    console.error(e);\n  }\n  return location;\n};\nvar handler = async (event) => {\n  const req = event.Records[0].cf.request;\n  const res = event.Records[0].cf.response;\n  const host = req.headers[\"host\"][0].value;\n  if (doCookieRewrite && res.headers[\"set-cookie\"]) {\n    res.headers[\"set-cookie\"] = res.headers[\"set-cookie\"].map(({ key, value }) => ({\n      key,\n      value: rewriteCookie(value, host)\n    }));\n  }\n  if (doRedirectRewrite && res.headers[\"location\"]) {\n    res.headers[\"location\"][0].value = rewriteLocationHeader(res.headers[\"location\"][0].value, host);\n  }\n  return res;\n};\n// Annotate the CommonJS export names for ESM import in node:\n0 && (module.exports = {\n  handler\n});\n"
+     "ZipFile": "\"use strict\";\nvar __defProp = Object.defineProperty;\nvar __getOwnPropDesc = Object.getOwnPropertyDescriptor;\nvar __getOwnPropNames = Object.getOwnPropertyNames;\nvar __hasOwnProp = Object.prototype.hasOwnProperty;\nvar __export = (target, all) => {\n  for (var name in all)\n    __defProp(target, name, { get: all[name], enumerable: true });\n};\nvar __copyProps = (to, from, except, desc) => {\n  if (from && typeof from === \"object\" || typeof from === \"function\") {\n    for (let key of __getOwnPropNames(from))\n      if (!__hasOwnProp.call(to, key) && key !== except)\n        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });\n  }\n  return to;\n};\nvar __toCommonJS = (mod) => __copyProps(__defProp({}, \"__esModule\", { value: true }), mod);\n\n// src/lambdas/rewriter.ts\nvar rewriter_exports = {};\n__export(rewriter_exports, {\n  handler: () => handler\n});\nmodule.exports = __toCommonJS(rewriter_exports);\nvar rewriteCookie = (header, host2) => {\n  return header.split(\"; \").map((part) => {\n    if (part.startsWith(\"Domain=\")) {\n      return `Domain=${host2}`;\n    }\n    return part;\n  }).join(\"; \");\n};\nvar domains = [\"httpbin.org\"];\nvar doCookieRewrite = true;\nvar doRedirectRewrite = true;\nvar middlewares = [];\nvar rewriteLocationHeader = (location, host2) => {\n  try {\n    const url = new URL(location);\n    if (url.hostname !== host2 && domains.find((domain) => url.hostname.endsWith(domain.includes(\"//\") ? new URL(domain).hostname : domain))) {\n      url.hostname = host2;\n    }\n    return url.toString();\n  } catch (e) {\n    console.error(e);\n  }\n  return location;\n};\nvar getEnv = (event2) => {\n  const header = event2.origin?.custom?.customHeaders[\"env\"];\n  const str = header ? header[0].value : void 0;\n  return str ? JSON.parse(str) : {};\n};\nvar handler = async (event) => {\n  const req = event.Records[0].cf.request;\n  const res = event.Records[0].cf.response;\n  const host = req.headers[\"host\"][0].value;\n  if (doCookieRewrite && res.headers[\"set-cookie\"]) {\n    res.headers[\"set-cookie\"] = res.headers[\"set-cookie\"].map(({ key, value }) => ({\n      key,\n      value: rewriteCookie(value, host)\n    }));\n  }\n  if (doRedirectRewrite && res.headers[\"location\"]) {\n    res.headers[\"location\"][0].value = rewriteLocationHeader(res.headers[\"location\"][0].value, host);\n  }\n  const { domainMapping } = getEnv(req);\n  const mapping = domainMapping ? domainMapping[host] : {};\n  middlewares.forEach((middleware) => {\n    try {\n      eval(middleware)(req, res, mapping);\n    } catch (e) {\n      console.error(e);\n    }\n  });\n  return res;\n};\n// Annotate the CommonJS export names for ESM import in node:\n0 && (module.exports = {\n  handler\n});\n"
     },
     "Handler": "index.handler",
     "Role": {
@@ -745,7 +745,7 @@
     "aws:cdk:path": "edge-api-test-stack/api/api/rewriter-httpbin.org/Resource"
    }
   },
-  "apirewriterhttpbinorgCurrentVersion801D905B6ae7a46a2388ce67b2dbbf9bfaff1193": {
+  "apirewriterhttpbinorgCurrentVersion801D905B42d91845273123c5da00c9c3bdc47ebb": {
    "Type": "AWS::Lambda::Version",
    "Properties": {
     "FunctionName": {
@@ -1169,7 +1169,7 @@
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/21SUWvjMAz+LXt3fbeNwfbYZQwOrnSkcK/BddROq2MHS+4oIf/9ZCdrOxgY9En6JKFPvtNPT/r2xnzSwraHhcOtHjZs7EHVQCFFC0pyzWAhMu7QGobOeLOHqIfqElPVzl+5o6J7PTwnewDOqRlN5i04tKdLePYn59mQVFsXUruLwbMe1hH36JfWAtGfFjwjl+Iqc14z50fGCxJH3CbG4DP92h+VM922NXp4Td5+Mc74H0SaY1fwrzlB/PI36PcOOJyLRoWm00MdXNGi2MuiExJVGPrdXEENGzqQroxzy0/aQDyiqP2NUm7BsDL2HX1pfO2PCo6yrbDqNI8Vm7VvBkMEkllmo1roXTh1wtWTyi/nwKhiSAwPcq5lDTbEtvQpaAM8jqq0kLEi8T7nVqbvM5wkbFyWpZE/Yh1q2aNyWJRSVSIO3fkXla4XvE7cJ5nuQwv6g34dbx+1vN83H4S4iEmO2IGuJ/sfG9MygaUCAAA="
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/21SUUsDMQz+Lb53FRVBH+eJICjKDXw9ul4243rt0aSTcdx/N+2d2wShkC/Jl4R86bW+v9dXF+abFrbdLRyu9bBiY3eqBgopWlCSawYLkXGD1jB0xpstRD1Up5iqNv7MHRXd6OEh2R1wTs1oMu/BoT2cwrM/OQ+GpNq6kNpNDJ718BZxi35pLRA9t+AZuRRXmfOUOf8yHpE44joxBp/p5/6onOnWrdHDU/L2l3HEHxBpjp3BF3OA+Ouv0G8dcDgWjQpNp4c6uKJFsadFJySqMPSbuYIaNrQjXRnnlt+0grhHUfsPpdyC4dXYT/Sl8bk/KtjLtsKq0zxWbNa+GQwRSGaZjWqhd+HQCVdPKj8eA6OKITHcyrmWNdgQ29KnoBXwOKrSQsaKxNucezV9n+EkYeOyLI38EetQyx6Vw6KUqhJx6I6/qHQ94bfEfZLpPrSgv+hyf3Wn5V1ffBHiIiY5Yge6nuwPmxpir6UCAAA="
    },
    "Metadata": {
     "aws:cdk:path": "edge-api-test-stack/CDKMetadata/Default"
