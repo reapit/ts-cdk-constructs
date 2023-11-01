@@ -1,27 +1,20 @@
 import { Client } from '@microsoft/microsoft-graph-client'
 import { getAccessToken } from './get-access-token'
 import { GetSecretValueCommand, SecretsManagerClient } from '@aws-sdk/client-secrets-manager'
+import { SecretObject } from './types'
 
-const bootstrapClientSecretId = process.env.BOOTSTRAP_CLIENT_SECRET_ID
-
-if (!bootstrapClientSecretId) {
-  throw new Error('env var BOOTSTRAP_CLIENT_SECRET_ID missing')
-}
-
-type BootstrapClientInfo = {
-  clientId: string
-  clientSecret: string
-  tenantId: string
-}
-
-const objectIsBootstrapClientInfo = (obj: any): obj is BootstrapClientInfo => {
-  if (!obj.clientId || !obj.clientSecret || !obj.tenantId) {
+const objectIsBootstrapClientInfo = (obj: any): obj is SecretObject => {
+  if (!obj.validForMsStr || !obj.clientId || !obj.secretText || !obj.keyId || !obj.tenantId) {
     return false
   }
   return true
 }
 
-const getBootstrapClientInfo = async (): Promise<BootstrapClientInfo> => {
+const getBootstrapClientInfo = async (): Promise<SecretObject> => {
+  const bootstrapClientSecretId = process.env.BOOTSTRAP_CLIENT_SECRET_ID
+  if (!bootstrapClientSecretId) {
+    throw new Error('env var BOOTSTRAP_CLIENT_SECRET_ID missing')
+  }
   const secretClient = new SecretsManagerClient()
   const secret = await secretClient.send(
     new GetSecretValueCommand({
@@ -39,15 +32,21 @@ const getBootstrapClientInfo = async (): Promise<BootstrapClientInfo> => {
   return obj
 }
 
-export const getBootstrapClientInfoPromise: Promise<BootstrapClientInfo> = getBootstrapClientInfo()
+let getBootstrapClientInfoPromise: Promise<SecretObject>
 
 export const client = Client.initWithMiddleware({
   defaultVersion: 'v1.0',
   authProvider: {
     async getAccessToken(authenticationProviderOptions) {
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
+      if (!getBootstrapClientInfoPromise) {
+        getBootstrapClientInfoPromise = getBootstrapClientInfo()
+      }
       const bootstrapClientInfo = await getBootstrapClientInfoPromise
       return await getAccessToken({
-        ...bootstrapClientInfo,
+        clientId: bootstrapClientInfo.clientId,
+        clientSecret: bootstrapClientInfo.secretText,
+        tenantId: bootstrapClientInfo.tenantId,
         scopes: authenticationProviderOptions?.scopes,
       })
     },

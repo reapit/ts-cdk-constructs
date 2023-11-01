@@ -7,26 +7,29 @@ const createEntraApp = async (app: Application) => {
   return res as Application
 }
 
-const updateEntraApp = async (id: string, app: Application) => {
-  const res = await client.api(`/applications/${id}`).patch(app)
+const updateEntraApp = async (appId: string, app: Application) => {
+  const res = await client.api(`/applications(appId='${appId}')`).patch(app)
   return res as Application
 }
 
-const deleteEntraApp = async (id: string) => {
-  await client.api(`/applications/${id}`).delete()
+const deleteEntraApp = async (appId: string) => {
+  await client.api(`/applications(appId='${appId}')`).delete()
 }
 
 export const onEvent = customResourceWrapper({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onCreate: async ({ requestId, serviceToken, ...appProps }) => {
     const app = await createEntraApp(appProps)
+    if (!app.appId) {
+      throw new Error('no appId present on created app')
+    }
     return {
       ...app,
-      physicalResourceId: app.id,
+      physicalResourceId: app.appId,
     }
   },
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  onUpdate: ({ requestId, serviceToken, physicalResourceId, ...appProps }) => {
+  onUpdate: async ({ requestId, serviceToken, physicalResourceId, ...appProps }, oldProps) => {
     if (!physicalResourceId) {
       throw new Error('no physicalResourceId present on event')
     }

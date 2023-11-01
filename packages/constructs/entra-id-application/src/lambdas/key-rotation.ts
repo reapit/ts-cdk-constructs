@@ -1,4 +1,4 @@
-import { SecretsManagerRotationHandler } from 'aws-lambda'
+import { SecretsManagerRotationEvent } from 'aws-lambda'
 import {
   SecretsManagerClient,
   DescribeSecretCommand,
@@ -8,10 +8,9 @@ import {
   UpdateSecretVersionStageCommand,
 } from '@aws-sdk/client-secrets-manager'
 import { createEntraAppKey, getEntraAppKey } from './entra-app-key'
-import { getAccessToken } from './get-access-token'
-import { getBootstrapClientInfoPromise } from './entra-sdk-client'
+import { SecretObject } from './types'
 
-export const onEvent: SecretsManagerRotationHandler = async (event) => {
+export const onEvent = async (event: SecretsManagerRotationEvent) => {
   const { SecretId, ClientRequestToken, Step } = event
 
   const client = new SecretsManagerClient({})
@@ -104,22 +103,28 @@ const createSecret = async (client: SecretsManagerClient, secretId: string, toke
   }
 }
 
-const getNewSecretString = async (client: SecretsManagerClient, secretId: string) => {
+export const getNewSecretString = async (client: SecretsManagerClient, secretId: string) => {
   const current = await client.send(
     new GetSecretValueCommand({
       SecretId: secretId,
       VersionStage: 'AWSCURRENT',
     }),
   )
-  const { appId, keyId, validForMsStr } = JSON.parse(current.SecretString ?? '{}')
+  const { clientId, keyId, validForMsStr, tenantId } = JSON.parse(current.SecretString ?? '{}') as SecretObject
 
-  const newKey = await rotateEntraKey(appId, keyId, validForMsStr)
-  return JSON.stringify({
-    appId,
+  const newKey = await rotateEntraKey(clientId, keyId, validForMsStr)
+  if (!newKey.secretText || !newKey.keyId) {
+    throw new Error('new key missing required properties')
+  }
+  const newObj: SecretObject = {
+    clientId,
     validForMsStr,
+    tenantId,
     secretText: newKey.secretText,
     keyId: newKey.keyId,
-  })
+  }
+
+  return JSON.stringify(newObj)
 }
 
 const setSecret = async (client: SecretsManagerClient, secretId: string, token: string) => {
@@ -133,10 +138,6 @@ const setSecret = async (client: SecretsManagerClient, secretId: string, token: 
   )
 }
 
-const jwtDecode = (token: string) => {
-  return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString())
-}
-
 const testSecret = async (client: SecretsManagerClient, secretId: string, token: string) => {
   // test the pending secret version
   const version = await client.send(
@@ -146,30 +147,12 @@ const testSecret = async (client: SecretsManagerClient, secretId: string, token:
       VersionStage: 'AWSPENDING',
     }),
   )
-  const { tenantId } = await getBootstrapClientInfoPromise
-
-  // see if this works
   const { secretText, appId } = JSON.parse(version.SecretString ?? '')
   if (!secretText) {
     throw new Error('secret is missing secretText')
   }
   if (!appId) {
     throw new Error('secret is missing appId')
-  }
-  const access_token = await getAccessToken({
-    clientId: appId,
-    clientSecret: secretText,
-    tenantId,
-  })
-  if (!access_token) {
-    throw new Error('no access token returned from /token call')
-  }
-  const { appid } = jwtDecode(access_token)
-  if (!appid) {
-    throw new Error('no appid in access token returned from /token call')
-  }
-  if (appid !== appId) {
-    throw new Error(`appid in token "${appid}" does not match our appId "${appId}"`)
   }
 }
 

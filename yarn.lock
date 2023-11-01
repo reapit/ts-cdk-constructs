@@ -3012,7 +3012,9 @@ __metadata:
     aws-cdk-lib: "npm:^2.96.2"
     aws-lambda: "npm:^1.0.7"
     aws-sdk-client-mock: "npm:^3.0.0"
+    commander: "npm:^11.1.0"
     constructs: "npm:^10.2.70"
+    ts-node: "npm:^10.9.1"
   peerDependencies:
     aws-cdk-lib: ^2.96.2
     constructs: ^10.2.70
@@ -5398,6 +5400,13 @@ __metadata:
   bin:
     color-support: bin.js
   checksum: 4bcfe30eea1498fe1cabc852bbda6c9770f230ea0e4faf4611c5858b1b9e4dde3730ac485e65f54ca182f4c50b626c1bea7c8441ceda47367a54a818c248aa7a
+  languageName: node
+  linkType: hard
+
+"commander@npm:^11.1.0":
+  version: 11.1.0
+  resolution: "commander@npm:11.1.0"
+  checksum: 66bd2d8a0547f6cb1d34022efb25f348e433b0e04ad76a65279b1b09da108f59a4d3001ca539c60a7a46ea38bcf399fc17d91adad76a8cf43845d8dcbaf5cda1
   languageName: node
   linkType: hard
 

@@ -4,7 +4,7 @@ import { client } from './entra-sdk-client'
 export type KeyInfo = Omit<Omit<PasswordCredential, 'customKeyIdentifier'>, 'secretText'>
 
 export const getEntraAppKey = async (appId: string, keyId: string) => {
-  const app: Application = await client.api(`/applications/${appId}`).get()
+  const app: Application = await client.api(`/applications(appId='${appId}')`).get()
   const key = app.passwordCredentials?.find((key) => key.keyId === keyId)
   return key
 }
@@ -17,8 +17,7 @@ export const createEntraAppKey = async (appId: string, keyInfo: KeyInfo, validFo
 
   const endDateTime = new Date()
   endDateTime.setUTCMilliseconds(endDateTime.getUTCMilliseconds() + validForMs)
-
-  const res = await client.api(`/applications/${appId}/addPassword`).post({
+  const res = await client.api(`/applications(appId='${appId}')/addPassword`).post({
     passwordCredential: {
       ...keyInfo,
       endDateTime: endDateTime.toISOString(),
@@ -29,7 +28,7 @@ export const createEntraAppKey = async (appId: string, keyInfo: KeyInfo, validFo
 }
 
 export const deleteEntraAppKey = async (appId: string, keyId: string) => {
-  await client.api(`/applications/${appId}/removePassword`).post({
+  await client.api(`/applications(appId='${appId}')/removePassword`).post({
     keyId,
   })
 }

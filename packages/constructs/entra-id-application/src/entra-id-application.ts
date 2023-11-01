@@ -1,4 +1,4 @@
-import { CustomResource, Duration, SecretValue } from 'aws-cdk-lib'
+import { CustomResource, Duration, SecretValue, RemovalPolicy } from 'aws-cdk-lib'
 import { Code, Function, Runtime } from 'aws-cdk-lib/aws-lambda'
 import { Provider } from 'aws-cdk-lib/custom-resources'
 import { Application, PasswordCredential } from '@microsoft/microsoft-graph-types'
@@ -6,26 +6,32 @@ import { Construct } from 'constructs'
 import * as path from 'path'
 import { KeyInfo } from './lambdas/entra-app-key'
 import { ISecret, Secret } from 'aws-cdk-lib/aws-secretsmanager'
+import { SecretObject } from './lambdas/types'
 
-interface EntraIDApplicationProps {
+export interface EntraIDApplicationProps {
   config: Application
   bootstrapClientSecret: ISecret
+  removalPolicy?: RemovalPolicy
 }
 
-interface CreateKeyProps {
+export interface CreateKeyProps {
   keyInfo: Omit<Omit<KeyInfo, 'endDateTime'>, 'startDateTime'>
   validFor: Duration
+  removalPolicy?: RemovalPolicy
 }
 
 export class EntraIDApplication extends Construct {
   private app: CustomResource
   private keyProvider: Provider
   private keyRotationLambda: Function
+  private bootstrapClientSecret: ISecret
 
   constructor(scope: Construct, id: string, props: EntraIDApplicationProps) {
     super(scope, id)
 
     const { bootstrapClientSecret } = props
+
+    this.bootstrapClientSecret = bootstrapClientSecret
 
     const appLambda = new Function(this, 'app-lambda', {
       handler: 'application.onEvent',
@@ -46,6 +52,7 @@ export class EntraIDApplication extends Construct {
     this.app = new CustomResource(this, 'resource', {
       serviceToken: appProvider.serviceToken,
       properties: props.config,
+      removalPolicy: props.removalPolicy ?? RemovalPolicy.RETAIN,
     })
 
     const keyLambda = new Function(this, 'key-lambda', {
@@ -95,23 +102,30 @@ export class EntraIDApplication extends Construct {
     const key = new CustomResource(scope, id, {
       serviceToken: this.keyProvider.serviceToken,
       properties: {
-        appId: this.getAttString('id'),
+        appId: this.getAttString('appId'),
         validForMsStr: props.validFor.toMilliseconds().toString(),
         ...props.keyInfo,
       },
+      removalPolicy: RemovalPolicy.RETAIN || props.removalPolicy,
     })
 
     const getAttString = (attr: keyof PasswordCredential) => {
       return key.getAttString(attr)
     }
 
+    type InitialSecretValue = Record<keyof SecretObject, SecretValue>
+
+    const secretObjectValue: InitialSecretValue = {
+      secretText: SecretValue.resourceAttribute(key.getAttString('secretText')),
+      clientId: SecretValue.resourceAttribute(this.getAttString('appId')),
+      keyId: SecretValue.resourceAttribute(getAttString('keyId')),
+      validForMsStr: SecretValue.unsafePlainText(props.validFor.toMilliseconds().toString()),
+      tenantId: SecretValue.secretsManager(this.bootstrapClientSecret.secretArn, {
+        jsonField: 'tenantId',
+      }),
+    }
     const secret = new Secret(scope, `${id}-secret`, {
-      secretObjectValue: {
-        secretText: SecretValue.resourceAttribute(key.getAttString('secretText')),
-        appId: SecretValue.resourceAttribute(this.getAttString('id')),
-        keyId: SecretValue.resourceAttribute(getAttString('keyId')),
-        validForMsStr: SecretValue.unsafePlainText(props.validFor.toMilliseconds().toString()),
-      },
+      secretObjectValue,
     })
 
     secret.addRotationSchedule(`${id}-secret-rotation`, {

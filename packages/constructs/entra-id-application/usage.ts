@@ -7,13 +7,18 @@ const stack = new Stack(app, 'stack-name')
 const entraApp = new EntraIDApplication(stack, 'entra-id-app', {
   /**
    * 1. Create an application in Entra ID with scopes:
-   *  - Application.ReadWrite.OwnedBy
-   * 2. Create a Secret with {
-   *  "clientId": "",
-   *  "clientSecret": "",
-   *  "tenantId": ""
-   * }
-   * 3. Copy the secret ARN and use it here
+   *  - Application.ReadWrite.All
+   * 2. Create a client secret which lasts a day
+   * 3. Run the setup script and follow the instructions from there.
+   * (Clone the repo
+   *  run yarn
+   *  cd packages/constructs/entra-id-application
+   *  yarn setup
+   *    --clientId <client id aka app id>
+   *    --clientSecret <client secret value>
+   *    --tenantId <your tenant id>
+   *    --keyId <secret id>
+   * )
    */
   bootstrapClientSecret: Secret.fromSecretCompleteArn(stack, 'bootstrap-client-secret', 'bootstrap-client-secret-arn'),
   config: {
