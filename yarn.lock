@@ -3007,6 +3007,8 @@ __metadata:
     "@reapit-cdk/eslint-config": "workspace:^"
     "@reapit-cdk/integration-tests": "workspace:^"
     "@reapit-cdk/jsii": "workspace:^"
+    "@reapit-cdk/replicated-key": "workspace:^"
+    "@reapit-cdk/replicated-secret": "workspace:^"
     "@reapit-cdk/tsup": "workspace:^"
     "@reapit-cdk/version-package": "workspace:^"
     aws-cdk-lib: "npm:^2.96.2"
@@ -3016,6 +3018,8 @@ __metadata:
     constructs: "npm:^10.2.70"
     ts-node: "npm:^10.9.1"
   peerDependencies:
+    "@reapit-cdk/replicated-key": ^0.0.2
+    "@reapit-cdk/replicated-secret": ^0.0.4
     aws-cdk-lib: ^2.96.2
     constructs: ^10.2.70
   languageName: unknown
@@ -3077,7 +3081,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@reapit-cdk/replicated-key@workspace:packages/constructs/replicated-key":
+"@reapit-cdk/replicated-key@workspace:^, @reapit-cdk/replicated-key@workspace:packages/constructs/replicated-key":
   version: 0.0.0-use.local
   resolution: "@reapit-cdk/replicated-key@workspace:packages/constructs/replicated-key"
   dependencies:
@@ -3098,7 +3102,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@reapit-cdk/replicated-secret@workspace:packages/constructs/replicated-secret":
+"@reapit-cdk/replicated-secret@workspace:^, @reapit-cdk/replicated-secret@workspace:packages/constructs/replicated-secret":
   version: 0.0.0-use.local
   resolution: "@reapit-cdk/replicated-secret@workspace:packages/constructs/replicated-secret"
   dependencies:

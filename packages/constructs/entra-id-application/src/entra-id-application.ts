@@ -7,6 +7,8 @@ import * as path from 'path'
 import { KeyInfo } from './lambdas/entra-app-key'
 import { ISecret, Secret } from 'aws-cdk-lib/aws-secretsmanager'
 import { SecretObject } from './lambdas/types'
+import { ReplicatedSecret } from '@reapit-cdk/replicated-secret'
+import { ReplicatedKey } from '@reapit-cdk/replicated-key'
 
 export interface EntraIDApplicationProps {
   config: Application
@@ -18,6 +20,8 @@ export interface CreateKeyProps {
   keyInfo: Omit<Omit<KeyInfo, 'endDateTime'>, 'startDateTime'>
   validFor: Duration
   removalPolicy?: RemovalPolicy
+  replicatedKey?: ReplicatedKey
+  replicaRegions?: string[]
 }
 
 export class EntraIDApplication extends Construct {
@@ -124,9 +128,17 @@ export class EntraIDApplication extends Construct {
         jsonField: 'tenantId',
       }),
     }
-    const secret = new Secret(scope, `${id}-secret`, {
-      secretObjectValue,
-    })
+
+    const secret =
+      props.replicaRegions && props.replicatedKey
+        ? new ReplicatedSecret(scope, `${id}-secret`, {
+            secretObjectValue,
+            replicaRegions: props.replicaRegions,
+            replicatedKey: props.replicatedKey,
+          })
+        : new Secret(scope, `${id}-secret`, {
+            secretObjectValue,
+          })
 
     secret.addRotationSchedule(`${id}-secret-rotation`, {
       automaticallyAfter: props.validFor.minus(Duration.days(7)),

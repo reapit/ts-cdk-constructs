@@ -33,6 +33,8 @@
     "types": "dist/index.d.ts"
   },
   "peerDependencies": {
+    "@reapit-cdk/replicated-key": "^0.0.2",
+    "@reapit-cdk/replicated-secret": "^0.0.4",
     "aws-cdk-lib": "^2.96.2",
     "constructs": "^10.2.70"
   },
@@ -42,6 +44,8 @@
     "@reapit-cdk/eslint-config": "workspace:^",
     "@reapit-cdk/integration-tests": "workspace:^",
     "@reapit-cdk/jsii": "workspace:^",
+    "@reapit-cdk/replicated-key": "workspace:^",
+    "@reapit-cdk/replicated-secret": "workspace:^",
     "@reapit-cdk/tsup": "workspace:^",
     "@reapit-cdk/version-package": "workspace:^",
     "aws-cdk-lib": "^2.96.2",

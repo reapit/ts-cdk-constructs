@@ -1,5 +1,5 @@
 import { Arn, ArnFormat, CustomResource, Duration, PhysicalName, Stack, Token } from 'aws-cdk-lib'
-import { ISecret, Secret } from 'aws-cdk-lib/aws-secretsmanager'
+import { ISecret, Secret, SecretProps } from 'aws-cdk-lib/aws-secretsmanager'
 import { Construct, IDependable } from 'constructs'
 import { ReplicatedKey } from '@reapit-cdk/replicated-key'
 import { Grant, IGrantable, PolicyStatement } from 'aws-cdk-lib/aws-iam'
@@ -10,6 +10,8 @@ import * as path from 'path'
 export interface MultiRegionSecretProps {
   replicatedKey: ReplicatedKey
   replicaRegions: string[]
+  secretObjectValue?: SecretProps['secretObjectValue']
+  secretStringValue?: SecretProps['secretStringValue']
 }
 
 const secretArnToNameWithSuffix = (secret: ISecret) => {
@@ -65,6 +67,8 @@ export class ReplicatedSecret extends Secret {
           encryptionKey,
         }
       }),
+      secretObjectValue: props.secretObjectValue,
+      secretStringValue: props.secretStringValue,
     })
 
     this.masterRegion = stackRegion
