@@ -41,7 +41,8 @@ export const onEvent = async (event: SecretsManagerRotationEvent) => {
     case 'createSecret':
       return createSecret(client, SecretId, ClientRequestToken)
     case 'setSecret':
-      return setSecret(client, SecretId, ClientRequestToken)
+      // not needed
+      return
     case 'testSecret':
       return testSecret(client, SecretId, ClientRequestToken)
     case 'finishSecret':
@@ -127,17 +128,6 @@ export const getNewSecretString = async (client: SecretsManagerClient, secretId:
   return JSON.stringify(newObj)
 }
 
-const setSecret = async (client: SecretsManagerClient, secretId: string, token: string) => {
-  await client.send(
-    new PutSecretValueCommand({
-      SecretId: secretId,
-      ClientRequestToken: token,
-      SecretString: await getNewSecretString(client, secretId),
-      VersionStages: ['AWSPENDING'],
-    }),
-  )
-}
-
 const testSecret = async (client: SecretsManagerClient, secretId: string, token: string) => {
   // test the pending secret version
   const version = await client.send(
@@ -154,6 +144,8 @@ const testSecret = async (client: SecretsManagerClient, secretId: string, token:
   if (!appId) {
     throw new Error('secret is missing appId')
   }
+  // If we had a tenant we knew had the app installed we could test the token
+  // but at time of writing you can't programmatically install an app so we can't be sure of that
 }
 
 const finishSecret = async (client: SecretsManagerClient, secretId: string, token: string) => {
