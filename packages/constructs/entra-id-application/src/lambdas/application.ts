@@ -8,8 +8,8 @@ const createEntraApp = async (app: Application) => {
 }
 
 const updateEntraApp = async (appId: string, app: Application) => {
-  const res = await client.api(`/applications(appId='${appId}')`).patch(app)
-  return res as Application
+  await client.api(`/applications(appId='${appId}')`).patch(app)
+  return (await client.api(`/applications(appId='${appId}')`).get()) as Application
 }
 
 const deleteEntraApp = async (appId: string) => {
