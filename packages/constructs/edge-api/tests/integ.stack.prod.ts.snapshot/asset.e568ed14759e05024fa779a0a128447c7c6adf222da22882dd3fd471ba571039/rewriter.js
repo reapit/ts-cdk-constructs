@@ -38,7 +38,7 @@ var middlewares = [];
 var rewriteLocationHeader = (location, host2) => {
   try {
     const url = new URL(location);
-    if (url.hostname !== host2 && domains.find((domain) => url.hostname.endsWith(domain))) {
+    if (url.hostname !== host2 && domains.find((domain) => url.hostname.endsWith(domain.includes("//") ? new URL(domain).hostname : domain))) {
       url.hostname = host2;
     }
     return url.toString();

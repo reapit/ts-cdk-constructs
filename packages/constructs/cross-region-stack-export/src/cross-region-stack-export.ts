@@ -7,7 +7,7 @@ import { Construct } from 'constructs'
 export class CrossRegionStackImport<ExportKey> extends Construct {
   exporter: CrossRegionStackExport<ExportKey>
   parameters: RemoteParameters
-  constructor(scope: Construct, id: string, fromExporter: CrossRegionStackExport<ExportKey>, roleArn: string) {
+  constructor(scope: Construct, id: string, fromExporter: CrossRegionStackExport<ExportKey>, roleArn: string, alwaysUpdate?: boolean) {
     super(scope, id)
     this.exporter = fromExporter
 
@@ -16,6 +16,7 @@ export class CrossRegionStackImport<ExportKey> extends Construct {
       path: this.exporter.parameterPath,
       region: this.exporter.sourceStack.region,
       role: Role.fromRoleArn(this, 'readOnlyRole', roleArn),
+      alwaysUpdate,
     })
     stack.addDependency(this.exporter.sourceStack)
   }
@@ -53,13 +54,13 @@ export class CrossRegionStackExport<ExportKey> extends Construct {
     })
   }
 
-  getImporter(scope: Construct, id: string) {
+  getImporter(scope: Construct, id: string, alwaysUpdate?: boolean) {
     const { account } = Stack.of(scope)
     const cdkReadOnlyRole = new Role(this, `${account}-readOnlyRole`, {
       assumedBy: new AccountPrincipal(account),
       roleName: PhysicalName.GENERATE_IF_NEEDED,
       managedPolicies: [ManagedPolicy.fromAwsManagedPolicyName('AmazonSSMReadOnlyAccess')],
     })
-    return new CrossRegionStackImport<ExportKey>(scope, id, this, cdkReadOnlyRole.roleArn)
+    return new CrossRegionStackImport<ExportKey>(scope, id, this, cdkReadOnlyRole.roleArn, alwaysUpdate)
   }
 }

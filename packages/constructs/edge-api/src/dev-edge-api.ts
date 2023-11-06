@@ -1,5 +1,6 @@
 import { Construct } from 'constructs'
 import {
+  Destination,
   EdgeAPIProps,
   Endpoint,
   endpointIsFrontendEndpoint,
@@ -20,11 +21,13 @@ export class DevEdgeAPI extends Construct {
   r53Target: RecordTarget
   api: HttpApi
   private redirector?: Function
+  private domainName: string
 
   constructor(scope: Construct, id: string, props: DevEdgeAPIProps) {
     super(scope, id)
 
     const domainName = props.domains[0]
+    this.domainName = domainName
     if (props.domains.length > 1) {
       console.warn('devMode EdgeAPI currently only supports a single domain, using ' + domainName)
     }
@@ -67,6 +70,22 @@ export class DevEdgeAPI extends Construct {
     return this.redirector
   }
 
+  private pickDestination(destination: Destination): string {
+    if (typeof destination === 'string') {
+      return destination
+    }
+    const map = destination[this.domainName]
+    if (typeof map === 'string') {
+      return map
+    }
+    if (typeof map.destination === 'string') {
+      return map.destination
+    }
+    throw new Error(
+      `Unable to find destination from ${JSON.stringify(destination)} for default domain "${this.domainName}"`,
+    )
+  }
+
   addEndpoint(endpoint: Endpoint) {
     if (endpointIsProxyEndpoint(endpoint)) {
       const methods = endpoint.methods ?? [HttpMethod.ANY]
@@ -80,7 +99,10 @@ export class DevEdgeAPI extends Construct {
       }
       this.api.addRoutes({
         path,
-        integration: new HttpUrlIntegration('proxy-integration', 'https://' + endpoint.destination + destPath),
+        integration: new HttpUrlIntegration(
+          'proxy-integration',
+          'https://' + this.pickDestination(endpoint.destination) + destPath,
+        ),
         methods,
       })
       if (endpoint.pathPattern.includes('*')) {
@@ -88,7 +110,7 @@ export class DevEdgeAPI extends Construct {
           path: endpoint.pathPattern.replace('*', '{proxy+}'),
           integration: new HttpUrlIntegration(
             'proxy-integration',
-            'https://' + endpoint.destination + destPath + '/{proxy}',
+            'https://' + this.pickDestination(endpoint.destination) + destPath + '/{proxy}',
           ),
           methods,
         })
