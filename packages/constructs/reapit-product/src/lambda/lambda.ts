@@ -9,6 +9,7 @@ export const onEvent = customResourceWrapper({
     return {
       physicalResourceId: productObj.id,
       ...productObj,
+      scopes: productObj?.scopes ? productObj.scopes.join(',') : '',
     }
   },
   onUpdate: async (properties) => {
@@ -21,6 +22,7 @@ export const onEvent = customResourceWrapper({
     return {
       physicalResourceId: productObj?.id,
       ...productObj,
+      scopes: productObj?.scopes ? productObj.scopes.join(',') : '',
     }
   },
   onDelete: async ({ physicalResourceId }) => {

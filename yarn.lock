@@ -3578,7 +3578,7 @@ __metadata:
     "@reapit-cdk/jsii": "workspace:^"
     "@reapit-cdk/tsup": "workspace:^"
     "@reapit-cdk/version-package": "workspace:^"
-    "@reapit/foundations-ts-definitions": "npm:^1.3.52"
+    "@reapit/foundations-ts-definitions": "npm:^1.3.55"
     aws-cdk-lib: "npm:^2.96.2"
     aws-lambda: "npm:^1.0.7"
     aws-sdk-client-mock: "npm:^3.0.0"
@@ -3723,10 +3723,10 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@reapit/foundations-ts-definitions@npm:^1.3.52":
-  version: 1.3.52
-  resolution: "@reapit/foundations-ts-definitions@npm:1.3.52"
-  checksum: 90136c4bae0e116ab2ca8d307cc59a5c7be986367b4a2007135f5ba6fbb919bb28943cf538ca112d7f3ea7aac36e7231144368ccf2c2342616e5e7e21e26f162
+"@reapit/foundations-ts-definitions@npm:^1.3.55":
+  version: 1.3.55
+  resolution: "@reapit/foundations-ts-definitions@npm:1.3.55"
+  checksum: c812f3dca17e421f0b1769592d38f830edf066aa1e8f64d329ccd492908e2f8bffb158740ec8c606beaf8965690e8ff6e373a34a79785abce1f1e54d2b1f136e
   languageName: node
   linkType: hard
 

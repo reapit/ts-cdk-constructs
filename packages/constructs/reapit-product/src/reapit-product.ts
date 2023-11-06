@@ -2,7 +2,7 @@ import { Construct } from 'constructs'
 import { CreateProductModel, ProductModel } from '@reapit/foundations-ts-definitions/types/organisations-schema'
 import { Code, Function, Runtime } from 'aws-cdk-lib/aws-lambda'
 import { Provider } from 'aws-cdk-lib/custom-resources'
-import { CustomResource, Duration, Token, TokenComparison } from 'aws-cdk-lib'
+import { CustomResource, Duration, Token, TokenComparison, Fn } from 'aws-cdk-lib'
 import * as path from 'path'
 
 export interface ReapitProductProviderProps {
@@ -44,6 +44,7 @@ export class ReapitProductProvider extends Construct {
       authFlow: getAttString('authFlow'),
       created: getAttString('created'),
       externalId: getAttString('externalId'),
+      scopes: Fn.split(',', getAttString('scopes')),
       isInternalApp: Token.compareStrings(getAttString('isInternalApp'), 'true') === TokenComparison.SAME,
       name: getAttString('name'),
       usageKeyId: getAttString('usageKeyId'),
