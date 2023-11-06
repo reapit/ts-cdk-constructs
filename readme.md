@@ -1,5 +1,5 @@
 # @reapit-cdk/ts-constructs
-![coverage: 93.49%25](https://img.shields.io/badge/coverage-93.49%25-green)
+![coverage: 93.17%25](https://img.shields.io/badge/coverage-93.17%25-green)
 CDK Constructs Monorepo
 ## Constructs
 
@@ -35,7 +35,7 @@ Allows you to share values between stack across regions and accounts.
 
 ![npm version](https://img.shields.io/npm/v/@reapit-cdk/edge-api)
 ![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/edge-api)
-![coverage: 96.97%25](https://img.shields.io/badge/coverage-96.97%25-green)
+![coverage: 95.59%25](https://img.shields.io/badge/coverage-95.59%25-green)
 ![Integ Tests: ✔](https://img.shields.io/badge/Integ%20Tests-%E2%9C%94-green)
 
 This construct creates a truly globally available API where code executes at the edge. Because changes take a long time to propagate to all edge locations, there is a `devMode` flag which will instead deploy your API to a [HTTP API](https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api.html). This is compatible with hotswapping, so [`cdk watch`](https://docs.aws.amazon.com/cdk/v2/guide/cli.html#cli-deploy-watch) works very well. In order to make it easy to develop APIs which handle both event formats and work around the environment variable limitation, I recommend you use the lightweight request wrapper [@reapit-cdk/edge-api-sdk](../../modules/edge-api-sdk) which normalises the event format and offers some extra helpers.
@@ -55,6 +55,14 @@ Add a swagger endpoint to your EdgeAPI
 ![Integ Tests: ✔](https://img.shields.io/badge/Integ%20Tests-%E2%9C%94-green)
 
 This construct sets up everything necessary to receive email. The emails get stored in a dynamodb table, queryable by recipient. This is designed to be used in end-to-end tests, with the [@reapit-cdk/email-receiver-client](../../libs/email-receiver-client) helper library.
+<h3><a href="packages/constructs/entra-id-application">@reapit-cdk/entra-id-application</a></h3>
+
+![npm version](https://img.shields.io/npm/v/@reapit-cdk/entra-id-application)
+![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/entra-id-application)
+![coverage: 0%25](https://img.shields.io/badge/coverage-0%25-red)
+![Integ Tests: X](https://img.shields.io/badge/Integ%20Tests-X-red)
+
+This construct creates and manages a Microsoft Entra ID Application
 <h3><a href="packages/constructs/replicated-key">@reapit-cdk/replicated-key</a></h3>
 
 ![npm version](https://img.shields.io/npm/v/@reapit-cdk/replicated-key)
@@ -177,13 +185,6 @@ tsconfig for @reapit-cdk.
 ![coverage: 0%25](https://img.shields.io/badge/coverage-0%25-red)
 
 Easily build @reapit-cdk constructs and custom resource lambdas.
-<h3><a href="packages/tools/version-package">@reapit-cdk/version-package</a></h3>
-
-![npm version](https://img.shields.io/npm/v/@reapit-cdk/version-package)
-![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/version-package)
-![coverage: 0%25](https://img.shields.io/badge/coverage-0%25-red)
-
-Set package version to the release version before publishing.
 
 </details>
 
