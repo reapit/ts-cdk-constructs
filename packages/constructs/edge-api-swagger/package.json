@@ -20,7 +20,7 @@
     "check": "yarn run root:check -p $(pwd)",
     "lint": "echo 'skipping...'",
     "test": "yarn run root:test  -- $(pwd)",
-    "prepack": "reapit-version-package && yarn build",
+    "prepack": "yarn build",
     "integ": "yarn run root:integ -- $(pwd)",
     "jsii:build": "rpt-cdk-jsii",
     "jsii:publish": "rpt-cdk-jsii --publish"
@@ -46,7 +46,6 @@
     "@reapit-cdk/integration-tests": "workspace:^",
     "@reapit-cdk/jsii": "workspace:^",
     "@reapit-cdk/tsup": "workspace:^",
-    "@reapit-cdk/version-package": "workspace:^",
     "aws-cdk-lib": "^2.96.2",
     "constructs": "^10.2.70"
   }

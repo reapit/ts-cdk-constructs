@@ -21,12 +21,11 @@
     "lint": "reapit-cdk-eslint",
     "test": "yarn run root:test -- $(pwd)",
     "build": "reapit-cdk-tsup",
-    "prepack": "reapit-version-package && yarn build"
+    "prepack": "yarn build"
   },
   "devDependencies": {
     "@reapit-cdk/eslint-config": "workspace:^",
     "@reapit-cdk/tsup": "workspace:^",
-    "@reapit-cdk/version-package": "workspace:^",
     "@types/aws-lambda": "^8.10.121",
     "aws-lambda": "^1.0.7"
   },
