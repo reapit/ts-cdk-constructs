@@ -18,7 +18,6 @@
     "test": "echo 'skipping...'"
   },
   "devDependencies": {
-    "@reapit-cdk/eslint-config": "workspace:^",
-    "@reapit-cdk/version-package": "workspace:^"
+    "@reapit-cdk/eslint-config": "workspace:^"
   }
 }

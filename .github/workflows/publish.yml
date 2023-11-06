@@ -27,15 +27,11 @@ jobs:
           node-version: '18.x'
           cache: 'yarn'
 
-      - name: Set Version
-        run: |
-          echo "RELEASE_VERSION=${{ steps.tagName.outputs.version }}" >> $GITHUB_ENV
-
       - name: Install
         run: yarn
 
       - name: Build
-        run: yarn build
+        run: yarn workspace -R ${{ steps.tagName.outputs.package }} run build
 
       - name: Lint
         run: |
@@ -44,6 +40,10 @@ jobs:
       - name: Test
         run: |
           yarn workspace ${{ steps.tagName.outputs.package }} run test
+
+      - name: Set Version
+        run: |
+          yarn workspace ${{ steps.tagName.outputs.package }} version ${{ steps.tagName.outputs.version }}
 
       # - name: JSII Build (if needed)
       #   run: |
