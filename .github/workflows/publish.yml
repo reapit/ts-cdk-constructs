@@ -31,7 +31,7 @@ jobs:
         run: yarn
 
       - name: Build
-        run: yarn workspace -R ${{ steps.tagName.outputs.package }} run build
+        run: yarn workspace foreach -R --from '${{ steps.tagName.outputs.package }}' run build
 
       - name: Lint
         run: |
