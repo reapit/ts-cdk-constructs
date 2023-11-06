@@ -7,7 +7,8 @@
     "reapit-version-package": "./src/index.js"
   },
   "scripts": {
-    "lint": "reapit-cdk-eslint"
+    "lint": "reapit-cdk-eslint",
+    "test": "echo 'skipping...'"
   },
   "dependencies": {
     "semver": "^7.5.4"
