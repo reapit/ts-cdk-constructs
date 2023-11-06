@@ -24,7 +24,8 @@ const signedFetch = createSignedFetcher({
 
 export type CreateProduct = Omit<CreateProductModel, 'id'>
 
-const createProductWithId = async (id: string, product: CreateProduct) => {
+export const createProduct = async (product: CreateProduct): Promise<ProductModel> => {
+  const id = randomUUID()
   const res = await signedFetch(`${baseUrl}/Products`, {
     method: 'post',
     body: JSON.stringify({
@@ -40,12 +41,11 @@ const createProductWithId = async (id: string, product: CreateProduct) => {
   if (!productId) {
     throw new Error('no product id returned in location header')
   }
-  return productId
-}
-
-export const createProduct = async (product: CreateProduct): Promise<string> => {
-  const id = randomUUID()
-  return createProductWithId(id, product)
+  const productObj = await getProduct(productId)
+  if (!productObj) {
+    throw new Error(`Failed to get created product with id ${productId}`)
+  }
+  return productObj
 }
 
 export const getProduct = async (productId: string): Promise<ProductModel | undefined> => {
@@ -74,8 +74,17 @@ export const deleteProduct = async (productId: string) => {
   throw new Error(`Orgs service responded with status code ${res.status}`)
 }
 
-export const updateProduct = async (productId: string, product: CreateProduct) => {
-  await deleteProduct(productId)
-  await createProductWithId(productId, product)
-  return getProduct(productId)
+export const updateProduct = async (id: string, product: CreateProduct) => {
+  const res = await signedFetch(`${baseUrl}/Products`, {
+    method: 'post',
+    body: JSON.stringify({
+      ...product,
+      id,
+    }),
+    headers,
+  })
+  if (!res.ok) {
+    throw new Error('failed to create product')
+  }
+  return getProduct(id)
 }

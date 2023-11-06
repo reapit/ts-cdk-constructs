@@ -1,14 +1,13 @@
 import { customResourceWrapper } from '@reapit-cdk/custom-resource-wrapper'
-import { createProduct, CreateProduct, deleteProduct, getProduct, updateProduct } from './product'
+import { createProduct, CreateProduct, deleteProduct, updateProduct } from './product'
 
 export const onEvent = customResourceWrapper({
   onCreate: async (properties) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { requestId, serviceToken, ...product } = properties
-    const id = await createProduct(product as CreateProduct)
-    const productObj = await getProduct(id)
+    const productObj = await createProduct(product as CreateProduct)
     return {
-      physicalResourceId: id,
+      physicalResourceId: productObj.id,
       ...productObj,
     }
   },

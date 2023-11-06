@@ -37,14 +37,16 @@ export class ReapitProductProvider extends Construct {
       properties: product,
     })
 
+    const getAttString = (att: keyof ProductModel) => cr.getAttString(att)
+
     return {
-      id: cr.getAttString('id'),
-      authFlow: cr.getAttString('authFlow'),
-      created: cr.getAttString('created'),
-      externalId: cr.getAttString('externalId'),
-      isInternalApp: Token.compareStrings(cr.getAttString('isInternalApp'), 'true') === TokenComparison.SAME,
-      name: cr.getAttString('name'),
-      usageKeyId: cr.getAttString('usageKeyId'),
+      id: getAttString('id'),
+      authFlow: getAttString('authFlow'),
+      created: getAttString('created'),
+      externalId: getAttString('externalId'),
+      isInternalApp: Token.compareStrings(getAttString('isInternalApp'), 'true') === TokenComparison.SAME,
+      name: getAttString('name'),
+      usageKeyId: getAttString('usageKeyId'),
     }
   }
 }
