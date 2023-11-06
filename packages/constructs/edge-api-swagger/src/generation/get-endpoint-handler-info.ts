@@ -1,5 +1,5 @@
 import * as ts from 'typescript'
-import path from 'path'
+import * as path from 'path'
 import { ResolvedProperty, EndpointsInput, EndpointHandlerInfo } from './types'
 
 const typeSyntaxKindToString = (kind: ts.SyntaxKind) => {
