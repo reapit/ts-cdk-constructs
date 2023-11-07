@@ -35,6 +35,7 @@ export const createProduct = async (product: CreateProduct): Promise<ProductMode
     headers,
   })
   if (!res.ok) {
+    console.error(await res.text())
     throw new Error('failed to create product')
   }
   const productId = res.headers.get('location')?.split('/').pop()
@@ -60,6 +61,7 @@ export const getProduct = async (productId: string): Promise<ProductModel | unde
   if (res.status === 404) {
     return undefined
   }
+  console.error(await res.text())
   throw new Error(`Orgs service responded with status code ${res.status}`)
 }
 
@@ -71,6 +73,7 @@ export const deleteProduct = async (productId: string) => {
   if (res.ok) {
     return
   }
+  console.error(await res.text())
   throw new Error(`Orgs service responded with status code ${res.status}`)
 }
 
