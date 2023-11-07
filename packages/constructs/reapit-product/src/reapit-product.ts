@@ -4,9 +4,11 @@ import { Code, Function, Runtime } from 'aws-cdk-lib/aws-lambda'
 import { Provider } from 'aws-cdk-lib/custom-resources'
 import { CustomResource, Duration, Token, TokenComparison, Fn } from 'aws-cdk-lib'
 import * as path from 'path'
+import { IRestApi } from 'aws-cdk-lib/aws-apigateway'
+import { PolicyStatement } from 'aws-cdk-lib/aws-iam'
 
 export interface ReapitProductProviderProps {
-  organisationsServiceUrl: string
+  organisationsServiceApiGateway: IRestApi
 }
 
 export type ReapitProduct = Omit<CreateProductModel, 'id'>
@@ -17,15 +19,30 @@ export class ReapitProductProvider extends Construct {
   constructor(scope: Construct, id: string, props: ReapitProductProviderProps) {
     super(scope, id)
 
+    const { organisationsServiceApiGateway } = props
+
+    const stage = organisationsServiceApiGateway.deploymentStage
+    const endpoint = '/Products'
+
     const lambda = new Function(this, 'lambda', {
       handler: 'lambda.onEvent',
       timeout: Duration.seconds(60),
       runtime: Runtime.NODEJS_18_X,
       code: Code.fromAsset(path.join(__dirname, '..', 'dist', 'lambda')),
       environment: {
-        ORGANISATIONS_SERVICE_URL: props.organisationsServiceUrl,
+        ORGANISATIONS_SERVICE_PRODUCTS_URL: stage.urlForPath(endpoint),
       },
     })
+    lambda.addToRolePolicy(
+      new PolicyStatement({
+        actions: ['execute-api:Invoke'],
+        resources: [
+          organisationsServiceApiGateway.arnForExecuteApi('POST', endpoint, stage.stageName),
+          organisationsServiceApiGateway.arnForExecuteApi('PUT', `${endpoint}/*`, stage.stageName),
+          organisationsServiceApiGateway.arnForExecuteApi('GET', `${endpoint}/*`, stage.stageName),
+        ],
+      }),
+    )
     this.provider = new Provider(this, 'provider', {
       onEventHandler: lambda,
     })

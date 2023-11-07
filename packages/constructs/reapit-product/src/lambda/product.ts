@@ -6,10 +6,10 @@ const headers = {
   'api-version': 'latest',
 }
 
-const baseUrl = process.env.ORGANISATIONS_SERVICE_URL
+const baseUrl = process.env.ORGANISATIONS_SERVICE_PRODUCTS_URL
 
 if (!baseUrl) {
-  throw new Error('missing env ORGANISATIONS_SERVICE_URL')
+  throw new Error('missing env ORGANISATIONS_SERVICE_PRODUCTS_URL')
 }
 
 const region = process.env.AWS_REGION
@@ -26,7 +26,7 @@ export type CreateProduct = Omit<CreateProductModel, 'id'>
 
 export const createProduct = async (product: CreateProduct): Promise<ProductModel> => {
   const id = randomUUID()
-  const res = await signedFetch(`${baseUrl}/Products`, {
+  const res = await signedFetch(baseUrl, {
     method: 'post',
     body: JSON.stringify({
       ...product,
@@ -50,7 +50,7 @@ export const createProduct = async (product: CreateProduct): Promise<ProductMode
 }
 
 export const getProduct = async (productId: string): Promise<ProductModel | undefined> => {
-  const res = await signedFetch(`${baseUrl}/Products/${productId}`, {
+  const res = await signedFetch(`${baseUrl}/${productId}`, {
     method: 'get',
     headers,
   })
@@ -66,7 +66,7 @@ export const getProduct = async (productId: string): Promise<ProductModel | unde
 }
 
 export const deleteProduct = async (productId: string) => {
-  const res = await signedFetch(`${baseUrl}/Products/${productId}`, {
+  const res = await signedFetch(`${baseUrl}/${productId}`, {
     method: 'delete',
     headers,
   })
@@ -78,8 +78,8 @@ export const deleteProduct = async (productId: string) => {
 }
 
 export const updateProduct = async (id: string, product: CreateProduct) => {
-  const res = await signedFetch(`${baseUrl}/Products`, {
-    method: 'post',
+  const res = await signedFetch(`${baseUrl}/${id}`, {
+    method: 'put',
     body: JSON.stringify({
       ...product,
       id,
@@ -87,7 +87,8 @@ export const updateProduct = async (id: string, product: CreateProduct) => {
     headers,
   })
   if (!res.ok) {
-    throw new Error('failed to create product')
+    console.error(await res.text())
+    throw new Error('failed to update product')
   }
   return getProduct(id)
 }
