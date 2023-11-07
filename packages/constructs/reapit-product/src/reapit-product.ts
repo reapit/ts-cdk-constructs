@@ -32,7 +32,7 @@ export class ReapitProductProvider extends Construct {
       environment: {
         ORGANISATIONS_SERVICE_PRODUCTS_URL: `https://${organisationsServiceApiGateway.restApiId}.execute-api.${
           Stack.of(this).region
-        }.amazonaws.com/${stageName}`,
+        }.amazonaws.com/${stageName}/Products`,
       },
     })
     lambda.addToRolePolicy(
