@@ -22,7 +22,7 @@ export class ReapitProductProvider extends Construct {
 
     const { organisationsServiceApiGateway, stageName } = props
 
-    const endpoint = '/Products'
+    const endpoint = '/organisations/Products'
 
     const lambda = new Function(this, 'lambda', {
       handler: 'lambda.onEvent',
@@ -32,7 +32,7 @@ export class ReapitProductProvider extends Construct {
       environment: {
         ORGANISATIONS_SERVICE_PRODUCTS_URL: `https://${organisationsServiceApiGateway.restApiId}.execute-api.${
           Stack.of(this).region
-        }.amazonaws.com/${stageName}/Products`,
+        }.amazonaws.com/${stageName}${endpoint}`,
       },
     })
     lambda.addToRolePolicy(
