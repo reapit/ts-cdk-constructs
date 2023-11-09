@@ -46,6 +46,7 @@ export interface ProxyEndpoint extends BaseEndpoint {
   destination: Destination
   customMiddlewares?: (RequestMiddleware | ResponseMiddleware)[]
   disableBuiltInMiddlewares?: DisableBuiltInMiddlewares
+  originResponseInterceptor?: EdgeAPILambda
   methods?: HttpMethod[]
 }
 

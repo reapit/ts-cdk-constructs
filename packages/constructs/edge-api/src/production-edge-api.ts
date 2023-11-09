@@ -229,6 +229,13 @@ export class ProductionEdgeAPI extends Construct {
         ],
       }
 
+      if (endpoint.originResponseInterceptor) {
+        addBehaviorOptions.edgeLambdas?.push({
+          eventType: LambdaEdgeEventType.ORIGIN_RESPONSE,
+          functionVersion: endpoint.originResponseInterceptor.currentVersion,
+        })
+      }
+
       const opts: EndpointBehaviorOptions[] = [
         {
           origin,
@@ -276,6 +283,13 @@ export class ProductionEdgeAPI extends Construct {
           functionVersion: rewriterLambda.currentVersion,
         },
       ],
+    }
+
+    if (endpoint.originResponseInterceptor) {
+      addBehaviorOptions.edgeLambdas?.push({
+        eventType: LambdaEdgeEventType.ORIGIN_RESPONSE,
+        functionVersion: endpoint.originResponseInterceptor.currentVersion,
+      })
     }
 
     return [
