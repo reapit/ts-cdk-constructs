@@ -19,8 +19,9 @@ const respondToEvent = (event: EventInput, response: RCResponse) => {
   const req = eventToRequest<{ corsOrigin?: string }>(event)
   const corsHeaders = req.env.corsOrigin
     ? {
-        'Access-Control-Allow-Headers': '*',
-        'Access-Control-Allow-Methods': '*',
+        'Access-Control-Allow-Headers':
+          'Accept, Accept-Language, Api-Version, Authorization, Content-Type, Referer, User-Agent',
+        'Access-Control-Allow-Methods': 'POST, PUT, PATCH, GET, OPTIONS, DELETE',
         'Access-Control-Allow-Origin': req.env.corsOrigin,
         'Access-Control-Expose-Headers': '*',
         'Access-Control-Allow-Credentials': 'true',
