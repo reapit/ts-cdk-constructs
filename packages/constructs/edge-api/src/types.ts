@@ -26,7 +26,7 @@ export type ResponseMiddleware = (req: CloudFrontRequest, res: CloudFrontRespons
 export const isResponseMiddleware = (
   middleware: RequestMiddleware | ResponseMiddleware,
 ): middleware is ResponseMiddleware => {
-  const numArgs = middleware.toString().split(')')[1].split(',').length
+  const numArgs = middleware.toString().split(')')[1].split(',').length + 1
   return numArgs === 3
 }
 export const isRequestMiddleware = (
