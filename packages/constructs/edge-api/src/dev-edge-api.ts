@@ -70,6 +70,10 @@ export class DevEdgeAPI extends Construct {
     return this.redirector
   }
 
+  private ensureHTTPS(url: string) {
+    return `https://${Fn.join('', Fn.split('https://', url))}`
+  }
+
   private pickDestination(destination: Destination): string {
     if (typeof destination === 'string') {
       return destination
@@ -101,7 +105,7 @@ export class DevEdgeAPI extends Construct {
         path,
         integration: new HttpUrlIntegration(
           'proxy-integration',
-          'https://' + this.pickDestination(endpoint.destination) + destPath,
+          this.ensureHTTPS(this.pickDestination(endpoint.destination)) + destPath,
         ),
         methods,
       })
@@ -110,7 +114,7 @@ export class DevEdgeAPI extends Construct {
           path: endpoint.pathPattern.replace('*', '{proxy+}'),
           integration: new HttpUrlIntegration(
             'proxy-integration',
-            'https://' + this.pickDestination(endpoint.destination) + destPath + '/{proxy}',
+            this.ensureHTTPS(this.pickDestination(endpoint.destination)) + destPath + '/{proxy}',
           ),
           methods,
         })
