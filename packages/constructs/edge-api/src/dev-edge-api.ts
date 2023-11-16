@@ -135,7 +135,7 @@ export class DevEdgeAPI extends Construct {
     if (endpointIsFrontendEndpoint(endpoint)) {
       const { pathPattern, bucket } = endpoint
       this.addEndpoint({
-        pathPattern,
+        pathPattern: pathPattern.endsWith('/*') ? pathPattern : `${pathPattern}/*`,
         methods: [HttpMethod.GET],
         destination: bucket.bucketWebsiteUrl,
       })
