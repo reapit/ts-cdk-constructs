@@ -79,7 +79,7 @@ export const endpointIsFrontendEndpoint = (endpoint: Endpoint): endpoint is Fron
   !!(endpoint as FrontendEndpoint).bucket
 
 export const endpointIsProxyEndpoint = (endpoint: Endpoint): endpoint is ProxyEndpoint =>
-  !!(endpoint as ProxyEndpoint).destination
+  !!(endpoint as ProxyEndpoint).destination && !endpointIsRedirectionEndpoint(endpoint)
 
 export const endpointIsRedirectionEndpoint = (endpoint: Endpoint): endpoint is RedirectionEndpoint =>
   !!(endpoint as RedirectionEndpoint).redirect

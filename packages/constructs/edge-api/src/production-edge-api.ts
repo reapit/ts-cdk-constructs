@@ -356,7 +356,7 @@ export class ProductionEdgeAPI extends Construct {
   }
 
   private redirectionEndpointToAddBehaviorOptions(endpoint: RedirectionEndpoint): EndpointBehaviorOptions[] {
-    const lambda = new EdgeAPILambda(this, 'redirector', {
+    const lambda = new EdgeAPILambda(this, endpoint.pathPattern + '-redirector', {
       runtime: Runtime.NODEJS_18_X,
       handler: 'production-redirector.handler',
       code: Code.fromAsset(path.resolve(__dirname, 'lambdas')),
