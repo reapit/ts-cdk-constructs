@@ -50,13 +50,19 @@ export interface ProxyEndpoint extends BaseEndpoint {
   methods?: HttpMethod[]
 }
 
-export type Endpoint = LambdaEndpoint | FrontendEndpoint | ProxyEndpoint
+export interface RedirectionEndpoint extends BaseEndpoint {
+  destination: Destination
+  redirect: true
+}
+
+export type Endpoint = LambdaEndpoint | FrontendEndpoint | ProxyEndpoint | RedirectionEndpoint
 
 // TODO: there must be a better way to do this
 export type DefaultEndpoint =
   | Omit<LambdaEndpoint, 'pathPattern'>
   | Omit<FrontendEndpoint, 'pathPattern'>
   | Omit<ProxyEndpoint, 'pathPattern'>
+  | Omit<RedirectionEndpoint, 'pathPattern'>
 
 export interface EdgeAPIProps {
   devMode?: boolean
@@ -74,3 +80,6 @@ export const endpointIsFrontendEndpoint = (endpoint: Endpoint): endpoint is Fron
 
 export const endpointIsProxyEndpoint = (endpoint: Endpoint): endpoint is ProxyEndpoint =>
   !!(endpoint as ProxyEndpoint).destination
+
+export const endpointIsRedirectionEndpoint = (endpoint: Endpoint): endpoint is RedirectionEndpoint =>
+  !!(endpoint as RedirectionEndpoint).redirect

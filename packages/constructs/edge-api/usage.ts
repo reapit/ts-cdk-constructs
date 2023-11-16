@@ -100,6 +100,11 @@ api.addEndpoint({
   ],
 })
 
+api.addEndpoint({
+  pathPattern: '/redirect-me',
+  destination: 'https://google.com/?q=youve+been+redirected',
+})
+
 const zone = HostedZone.fromLookup(stack, 'zone', {
   domainName: 'example.org',
 })

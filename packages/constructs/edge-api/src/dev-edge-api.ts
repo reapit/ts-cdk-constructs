@@ -6,6 +6,7 @@ import {
   endpointIsFrontendEndpoint,
   endpointIsLambdaEndpoint,
   endpointIsProxyEndpoint,
+  endpointIsRedirectionEndpoint,
 } from './types'
 import { DomainName, HttpApi, HttpMethod, ParameterMapping } from '@aws-cdk/aws-apigatewayv2-alpha'
 import { HttpLambdaIntegration, HttpUrlIntegration } from '@aws-cdk/aws-apigatewayv2-integrations-alpha'
@@ -133,25 +134,25 @@ export class DevEdgeAPI extends Construct {
     }
     if (endpointIsFrontendEndpoint(endpoint)) {
       const { pathPattern, bucket } = endpoint
+      this.addEndpoint({
+        pathPattern,
+        methods: [HttpMethod.GET],
+        destination: bucket.bucketWebsiteUrl,
+      })
+    }
+    if (endpointIsRedirectionEndpoint(endpoint)) {
+      const { pathPattern, destination } = endpoint
       const integration = new HttpLambdaIntegration(pathPattern + '-integration', this.getRedirector(), {
-        parameterMapping: this.generateParameterMapping({ destination: bucket.bucketWebsiteUrl }),
+        parameterMapping: this.generateParameterMapping({ destination: this.pickDestination(destination) }),
       })
       this.api.addRoutes({
-        path: pathPattern.replace('*', ''),
+        path: pathPattern,
         integration,
         methods: [HttpMethod.GET],
       })
       this.api.addRoutes({
-        path: pathPattern.replace('*', '') + '/{proxy+}',
+        path: pathPattern + '/{proxy+}',
         integration,
-        methods: [HttpMethod.GET],
-      })
-      this.api.addRoutes({
-        path: pathPattern.replace('*', '') + '/config.js',
-        integration: new HttpUrlIntegration(
-          'proxy-integration',
-          bucket.bucketWebsiteUrl + pathPattern.replace('*', '') + '/config.js',
-        ),
         methods: [HttpMethod.GET],
       })
     }

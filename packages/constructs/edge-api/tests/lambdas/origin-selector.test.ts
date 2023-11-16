@@ -1,6 +1,6 @@
 import { handler } from '../../src/lambdas/origin-selector'
 
-const genEvent = (reqHost: string, env: any) => ({
+export const genEvent = (reqHost: string, env: any) => ({
   Records: [
     {
       cf: {

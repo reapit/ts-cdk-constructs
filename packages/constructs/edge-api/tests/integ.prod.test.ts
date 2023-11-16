@@ -37,4 +37,15 @@ describe('edge-api prod integration', () => {
     expect(resJson).toBeDefined()
     expect(resJson).toHaveProperty('url', 'https://httpbin.org/get')
   })
+
+  integ.it('/redirect-me - should redirect to google', async () => {
+    const endpoint = integ.outputs.output
+    const res = await fetch(`${endpoint}/redirect-me`, {
+      redirect: 'manual',
+    })
+    expect(res.status).toBe(302)
+    const locHeader = res.headers.get('location')
+    expect(locHeader).not.toBeNull()
+    expect(locHeader).toBe('https://google.com/?q=youve+been+redirected')
+  })
 })

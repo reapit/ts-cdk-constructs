@@ -94,6 +94,11 @@ export const edgeAPITest = (devMode?: boolean) => {
     }),
   })
 
+  api.addEndpoint({
+    pathPattern: '/redirect-me',
+    destination: 'https://google.com/?q=youve+been+redirected',
+  })
+
   new CfnOutput(stack, 'output', {
     value: `https://${domainName}`,
   })
