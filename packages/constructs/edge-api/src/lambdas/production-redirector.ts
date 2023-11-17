@@ -38,13 +38,13 @@ export const handler = async (event: CloudFrontRequestEvent): Promise<CloudFront
       throw new Error('no Record present')
     }
     const req = Record.cf.request
-    const reqHostHeaders = req.headers['req-host']
-    if (!reqHostHeaders?.length) {
-      throw new Error('no req-host header present')
+    const hostHeaders = req.headers['host']
+    if (!hostHeaders?.length) {
+      throw new Error('no host header present')
     }
-    const host = reqHostHeaders[0].value
+    const host = hostHeaders[0].value
     if (!host) {
-      throw new Error('no req-host header present')
+      throw new Error('no host header present')
     }
 
     const { destination } = getEnv(req) as { destination?: Destination }
