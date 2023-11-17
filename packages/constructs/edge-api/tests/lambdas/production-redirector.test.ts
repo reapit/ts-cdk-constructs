@@ -13,8 +13,7 @@ const genEvent = (reqHost: string, env: any) => ({
         request: {
           clientIp: '1.1.1.1',
           headers: {
-            host: [{ key: 'Host', value: 'fjklsdfjlkds.org' }],
-            'req-host': [{ key: 'req-host', value: reqHost }],
+            host: [{ key: 'Host', value: reqHost }],
             'cloudfront-is-mobile-viewer': [{ key: 'CloudFront-Is-Mobile-Viewer', value: 'false' }],
             'cloudfront-is-tablet-viewer': [{ key: 'CloudFront-Is-Tablet-Viewer', value: 'false' }],
             'cloudfront-is-smarttv-viewer': [{ key: 'CloudFront-Is-SmartTV-Viewer', value: 'false' }],
@@ -108,6 +107,13 @@ const genEvent = (reqHost: string, env: any) => ({
 describe('production-redirector', () => {
   it('should 302 users to the configured destination', async () => {
     const env = { destination: 'https://google.com' }
+    const result = await handler(genEvent('something.com', env) as any)
+    expect(result.status).toBe('302')
+    expect(result.headers.location[0].value).toBe('https://google.com')
+  })
+
+  it('should 302 users to the configured destination with https', async () => {
+    const env = { destination: 'google.com' }
     const result = await handler(genEvent('something.com', env) as any)
     expect(result.status).toBe('302')
     expect(result.headers.location[0].value).toBe('https://google.com')
