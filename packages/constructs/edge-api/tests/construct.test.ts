@@ -693,7 +693,23 @@ describe('edge-api', () => {
         },
         IntegrationMethod: 'ANY',
         IntegrationType: 'HTTP_PROXY',
-        IntegrationUri: 'https://example.com/{proxy}',
+        IntegrationUri: {
+          'Fn::Join': [
+            '',
+            [
+              'https://',
+              {
+                'Fn::Join': [
+                  '',
+                  {
+                    'Fn::Split': ['https://', 'example.com'],
+                  },
+                ],
+              },
+              '/{proxy}',
+            ],
+          ],
+        },
       })
       result.hasResourceProperties('AWS::ApiGatewayV2::DomainName', {
         DomainName: 'example.org',
@@ -794,7 +810,17 @@ describe('edge-api', () => {
                     'Fn::Split': [
                       'https://',
                       {
-                        'Fn::GetAtt': ['bucket43879C71', 'WebsiteURL'],
+                        'Fn::Join': [
+                          '',
+                          {
+                            'Fn::Split': [
+                              'http://',
+                              {
+                                'Fn::GetAtt': ['bucket43879C71', 'WebsiteURL'],
+                              },
+                            ],
+                          },
+                        ],
                       },
                     ],
                   },
@@ -886,7 +912,23 @@ describe('edge-api', () => {
         },
         IntegrationMethod: 'ANY',
         IntegrationType: 'HTTP_PROXY',
-        IntegrationUri: 'https://google.com/google',
+        IntegrationUri: {
+          'Fn::Join': [
+            '',
+            [
+              'https://',
+              {
+                'Fn::Join': [
+                  '',
+                  {
+                    'Fn::Split': ['https://', 'google.com'],
+                  },
+                ],
+              },
+              '/google',
+            ],
+          ],
+        },
         PayloadFormatVersion: '1.0',
       })
     })
