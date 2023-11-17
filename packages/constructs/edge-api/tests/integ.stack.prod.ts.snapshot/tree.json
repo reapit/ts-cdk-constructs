@@ -421,6 +421,34 @@
                                       ]
                                     }
                                   }
+                                },
+                                {
+                                  "domainName": {
+                                    "Fn::GetAtt": [
+                                      "apibucketF0F7D0F9",
+                                      "RegionalDomainName"
+                                    ]
+                                  },
+                                  "id": "edgeapiteststackapiOrigin5984B2994",
+                                  "originCustomHeaders": [
+                                    {
+                                      "headerName": "env",
+                                      "headerValue": "{\"destination\":\"https://google.com/?q=youve+been+redirected\"}"
+                                    }
+                                  ],
+                                  "s3OriginConfig": {
+                                    "originAccessIdentity": {
+                                      "Fn::Join": [
+                                        "",
+                                        [
+                                          "origin-access-identity/cloudfront/",
+                                          {
+                                            "Ref": "apioia76883CD0"
+                                          }
+                                        ]
+                                      ]
+                                    }
+                                  }
                                 }
                               ],
                               "defaultCacheBehavior": {
@@ -466,7 +494,7 @@
                                   "lambdaFunctionAssociations": [
                                     {
                                       "lambdaFunctionArn": {
-                                        "Ref": "apis3qsredirectCurrentVersion201EBAF5a671c75b1ec806526888d7396658d4ab"
+                                        "Ref": "apis3qsredirectCurrentVersion201EBAF55353c178dc9ad9cfdc662adea030e403"
                                       },
                                       "eventType": "origin-response"
                                     }
@@ -559,6 +587,32 @@
                                       "includeBody": true
                                     }
                                   ]
+                                },
+                                {
+                                  "pathPattern": "/redirect-me",
+                                  "targetOriginId": "edgeapiteststackapiOrigin5984B2994",
+                                  "allowedMethods": [
+                                    "GET",
+                                    "HEAD",
+                                    "OPTIONS",
+                                    "PUT",
+                                    "PATCH",
+                                    "POST",
+                                    "DELETE"
+                                  ],
+                                  "cachePolicyId": "4135ea2d-6df8-44a3-9df3-4b5a84be39ad",
+                                  "compress": true,
+                                  "originRequestPolicyId": "216adef6-5c7f-47e4-b989-5492eafa07d3",
+                                  "viewerProtocolPolicy": "allow-all",
+                                  "lambdaFunctionAssociations": [
+                                    {
+                                      "lambdaFunctionArn": {
+                                        "Ref": "apiredirectmeredirectorCurrentVersionA5C47DBF17b01f05a7c2764452a56eb5d99cd9f4"
+                                      },
+                                      "eventType": "origin-request",
+                                      "includeBody": true
+                                    }
+                                  ]
                                 }
                               ],
                               "httpVersion": "http2",
@@ -597,6 +651,14 @@
                       "Origin4": {
                         "id": "Origin4",
                         "path": "edge-api-test-stack/api/api/Resource/Origin4",
+                        "constructInfo": {
+                          "fqn": "constructs.Construct",
+                          "version": "10.2.70"
+                        }
+                      },
+                      "Origin5": {
+                        "id": "Origin5",
+                        "path": "edge-api-test-stack/api/api/Resource/Origin5",
                         "constructInfo": {
                           "fqn": "constructs.Construct",
                           "version": "10.2.70"
@@ -1005,7 +1067,7 @@
                           "aws:cdk:cloudformation:props": {
                             "code": {
                               "s3Bucket": "cdk-hnb659fds-assets-028446965111-us-east-1",
-                              "s3Key": "e568ed14759e05024fa779a0a128447c7c6adf222da22882dd3fd471ba571039.zip"
+                              "s3Key": "93426d0a07302b6bd8d6b681ad791999e8e9f09706a48819b149f901ac694020.zip"
                             },
                             "handler": "s3-qs-redirect.handler",
                             "role": {
@@ -1158,6 +1220,157 @@
                               "aws:cdk:cloudformation:props": {
                                 "functionName": {
                                   "Ref": "apirewriterhttpbinorg976F5BBD"
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_lambda.CfnVersion",
+                              "version": "2.99.1"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.Version",
+                          "version": "2.99.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.Function",
+                      "version": "2.99.1"
+                    }
+                  },
+                  "--redirect-me-redirector": {
+                    "id": "--redirect-me-redirector",
+                    "path": "edge-api-test-stack/api/api/--redirect-me-redirector",
+                    "children": {
+                      "ServiceRole": {
+                        "id": "ServiceRole",
+                        "path": "edge-api-test-stack/api/api/--redirect-me-redirector/ServiceRole",
+                        "children": {
+                          "ImportServiceRole": {
+                            "id": "ImportServiceRole",
+                            "path": "edge-api-test-stack/api/api/--redirect-me-redirector/ServiceRole/ImportServiceRole",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.Resource",
+                              "version": "2.99.1"
+                            }
+                          },
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "edge-api-test-stack/api/api/--redirect-me-redirector/ServiceRole/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                              "aws:cdk:cloudformation:props": {
+                                "assumeRolePolicyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": "sts:AssumeRole",
+                                      "Effect": "Allow",
+                                      "Principal": {
+                                        "Service": "lambda.amazonaws.com"
+                                      }
+                                    },
+                                    {
+                                      "Action": "sts:AssumeRole",
+                                      "Effect": "Allow",
+                                      "Principal": {
+                                        "Service": "edgelambda.amazonaws.com"
+                                      }
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "managedPolicyArns": [
+                                  {
+                                    "Fn::Join": [
+                                      "",
+                                      [
+                                        "arn:",
+                                        {
+                                          "Ref": "AWS::Partition"
+                                        },
+                                        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                                      ]
+                                    ]
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                              "version": "2.99.1"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Role",
+                          "version": "2.99.1"
+                        }
+                      },
+                      "Code": {
+                        "id": "Code",
+                        "path": "edge-api-test-stack/api/api/--redirect-me-redirector/Code",
+                        "children": {
+                          "Stage": {
+                            "id": "Stage",
+                            "path": "edge-api-test-stack/api/api/--redirect-me-redirector/Code/Stage",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.AssetStaging",
+                              "version": "2.99.1"
+                            }
+                          },
+                          "AssetBucket": {
+                            "id": "AssetBucket",
+                            "path": "edge-api-test-stack/api/api/--redirect-me-redirector/Code/AssetBucket",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                              "version": "2.99.1"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                          "version": "2.99.1"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "edge-api-test-stack/api/api/--redirect-me-redirector/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                          "aws:cdk:cloudformation:props": {
+                            "code": {
+                              "s3Bucket": "cdk-hnb659fds-assets-028446965111-us-east-1",
+                              "s3Key": "93426d0a07302b6bd8d6b681ad791999e8e9f09706a48819b149f901ac694020.zip"
+                            },
+                            "handler": "production-redirector.handler",
+                            "role": {
+                              "Fn::GetAtt": [
+                                "apiredirectmeredirectorServiceRole3C91D1D9",
+                                "Arn"
+                              ]
+                            },
+                            "runtime": "nodejs18.x"
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                          "version": "2.99.1"
+                        }
+                      },
+                      "CurrentVersion": {
+                        "id": "CurrentVersion",
+                        "path": "edge-api-test-stack/api/api/--redirect-me-redirector/CurrentVersion",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "edge-api-test-stack/api/api/--redirect-me-redirector/CurrentVersion/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::Lambda::Version",
+                              "aws:cdk:cloudformation:props": {
+                                "functionName": {
+                                  "Ref": "apiredirectmeredirector954188A7"
                                 }
                               }
                             },

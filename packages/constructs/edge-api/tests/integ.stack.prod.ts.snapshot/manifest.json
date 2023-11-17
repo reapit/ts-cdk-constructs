@@ -18,7 +18,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-deploy-role-028446965111-us-east-1",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-cfn-exec-role-028446965111-us-east-1",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-028446965111-us-east-1/00b81e185ce083dfa6618a62f98cfbf03ec9cad7cf0a0b6bc6f8abf2455381c9.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-028446965111-us-east-1/c6f8eb8e96553d06699d5130bac8e54a366a375de9ddcab60114db2bf8ffff8d.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -133,7 +133,7 @@
         "/edge-api-test-stack/api/api/s3-qs-redirect/CurrentVersion/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "apis3qsredirectCurrentVersion201EBAF5a671c75b1ec806526888d7396658d4ab"
+            "data": "apis3qsredirectCurrentVersion201EBAF55353c178dc9ad9cfdc662adea030e403"
           }
         ],
         "/edge-api-test-stack/api/api/rewriter-httpbin.org/ServiceRole/Resource": [
@@ -152,6 +152,24 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "apirewriterhttpbinorgCurrentVersion801D905B42d91845273123c5da00c9c3bdc47ebb"
+          }
+        ],
+        "/edge-api-test-stack/api/api/--redirect-me-redirector/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiredirectmeredirectorServiceRole3C91D1D9"
+          }
+        ],
+        "/edge-api-test-stack/api/api/--redirect-me-redirector/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiredirectmeredirector954188A7"
+          }
+        ],
+        "/edge-api-test-stack/api/api/--redirect-me-redirector/CurrentVersion/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiredirectmeredirectorCurrentVersionA5C47DBF17b01f05a7c2764452a56eb5d99cd9f4"
           }
         ],
         "/edge-api-test-stack/arecord/Resource": [
