@@ -71,8 +71,12 @@ export class DevEdgeAPI extends Construct {
     return this.redirector
   }
 
+  private replaceStr(str: string, find: string, replace: string) {
+    return Fn.join(replace, Fn.split(find, str))
+  }
+
   private ensureHTTPS(url: string) {
-    return `https://${Fn.join('', Fn.split('https://', url))}`
+    return `https://${this.replaceStr(this.replaceStr(url, 'http://', ''), 'https://', '')}`
   }
 
   private pickDestination(destination: Destination): string {
@@ -146,15 +150,17 @@ export class DevEdgeAPI extends Construct {
         parameterMapping: this.generateParameterMapping({ destination: this.pickDestination(destination) }),
       })
       this.api.addRoutes({
-        path: pathPattern,
+        path: pathPattern.replace('/*', ''),
         integration,
         methods: [HttpMethod.GET],
       })
-      this.api.addRoutes({
-        path: pathPattern + '/{proxy+}',
-        integration,
-        methods: [HttpMethod.GET],
-      })
+      if (pathPattern.endsWith('/*')) {
+        this.api.addRoutes({
+          path: pathPattern.replace('/*', '/{proxy+}'),
+          integration,
+          methods: [HttpMethod.GET],
+        })
+      }
     }
   }
 }
