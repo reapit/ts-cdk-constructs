@@ -126,4 +126,11 @@ describe('production-redirector', () => {
     expect(result.status).toBe('302')
     expect(result.headers.location[0].value).toBe('https://google.com')
   })
+
+  it('should 302 users to an error page if on destination is found', async () => {
+    const env = { destination: { 'something.com': 'https://google.com' } }
+    const result = await handler(genEvent('something.org', env) as any)
+    expect(result.status).toBe('302')
+    expect(result.headers.location[0].value).toContain('/error')
+  })
 })
