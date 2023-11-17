@@ -12,6 +12,9 @@ const pickDestination = (destination: Destination, host: string): string => {
     return destination
   }
   const map = destination[host]
+  if (!map) {
+    throw new Error(`Unable to find destination from ${JSON.stringify(destination)} for host "${host}"`)
+  }
   if (typeof map === 'string') {
     return map
   }

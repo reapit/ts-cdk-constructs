@@ -108,7 +108,21 @@ const genEvent = (reqHost: string, env: any) => ({
 describe('production-redirector', () => {
   it('should 302 users to the configured destination', async () => {
     const env = { destination: 'https://google.com' }
-    const result = await handler(genEvent('https://something.com', env) as any)
+    const result = await handler(genEvent('something.com', env) as any)
+    expect(result.status).toBe('302')
+    expect(result.headers.location[0].value).toBe('https://google.com')
+  })
+
+  it('should 302 users to the configured destination - domain map obj', async () => {
+    const env = { destination: { 'something.com': { destination: 'https://google.com' } } }
+    const result = await handler(genEvent('something.com', env) as any)
+    expect(result.status).toBe('302')
+    expect(result.headers.location[0].value).toBe('https://google.com')
+  })
+
+  it('should 302 users to the configured destination - domain map string', async () => {
+    const env = { destination: { 'something.com': 'https://google.com' } }
+    const result = await handler(genEvent('something.com', env) as any)
     expect(result.status).toBe('302')
     expect(result.headers.location[0].value).toBe('https://google.com')
   })
