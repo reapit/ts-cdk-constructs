@@ -122,6 +122,7 @@ api.addEndpoint({
 
 api.addEndpoint({
   pathPattern: '/redirect-me',
+  redirect: true,
   destination: 'https://google.com/?q=youve+been+redirected',
 })
 
