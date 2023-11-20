@@ -334,6 +334,7 @@ describe('edge-api', () => {
         },
       })
     })
+
     test('add a lambda endpoint - POST', () => {
       const { api, stack, template } = synth('us-east-1', {})
       api.addEndpoint({
@@ -669,6 +670,26 @@ describe('edge-api', () => {
       expect(lambdaResult.uri).toBe('/oauth2/authorize')
       expect(lambdaResult.querystring).toBe('identity_provider=b')
     })
+
+    test('add a redirection endpoint', () => {
+      const { api, template } = synth('us-east-1', {})
+      api.addEndpoint({
+        pathPattern: '/redirect-me',
+        destination: 'google.com',
+        redirect: true,
+      })
+
+      const result = template()
+      result.hasResourceProperties('AWS::CloudFront::Distribution', {
+        DistributionConfig: {
+          CacheBehaviors: [
+            {
+              AllowedMethods: ['GET', 'HEAD', 'OPTIONS', 'PUT', 'PATCH', 'POST', 'DELETE'],
+            },
+          ],
+        },
+      })
+    })
   })
   describe('dev', () => {
     test('synthesizes', () => {
@@ -954,6 +975,48 @@ describe('edge-api', () => {
           ],
         },
         PayloadFormatVersion: '1.0',
+      })
+    })
+    test('add a redirect endpoint', () => {
+      const { api, template } = synth('us-east-1', { devMode: true })
+      api.addEndpoint({
+        pathPattern: '/redirect-me',
+        destination: 'google.com',
+        redirect: true,
+      })
+      const result = template()
+      result.hasResourceProperties('AWS::ApiGatewayV2::Route', {
+        ApiId: {
+          Ref: 'api215E4D4B',
+        },
+        AuthorizationType: 'NONE',
+        RouteKey: 'GET /redirect-me',
+        Target: {
+          'Fn::Join': [
+            '',
+            [
+              'integrations/',
+              {
+                Ref: 'apiGETredirectmeredirectmeintegration7DBACAF6',
+              },
+            ],
+          ],
+        },
+      })
+      result.hasResourceProperties('AWS::ApiGatewayV2::Integration', {
+        ApiId: {
+          Ref: 'api215E4D4B',
+        },
+        IntegrationType: 'AWS_PROXY',
+        IntegrationUri: {
+          'Fn::GetAtt': ['apiredirect5F095797', 'Arn'],
+        },
+        PayloadFormatVersion: '2.0',
+        RequestParameters: {
+          'overwrite:header.env': {
+            'Fn::Base64': '{"destination":"google.com"}',
+          },
+        },
       })
     })
   })
