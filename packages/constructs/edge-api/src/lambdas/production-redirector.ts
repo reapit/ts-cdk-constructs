@@ -54,6 +54,9 @@ export const handler = async (event: CloudFrontRequestEvent): Promise<CloudFront
 
     const location = ensureHTTPS(pickDestination(destination, host))
 
+    const { uri, querystring } = req
+    const value = `${location}${uri}${querystring ? `?${querystring}` : ''}`
+
     return {
       status: '302',
       statusDescription: 'Found',
@@ -61,7 +64,7 @@ export const handler = async (event: CloudFrontRequestEvent): Promise<CloudFront
         location: [
           {
             key: 'location',
-            value: location,
+            value,
           },
         ],
       },

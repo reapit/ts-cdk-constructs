@@ -46,6 +46,6 @@ describe('edge-api prod integration', () => {
     expect(res.status).toBe(302)
     const locHeader = res.headers.get('location')
     expect(locHeader).not.toBeNull()
-    expect(locHeader).toBe('https://google.com/?q=youve+been+redirected')
+    expect(locHeader).toBe('https://google.com/redirect-me')
   })
 })
