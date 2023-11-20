@@ -757,6 +757,43 @@ describe('edge-api', () => {
         bucket: new Bucket(stack, 'bucket'),
       })
       const result = template()
+      result.hasResourceProperties('AWS::ApiGatewayV2::Integration', {
+        ApiId: {
+          Ref: 'api215E4D4B',
+        },
+        IntegrationMethod: 'ANY',
+        IntegrationType: 'HTTP_PROXY',
+        IntegrationUri: {
+          'Fn::Join': [
+            '',
+            [
+              {
+                'Fn::GetAtt': ['bucket43879C71', 'WebsiteURL'],
+              },
+              '/frontend/config.js',
+            ],
+          ],
+        },
+        PayloadFormatVersion: '1.0',
+      })
+      result.hasResourceProperties('AWS::ApiGatewayV2::Route', {
+        ApiId: {
+          Ref: 'api215E4D4B',
+        },
+        AuthorizationType: 'NONE',
+        RouteKey: 'GET /frontend/config.js',
+        Target: {
+          'Fn::Join': [
+            '',
+            [
+              'integrations/',
+              {
+                Ref: 'apiGETfrontendconfigjsproxyintegration69A14FD7',
+              },
+            ],
+          ],
+        },
+      })
       result.hasResourceProperties('AWS::ApiGatewayV2::Route', {
         ApiId: {
           Ref: 'api215E4D4B',
@@ -769,7 +806,7 @@ describe('edge-api', () => {
             [
               'integrations/',
               {
-                Ref: 'apiGETfrontendproxyproxyintegrationE8163236',
+                Ref: 'apiGETfrontendfrontendintegration2B7B880A',
               },
             ],
           ],
@@ -787,7 +824,7 @@ describe('edge-api', () => {
             [
               'integrations/',
               {
-                Ref: 'apiGETfrontendproxyintegration3172D3D6',
+                Ref: 'apiGETfrontendfrontendintegration2B7B880A',
               },
             ],
           ],
@@ -797,40 +834,27 @@ describe('edge-api', () => {
         ApiId: {
           Ref: 'api215E4D4B',
         },
-        IntegrationType: 'HTTP_PROXY',
+        IntegrationType: 'AWS_PROXY',
         IntegrationUri: {
-          'Fn::Join': [
-            '',
-            [
-              'https://',
-              {
-                'Fn::Join': [
-                  '',
-                  {
-                    'Fn::Split': [
-                      'https://',
-                      {
-                        'Fn::Join': [
-                          '',
-                          {
-                            'Fn::Split': [
-                              'http://',
-                              {
-                                'Fn::GetAtt': ['bucket43879C71', 'WebsiteURL'],
-                              },
-                            ],
-                          },
-                        ],
-                      },
-                    ],
-                  },
-                ],
-              },
-              '/frontend',
-            ],
-          ],
+          'Fn::GetAtt': ['apiredirect5F095797', 'Arn'],
         },
-        PayloadFormatVersion: '1.0',
+        PayloadFormatVersion: '2.0',
+        RequestParameters: {
+          'overwrite:header.env': {
+            'Fn::Base64': {
+              'Fn::Join': [
+                '',
+                [
+                  '{"destination":"',
+                  {
+                    'Fn::GetAtt': ['bucket43879C71', 'WebsiteURL'],
+                  },
+                  '"}',
+                ],
+              ],
+            },
+          },
+        },
       })
     })
     test('add a lambda endpoint', () => {

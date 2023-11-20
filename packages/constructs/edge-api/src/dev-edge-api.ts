@@ -138,10 +138,26 @@ export class DevEdgeAPI extends Construct {
     }
     if (endpointIsFrontendEndpoint(endpoint)) {
       const { pathPattern, bucket } = endpoint
-      this.addEndpoint({
-        pathPattern: pathPattern.endsWith('/*') ? pathPattern : `${pathPattern}/*`,
+      const integration = new HttpLambdaIntegration(pathPattern + '-integration', this.getRedirector(), {
+        parameterMapping: this.generateParameterMapping({ destination: bucket.bucketWebsiteUrl }),
+      })
+      this.api.addRoutes({
+        path: pathPattern.replace('*', ''),
+        integration,
         methods: [HttpMethod.GET],
-        destination: bucket.bucketWebsiteUrl,
+      })
+      this.api.addRoutes({
+        path: pathPattern.replace('*', '') + '/{proxy+}',
+        integration,
+        methods: [HttpMethod.GET],
+      })
+      this.api.addRoutes({
+        path: pathPattern.replace('*', '') + '/config.js',
+        integration: new HttpUrlIntegration(
+          'proxy-integration',
+          bucket.bucketWebsiteUrl + pathPattern.replace('*', '') + '/config.js',
+        ),
+        methods: [HttpMethod.GET],
       })
     }
     if (endpointIsRedirectionEndpoint(endpoint)) {
