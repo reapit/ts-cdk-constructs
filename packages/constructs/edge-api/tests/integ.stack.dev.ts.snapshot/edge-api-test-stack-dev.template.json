@@ -92,7 +92,25 @@
     },
     "IntegrationMethod": "ANY",
     "IntegrationType": "HTTP_PROXY",
-    "IntegrationUri": "https://example.org",
+    "IntegrationUri": {
+     "Fn::Join": [
+      "",
+      [
+       "https://",
+       {
+        "Fn::Join": [
+         "",
+         {
+          "Fn::Split": [
+           "https://",
+           "example.org"
+          ]
+         }
+        ]
+       }
+      ]
+     ]
+    },
     "PayloadFormatVersion": "1.0"
    },
    "Metadata": {
@@ -131,7 +149,26 @@
     },
     "IntegrationMethod": "ANY",
     "IntegrationType": "HTTP_PROXY",
-    "IntegrationUri": "https://example.org/{proxy}",
+    "IntegrationUri": {
+     "Fn::Join": [
+      "",
+      [
+       "https://",
+       {
+        "Fn::Join": [
+         "",
+         {
+          "Fn::Split": [
+           "https://",
+           "example.org"
+          ]
+         }
+        ]
+       },
+       "/{proxy}"
+      ]
+     ]
+    },
     "PayloadFormatVersion": "1.0"
    },
    "Metadata": {
@@ -372,7 +409,26 @@
     },
     "IntegrationMethod": "ANY",
     "IntegrationType": "HTTP_PROXY",
-    "IntegrationUri": "https://httpbin.org/get",
+    "IntegrationUri": {
+     "Fn::Join": [
+      "",
+      [
+       "https://",
+       {
+        "Fn::Join": [
+         "",
+         {
+          "Fn::Split": [
+           "https://",
+           "httpbin.org"
+          ]
+         }
+        ]
+       },
+       "/get"
+      ]
+     ]
+    },
     "PayloadFormatVersion": "1.0"
    },
    "Metadata": {
@@ -411,7 +467,26 @@
     },
     "IntegrationMethod": "ANY",
     "IntegrationType": "HTTP_PROXY",
-    "IntegrationUri": "https://httpbin.org/get/{proxy}",
+    "IntegrationUri": {
+     "Fn::Join": [
+      "",
+      [
+       "https://",
+       {
+        "Fn::Join": [
+         "",
+         {
+          "Fn::Split": [
+           "https://",
+           "httpbin.org"
+          ]
+         }
+        ]
+       },
+       "/get/{proxy}"
+      ]
+     ]
+    },
     "PayloadFormatVersion": "1.0"
    },
    "Metadata": {
@@ -522,6 +597,86 @@
     "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/ANY--api/Resource"
    }
   },
+  "apiGETredirectmeredirectmeintegration7DBACAF6": {
+   "Type": "AWS::ApiGatewayV2::Integration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "api215E4D4B"
+    },
+    "IntegrationType": "AWS_PROXY",
+    "IntegrationUri": {
+     "Fn::GetAtt": [
+      "apiredirect5F095797",
+      "Arn"
+     ]
+    },
+    "PayloadFormatVersion": "2.0",
+    "RequestParameters": {
+     "overwrite:header.env": {
+      "Fn::Base64": "{\"destination\":\"https://google.com\"}"
+     }
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/GET--redirect-me/--redirect-me-integration/Resource"
+   }
+  },
+  "apiGETredirectmeredirectmeintegrationPermission9857413E": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "apiredirect5F095797",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:eu-central-1:028446965111:",
+       {
+        "Ref": "api215E4D4B"
+       },
+       "/*/*/redirect-me"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/GET--redirect-me/--redirect-me-integration-Permission"
+   }
+  },
+  "apiGETredirectme38145E3D": {
+   "Type": "AWS::ApiGatewayV2::Route",
+   "Properties": {
+    "ApiId": {
+     "Ref": "api215E4D4B"
+    },
+    "AuthorizationType": "NONE",
+    "RouteKey": "GET /redirect-me",
+    "Target": {
+     "Fn::Join": [
+      "",
+      [
+       "integrations/",
+       {
+        "Ref": "apiGETredirectmeredirectmeintegration7DBACAF6"
+       }
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/GET--redirect-me/Resource"
+   }
+  },
   "apiredirectServiceRole981B3F00": {
    "Type": "AWS::IAM::Role",
    "Properties": {
@@ -561,7 +716,7 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-028446965111-eu-central-1",
-     "S3Key": "e568ed14759e05024fa779a0a128447c7c6adf222da22882dd3fd471ba571039.zip"
+     "S3Key": "861c9a77c75d8868b35fb0ad893d2efe0dbf2b440a93b0b95135143fced86642.zip"
     },
     "Handler": "redirector.handler",
     "Role": {
@@ -577,7 +732,7 @@
    ],
    "Metadata": {
     "aws:cdk:path": "edge-api-test-stack-dev/api/api/redirect/Resource",
-    "aws:asset:path": "asset.e568ed14759e05024fa779a0a128447c7c6adf222da22882dd3fd471ba571039",
+    "aws:asset:path": "asset.861c9a77c75d8868b35fb0ad893d2efe0dbf2b440a93b0b95135143fced86642",
     "aws:asset:is-bundled": false,
     "aws:asset:property": "Code"
    }
