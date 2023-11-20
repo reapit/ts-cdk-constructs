@@ -189,7 +189,25 @@
                                     },
                                     "integrationMethod": "ANY",
                                     "integrationType": "HTTP_PROXY",
-                                    "integrationUri": "https://example.org",
+                                    "integrationUri": {
+                                      "Fn::Join": [
+                                        "",
+                                        [
+                                          "https://",
+                                          {
+                                            "Fn::Join": [
+                                              "",
+                                              {
+                                                "Fn::Split": [
+                                                  "https://",
+                                                  "example.org"
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      ]
+                                    },
                                     "payloadFormatVersion": "1.0"
                                   }
                                 },
@@ -258,7 +276,26 @@
                                     },
                                     "integrationMethod": "ANY",
                                     "integrationType": "HTTP_PROXY",
-                                    "integrationUri": "https://example.org/{proxy}",
+                                    "integrationUri": {
+                                      "Fn::Join": [
+                                        "",
+                                        [
+                                          "https://",
+                                          {
+                                            "Fn::Join": [
+                                              "",
+                                              {
+                                                "Fn::Split": [
+                                                  "https://",
+                                                  "example.org"
+                                                ]
+                                              }
+                                            ]
+                                          },
+                                          "/{proxy}"
+                                        ]
+                                      ]
+                                    },
                                     "payloadFormatVersion": "1.0"
                                   }
                                 },
@@ -614,7 +651,26 @@
                                     },
                                     "integrationMethod": "ANY",
                                     "integrationType": "HTTP_PROXY",
-                                    "integrationUri": "https://httpbin.org/get",
+                                    "integrationUri": {
+                                      "Fn::Join": [
+                                        "",
+                                        [
+                                          "https://",
+                                          {
+                                            "Fn::Join": [
+                                              "",
+                                              {
+                                                "Fn::Split": [
+                                                  "https://",
+                                                  "httpbin.org"
+                                                ]
+                                              }
+                                            ]
+                                          },
+                                          "/get"
+                                        ]
+                                      ]
+                                    },
                                     "payloadFormatVersion": "1.0"
                                   }
                                 },
@@ -683,7 +739,26 @@
                                     },
                                     "integrationMethod": "ANY",
                                     "integrationType": "HTTP_PROXY",
-                                    "integrationUri": "https://httpbin.org/get/{proxy}",
+                                    "integrationUri": {
+                                      "Fn::Join": [
+                                        "",
+                                        [
+                                          "https://",
+                                          {
+                                            "Fn::Join": [
+                                              "",
+                                              {
+                                                "Fn::Split": [
+                                                  "https://",
+                                                  "httpbin.org"
+                                                ]
+                                              }
+                                            ]
+                                          },
+                                          "/get/{proxy}"
+                                        ]
+                                      ]
+                                    },
                                     "payloadFormatVersion": "1.0"
                                   }
                                 },
@@ -847,6 +922,121 @@
                           "fqn": "@aws-cdk/aws-apigatewayv2-alpha.HttpRoute",
                           "version": "2.96.2-alpha.0"
                         }
+                      },
+                      "GET--redirect-me": {
+                        "id": "GET--redirect-me",
+                        "path": "edge-api-test-stack-dev/api/api/api/GET--redirect-me",
+                        "children": {
+                          "--redirect-me-integration": {
+                            "id": "--redirect-me-integration",
+                            "path": "edge-api-test-stack-dev/api/api/api/GET--redirect-me/--redirect-me-integration",
+                            "children": {
+                              "Resource": {
+                                "id": "Resource",
+                                "path": "edge-api-test-stack-dev/api/api/api/GET--redirect-me/--redirect-me-integration/Resource",
+                                "attributes": {
+                                  "aws:cdk:cloudformation:type": "AWS::ApiGatewayV2::Integration",
+                                  "aws:cdk:cloudformation:props": {
+                                    "apiId": {
+                                      "Ref": "api215E4D4B"
+                                    },
+                                    "integrationType": "AWS_PROXY",
+                                    "integrationUri": {
+                                      "Fn::GetAtt": [
+                                        "apiredirect5F095797",
+                                        "Arn"
+                                      ]
+                                    },
+                                    "payloadFormatVersion": "2.0",
+                                    "requestParameters": {
+                                      "overwrite:header.env": {
+                                        "Fn::Base64": "{\"destination\":\"https://google.com\"}"
+                                      }
+                                    }
+                                  }
+                                },
+                                "constructInfo": {
+                                  "fqn": "aws-cdk-lib.aws_apigatewayv2.CfnIntegration",
+                                  "version": "2.99.1"
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "@aws-cdk/aws-apigatewayv2-alpha.HttpIntegration",
+                              "version": "2.96.2-alpha.0"
+                            }
+                          },
+                          "--redirect-me-integration-Permission": {
+                            "id": "--redirect-me-integration-Permission",
+                            "path": "edge-api-test-stack-dev/api/api/api/GET--redirect-me/--redirect-me-integration-Permission",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                              "aws:cdk:cloudformation:props": {
+                                "action": "lambda:InvokeFunction",
+                                "functionName": {
+                                  "Fn::GetAtt": [
+                                    "apiredirect5F095797",
+                                    "Arn"
+                                  ]
+                                },
+                                "principal": "apigateway.amazonaws.com",
+                                "sourceArn": {
+                                  "Fn::Join": [
+                                    "",
+                                    [
+                                      "arn:",
+                                      {
+                                        "Ref": "AWS::Partition"
+                                      },
+                                      ":execute-api:eu-central-1:028446965111:",
+                                      {
+                                        "Ref": "api215E4D4B"
+                                      },
+                                      "/*/*/redirect-me"
+                                    ]
+                                  ]
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                              "version": "2.99.1"
+                            }
+                          },
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "edge-api-test-stack-dev/api/api/api/GET--redirect-me/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::ApiGatewayV2::Route",
+                              "aws:cdk:cloudformation:props": {
+                                "apiId": {
+                                  "Ref": "api215E4D4B"
+                                },
+                                "authorizationType": "NONE",
+                                "routeKey": "GET /redirect-me",
+                                "target": {
+                                  "Fn::Join": [
+                                    "",
+                                    [
+                                      "integrations/",
+                                      {
+                                        "Ref": "apiGETredirectmeredirectmeintegration7DBACAF6"
+                                      }
+                                    ]
+                                  ]
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_apigatewayv2.CfnRoute",
+                              "version": "2.99.1"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "@aws-cdk/aws-apigatewayv2-alpha.HttpRoute",
+                          "version": "2.96.2-alpha.0"
+                        }
                       }
                     },
                     "constructInfo": {
@@ -949,7 +1139,7 @@
                           "aws:cdk:cloudformation:props": {
                             "code": {
                               "s3Bucket": "cdk-hnb659fds-assets-028446965111-eu-central-1",
-                              "s3Key": "e568ed14759e05024fa779a0a128447c7c6adf222da22882dd3fd471ba571039.zip"
+                              "s3Key": "861c9a77c75d8868b35fb0ad893d2efe0dbf2b440a93b0b95135143fced86642.zip"
                             },
                             "handler": "redirector.handler",
                             "role": {

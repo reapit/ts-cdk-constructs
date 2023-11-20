@@ -18,7 +18,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-deploy-role-028446965111-eu-central-1",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-cfn-exec-role-028446965111-eu-central-1",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-028446965111-eu-central-1/c7e4fd4b5953cf90cfa743ee60a5d3a3d2b043a5db3e19a203577ab7890f222b.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-028446965111-eu-central-1/7364716240c9abcfdec2b199e3ec24362dab392803771d3bf0073f9b2720c207.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -170,6 +170,24 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "apiANYapi0BF5EBED"
+          }
+        ],
+        "/edge-api-test-stack-dev/api/api/api/GET--redirect-me/--redirect-me-integration/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiGETredirectmeredirectmeintegration7DBACAF6"
+          }
+        ],
+        "/edge-api-test-stack-dev/api/api/api/GET--redirect-me/--redirect-me-integration-Permission": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiGETredirectmeredirectmeintegrationPermission9857413E"
+          }
+        ],
+        "/edge-api-test-stack-dev/api/api/api/GET--redirect-me/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiGETredirectme38145E3D"
           }
         ],
         "/edge-api-test-stack-dev/api/api/redirect/ServiceRole/Resource": [
