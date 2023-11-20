@@ -138,4 +138,32 @@ describe('production-redirector', () => {
     expect(result.status).toBe('302')
     expect(result.headers.location[0].value).toContain('/error')
   })
+
+  it('should error nicely - no record', async () => {
+    const result = await handler({ Records: [] })
+    expect(result.status).toBe('302')
+    expect(result.headers.location[0].value).toContain('/error')
+  })
+  it('should error nicely - no host header', async () => {
+    const result = await handler({
+      Records: [
+        {
+          cf: {
+            request: {
+              headers: {
+                host: [],
+              },
+            },
+          },
+        },
+      ],
+    } as any)
+    expect(result.status).toBe('302')
+    expect(result.headers.location[0].value).toContain('/error')
+  })
+  it('should error nicely - no destination', async () => {
+    const result = await handler(genEvent('something.org', {}, '?a=b') as any)
+    expect(result.status).toBe('302')
+    expect(result.headers.location[0].value).toContain('/error')
+  })
 })

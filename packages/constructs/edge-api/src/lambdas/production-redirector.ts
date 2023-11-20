@@ -2,8 +2,7 @@ import { CloudFrontRequest, CloudFrontRequestEvent, CloudFrontResponse } from 'a
 import { Destination } from '../types'
 
 const getEnv = (event: CloudFrontRequest): Record<string, any> => {
-  const header = event.origin?.s3?.customHeaders['env']
-  const str = header ? header[0].value : undefined
+  const str = event.origin?.s3?.customHeaders['env']?.[0]?.value
   return str ? JSON.parse(str) : {}
 }
 
