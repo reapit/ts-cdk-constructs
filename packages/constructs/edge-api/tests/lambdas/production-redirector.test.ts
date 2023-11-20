@@ -1,6 +1,6 @@
 import { handler } from '../../src/lambdas/production-redirector'
 
-const genEvent = (reqHost: string, env: any) => ({
+const genEvent = (reqHost: string, env: any, querystring: string) => ({
   Records: [
     {
       cf: {
@@ -95,8 +95,7 @@ const genEvent = (reqHost: string, env: any) => ({
               sslProtocols: ['TLSv1.2'],
             },
           },
-          querystring:
-            'response_type=code&client_id=asdf&state=14af2312-f3df-401e-b7f2-47131b97bfc7&redirect_uri=https://example.org',
+          querystring,
           uri: '/',
         },
       },
@@ -107,35 +106,35 @@ const genEvent = (reqHost: string, env: any) => ({
 describe('production-redirector', () => {
   it('should 302 users to the configured destination', async () => {
     const env = { destination: 'https://google.com' }
-    const result = await handler(genEvent('something.com', env) as any)
+    const result = await handler(genEvent('something.com', env, 'a=b') as any)
     expect(result.status).toBe('302')
-    expect(result.headers.location[0].value).toBe('https://google.com')
+    expect(result.headers.location[0].value).toBe('https://google.com/?a=b')
   })
 
   it('should 302 users to the configured destination with https', async () => {
     const env = { destination: 'google.com' }
-    const result = await handler(genEvent('something.com', env) as any)
+    const result = await handler(genEvent('something.com', env, 'a=b') as any)
     expect(result.status).toBe('302')
-    expect(result.headers.location[0].value).toBe('https://google.com')
+    expect(result.headers.location[0].value).toBe('https://google.com/?a=b')
   })
 
   it('should 302 users to the configured destination - domain map obj', async () => {
     const env = { destination: { 'something.com': { destination: 'https://google.com' } } }
-    const result = await handler(genEvent('something.com', env) as any)
+    const result = await handler(genEvent('something.com', env, 'a=b') as any)
     expect(result.status).toBe('302')
-    expect(result.headers.location[0].value).toBe('https://google.com')
+    expect(result.headers.location[0].value).toBe('https://google.com/?a=b')
   })
 
   it('should 302 users to the configured destination - domain map string', async () => {
     const env = { destination: { 'something.com': 'https://google.com' } }
-    const result = await handler(genEvent('something.com', env) as any)
+    const result = await handler(genEvent('something.com', env, 'a=b') as any)
     expect(result.status).toBe('302')
-    expect(result.headers.location[0].value).toBe('https://google.com')
+    expect(result.headers.location[0].value).toBe('https://google.com/?a=b')
   })
 
   it('should 302 users to an error page if on destination is found', async () => {
     const env = { destination: { 'something.com': 'https://google.com' } }
-    const result = await handler(genEvent('something.org', env) as any)
+    const result = await handler(genEvent('something.org', env, '?a=b') as any)
     expect(result.status).toBe('302')
     expect(result.headers.location[0].value).toContain('/error')
   })
