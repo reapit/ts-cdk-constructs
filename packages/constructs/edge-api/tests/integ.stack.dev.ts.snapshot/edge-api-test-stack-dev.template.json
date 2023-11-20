@@ -716,7 +716,7 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-028446965111-eu-central-1",
-     "S3Key": "861c9a77c75d8868b35fb0ad893d2efe0dbf2b440a93b0b95135143fced86642.zip"
+     "S3Key": "2ea0bec2e90021dc6ee51794fc23cfd48e6c8c7d4933c25dc21ddd7815aee37e.zip"
     },
     "Handler": "redirector.handler",
     "Role": {
@@ -732,7 +732,7 @@
    ],
    "Metadata": {
     "aws:cdk:path": "edge-api-test-stack-dev/api/api/redirect/Resource",
-    "aws:asset:path": "asset.861c9a77c75d8868b35fb0ad893d2efe0dbf2b440a93b0b95135143fced86642",
+    "aws:asset:path": "asset.2ea0bec2e90021dc6ee51794fc23cfd48e6c8c7d4933c25dc21ddd7815aee37e",
     "aws:asset:is-bundled": false,
     "aws:asset:property": "Code"
    }
