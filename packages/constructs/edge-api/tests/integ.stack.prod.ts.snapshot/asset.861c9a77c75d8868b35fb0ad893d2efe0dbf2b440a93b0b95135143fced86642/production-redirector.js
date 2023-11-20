@@ -70,6 +70,8 @@ var handler = async (event) => {
       throw new Error("no destination present on request");
     }
     const location = ensureHTTPS(pickDestination(destination, host));
+    const { uri, querystring } = req;
+    const value = `${location}${uri}${querystring ? `?${querystring}` : ""}`;
     return {
       status: "302",
       statusDescription: "Found",
@@ -77,7 +79,7 @@ var handler = async (event) => {
         location: [
           {
             key: "location",
-            value: location
+            value
           }
         ]
       }

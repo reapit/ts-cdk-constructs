@@ -18,7 +18,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-deploy-role-028446965111-us-east-1",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-cfn-exec-role-028446965111-us-east-1",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-028446965111-us-east-1/c6f8eb8e96553d06699d5130bac8e54a366a375de9ddcab60114db2bf8ffff8d.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-028446965111-us-east-1/2dace2b041f4f0b9422c1ddc3478be7e0c4b91f6060fe56bbd2e423fcb371d2b.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -133,7 +133,7 @@
         "/edge-api-test-stack/api/api/s3-qs-redirect/CurrentVersion/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "apis3qsredirectCurrentVersion201EBAF55353c178dc9ad9cfdc662adea030e403"
+            "data": "apis3qsredirectCurrentVersion201EBAF528e3c94a7885ffe9a920872870739983"
           }
         ],
         "/edge-api-test-stack/api/api/rewriter-httpbin.org/ServiceRole/Resource": [
@@ -169,7 +169,7 @@
         "/edge-api-test-stack/api/api/--redirect-me-redirector/CurrentVersion/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "apiredirectmeredirectorCurrentVersionA5C47DBF17b01f05a7c2764452a56eb5d99cd9f4"
+            "data": "apiredirectmeredirectorCurrentVersionA5C47DBF12bd68966266e5310f81b2fd99d530af"
           }
         ],
         "/edge-api-test-stack/arecord/Resource": [

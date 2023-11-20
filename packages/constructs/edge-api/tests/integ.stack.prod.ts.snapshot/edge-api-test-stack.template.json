@@ -214,7 +214,7 @@
         {
          "EventType": "origin-response",
          "LambdaFunctionARN": {
-          "Ref": "apis3qsredirectCurrentVersion201EBAF55353c178dc9ad9cfdc662adea030e403"
+          "Ref": "apis3qsredirectCurrentVersion201EBAF528e3c94a7885ffe9a920872870739983"
          }
         }
        ],
@@ -328,7 +328,7 @@
          "EventType": "origin-request",
          "IncludeBody": true,
          "LambdaFunctionARN": {
-          "Ref": "apiredirectmeredirectorCurrentVersionA5C47DBF17b01f05a7c2764452a56eb5d99cd9f4"
+          "Ref": "apiredirectmeredirectorCurrentVersionA5C47DBF12bd68966266e5310f81b2fd99d530af"
          }
         }
        ],
@@ -450,7 +450,7 @@
        "OriginCustomHeaders": [
         {
          "HeaderName": "env",
-         "HeaderValue": "{\"destination\":\"https://google.com/?q=youve+been+redirected\"}"
+         "HeaderValue": "{\"destination\":\"https://google.com\"}"
         }
        ],
        "S3OriginConfig": {
@@ -704,7 +704,7 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-028446965111-us-east-1",
-     "S3Key": "93426d0a07302b6bd8d6b681ad791999e8e9f09706a48819b149f901ac694020.zip"
+     "S3Key": "861c9a77c75d8868b35fb0ad893d2efe0dbf2b440a93b0b95135143fced86642.zip"
     },
     "Handler": "s3-qs-redirect.handler",
     "Role": {
@@ -720,12 +720,12 @@
    ],
    "Metadata": {
     "aws:cdk:path": "edge-api-test-stack/api/api/s3-qs-redirect/Resource",
-    "aws:asset:path": "asset.93426d0a07302b6bd8d6b681ad791999e8e9f09706a48819b149f901ac694020",
+    "aws:asset:path": "asset.861c9a77c75d8868b35fb0ad893d2efe0dbf2b440a93b0b95135143fced86642",
     "aws:asset:is-bundled": false,
     "aws:asset:property": "Code"
    }
   },
-  "apis3qsredirectCurrentVersion201EBAF55353c178dc9ad9cfdc662adea030e403": {
+  "apis3qsredirectCurrentVersion201EBAF528e3c94a7885ffe9a920872870739983": {
    "Type": "AWS::Lambda::Version",
    "Properties": {
     "FunctionName": {
@@ -856,7 +856,7 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-028446965111-us-east-1",
-     "S3Key": "93426d0a07302b6bd8d6b681ad791999e8e9f09706a48819b149f901ac694020.zip"
+     "S3Key": "861c9a77c75d8868b35fb0ad893d2efe0dbf2b440a93b0b95135143fced86642.zip"
     },
     "Handler": "production-redirector.handler",
     "Role": {
@@ -872,12 +872,12 @@
    ],
    "Metadata": {
     "aws:cdk:path": "edge-api-test-stack/api/api/--redirect-me-redirector/Resource",
-    "aws:asset:path": "asset.93426d0a07302b6bd8d6b681ad791999e8e9f09706a48819b149f901ac694020",
+    "aws:asset:path": "asset.861c9a77c75d8868b35fb0ad893d2efe0dbf2b440a93b0b95135143fced86642",
     "aws:asset:is-bundled": false,
     "aws:asset:property": "Code"
    }
   },
-  "apiredirectmeredirectorCurrentVersionA5C47DBF17b01f05a7c2764452a56eb5d99cd9f4": {
+  "apiredirectmeredirectorCurrentVersionA5C47DBF12bd68966266e5310f81b2fd99d530af": {
    "Type": "AWS::Lambda::Version",
    "Properties": {
     "FunctionName": {
