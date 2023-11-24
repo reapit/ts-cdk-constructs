@@ -20,11 +20,13 @@ import {
   HttpMethod,
   LambdaEndpoint,
   ProxyEndpoint,
+  RedirectionEndpoint,
   RequestMiddleware,
   ResponseMiddleware,
   endpointIsFrontendEndpoint,
   endpointIsLambdaEndpoint,
   endpointIsProxyEndpoint,
+  endpointIsRedirectionEndpoint,
   isRequestMiddleware,
   isResponseMiddleware,
 } from './types'
@@ -346,7 +348,26 @@ export class ProductionEdgeAPI extends Construct {
       return this.proxyEndpointToAddBehaviorOptions(endpoint)
     }
 
+    if (endpointIsRedirectionEndpoint(endpoint)) {
+      return this.redirectionEndpointToAddBehaviorOptions(endpoint)
+    }
+
     throw new Error('unhandled endpoint type')
+  }
+
+  private redirectionEndpointToAddBehaviorOptions(endpoint: RedirectionEndpoint): EndpointBehaviorOptions[] {
+    const lambda = new EdgeAPILambda(this, endpoint.pathPattern + '-redirector', {
+      runtime: Runtime.NODEJS_18_X,
+      handler: 'production-redirector.handler',
+      code: Code.fromAsset(path.resolve(__dirname, 'lambdas')),
+      environment: {
+        destination: endpoint.destination,
+      } as any,
+    })
+    return this.lambdaEndpointToAddBehaviorOptions({
+      pathPattern: endpoint.pathPattern,
+      lambda,
+    })
   }
 
   private endpointToBehaviorOptions(endpoint: Endpoint): BehaviorOptions {

@@ -126,6 +126,7 @@ export class IntegrationTest {
     if (!(await snapshotExists(this.dir, this.file))) {
       console.log('synth starting')
       this.outDir = await this.mkTmpDir()
+      console.log('outDir', this.outDir)
       const synthres = await synth(this.dir, this.file, this.stackName, this.outDir)
       console.log(synthres)
       console.log('synth complete')
@@ -137,6 +138,7 @@ export class IntegrationTest {
 
     console.log('diff starting')
     const outDir = await this.mkTmpDir()
+    console.log('outDir', outDir)
     const diffResult = await diff(this.dir, this.file, this.stackName, outDir)
     console.log('diff complete', JSON.stringify(diffResult))
     const hasDifferences = !diffResult.toLowerCase().includes('there were no differences')

@@ -94,6 +94,12 @@ export const edgeAPITest = (devMode?: boolean) => {
     }),
   })
 
+  api.addEndpoint({
+    pathPattern: '/redirect-me',
+    redirect: true,
+    destination: 'https://google.com',
+  })
+
   new CfnOutput(stack, 'output', {
     value: `https://${domainName}`,
   })

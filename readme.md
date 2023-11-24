@@ -1,5 +1,5 @@
 # @reapit-cdk/ts-constructs
-![coverage: 93.03%25](https://img.shields.io/badge/coverage-93.03%25-green)
+![coverage: 93.09%25](https://img.shields.io/badge/coverage-93.09%25-green)
 CDK Constructs Monorepo
 ## Constructs
 
