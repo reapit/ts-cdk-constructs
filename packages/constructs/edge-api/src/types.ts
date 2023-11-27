@@ -48,6 +48,7 @@ export interface ProxyEndpoint extends BaseEndpoint {
   disableBuiltInMiddlewares?: DisableBuiltInMiddlewares
   originResponseInterceptor?: EdgeAPILambda
   methods?: HttpMethod[]
+  insecure?: boolean
 }
 
 export interface RedirectionEndpoint extends BaseEndpoint {

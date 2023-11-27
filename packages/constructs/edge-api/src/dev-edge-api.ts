@@ -75,8 +75,9 @@ export class DevEdgeAPI extends Construct {
     return Fn.join(replace, Fn.split(find, str))
   }
 
-  private ensureHTTPS(url: string) {
-    return `https://${this.replaceStr(this.replaceStr(url, 'http://', ''), 'https://', '')}`
+  private ensureHTTPS(url: string, insecure?: boolean) {
+    const protocol = insecure ? 'http' : 'https'
+    return `${protocol}://${this.replaceStr(this.replaceStr(url, 'http://', ''), 'https://', '')}`
   }
 
   private pickDestination(destination: Destination): string {
@@ -110,7 +111,7 @@ export class DevEdgeAPI extends Construct {
         path,
         integration: new HttpUrlIntegration(
           'proxy-integration',
-          this.ensureHTTPS(this.pickDestination(endpoint.destination)) + destPath,
+          this.ensureHTTPS(this.pickDestination(endpoint.destination), endpoint.insecure) + destPath,
         ),
         methods,
       })
@@ -119,7 +120,7 @@ export class DevEdgeAPI extends Construct {
           path: endpoint.pathPattern.replace('*', '{proxy+}'),
           integration: new HttpUrlIntegration(
             'proxy-integration',
-            this.ensureHTTPS(this.pickDestination(endpoint.destination)) + destPath + '/{proxy}',
+            this.ensureHTTPS(this.pickDestination(endpoint.destination), endpoint.insecure) + destPath + '/{proxy}',
           ),
           methods,
         })
