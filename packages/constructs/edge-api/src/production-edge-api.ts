@@ -9,6 +9,7 @@ import {
   OriginAccessIdentity,
   OriginProtocolPolicy,
   OriginRequestPolicy,
+  ResponseHeadersPolicy,
 } from 'aws-cdk-lib/aws-cloudfront'
 import { Bucket } from 'aws-cdk-lib/aws-s3'
 import { Construct } from 'constructs'
@@ -56,12 +57,20 @@ export class ProductionEdgeAPI extends Construct {
   private originAccessIdentity: OriginAccessIdentity
   private invalidationPaths: string[] = []
   distribution: Distribution
+  private defaultResponseHeadersPolicy?: ResponseHeadersPolicy
 
   constructor(scope: Construct, id: string, props: ProductionEdgeAPIProps) {
     super(scope, id)
     this.bucket = new Bucket(this, 'bucket')
     this.originAccessIdentity = new OriginAccessIdentity(this, 'oia', {})
     this.bucket.grantRead(this.originAccessIdentity)
+    if (props.defaultResponseHeaderOverrides) {
+      this.defaultResponseHeadersPolicy = new ResponseHeadersPolicy(
+        this,
+        'defaultResponseHeadersPolicy',
+        props.defaultResponseHeaderOverrides,
+      )
+    }
     const distribution = new Distribution(this, 'Resource', {
       defaultBehavior: this.endpointToBehaviorOptions({
         ...props.defaultEndpoint,
@@ -335,27 +344,53 @@ export class ProductionEdgeAPI extends Construct {
     return this.rewriterCache[key]
   }
 
+  private addResponseHeadersPolicyToEndpointBehaviorOptions(
+    endpointBehaviorOptions: EndpointBehaviorOptions,
+    responseHeadersPolicy?: ResponseHeadersPolicy,
+  ): EndpointBehaviorOptions {
+    return {
+      ...endpointBehaviorOptions,
+      addBehaviorOptions: {
+        ...endpointBehaviorOptions.addBehaviorOptions,
+        responseHeadersPolicy,
+      },
+    }
+  }
+
   private endpointToAddBehaviorOptions(endpoint: Endpoint): EndpointBehaviorOptions[] {
+    const responseHeadersPolicy = endpoint.responseHeaderOverrides
+      ? new ResponseHeadersPolicy(this, endpoint.pathPattern + '-headers', endpoint.responseHeaderOverrides)
+      : this.defaultResponseHeadersPolicy
+
     if (endpointIsLambdaEndpoint(endpoint)) {
-      return this.lambdaEndpointToAddBehaviorOptions(endpoint)
+      return this.lambdaEndpointToAddBehaviorOptions(endpoint).map((ebo) =>
+        this.addResponseHeadersPolicyToEndpointBehaviorOptions(ebo, responseHeadersPolicy),
+      )
     }
 
     if (endpointIsFrontendEndpoint(endpoint)) {
-      return this.frontendEndpointToAddBehaviorOptions(endpoint)
+      return this.frontendEndpointToAddBehaviorOptions(endpoint).map((ebo) =>
+        this.addResponseHeadersPolicyToEndpointBehaviorOptions(ebo, responseHeadersPolicy),
+      )
     }
 
     if (endpointIsProxyEndpoint(endpoint)) {
-      return this.proxyEndpointToAddBehaviorOptions(endpoint)
+      return this.proxyEndpointToAddBehaviorOptions(endpoint).map((ebo) =>
+        this.addResponseHeadersPolicyToEndpointBehaviorOptions(ebo, responseHeadersPolicy),
+      )
     }
 
     if (endpointIsRedirectionEndpoint(endpoint)) {
-      return this.redirectionEndpointToAddBehaviorOptions(endpoint)
+      return this.redirectionEndpointToAddBehaviorOptions(endpoint).map((ebo) =>
+        this.addResponseHeadersPolicyToEndpointBehaviorOptions(ebo, responseHeadersPolicy),
+      )
     }
 
     throw new Error('unhandled endpoint type')
   }
 
   private redirectionEndpointToAddBehaviorOptions(endpoint: RedirectionEndpoint): EndpointBehaviorOptions[] {
+    // TODO: reuse the redirector
     const lambda = new EdgeAPILambda(this, endpoint.pathPattern + '-redirector', {
       runtime: Runtime.NODEJS_18_X,
       handler: 'production-redirector.handler',

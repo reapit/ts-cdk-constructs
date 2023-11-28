@@ -3,10 +3,14 @@ import { EdgeAPILambda } from './edge-api-lambda'
 import { ICertificate } from 'aws-cdk-lib/aws-certificatemanager'
 import { CloudFrontRequest, CloudFrontResponse } from 'aws-lambda'
 import { HttpMethod } from '@aws-cdk/aws-apigatewayv2-alpha'
+import { ResponseHeadersPolicyProps } from 'aws-cdk-lib/aws-cloudfront'
 export { HttpMethod } from '@aws-cdk/aws-apigatewayv2-alpha'
+
+export type ResponseHeaderOverrides = ResponseHeadersPolicyProps
 
 interface BaseEndpoint {
   pathPattern: string
+  responseHeaderOverrides?: ResponseHeaderOverrides
 }
 
 export interface LambdaEndpoint extends BaseEndpoint {
@@ -71,6 +75,7 @@ export interface EdgeAPIProps {
   certificate: ICertificate
   defaultEndpoint: DefaultEndpoint
   webAclId?: string
+  defaultResponseHeaderOverrides?: ResponseHeaderOverrides
 }
 
 export const endpointIsLambdaEndpoint = (endpoint: Endpoint): endpoint is LambdaEndpoint =>
