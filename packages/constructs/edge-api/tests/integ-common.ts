@@ -6,6 +6,7 @@ import { BucketDeployment, Source } from 'aws-cdk-lib/aws-s3-deployment'
 import { Bucket } from 'aws-cdk-lib/aws-s3'
 import { Code, Runtime } from 'aws-cdk-lib/aws-lambda'
 import { CfnOutput, RemovalPolicy } from 'aws-cdk-lib'
+import { HeadersFrameOption } from 'aws-cdk-lib/aws-cloudfront'
 
 export const edgeAPITest = (devMode?: boolean) => {
   const app = new App()
@@ -43,6 +44,17 @@ export const edgeAPITest = (devMode?: boolean) => {
     defaultEndpoint: {
       destination: 'example.org',
     },
+    defaultResponseHeaderOverrides: {
+      customHeadersBehavior: {
+        customHeaders: [
+          {
+            header: 'Server',
+            override: true,
+            value: '@reapit-cdk/edge-api',
+          },
+        ],
+      },
+    },
   })
 
   new ARecord(stack, 'arecord', {
@@ -71,11 +83,30 @@ export const edgeAPITest = (devMode?: boolean) => {
   api.addEndpoint({
     bucket,
     pathPattern: '/bucket',
+    responseHeaderOverrides: {
+      securityHeadersBehavior: {
+        frameOptions: {
+          frameOption: HeadersFrameOption.DENY,
+          override: true,
+        },
+      },
+    },
   })
 
   api.addEndpoint({
     pathPattern: '/get/*',
     destination: 'httpbin.org',
+    responseHeaderOverrides: {
+      customHeadersBehavior: {
+        customHeaders: [
+          {
+            header: 'Server',
+            override: true,
+            value: 'CERN-NextStep-WorldWideWeb.app/1.1  libwww/2.07',
+          },
+        ],
+      },
+    },
   })
 
   api.addEndpoint({
@@ -92,6 +123,17 @@ export const edgeAPITest = (devMode?: boolean) => {
         aVariable: 'contents',
       },
     }),
+    responseHeaderOverrides: {
+      customHeadersBehavior: {
+        customHeaders: [
+          {
+            header: 'X-CUSTOM-HEADER',
+            override: true,
+            value: 'CUSTOM-HEADER-VALUE',
+          },
+        ],
+      },
+    },
   })
 
   api.addEndpoint({
