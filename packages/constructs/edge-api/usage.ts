@@ -5,6 +5,7 @@ import { Bucket } from 'aws-cdk-lib/aws-s3'
 import { Certificate } from 'aws-cdk-lib/aws-certificatemanager'
 
 import { EdgeAPI, EdgeAPILambda } from '@reapit-cdk/edge-api'
+import { HeadersFrameOption } from 'aws-cdk-lib/aws-cloudfront'
 
 const app = new App()
 
@@ -46,6 +47,16 @@ api.addEndpoint({
   pathPattern: '/frontend', // this will route /frontend and /frontend/* to the bucket
   bucket: new Bucket(stack, 'bucket'),
   invalidationItems: ['/index.html', '/config.js'], // optional, (relative to the pathPattern), set to invalidate these paths after deployment
+  // responseHeaderOverrides accepts https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_cloudfront.ResponseHeadersPolicyProps.html
+  responseHeaderOverrides: {
+    // Prevent the site from being iframed
+    securityHeadersBehavior: {
+      frameOptions: {
+        frameOption: HeadersFrameOption.DENY,
+        override: true,
+      },
+    },
+  },
 })
 
 api.addEndpoint({
