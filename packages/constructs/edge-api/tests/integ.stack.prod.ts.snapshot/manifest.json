@@ -18,7 +18,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-deploy-role-028446965111-us-east-1",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-cfn-exec-role-028446965111-us-east-1",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-028446965111-us-east-1/2dace2b041f4f0b9422c1ddc3478be7e0c4b91f6060fe56bbd2e423fcb371d2b.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-028446965111-us-east-1/d465d58b9151bfd5d2a35ef4fb8153245304f05859cc0bcac52b8868c254750e.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -56,6 +56,12 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "apioia76883CD0"
+          }
+        ],
+        "/edge-api-test-stack/api/api/defaultResponseHeadersPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apidefaultResponseHeadersPolicy57E40C40"
           }
         ],
         "/edge-api-test-stack/api/api/rewriter-example.org/ServiceRole/Resource": [
@@ -118,6 +124,12 @@
             "data": "apiinvalidationDeploymentCompleteC35E3F9C"
           }
         ],
+        "/edge-api-test-stack/api/api/--bucket-headers/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apibucketheaders865BC975"
+          }
+        ],
         "/edge-api-test-stack/api/api/s3-qs-redirect/ServiceRole/Resource": [
           {
             "type": "aws:cdk:logicalId",
@@ -133,7 +145,13 @@
         "/edge-api-test-stack/api/api/s3-qs-redirect/CurrentVersion/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "apis3qsredirectCurrentVersion201EBAF528e3c94a7885ffe9a920872870739983"
+            "data": "apis3qsredirectCurrentVersion201EBAF5b65ee701a46fed9ee997a70695f73678"
+          }
+        ],
+        "/edge-api-test-stack/api/api/--get--*-headers/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apigetheaders069394BD"
           }
         ],
         "/edge-api-test-stack/api/api/rewriter-httpbin.org/ServiceRole/Resource": [
@@ -154,6 +172,12 @@
             "data": "apirewriterhttpbinorgCurrentVersion801D905B42d91845273123c5da00c9c3bdc47ebb"
           }
         ],
+        "/edge-api-test-stack/api/api/--api-headers/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apiapiheadersD6D8435F"
+          }
+        ],
         "/edge-api-test-stack/api/api/--redirect-me-redirector/ServiceRole/Resource": [
           {
             "type": "aws:cdk:logicalId",
@@ -169,7 +193,7 @@
         "/edge-api-test-stack/api/api/--redirect-me-redirector/CurrentVersion/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "apiredirectmeredirectorCurrentVersionA5C47DBF12bd68966266e5310f81b2fd99d530af"
+            "data": "apiredirectmeredirectorCurrentVersionA5C47DBFf605f1cd2163e657066a2cebe4a8666f"
           }
         ],
         "/edge-api-test-stack/arecord/Resource": [

@@ -24,8 +24,7 @@ __export(production_redirector_exports, {
 });
 module.exports = __toCommonJS(production_redirector_exports);
 var getEnv = (event) => {
-  const header = event.origin?.s3?.customHeaders["env"];
-  const str = header ? header[0].value : void 0;
+  const str = event.origin?.s3?.customHeaders["env"]?.[0]?.value;
   return str ? JSON.parse(str) : {};
 };
 var pickDestination = (destination, host) => {
