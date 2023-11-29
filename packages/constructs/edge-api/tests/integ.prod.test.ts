@@ -72,4 +72,21 @@ describe('edge-api prod integration', () => {
     const res = await fetch(endpoint)
     expect(res.headers.get('Server')).toBe('@reapit-cdk/edge-api')
   })
+
+  const testHttpsRedirect = async (httpsEndpoint: string) => {
+    const httpEndpoint = httpsEndpoint.replace('https://', 'http://')
+    const res = await fetch(httpEndpoint)
+    expect(res.status).toBe(301)
+    expect(res.headers.get('location')).toBe(httpsEndpoint)
+  }
+
+  integ.it('should redirect http to https', async () => {
+    const httpsEndpoint = integ.outputs.output
+
+    await testHttpsRedirect(`${httpsEndpoint}`)
+    await testHttpsRedirect(`${httpsEndpoint}/bucket`)
+    await testHttpsRedirect(`${httpsEndpoint}/api`)
+    await testHttpsRedirect(`${httpsEndpoint}/get`)
+    await testHttpsRedirect(`${httpsEndpoint}/redirect-me`)
+  })
 })
