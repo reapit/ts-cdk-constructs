@@ -80,13 +80,29 @@ describe('edge-api prod integration', () => {
     expect(res.headers.get('location')).toBe(httpsEndpoint)
   }
 
-  integ.it('should redirect http to https', async () => {
+  integ.it('should redirect http to https - root', async () => {
     const httpsEndpoint = integ.outputs.output
 
     await testHttpsRedirect(`${httpsEndpoint}`)
+  })
+  integ.it('should redirect http to https - /bucket', async () => {
+    const httpsEndpoint = integ.outputs.output
+
     await testHttpsRedirect(`${httpsEndpoint}/bucket`)
+  })
+  integ.it('should redirect http to https - /api', async () => {
+    const httpsEndpoint = integ.outputs.output
+
     await testHttpsRedirect(`${httpsEndpoint}/api`)
+  })
+  integ.it('should redirect http to https - /get', async () => {
+    const httpsEndpoint = integ.outputs.output
+
     await testHttpsRedirect(`${httpsEndpoint}/get`)
+  })
+  integ.it('should redirect http to https - /redirect-me', async () => {
+    const httpsEndpoint = integ.outputs.output
+
     await testHttpsRedirect(`${httpsEndpoint}/redirect-me`)
   })
 })
