@@ -63,7 +63,7 @@ describe('edge-api prod integration', () => {
 
   integ.it('/bucket - should set the X-FRAME-OPTIONS header to be deny', async () => {
     const endpoint = integ.outputs.output
-    const res = await fetch(`${endpoint}/get`)
+    const res = await fetch(`${endpoint}/bucket`)
     expect(res.headers.get('X-FRAME-OPTIONS')).toBe('deny')
   })
 
