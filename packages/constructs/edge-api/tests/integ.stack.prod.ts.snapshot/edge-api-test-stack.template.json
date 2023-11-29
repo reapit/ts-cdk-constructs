@@ -121,6 +121,26 @@
     "aws:cdk:path": "edge-api-test-stack/api/api/oia/Resource"
    }
   },
+  "apidefaultResponseHeadersPolicy57E40C40": {
+   "Type": "AWS::CloudFront::ResponseHeadersPolicy",
+   "Properties": {
+    "ResponseHeadersPolicyConfig": {
+     "CustomHeadersConfig": {
+      "Items": [
+       {
+        "Header": "Server",
+        "Override": true,
+        "Value": "@reapit-cdk/edge-api"
+       }
+      ]
+     },
+     "Name": "edgeapiteststackapidefaultResponseHeadersPolicyB29479AA"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack/api/api/defaultResponseHeadersPolicy/Resource"
+   }
+  },
   "apirewriterexampleorgServiceRole43DE3251": {
    "Type": "AWS::IAM::Role",
    "Properties": {
@@ -214,12 +234,15 @@
         {
          "EventType": "origin-response",
          "LambdaFunctionARN": {
-          "Ref": "apis3qsredirectCurrentVersion201EBAF528e3c94a7885ffe9a920872870739983"
+          "Ref": "apis3qsredirectCurrentVersion201EBAF5b65ee701a46fed9ee997a70695f73678"
          }
         }
        ],
        "OriginRequestPolicyId": "b689b0a8-53d0-40ab-baf2-68738e2966ac",
        "PathPattern": "/bucket",
+       "ResponseHeadersPolicyId": {
+        "Ref": "apibucketheaders865BC975"
+       },
        "TargetOriginId": "edgeapiteststackapiOrigin2AA2A86CD",
        "ViewerProtocolPolicy": "allow-all"
       },
@@ -232,6 +255,9 @@
        "Compress": true,
        "OriginRequestPolicyId": "b689b0a8-53d0-40ab-baf2-68738e2966ac",
        "PathPattern": "/bucket/*",
+       "ResponseHeadersPolicyId": {
+        "Ref": "apibucketheaders865BC975"
+       },
        "TargetOriginId": "edgeapiteststackapiOrigin2AA2A86CD",
        "ViewerProtocolPolicy": "allow-all"
       },
@@ -257,6 +283,9 @@
        ],
        "OriginRequestPolicyId": "b689b0a8-53d0-40ab-baf2-68738e2966ac",
        "PathPattern": "/get/*",
+       "ResponseHeadersPolicyId": {
+        "Ref": "apigetheaders069394BD"
+       },
        "TargetOriginId": "edgeapiteststackapiOrigin3B654D2FD",
        "ViewerProtocolPolicy": "allow-all"
       },
@@ -282,6 +311,9 @@
        ],
        "OriginRequestPolicyId": "b689b0a8-53d0-40ab-baf2-68738e2966ac",
        "PathPattern": "/get",
+       "ResponseHeadersPolicyId": {
+        "Ref": "apigetheaders069394BD"
+       },
        "TargetOriginId": "edgeapiteststackapiOrigin3B654D2FD",
        "ViewerProtocolPolicy": "allow-all"
       },
@@ -308,6 +340,9 @@
        ],
        "OriginRequestPolicyId": "216adef6-5c7f-47e4-b989-5492eafa07d3",
        "PathPattern": "/api",
+       "ResponseHeadersPolicyId": {
+        "Ref": "apiapiheadersD6D8435F"
+       },
        "TargetOriginId": "edgeapiteststackapiOrigin40744BB00",
        "ViewerProtocolPolicy": "allow-all"
       },
@@ -328,12 +363,15 @@
          "EventType": "origin-request",
          "IncludeBody": true,
          "LambdaFunctionARN": {
-          "Ref": "apiredirectmeredirectorCurrentVersionA5C47DBF12bd68966266e5310f81b2fd99d530af"
+          "Ref": "apiredirectmeredirectorCurrentVersionA5C47DBFf605f1cd2163e657066a2cebe4a8666f"
          }
         }
        ],
        "OriginRequestPolicyId": "216adef6-5c7f-47e4-b989-5492eafa07d3",
        "PathPattern": "/redirect-me",
+       "ResponseHeadersPolicyId": {
+        "Ref": "apidefaultResponseHeadersPolicy57E40C40"
+       },
        "TargetOriginId": "edgeapiteststackapiOrigin5984B2994",
        "ViewerProtocolPolicy": "allow-all"
       }
@@ -359,6 +397,9 @@
        }
       ],
       "OriginRequestPolicyId": "b689b0a8-53d0-40ab-baf2-68738e2966ac",
+      "ResponseHeadersPolicyId": {
+       "Ref": "apidefaultResponseHeadersPolicy57E40C40"
+      },
       "TargetOriginId": "edgeapiteststackapiOrigin1CD769B0F",
       "ViewerProtocolPolicy": "allow-all"
      },
@@ -658,6 +699,23 @@
     "aws:cdk:path": "edge-api-test-stack/api/api/invalidation/DeploymentComplete/Resource"
    }
   },
+  "apibucketheaders865BC975": {
+   "Type": "AWS::CloudFront::ResponseHeadersPolicy",
+   "Properties": {
+    "ResponseHeadersPolicyConfig": {
+     "Name": "edgeapiteststackapibucketheaders518EAFEB",
+     "SecurityHeadersConfig": {
+      "FrameOptions": {
+       "FrameOption": "DENY",
+       "Override": true
+      }
+     }
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack/api/api/--bucket-headers/Resource"
+   }
+  },
   "apis3qsredirectServiceRole9987230B": {
    "Type": "AWS::IAM::Role",
    "Properties": {
@@ -704,7 +762,7 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-028446965111-us-east-1",
-     "S3Key": "861c9a77c75d8868b35fb0ad893d2efe0dbf2b440a93b0b95135143fced86642.zip"
+     "S3Key": "2ea0bec2e90021dc6ee51794fc23cfd48e6c8c7d4933c25dc21ddd7815aee37e.zip"
     },
     "Handler": "s3-qs-redirect.handler",
     "Role": {
@@ -720,12 +778,12 @@
    ],
    "Metadata": {
     "aws:cdk:path": "edge-api-test-stack/api/api/s3-qs-redirect/Resource",
-    "aws:asset:path": "asset.861c9a77c75d8868b35fb0ad893d2efe0dbf2b440a93b0b95135143fced86642",
+    "aws:asset:path": "asset.2ea0bec2e90021dc6ee51794fc23cfd48e6c8c7d4933c25dc21ddd7815aee37e",
     "aws:asset:is-bundled": false,
     "aws:asset:property": "Code"
    }
   },
-  "apis3qsredirectCurrentVersion201EBAF528e3c94a7885ffe9a920872870739983": {
+  "apis3qsredirectCurrentVersion201EBAF5b65ee701a46fed9ee997a70695f73678": {
    "Type": "AWS::Lambda::Version",
    "Properties": {
     "FunctionName": {
@@ -734,6 +792,26 @@
    },
    "Metadata": {
     "aws:cdk:path": "edge-api-test-stack/api/api/s3-qs-redirect/CurrentVersion/Resource"
+   }
+  },
+  "apigetheaders069394BD": {
+   "Type": "AWS::CloudFront::ResponseHeadersPolicy",
+   "Properties": {
+    "ResponseHeadersPolicyConfig": {
+     "CustomHeadersConfig": {
+      "Items": [
+       {
+        "Header": "Server",
+        "Override": true,
+        "Value": "CERN-NextStep-WorldWideWeb.app/1.1  libwww/2.07"
+       }
+      ]
+     },
+     "Name": "edgeapiteststackapigetheadersA368D790"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack/api/api/--get--*-headers/Resource"
    }
   },
   "apirewriterhttpbinorgServiceRoleFFFBFAA0": {
@@ -810,6 +888,26 @@
     "aws:cdk:path": "edge-api-test-stack/api/api/rewriter-httpbin.org/CurrentVersion/Resource"
    }
   },
+  "apiapiheadersD6D8435F": {
+   "Type": "AWS::CloudFront::ResponseHeadersPolicy",
+   "Properties": {
+    "ResponseHeadersPolicyConfig": {
+     "CustomHeadersConfig": {
+      "Items": [
+       {
+        "Header": "X-CUSTOM-HEADER",
+        "Override": true,
+        "Value": "CUSTOM-HEADER-VALUE"
+       }
+      ]
+     },
+     "Name": "edgeapiteststackapiapiheaders2EA432EC"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "edge-api-test-stack/api/api/--api-headers/Resource"
+   }
+  },
   "apiredirectmeredirectorServiceRole3C91D1D9": {
    "Type": "AWS::IAM::Role",
    "Properties": {
@@ -856,7 +954,7 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-028446965111-us-east-1",
-     "S3Key": "861c9a77c75d8868b35fb0ad893d2efe0dbf2b440a93b0b95135143fced86642.zip"
+     "S3Key": "2ea0bec2e90021dc6ee51794fc23cfd48e6c8c7d4933c25dc21ddd7815aee37e.zip"
     },
     "Handler": "production-redirector.handler",
     "Role": {
@@ -872,12 +970,12 @@
    ],
    "Metadata": {
     "aws:cdk:path": "edge-api-test-stack/api/api/--redirect-me-redirector/Resource",
-    "aws:asset:path": "asset.861c9a77c75d8868b35fb0ad893d2efe0dbf2b440a93b0b95135143fced86642",
+    "aws:asset:path": "asset.2ea0bec2e90021dc6ee51794fc23cfd48e6c8c7d4933c25dc21ddd7815aee37e",
     "aws:asset:is-bundled": false,
     "aws:asset:property": "Code"
    }
   },
-  "apiredirectmeredirectorCurrentVersionA5C47DBF12bd68966266e5310f81b2fd99d530af": {
+  "apiredirectmeredirectorCurrentVersionA5C47DBFf605f1cd2163e657066a2cebe4a8666f": {
    "Type": "AWS::Lambda::Version",
    "Properties": {
     "FunctionName": {
@@ -1301,7 +1399,7 @@
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/21SUUsDMQz+Lb53FRVBH+eJICjKDXw9ul4243rt0aSTcdx/N+2d2wShkC/Jl4R86bW+v9dXF+abFrbdLRyu9bBiY3eqBgopWlCSawYLkXGD1jB0xpstRD1Up5iqNv7MHRXd6OEh2R1wTs1oMu/BoT2cwrM/OQ+GpNq6kNpNDJ718BZxi35pLRA9t+AZuRRXmfOUOf8yHpE44joxBp/p5/6onOnWrdHDU/L2l3HEHxBpjp3BF3OA+Ouv0G8dcDgWjQpNp4c6uKJFsadFJySqMPSbuYIaNrQjXRnnlt+0grhHUfsPpdyC4dXYT/Sl8bk/KtjLtsKq0zxWbNa+GQwRSGaZjWqhd+HQCVdPKj8eA6OKITHcyrmWNdgQ29KnoBXwOKrSQsaKxNucezV9n+EkYeOyLI38EetQyx6Vw6KUqhJx6I6/qHQ94bfEfZLpPrSgv+hyf3Wn5V1ffBHiIiY5Yge6nuwPmxpir6UCAAA="
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/21SYUvDMBD9LX7PIiqCfpyVoaAoHfi1ZOltnkuTkrtMRul/99LWboJQuHd373Lpe7nW9/f66sJ808LW+4XDje7WbOxelUAhRQtKelVnITJu0RqGxnizg6i74lRTxdafpb2iG909JLsHzq0JjeE9OLTHU3nKx+TBkExbF1K9jcGz7t4i7tAvrQWi5xo8Iw/DReasMudfhly/DZ7gCUwNkU5L/288InHETWIMPrPO814502xqo7tV8vaXMeMPOWWqncEXc4T4m6/R7xxwmId6habRXRncIN0QT1cckYjI0G6nCarY0J50YZxbftMa4gHFnD+UwTqGV2M/0Q8Hn+e9goOII6wyTWslZquqzhCBdJY5qBpaF46NcPVoyuNc6FUMieFW3F2WYEOsR0kzWgP3vRqOkLXiyC73Xk3bZjhKWLksSyVPyjrU8h+Fw0EpVSTi0MyPbjRqxm+J2yTbfahBf9Hl4epOy3d98UWIi5jE8wZ0OcYfkjsecNQCAAA="
    },
    "Metadata": {
     "aws:cdk:path": "edge-api-test-stack/CDKMetadata/Default"

@@ -48,4 +48,28 @@ describe('edge-api prod integration', () => {
     expect(locHeader).not.toBeNull()
     expect(locHeader).toBe('https://google.com/redirect-me')
   })
+
+  integ.it('/api - should have the custom header', async () => {
+    const endpoint = integ.outputs.output
+    const res = await fetch(`${endpoint}/api`)
+    expect(res.headers.get('X-CUSTOM-HEADER')).toBe('CUSTOM-HEADER-VALUE')
+  })
+
+  integ.it('/get - should set the Server header to be CERN NextStep', async () => {
+    const endpoint = integ.outputs.output
+    const res = await fetch(`${endpoint}/get`)
+    expect(res.headers.get('Server')).toBe('CERN-NextStep-WorldWideWeb.app/1.1  libwww/2.07')
+  })
+
+  integ.it('/bucket - should set the X-FRAME-OPTIONS header to be DENY', async () => {
+    const endpoint = integ.outputs.output
+    const res = await fetch(`${endpoint}/bucket`)
+    expect(res.headers.get('X-FRAME-OPTIONS')).toBe('DENY')
+  })
+
+  integ.it('root - should set the Server header to be @reapit-cdk/edge-api', async () => {
+    const endpoint = integ.outputs.output
+    const res = await fetch(endpoint)
+    expect(res.headers.get('Server')).toBe('@reapit-cdk/edge-api')
+  })
 })

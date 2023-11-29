@@ -204,6 +204,41 @@
                       "version": "2.99.1"
                     }
                   },
+                  "defaultResponseHeadersPolicy": {
+                    "id": "defaultResponseHeadersPolicy",
+                    "path": "edge-api-test-stack/api/api/defaultResponseHeadersPolicy",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "edge-api-test-stack/api/api/defaultResponseHeadersPolicy/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::CloudFront::ResponseHeadersPolicy",
+                          "aws:cdk:cloudformation:props": {
+                            "responseHeadersPolicyConfig": {
+                              "name": "edgeapiteststackapidefaultResponseHeadersPolicyB29479AA",
+                              "customHeadersConfig": {
+                                "items": [
+                                  {
+                                    "header": "Server",
+                                    "override": true,
+                                    "value": "@reapit-cdk/edge-api"
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_cloudfront.CfnResponseHeadersPolicy",
+                          "version": "2.99.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_cloudfront.ResponseHeadersPolicy",
+                      "version": "2.99.1"
+                    }
+                  },
                   "rewriter-example.org": {
                     "id": "rewriter-example.org",
                     "path": "edge-api-test-stack/api/api/rewriter-example.org",
@@ -466,6 +501,9 @@
                                 "cachePolicyId": "4135ea2d-6df8-44a3-9df3-4b5a84be39ad",
                                 "compress": true,
                                 "originRequestPolicyId": "b689b0a8-53d0-40ab-baf2-68738e2966ac",
+                                "responseHeadersPolicyId": {
+                                  "Ref": "apidefaultResponseHeadersPolicy57E40C40"
+                                },
                                 "viewerProtocolPolicy": "allow-all",
                                 "lambdaFunctionAssociations": [
                                   {
@@ -490,11 +528,14 @@
                                   "cachePolicyId": "4135ea2d-6df8-44a3-9df3-4b5a84be39ad",
                                   "compress": true,
                                   "originRequestPolicyId": "b689b0a8-53d0-40ab-baf2-68738e2966ac",
+                                  "responseHeadersPolicyId": {
+                                    "Ref": "apibucketheaders865BC975"
+                                  },
                                   "viewerProtocolPolicy": "allow-all",
                                   "lambdaFunctionAssociations": [
                                     {
                                       "lambdaFunctionArn": {
-                                        "Ref": "apis3qsredirectCurrentVersion201EBAF528e3c94a7885ffe9a920872870739983"
+                                        "Ref": "apis3qsredirectCurrentVersion201EBAF5b65ee701a46fed9ee997a70695f73678"
                                       },
                                       "eventType": "origin-response"
                                     }
@@ -510,6 +551,9 @@
                                   "cachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
                                   "compress": true,
                                   "originRequestPolicyId": "b689b0a8-53d0-40ab-baf2-68738e2966ac",
+                                  "responseHeadersPolicyId": {
+                                    "Ref": "apibucketheaders865BC975"
+                                  },
                                   "viewerProtocolPolicy": "allow-all"
                                 },
                                 {
@@ -527,6 +571,9 @@
                                   "cachePolicyId": "4135ea2d-6df8-44a3-9df3-4b5a84be39ad",
                                   "compress": true,
                                   "originRequestPolicyId": "b689b0a8-53d0-40ab-baf2-68738e2966ac",
+                                  "responseHeadersPolicyId": {
+                                    "Ref": "apigetheaders069394BD"
+                                  },
                                   "viewerProtocolPolicy": "allow-all",
                                   "lambdaFunctionAssociations": [
                                     {
@@ -552,6 +599,9 @@
                                   "cachePolicyId": "4135ea2d-6df8-44a3-9df3-4b5a84be39ad",
                                   "compress": true,
                                   "originRequestPolicyId": "b689b0a8-53d0-40ab-baf2-68738e2966ac",
+                                  "responseHeadersPolicyId": {
+                                    "Ref": "apigetheaders069394BD"
+                                  },
                                   "viewerProtocolPolicy": "allow-all",
                                   "lambdaFunctionAssociations": [
                                     {
@@ -577,6 +627,9 @@
                                   "cachePolicyId": "4135ea2d-6df8-44a3-9df3-4b5a84be39ad",
                                   "compress": true,
                                   "originRequestPolicyId": "216adef6-5c7f-47e4-b989-5492eafa07d3",
+                                  "responseHeadersPolicyId": {
+                                    "Ref": "apiapiheadersD6D8435F"
+                                  },
                                   "viewerProtocolPolicy": "allow-all",
                                   "lambdaFunctionAssociations": [
                                     {
@@ -603,11 +656,14 @@
                                   "cachePolicyId": "4135ea2d-6df8-44a3-9df3-4b5a84be39ad",
                                   "compress": true,
                                   "originRequestPolicyId": "216adef6-5c7f-47e4-b989-5492eafa07d3",
+                                  "responseHeadersPolicyId": {
+                                    "Ref": "apidefaultResponseHeadersPolicy57E40C40"
+                                  },
                                   "viewerProtocolPolicy": "allow-all",
                                   "lambdaFunctionAssociations": [
                                     {
                                       "lambdaFunctionArn": {
-                                        "Ref": "apiredirectmeredirectorCurrentVersionA5C47DBF12bd68966266e5310f81b2fd99d530af"
+                                        "Ref": "apiredirectmeredirectorCurrentVersionA5C47DBFf605f1cd2163e657066a2cebe4a8666f"
                                       },
                                       "eventType": "origin-request",
                                       "includeBody": true
@@ -965,6 +1021,38 @@
                       "version": "10.2.70"
                     }
                   },
+                  "--bucket-headers": {
+                    "id": "--bucket-headers",
+                    "path": "edge-api-test-stack/api/api/--bucket-headers",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "edge-api-test-stack/api/api/--bucket-headers/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::CloudFront::ResponseHeadersPolicy",
+                          "aws:cdk:cloudformation:props": {
+                            "responseHeadersPolicyConfig": {
+                              "name": "edgeapiteststackapibucketheaders518EAFEB",
+                              "securityHeadersConfig": {
+                                "frameOptions": {
+                                  "frameOption": "DENY",
+                                  "override": true
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_cloudfront.CfnResponseHeadersPolicy",
+                          "version": "2.99.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_cloudfront.ResponseHeadersPolicy",
+                      "version": "2.99.1"
+                    }
+                  },
                   "s3-qs-redirect": {
                     "id": "s3-qs-redirect",
                     "path": "edge-api-test-stack/api/api/s3-qs-redirect",
@@ -1067,7 +1155,7 @@
                           "aws:cdk:cloudformation:props": {
                             "code": {
                               "s3Bucket": "cdk-hnb659fds-assets-028446965111-us-east-1",
-                              "s3Key": "861c9a77c75d8868b35fb0ad893d2efe0dbf2b440a93b0b95135143fced86642.zip"
+                              "s3Key": "2ea0bec2e90021dc6ee51794fc23cfd48e6c8c7d4933c25dc21ddd7815aee37e.zip"
                             },
                             "handler": "s3-qs-redirect.handler",
                             "role": {
@@ -1113,6 +1201,41 @@
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_lambda.Function",
+                      "version": "2.99.1"
+                    }
+                  },
+                  "--get--*-headers": {
+                    "id": "--get--*-headers",
+                    "path": "edge-api-test-stack/api/api/--get--*-headers",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "edge-api-test-stack/api/api/--get--*-headers/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::CloudFront::ResponseHeadersPolicy",
+                          "aws:cdk:cloudformation:props": {
+                            "responseHeadersPolicyConfig": {
+                              "name": "edgeapiteststackapigetheadersA368D790",
+                              "customHeadersConfig": {
+                                "items": [
+                                  {
+                                    "header": "Server",
+                                    "override": true,
+                                    "value": "CERN-NextStep-WorldWideWeb.app/1.1  libwww/2.07"
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_cloudfront.CfnResponseHeadersPolicy",
+                          "version": "2.99.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_cloudfront.ResponseHeadersPolicy",
                       "version": "2.99.1"
                     }
                   },
@@ -1240,6 +1363,41 @@
                       "version": "2.99.1"
                     }
                   },
+                  "--api-headers": {
+                    "id": "--api-headers",
+                    "path": "edge-api-test-stack/api/api/--api-headers",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "edge-api-test-stack/api/api/--api-headers/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::CloudFront::ResponseHeadersPolicy",
+                          "aws:cdk:cloudformation:props": {
+                            "responseHeadersPolicyConfig": {
+                              "name": "edgeapiteststackapiapiheaders2EA432EC",
+                              "customHeadersConfig": {
+                                "items": [
+                                  {
+                                    "header": "X-CUSTOM-HEADER",
+                                    "override": true,
+                                    "value": "CUSTOM-HEADER-VALUE"
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_cloudfront.CfnResponseHeadersPolicy",
+                          "version": "2.99.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_cloudfront.ResponseHeadersPolicy",
+                      "version": "2.99.1"
+                    }
+                  },
                   "--redirect-me-redirector": {
                     "id": "--redirect-me-redirector",
                     "path": "edge-api-test-stack/api/api/--redirect-me-redirector",
@@ -1342,7 +1500,7 @@
                           "aws:cdk:cloudformation:props": {
                             "code": {
                               "s3Bucket": "cdk-hnb659fds-assets-028446965111-us-east-1",
-                              "s3Key": "861c9a77c75d8868b35fb0ad893d2efe0dbf2b440a93b0b95135143fced86642.zip"
+                              "s3Key": "2ea0bec2e90021dc6ee51794fc23cfd48e6c8c7d4933c25dc21ddd7815aee37e.zip"
                             },
                             "handler": "production-redirector.handler",
                             "role": {
