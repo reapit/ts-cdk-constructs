@@ -75,7 +75,9 @@ describe('edge-api prod integration', () => {
 
   const testHttpsRedirect = async (httpsEndpoint: string) => {
     const httpEndpoint = httpsEndpoint.replace('https://', 'http://')
-    const res = await fetch(httpEndpoint)
+    const res = await fetch(httpEndpoint, {
+      redirect: 'manual',
+    })
     expect(res.status).toBe(301)
     expect(res.headers.get('location')).toBe(httpsEndpoint)
   }
