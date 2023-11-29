@@ -1,0 +1,48 @@
+{
+  "name": "@reapit-cdk/hsts-preload",
+  "version": "0.0.0",
+  "description": "Send your domain to hstspreload.org",
+  "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/hsts-preload",
+  "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/hsts-preload/readme.md",
+  "bugs": {
+    "url": "https://github.com/reapit/ts-cdk-constructs/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Josh Balfour",
+    "email": "jbalfour@reapit.com"
+  },
+  "repository": {
+    "url": "https://github.com/reapit/ts-cdk-constructs.git"
+  },
+  "scripts": {
+    "build": "reapit-cdk-tsup --lambda",
+    "check": "yarn run root:check -p $(pwd)",
+    "lint": "reapit-cdk-eslint",
+    "test": "yarn run root:test  -- $(pwd)",
+    "prepack": "yarn build",
+    "integ": "yarn run root:integ -- $(pwd)",
+    "jsii:build": "rpt-cdk-jsii",
+    "jsii:publish": "rpt-cdk-jsii --publish"
+  },
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "publishConfig": {
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts"
+  },
+  "peerDependencies": {
+    "aws-cdk-lib": "^2.96.2",
+    "constructs": "^10.2.70"
+  },
+  "devDependencies": {
+    "@reapit-cdk/custom-resource-wrapper": "workspace:^",
+    "@reapit-cdk/eslint-config": "workspace:^",
+    "@reapit-cdk/integration-tests": "workspace:^",
+    "@reapit-cdk/jsii": "workspace:^",
+    "@reapit-cdk/tsup": "workspace:^",
+    "aws-cdk-lib": "^2.96.2",
+    "aws-lambda": "^1.0.7",
+    "constructs": "^10.2.70"
+  }
+}
