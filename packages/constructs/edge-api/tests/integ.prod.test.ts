@@ -61,10 +61,10 @@ describe('edge-api prod integration', () => {
     expect(res.headers.get('Server')).toBe('CERN-NextStep-WorldWideWeb.app/1.1  libwww/2.07')
   })
 
-  integ.it('/bucket - should set the X-FRAME-OPTIONS header to be deny', async () => {
+  integ.it('/bucket - should set the X-FRAME-OPTIONS header to be DENY', async () => {
     const endpoint = integ.outputs.output
     const res = await fetch(`${endpoint}/bucket`)
-    expect(res.headers.get('X-FRAME-OPTIONS')).toBe('deny')
+    expect(res.headers.get('X-FRAME-OPTIONS')).toBe('DENY')
   })
 
   integ.it('root - should set the Server header to be @reapit-cdk/edge-api', async () => {
