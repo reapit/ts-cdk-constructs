@@ -96,6 +96,15 @@ describe('edge-api', () => {
       expect(warnSpy).toHaveBeenCalledWith('devMode enabled, ignoring webAclId')
       warnSpy.mockRestore()
     })
+    test('webAclId prodMod', () => {
+      const warnSpy = jest.spyOn(global.console, 'warn')
+      synth('us-east-1', {
+        devMode: false,
+        webAclId: 'asdf',
+      })
+      expect(warnSpy).not.toHaveBeenCalledWith('devMode enabled, ignoring webAclId')
+      warnSpy.mockRestore()
+    })
     test('default endpoint', () => {
       const { template } = synth('us-east-1', {})
       const result = template()
