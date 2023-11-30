@@ -125,7 +125,7 @@ describe('edge-api', () => {
             ],
             OriginRequestPolicyId: 'b689b0a8-53d0-40ab-baf2-68738e2966ac',
             TargetOriginId: 'stackapiOrigin1254E9B8E',
-            ViewerProtocolPolicy: 'allow-all',
+            ViewerProtocolPolicy: 'redirect-to-https',
           },
         },
       })
@@ -153,7 +153,7 @@ describe('edge-api', () => {
               OriginRequestPolicyId: 'b689b0a8-53d0-40ab-baf2-68738e2966ac',
               PathPattern: '/frontend',
               TargetOriginId: 'stackapiOrigin236DC05AF',
-              ViewerProtocolPolicy: 'allow-all',
+              ViewerProtocolPolicy: 'redirect-to-https',
             },
             {
               AllowedMethods: ['GET', 'HEAD'],
@@ -162,7 +162,7 @@ describe('edge-api', () => {
               OriginRequestPolicyId: 'b689b0a8-53d0-40ab-baf2-68738e2966ac',
               PathPattern: '/frontend/*',
               TargetOriginId: 'stackapiOrigin236DC05AF',
-              ViewerProtocolPolicy: 'allow-all',
+              ViewerProtocolPolicy: 'redirect-to-https',
             },
           ],
           Origins: [
@@ -221,7 +221,7 @@ describe('edge-api', () => {
               OriginRequestPolicyId: '216adef6-5c7f-47e4-b989-5492eafa07d3',
               PathPattern: '/api/lambda',
               TargetOriginId: 'stackapiOrigin236DC05AF',
-              ViewerProtocolPolicy: 'allow-all',
+              ViewerProtocolPolicy: 'redirect-to-https',
             },
           ],
           Origins: [
@@ -409,7 +409,7 @@ describe('edge-api', () => {
           OriginRequestPolicyId: 'b689b0a8-53d0-40ab-baf2-68738e2966ac',
           PathPattern: '/google',
           TargetOriginId: 'stackapiOrigin236DC05AF',
-          ViewerProtocolPolicy: 'allow-all',
+          ViewerProtocolPolicy: 'redirect-to-https',
         },
       ]
 

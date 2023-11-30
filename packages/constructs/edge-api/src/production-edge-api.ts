@@ -10,6 +10,7 @@ import {
   OriginProtocolPolicy,
   OriginRequestPolicy,
   ResponseHeadersPolicy,
+  ViewerProtocolPolicy,
 } from 'aws-cdk-lib/aws-cloudfront'
 import { Bucket } from 'aws-cdk-lib/aws-s3'
 import { Construct } from 'constructs'
@@ -357,33 +358,43 @@ export class ProductionEdgeAPI extends Construct {
     }
   }
 
+  private addBehaviorDefaults(ebo: EndpointBehaviorOptions): EndpointBehaviorOptions {
+    return {
+      ...ebo,
+      addBehaviorOptions: {
+        ...ebo.addBehaviorOptions,
+        viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+      },
+    }
+  }
+
   private endpointToAddBehaviorOptions(endpoint: Endpoint): EndpointBehaviorOptions[] {
     const responseHeadersPolicy = endpoint.responseHeaderOverrides
       ? new ResponseHeadersPolicy(this, endpoint.pathPattern + '-headers', endpoint.responseHeaderOverrides)
       : this.defaultResponseHeadersPolicy
 
     if (endpointIsLambdaEndpoint(endpoint)) {
-      return this.lambdaEndpointToAddBehaviorOptions(endpoint).map((ebo) =>
-        this.addResponseHeadersPolicyToEndpointBehaviorOptions(ebo, responseHeadersPolicy),
-      )
+      return this.lambdaEndpointToAddBehaviorOptions(endpoint)
+        .map((ebo) => this.addResponseHeadersPolicyToEndpointBehaviorOptions(ebo, responseHeadersPolicy))
+        .map(this.addBehaviorDefaults)
     }
 
     if (endpointIsFrontendEndpoint(endpoint)) {
-      return this.frontendEndpointToAddBehaviorOptions(endpoint).map((ebo) =>
-        this.addResponseHeadersPolicyToEndpointBehaviorOptions(ebo, responseHeadersPolicy),
-      )
+      return this.frontendEndpointToAddBehaviorOptions(endpoint)
+        .map((ebo) => this.addResponseHeadersPolicyToEndpointBehaviorOptions(ebo, responseHeadersPolicy))
+        .map(this.addBehaviorDefaults)
     }
 
     if (endpointIsProxyEndpoint(endpoint)) {
-      return this.proxyEndpointToAddBehaviorOptions(endpoint).map((ebo) =>
-        this.addResponseHeadersPolicyToEndpointBehaviorOptions(ebo, responseHeadersPolicy),
-      )
+      return this.proxyEndpointToAddBehaviorOptions(endpoint)
+        .map((ebo) => this.addResponseHeadersPolicyToEndpointBehaviorOptions(ebo, responseHeadersPolicy))
+        .map(this.addBehaviorDefaults)
     }
 
     if (endpointIsRedirectionEndpoint(endpoint)) {
-      return this.redirectionEndpointToAddBehaviorOptions(endpoint).map((ebo) =>
-        this.addResponseHeadersPolicyToEndpointBehaviorOptions(ebo, responseHeadersPolicy),
-      )
+      return this.redirectionEndpointToAddBehaviorOptions(endpoint)
+        .map((ebo) => this.addResponseHeadersPolicyToEndpointBehaviorOptions(ebo, responseHeadersPolicy))
+        .map(this.addBehaviorDefaults)
     }
 
     throw new Error('unhandled endpoint type')

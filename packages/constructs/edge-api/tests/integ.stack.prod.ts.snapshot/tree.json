@@ -504,7 +504,7 @@
                                 "responseHeadersPolicyId": {
                                   "Ref": "apidefaultResponseHeadersPolicy57E40C40"
                                 },
-                                "viewerProtocolPolicy": "allow-all",
+                                "viewerProtocolPolicy": "redirect-to-https",
                                 "lambdaFunctionAssociations": [
                                   {
                                     "lambdaFunctionArn": {
@@ -531,7 +531,7 @@
                                   "responseHeadersPolicyId": {
                                     "Ref": "apibucketheaders865BC975"
                                   },
-                                  "viewerProtocolPolicy": "allow-all",
+                                  "viewerProtocolPolicy": "redirect-to-https",
                                   "lambdaFunctionAssociations": [
                                     {
                                       "lambdaFunctionArn": {
@@ -554,7 +554,7 @@
                                   "responseHeadersPolicyId": {
                                     "Ref": "apibucketheaders865BC975"
                                   },
-                                  "viewerProtocolPolicy": "allow-all"
+                                  "viewerProtocolPolicy": "redirect-to-https"
                                 },
                                 {
                                   "pathPattern": "/get/*",
@@ -574,7 +574,7 @@
                                   "responseHeadersPolicyId": {
                                     "Ref": "apigetheaders069394BD"
                                   },
-                                  "viewerProtocolPolicy": "allow-all",
+                                  "viewerProtocolPolicy": "redirect-to-https",
                                   "lambdaFunctionAssociations": [
                                     {
                                       "lambdaFunctionArn": {
@@ -602,7 +602,7 @@
                                   "responseHeadersPolicyId": {
                                     "Ref": "apigetheaders069394BD"
                                   },
-                                  "viewerProtocolPolicy": "allow-all",
+                                  "viewerProtocolPolicy": "redirect-to-https",
                                   "lambdaFunctionAssociations": [
                                     {
                                       "lambdaFunctionArn": {
@@ -630,7 +630,7 @@
                                   "responseHeadersPolicyId": {
                                     "Ref": "apiapiheadersD6D8435F"
                                   },
-                                  "viewerProtocolPolicy": "allow-all",
+                                  "viewerProtocolPolicy": "redirect-to-https",
                                   "lambdaFunctionAssociations": [
                                     {
                                       "lambdaFunctionArn": {
@@ -659,7 +659,7 @@
                                   "responseHeadersPolicyId": {
                                     "Ref": "apidefaultResponseHeadersPolicy57E40C40"
                                   },
-                                  "viewerProtocolPolicy": "allow-all",
+                                  "viewerProtocolPolicy": "redirect-to-https",
                                   "lambdaFunctionAssociations": [
                                     {
                                       "lambdaFunctionArn": {
