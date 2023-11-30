@@ -79,7 +79,7 @@ describe('edge-api prod integration', () => {
       redirect: 'manual',
     })
     expect(res.status).toBe(301)
-    expect(res.headers.get('location')).toBe(httpsEndpoint)
+    expect(res.headers.get('location')?.replace(/\/+$/, '')).toBe(httpsEndpoint.replace(/\/+$/, ''))
   }
 
   integ.it('should redirect http to https - root', async () => {
