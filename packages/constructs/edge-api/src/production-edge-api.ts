@@ -79,6 +79,7 @@ export class ProductionEdgeAPI extends Construct {
       }),
       domainNames: props.domains,
       certificate: props.certificate,
+      webAclId: props.webAclId
     })
     this.r53Target = RecordTarget.fromAlias(new CloudFrontTarget(distribution))
     new CloudfrontInvalidation(this, 'invalidation', {
