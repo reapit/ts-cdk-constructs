@@ -244,7 +244,7 @@
         "Ref": "apibucketheaders865BC975"
        },
        "TargetOriginId": "edgeapiteststackapiOrigin2AA2A86CD",
-       "ViewerProtocolPolicy": "allow-all"
+       "ViewerProtocolPolicy": "redirect-to-https"
       },
       {
        "AllowedMethods": [
@@ -259,7 +259,7 @@
         "Ref": "apibucketheaders865BC975"
        },
        "TargetOriginId": "edgeapiteststackapiOrigin2AA2A86CD",
-       "ViewerProtocolPolicy": "allow-all"
+       "ViewerProtocolPolicy": "redirect-to-https"
       },
       {
        "AllowedMethods": [
@@ -287,7 +287,7 @@
         "Ref": "apigetheaders069394BD"
        },
        "TargetOriginId": "edgeapiteststackapiOrigin3B654D2FD",
-       "ViewerProtocolPolicy": "allow-all"
+       "ViewerProtocolPolicy": "redirect-to-https"
       },
       {
        "AllowedMethods": [
@@ -315,7 +315,7 @@
         "Ref": "apigetheaders069394BD"
        },
        "TargetOriginId": "edgeapiteststackapiOrigin3B654D2FD",
-       "ViewerProtocolPolicy": "allow-all"
+       "ViewerProtocolPolicy": "redirect-to-https"
       },
       {
        "AllowedMethods": [
@@ -344,7 +344,7 @@
         "Ref": "apiapiheadersD6D8435F"
        },
        "TargetOriginId": "edgeapiteststackapiOrigin40744BB00",
-       "ViewerProtocolPolicy": "allow-all"
+       "ViewerProtocolPolicy": "redirect-to-https"
       },
       {
        "AllowedMethods": [
@@ -373,7 +373,7 @@
         "Ref": "apidefaultResponseHeadersPolicy57E40C40"
        },
        "TargetOriginId": "edgeapiteststackapiOrigin5984B2994",
-       "ViewerProtocolPolicy": "allow-all"
+       "ViewerProtocolPolicy": "redirect-to-https"
       }
      ],
      "DefaultCacheBehavior": {
@@ -401,7 +401,7 @@
        "Ref": "apidefaultResponseHeadersPolicy57E40C40"
       },
       "TargetOriginId": "edgeapiteststackapiOrigin1CD769B0F",
-      "ViewerProtocolPolicy": "allow-all"
+      "ViewerProtocolPolicy": "redirect-to-https"
      },
      "Enabled": true,
      "HttpVersion": "http2",
