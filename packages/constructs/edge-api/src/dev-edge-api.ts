@@ -166,8 +166,12 @@ export class DevEdgeAPI extends Construct {
       const integration = new HttpLambdaIntegration(pathPattern + '-integration', this.getRedirector(), {
         parameterMapping: this.generateParameterMapping({ destination: this.pickDestination(destination) }),
       })
+      const strip = endpoint.pathPattern.replace('*', '').endsWith('/') && endpoint.pathPattern !== '/*'
+      const path = strip
+        ? endpoint.pathPattern.replace('/*', '').replace('*', '')
+        : endpoint.pathPattern.replace('*', '')
       this.api.addRoutes({
-        path: pathPattern.replace('/*', ''),
+        path,
         integration,
         methods: [HttpMethod.GET],
       })
