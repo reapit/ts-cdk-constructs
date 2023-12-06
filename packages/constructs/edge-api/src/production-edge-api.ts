@@ -78,18 +78,6 @@ export class ProductionEdgeAPI extends Construct {
         ...props.defaultEndpoint,
         pathPattern: '',
       }),
-      errorResponses: endpointIsFrontendEndpoint({
-        ...props.defaultEndpoint,
-        pathPattern: '',
-      })
-        ? [
-            {
-              httpStatus: 404,
-              responseHttpStatus: 200,
-              responsePagePath: '/index.html',
-            },
-          ]
-        : undefined,
       domainNames: props.domains,
       certificate: props.certificate,
       webAclId: props.webAclId,
