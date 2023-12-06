@@ -96,19 +96,23 @@ export class DevEdgeAPI extends Construct {
     )
   }
 
+  private cleanPathPattern(pathPattern: string): string {
+    if (pathPattern === '/*') {
+      return '/'
+    }
+    return pathPattern.endsWith('/*') ? pathPattern.replace('/*', '') : pathPattern
+  }
+
   addEndpoint(endpoint: Endpoint) {
     if (endpointIsProxyEndpoint(endpoint)) {
       const methods = endpoint.methods ?? [HttpMethod.ANY]
-      const strip = endpoint.pathPattern.replace('*', '').endsWith('/') && endpoint.pathPattern !== '/*'
-      const path = strip
-        ? endpoint.pathPattern.replace('/*', '').replace('*', '')
-        : endpoint.pathPattern.replace('*', '')
-      let destPath = path === '/*' ? '' : path.replace('/*', '').replace('*', '')
+      const cleanedPathPattern = this.cleanPathPattern(endpoint.pathPattern)
+      let destPath = cleanedPathPattern === '/*' ? '' : cleanedPathPattern.replace('/*', '').replace('*', '')
       if (destPath === '/') {
         destPath = ''
       }
       this.api.addRoutes({
-        path,
+        path: cleanedPathPattern,
         integration: new HttpUrlIntegration(
           'proxy-integration',
           this.ensureHTTPS(this.pickDestination(endpoint.destination), endpoint.insecure) + destPath,
@@ -166,8 +170,9 @@ export class DevEdgeAPI extends Construct {
       const integration = new HttpLambdaIntegration(pathPattern + '-integration', this.getRedirector(), {
         parameterMapping: this.generateParameterMapping({ destination: this.pickDestination(destination) }),
       })
+      const path = this.cleanPathPattern(endpoint.pathPattern)
       this.api.addRoutes({
-        path: pathPattern.replace('/*', ''),
+        path,
         integration,
         methods: [HttpMethod.GET],
       })

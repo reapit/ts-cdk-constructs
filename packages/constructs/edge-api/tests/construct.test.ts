@@ -199,6 +199,36 @@ describe('edge-api', () => {
         },
       })
     })
+    test('add a frontend endpoint at / - 404 behaviour', () => {
+      const app = new cdk.App()
+      const stack = new cdk.Stack(app, 'stack', {
+        env: {
+          region: 'us-east-1',
+        },
+      })
+      const certificate = new Certificate(stack, 'certificate', {
+        domainName: 'example.org',
+      })
+      new EdgeAPI(stack, 'api', {
+        certificate,
+        domains: ['example.org'],
+        defaultEndpoint: {
+          bucket: new Bucket(stack, 'bucket'),
+        },
+      })
+      const result = Template.fromStack(stack)
+      result.hasResourceProperties('AWS::CloudFront::Distribution', {
+        DistributionConfig: {
+          CustomErrorResponses: [
+            {
+              ErrorCode: 404,
+              ResponseCode: 200,
+              ResponsePagePath: '/index.html',
+            },
+          ],
+        },
+      })
+    })
     test('add a lambda endpoint', () => {
       const { api, stack, template } = synth('us-east-1', {})
       api.addEndpoint({
@@ -883,6 +913,46 @@ describe('edge-api', () => {
                 ],
               ],
             },
+          },
+        },
+      })
+    })
+    test('add a redirection endpoint - root', () => {
+      const { template } = synth('us-east-1', {
+        devMode: true,
+        defaultEndpoint: {
+          redirect: true,
+          destination: 'google.com',
+        },
+      })
+      const result = template()
+      result.hasResourceProperties('AWS::ApiGatewayV2::Route', {
+        ApiId: {
+          Ref: 'api215E4D4B',
+        },
+        AuthorizationType: 'NONE',
+        RouteKey: 'GET /',
+        Target: {
+          'Fn::Join': [
+            '',
+            [
+              'integrations/',
+              {
+                Ref: 'apiGETintegration6509F68C',
+              },
+            ],
+          ],
+        },
+      })
+      result.hasResourceProperties('AWS::ApiGatewayV2::Integration', {
+        ApiId: {
+          Ref: 'api215E4D4B',
+        },
+        IntegrationType: 'AWS_PROXY',
+        PayloadFormatVersion: '2.0',
+        RequestParameters: {
+          'overwrite:header.env': {
+            'Fn::Base64': '{"destination":"google.com"}',
           },
         },
       })
