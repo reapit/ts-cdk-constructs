@@ -61,7 +61,7 @@ export const toRCRequest = <EnvType>(request: RequestEvent): RCRequest<EnvType> 
     method: request.requestContext.http.method as HTTPMethod,
     path: request.rawPath,
     host: Array.isArray(headers['host']) ? headers['host'][0] : headers['host'],
-    cookies: parseCookies(headers['cookies']),
+    cookies: parseCookies(headers['cookie']),
     body: requestBodyHandler(request),
     headers,
     env: getEnv(headers) as EnvType,

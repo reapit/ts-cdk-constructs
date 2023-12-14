@@ -168,10 +168,10 @@ const testEventType = (generateRequest: RequestGenerator, generateResponse: Resp
             generateRequest({
               uri: '/',
               headers: {
-                cookies: [
+                cookie: [
                   {
                     value: 'a=b;c=d',
-                    key: 'cookies',
+                    key: 'Cookie',
                   },
                 ],
               },

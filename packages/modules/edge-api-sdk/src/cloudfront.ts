@@ -66,7 +66,7 @@ export const toRCRequest = <EnvType>(event: RequestEvent): RCRequest<EnvType> =>
     host,
     env: env as EnvType,
     region,
-    cookies: headers.cookies ? parseCookies(headers.cookies) : [],
+    cookies: headers.cookie ? parseCookies(headers.cookie) : [],
   }
 
   if (query && Object.keys(query).length) {
