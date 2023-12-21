@@ -51,13 +51,13 @@ export const handler = async (event: CloudFrontRequestEvent): Promise<CloudFront
     },
   ]
 
-  middlewares.forEach((middleware) => {
+  for (const middleware of middlewares) {
     try {
-      eval(middleware)(req, mapping)
+      await eval(middleware)(req, mapping)
     } catch (e) {
       console.error(e)
     }
-  })
+  }
 
   return req
 }

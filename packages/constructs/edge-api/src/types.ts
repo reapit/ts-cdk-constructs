@@ -24,8 +24,12 @@ export interface FrontendEndpoint extends BaseEndpoint {
   invalidationItems?: string[]
 }
 
-export type RequestMiddleware = (req: CloudFrontRequest, mapping: Destination) => void
-export type ResponseMiddleware = (req: CloudFrontRequest, res: CloudFrontResponse, mapping: Destination) => void
+export type RequestMiddleware = (req: CloudFrontRequest, mapping: Destination) => void | Promise<void>
+export type ResponseMiddleware = (
+  req: CloudFrontRequest,
+  res: CloudFrontResponse,
+  mapping: Destination,
+) => void | Promise<void>
 
 export const isResponseMiddleware = (
   middleware: RequestMiddleware | ResponseMiddleware,
