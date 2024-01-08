@@ -71,13 +71,13 @@ var handler = async (event) => {
       value: domainName
     }
   ];
-  middlewares.forEach((middleware) => {
+  for (const middleware of middlewares) {
     try {
-      eval(middleware)(req, mapping);
+      await eval(middleware)(req, mapping);
     } catch (e) {
       console.error(e);
     }
-  });
+  }
   return req;
 };
 // Annotate the CommonJS export names for ESM import in node:

@@ -234,7 +234,7 @@
         {
          "EventType": "origin-response",
          "LambdaFunctionARN": {
-          "Ref": "apis3qsredirectCurrentVersion201EBAF5b65ee701a46fed9ee997a70695f73678"
+          "Ref": "apis3qsredirectCurrentVersion201EBAF5ee6e5695a3c69fe42abc3c5457c9312d"
          }
         }
        ],
@@ -363,7 +363,7 @@
          "EventType": "origin-request",
          "IncludeBody": true,
          "LambdaFunctionARN": {
-          "Ref": "apiredirectmeredirectorCurrentVersionA5C47DBFf605f1cd2163e657066a2cebe4a8666f"
+          "Ref": "apiredirectmeredirectorCurrentVersionA5C47DBFae680f8ca3cdb946b8115b80d63e09e1"
          }
         }
        ],
@@ -762,7 +762,7 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-028446965111-us-east-1",
-     "S3Key": "2ea0bec2e90021dc6ee51794fc23cfd48e6c8c7d4933c25dc21ddd7815aee37e.zip"
+     "S3Key": "03c4398d27bfe8ea8baafc234fca408feb2dd1834f6998faad3792c49ca4099e.zip"
     },
     "Handler": "s3-qs-redirect.handler",
     "Role": {
@@ -778,12 +778,12 @@
    ],
    "Metadata": {
     "aws:cdk:path": "edge-api-test-stack/api/api/s3-qs-redirect/Resource",
-    "aws:asset:path": "asset.2ea0bec2e90021dc6ee51794fc23cfd48e6c8c7d4933c25dc21ddd7815aee37e",
+    "aws:asset:path": "asset.03c4398d27bfe8ea8baafc234fca408feb2dd1834f6998faad3792c49ca4099e",
     "aws:asset:is-bundled": false,
     "aws:asset:property": "Code"
    }
   },
-  "apis3qsredirectCurrentVersion201EBAF5b65ee701a46fed9ee997a70695f73678": {
+  "apis3qsredirectCurrentVersion201EBAF5ee6e5695a3c69fe42abc3c5457c9312d": {
    "Type": "AWS::Lambda::Version",
    "Properties": {
     "FunctionName": {
@@ -954,7 +954,7 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-028446965111-us-east-1",
-     "S3Key": "2ea0bec2e90021dc6ee51794fc23cfd48e6c8c7d4933c25dc21ddd7815aee37e.zip"
+     "S3Key": "03c4398d27bfe8ea8baafc234fca408feb2dd1834f6998faad3792c49ca4099e.zip"
     },
     "Handler": "production-redirector.handler",
     "Role": {
@@ -970,12 +970,12 @@
    ],
    "Metadata": {
     "aws:cdk:path": "edge-api-test-stack/api/api/--redirect-me-redirector/Resource",
-    "aws:asset:path": "asset.2ea0bec2e90021dc6ee51794fc23cfd48e6c8c7d4933c25dc21ddd7815aee37e",
+    "aws:asset:path": "asset.03c4398d27bfe8ea8baafc234fca408feb2dd1834f6998faad3792c49ca4099e",
     "aws:asset:is-bundled": false,
     "aws:asset:property": "Code"
    }
   },
-  "apiredirectmeredirectorCurrentVersionA5C47DBFf605f1cd2163e657066a2cebe4a8666f": {
+  "apiredirectmeredirectorCurrentVersionA5C47DBFae680f8ca3cdb946b8115b80d63e09e1": {
    "Type": "AWS::Lambda::Version",
    "Properties": {
     "FunctionName": {
@@ -1399,7 +1399,7 @@
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/21SYUvDMBD9LX7PIiqCfpyVoaAoHfi1ZOltnkuTkrtMRul/99LWboJQuHd373Lpe7nW9/f66sJ808LW+4XDje7WbOxelUAhRQtKelVnITJu0RqGxnizg6i74lRTxdafpb2iG909JLsHzq0JjeE9OLTHU3nKx+TBkExbF1K9jcGz7t4i7tAvrQWi5xo8Iw/DReasMudfhly/DZ7gCUwNkU5L/288InHETWIMPrPO814502xqo7tV8vaXMeMPOWWqncEXc4T4m6/R7xxwmId6habRXRncIN0QT1cckYjI0G6nCarY0J50YZxbftMa4gHFnD+UwTqGV2M/0Q8Hn+e9goOII6wyTWslZquqzhCBdJY5qBpaF46NcPVoyuNc6FUMieFW3F2WYEOsR0kzWgP3vRqOkLXiyC73Xk3bZjhKWLksSyVPyjrU8h+Fw0EpVSTi0MyPbjRqxm+J2yTbfahBf9Hl4epOy3d98UWIi5jE8wZ0OcYfkjsecNQCAAA="
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/21SXW/bMAz8LX1XtGXFgOXRdVGsQIsONrBXg5EZl40sGSKVIBD03wd/1MmAPvGOPJLCUT/0bqe3d3DmjWmPG0t7nWoBc1QVso/BoIIzN8lgEDqQAcEeHHQYdCqvOVUe3A3Niu91eojmiDKWFjSHP96SuVzTC5/JAzBmZayP7SF4Jzq9BerIFcYg83OLTkim5nLUPI2aLxUV8uAd42+EFgNfl35deCSWQPso5N2ouuVZWej3Lej0FJ35VKz4LwZecjfwBS4YPnlNrrMofm3KiqDXqfJ2sm6K1yfOKCsWHA5LBzcCfGRdgrXFmWsMJzL4v2Q6neArmHdy0+BbnhWe0AnrVMVlbbTTqZoEzCisizGoFgfrLz060fNRHtdEVsFHwZ/3OhUVGh/a2dIR1Sg5q2lELdCR68baKwzDCGcLGzva0sCZjSVdnLm0NDmlysji+/XTzYda8VuUIUpWzreoP/jbaftLb3f6+90HE21CdEI96mqO/wA1l2vf1AIAAA=="
    },
    "Metadata": {
     "aws:cdk:path": "edge-api-test-stack/CDKMetadata/Default"
