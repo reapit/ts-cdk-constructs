@@ -205,6 +205,7 @@ const testEventType = (generateRequest: RequestGenerator, generateResponse: Resp
             },
             region: 'eu-west-2',
             cookies: [],
+            meta: {} as any,
           }
           expect(handler).toHaveBeenCalledWith(request)
         })
@@ -225,6 +226,7 @@ const testEventType = (generateRequest: RequestGenerator, generateResponse: Resp
             path: '/',
             region: 'eu-west-2',
             cookies: [],
+            meta: {} as any,
           }
           expect(handler).toHaveBeenCalledWith(request)
         })
@@ -281,6 +283,7 @@ const testEventType = (generateRequest: RequestGenerator, generateResponse: Resp
             path: '/',
             region: 'eu-west-2',
             cookies: [],
+            meta: {} as any,
           }
           expect(handler).toHaveBeenCalledWith(request)
         })
@@ -326,6 +329,7 @@ const testEventType = (generateRequest: RequestGenerator, generateResponse: Resp
             env,
             body: JSON.stringify({ something: 'here' }),
           }),
+          {} as any,
         )
         const request: JSONRequest<any, any> = {
           env,
@@ -338,6 +342,7 @@ const testEventType = (generateRequest: RequestGenerator, generateResponse: Resp
           region: 'eu-west-2',
           cookies: [],
           body: { something: 'here' },
+          meta: {} as any,
         }
         expect(handler).toHaveBeenCalledWith(request)
       })
@@ -357,6 +362,7 @@ const testEventType = (generateRequest: RequestGenerator, generateResponse: Resp
           env,
           body: new URLSearchParams({ something: 'here' }).toString(),
         }),
+        {} as any,
       )
       const request: JSONRequest<any, any> = {
         env,
@@ -369,6 +375,7 @@ const testEventType = (generateRequest: RequestGenerator, generateResponse: Resp
         region: 'eu-west-2',
         cookies: [],
         body: { something: 'here' },
+        meta: {} as any,
       }
       expect(handler).toHaveBeenCalledWith(request)
     })
