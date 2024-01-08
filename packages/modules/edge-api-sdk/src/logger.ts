@@ -96,12 +96,12 @@ export const createLogger = (request: RCRequest<any>): Logger => {
     (...args) => {
       if (level === 'warning') {
         console.warn(...args)
-      }
-      if (level === 'critical' || level === 'error') {
+      } else if (level === 'critical' || level === 'error') {
         console.error(...args)
-      }
-      if (level === 'info') {
+      } else if (level === 'info') {
         console.info(...args)
+      } else {
+        console.log(...args)
       }
       entries.push({
         level,
