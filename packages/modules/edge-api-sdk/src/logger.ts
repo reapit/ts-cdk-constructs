@@ -1,4 +1,4 @@
-import { EventInput, RCRequest } from './types'
+import { EventInput, JSONRequest, RCRequest } from './types'
 import { format } from 'util'
 
 type LogFn = (message?: any, ...optionalParams: any[]) => void
@@ -24,14 +24,57 @@ type MinimalLogPayload = {
   entries: LogEntry[]
 }
 
-type LogPayload = MinimalLogPayload & {
-  request: RCRequest<any>
+export type LogPayload = MinimalLogPayload & {
+  request: RCRequest<any> | JSONRequest<any, any>
   sessionId: string
   invocationId: string
 }
 
+const isNotMinimal = (payload: MinimalLogPayload | LogPayload): payload is LogPayload => {
+  return !!(payload as LogPayload).request
+}
+
+const isJsonRequest = (request: RCRequest<any> | JSONRequest<any, any>): request is JSONRequest<any, any> => {
+  return typeof request.body === 'object'
+}
+
+const scrubEvent = (event: any): EventInput => {
+  if (event.body) {
+    delete event.body
+  }
+  if (event.Records?.[0]?.cf?.request?.body) {
+    delete event.Records[0].cf.request.body
+  }
+  return event
+}
+
+const scrub = <T extends MinimalLogPayload | LogPayload>(payload: T): T => {
+  let doScrubEvent = true
+
+  if (isNotMinimal(payload)) {
+    if (payload.request.body && isJsonRequest(payload.request)) {
+      const body = payload.request.body
+      if (body.password) {
+        payload.request.body = {
+          ...body,
+          password: 'request-body-entry-removed',
+        }
+      } else {
+        doScrubEvent = false
+      }
+    } else {
+      doScrubEvent = false
+    }
+  }
+
+  return {
+    ...payload,
+    event: doScrubEvent ? scrubEvent(payload.event) : payload.event,
+  }
+}
+
 const writeOut = (payload: MinimalLogPayload | LogPayload) => {
-  console.log(JSON.stringify(payload))
+  console.log(JSON.stringify(scrub(payload)))
 }
 
 const flush = (request: RCRequest<any>, entries: LogEntry[], centralize: boolean) => {
