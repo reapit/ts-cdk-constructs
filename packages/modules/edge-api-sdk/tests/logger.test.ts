@@ -1,6 +1,6 @@
 import { CloudFrontRequestEvent } from 'aws-lambda'
 import { JSONRequest } from '../src'
-import { LogPayload, createLogger } from '../src/logger'
+import { LogPayload, createLogger, panic } from '../src/logger'
 
 const generateCloudfrontRequest = ({
   headers = {
@@ -188,5 +188,23 @@ describe('logger', () => {
     expect(format.request.body).toHaveProperty('something')
     expect((format.request.body as any).something).toBe('else')
     expect((format.event as CloudFrontRequestEvent).Records[0].cf.request.body).not.toBeUndefined()
+  })
+
+  it('panic - should work', () => {
+    panic(
+      {
+        name: 'Big Error',
+        message: 'something went very wrong',
+      },
+      generateCloudfrontRequest({}),
+    )
+
+    expect(consoleLog).toHaveBeenCalledTimes(1)
+    const format = JSON.parse(consoleLog.mock.calls[0][0]) as LogPayload
+    expect(format.entries).toHaveLength(1)
+    expect(format.entries[0].message).toBe("{ error: { name: 'Big Error', message: 'something went very wrong' } }")
+    expect(format.entries[0].error?.message).toBe('something went very wrong')
+    expect(format.entries[0].error?.name).toBe('Big Error')
+    expect(format.entries[0].level).toBe('panic')
   })
 })

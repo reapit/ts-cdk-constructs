@@ -3,7 +3,7 @@ import { format } from 'util'
 
 type LogFn = (message?: any, ...optionalParams: any[]) => void
 
-type LogLevel = 'info' | 'warning' | 'error' | 'critical'
+type LogLevel = 'info' | 'warning' | 'error' | 'critical' | 'panic'
 
 export type Logger = Record<LogLevel, LogFn>
 
@@ -121,8 +121,8 @@ export const panic = (error: Error, event: EventInput) => {
     timestamp: new Date(),
     entries: [
       {
-        level: 'critical',
-        message: error.message,
+        level: 'panic',
+        message: format({ error }),
         timestamp: new Date(),
         error,
       },
@@ -139,7 +139,7 @@ export const createLogger = (request: RCRequest<any>): Logger => {
     (...args) => {
       if (level === 'warning') {
         console.warn(...args)
-      } else if (level === 'critical' || level === 'error') {
+      } else if (level === 'critical' || level === 'error' || level === 'panic') {
         console.error(...args)
       } else if (level === 'info') {
         console.info(...args)
@@ -163,5 +163,6 @@ export const createLogger = (request: RCRequest<any>): Logger => {
     warning: logFn('warning'),
     error: logFn('error'),
     critical: logFn('critical'),
+    panic: logFn('panic'),
   }
 }
