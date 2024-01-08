@@ -26,7 +26,7 @@ type MinimalLogPayload = {
 
 export type LogPayload = MinimalLogPayload & {
   request: RCRequest<any> | JSONRequest<any, any>
-  sessionId: string
+  sessionId?: string
   invocationId: string
 }
 
@@ -124,11 +124,22 @@ export const panic = (error: Error, event: EventInput) => {
         level: 'panic',
         message: format({ error }),
         timestamp: new Date(),
-        error,
+        error: stringifiableError(error),
       },
     ],
   }
   writeOut(payload)
+}
+
+const stringifiableError = (error?: Error): Error | undefined => {
+  if (!error) {
+    return error
+  }
+  return {
+    message: error.message,
+    name: error.name,
+    stack: error.stack,
+  }
 }
 
 export const createLogger = (request: RCRequest<any>): Logger => {
@@ -150,7 +161,7 @@ export const createLogger = (request: RCRequest<any>): Logger => {
         level,
         message: format(...args),
         timestamp: new Date(),
-        error: args.find(isAdditionalLogData)?.error,
+        error: stringifiableError(args.find(isAdditionalLogData)?.error),
       })
       const centralize = level === 'error' || level === 'critical'
       if (centralize) {

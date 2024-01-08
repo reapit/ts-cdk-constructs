@@ -8,5 +8,3 @@ export const getEnvRegion = () => {
     region,
   }
 }
-
-export const sessionIdHeaderName = 'x-edge-api-session-id'

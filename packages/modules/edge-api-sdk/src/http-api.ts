@@ -5,10 +5,10 @@ import {
   APIGatewayProxyEventHeaders,
   Context,
 } from 'aws-lambda'
-import { envKey } from './config'
+import { envKey, sessionIdHeaderName } from './config'
 import { parseQueryString } from './parse-querystring'
 import { EventInput, HTTPMethod, RCHeaders, RCRequest, RCResponse } from './types'
-import { getEnvRegion, sessionIdHeaderName } from './utils'
+import { getEnvRegion } from './utils'
 import { parseCookies } from './parse-cookies'
 
 export type RequestEvent = APIGatewayProxyEventV2
@@ -61,7 +61,7 @@ export const toRCRequest = <EnvType>(request: RequestEvent, context: Context): R
   const { functionName, functionVersion, awsRequestId } = context
   const meta = {
     event: request,
-    sessionId: headers[sessionIdHeaderName].toString(),
+    sessionId: headers[sessionIdHeaderName]?.toString(),
     functionName,
     functionVersion,
     invocationId: awsRequestId,
