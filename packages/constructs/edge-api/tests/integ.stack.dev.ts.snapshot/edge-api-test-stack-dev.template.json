@@ -716,7 +716,7 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-028446965111-eu-central-1",
-     "S3Key": "2ea0bec2e90021dc6ee51794fc23cfd48e6c8c7d4933c25dc21ddd7815aee37e.zip"
+     "S3Key": "03c4398d27bfe8ea8baafc234fca408feb2dd1834f6998faad3792c49ca4099e.zip"
     },
     "Handler": "redirector.handler",
     "Role": {
@@ -732,7 +732,7 @@
    ],
    "Metadata": {
     "aws:cdk:path": "edge-api-test-stack-dev/api/api/redirect/Resource",
-    "aws:asset:path": "asset.2ea0bec2e90021dc6ee51794fc23cfd48e6c8c7d4933c25dc21ddd7815aee37e",
+    "aws:asset:path": "asset.03c4398d27bfe8ea8baafc234fca408feb2dd1834f6998faad3792c49ca4099e",
     "aws:asset:is-bundled": false,
     "aws:asset:property": "Code"
    }
@@ -1091,7 +1091,7 @@
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/01S2WrDMBD8lrzLSuPS0rw1B6WFHsGBvoaNvHGV6DCSnBCM/71aOYfBMLOrYa9xztvplE9GcPKZKA+ZklvergOIAyvQ28YJZPFt0wp0Qe6kgIAaDFToeLu459hiZwZhx6CWVSQnOB/zqNyZpdUgzTfopJ3VkiB2qq7xF9S1NBVFHyZg5SBIaygsbEMlFehtCanYCp2W3tP7W2PEVTjkn3BG94suidaxsMJgb4qOSdC8LazCvkPElVVSnCnsWcf846YF7zF4PiNgJdbKnjWawOeNOGBY3hKk5m2fnYNH1lMqd2E93LsM4445WvIplpgVKKwr01iJrTF0HUsD0L3oRv0pNop23ER/hJJ8dvILJdPabNH4YPXNwVTqzn+aUDdx4OkzzzNQ9R/wh9Hr5RcYEw7duyjagYHvIdTkIGFv4cA/SibHEhtYGZcwtkS+9+Pj5IXHLx/tvZSZa0yQGnnR4z+kZqDQlAIAAA=="
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/01Sy07DMBD8lt7dhRaB6I0ShEDipVTiWi3ONpj6EdkbosryvyM7pc1pZtajtXfHS4irFSxmOIS5bPZzrb4gbhjlXtQUXO8lCRzCNkryrHZKIpNBiy15iNW5JqqdncgksFMtMg14+F1CrHb2wRlU9g1N8a47lWHD2P7rV+w6Zdusni1T65GVs1nWrs8tNZqvBkuzD/JGhZDPH3sr/41T/oIH8p/ki2mjbKuJ3cmRhEIDsXaaxhs0iQ+nlTxkObIkwtU2YgjEAdYZREOddgdDluG+l3vih1MhuyGO1XsMJEaa2x3ZCOdbpjoJn4e8voK4rkk635RnFbYhTkmUB+R95R2Nq9jqPOMWhyC1gvUQKq3K2KLqAztzSrC0OvP3nruek1jdwHKOuvtGuJzdHb/ARcZpekdHnAT4xNzlBDOOEU7yy8WSWGGTKFMS1jUEP+Hid3ELixVczn6CUnPfW1aGoB7xDwPK1X+UAgAA"
    },
    "Metadata": {
     "aws:cdk:path": "edge-api-test-stack-dev/CDKMetadata/Default"

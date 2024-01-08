@@ -4,6 +4,7 @@ import {
   CloudFrontRequestEvent,
   CloudFrontRequestResult,
 } from 'aws-lambda'
+import { Logger } from './logger'
 
 export type EventInput = APIGatewayProxyEventV2 | CloudFrontRequestEvent
 export type EventOutput = APIGatewayProxyResultV2 | CloudFrontRequestResult
@@ -24,6 +25,13 @@ export type RCRequest<EnvType> = {
   query?: RCQuery
   env: EnvType
   region: string
+  meta: {
+    sessionId: string
+    functionName: string
+    functionVersion: string
+    invocationId: string
+    event: EventInput
+  }
 }
 
 export type JSONRequest<EnvType, BodyType> = Omit<RCRequest<EnvType>, 'body'> & {
@@ -50,7 +58,9 @@ export type RedirectionResponse = {
   status: 302
 }
 
-export type RequestHandler<EnvType> = (request: RCRequest<EnvType>) => RCResponse | Promise<RCResponse>
+export type RequestHandler<EnvType> = (
+  request: RCRequest<EnvType> & { logger: Logger },
+) => RCResponse | Promise<RCResponse>
 export type JSONRequestHandler<EnvType, BodyType> = (
-  request: JSONRequest<EnvType, BodyType>,
+  request: JSONRequest<EnvType, BodyType> & { logger: Logger },
 ) => JSONResponse | Promise<JSONResponse>

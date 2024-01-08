@@ -157,6 +157,7 @@ const testEventType = (generateRequest: RequestGenerator, generateResponse: Resp
           generateRequest({
             uri: '/',
           }),
+          {},
         )
         expect(handler).toBeCalledTimes(1)
       })
@@ -176,6 +177,7 @@ const testEventType = (generateRequest: RequestGenerator, generateResponse: Resp
                 ],
               },
             }),
+            {},
           )
 
           expect(handler.mock.calls[0][0].cookies).toStrictEqual(['a=b', 'c=d'])
@@ -189,6 +191,7 @@ const testEventType = (generateRequest: RequestGenerator, generateResponse: Resp
               uri: '/',
               querystring: 'asdf=1&qwerty=2&ghjkl=3',
             }),
+            {},
           )
           const request: JSONRequest<any, any> = {
             headers: {
@@ -205,6 +208,7 @@ const testEventType = (generateRequest: RequestGenerator, generateResponse: Resp
             },
             region: 'eu-west-2',
             cookies: [],
+            meta: {} as any,
           }
           expect(handler).toHaveBeenCalledWith(request)
         })
@@ -214,6 +218,7 @@ const testEventType = (generateRequest: RequestGenerator, generateResponse: Resp
             generateRequest({
               uri: '/',
             }),
+            {},
           )
           const request: JSONRequest<any, any> = {
             headers: {
@@ -225,6 +230,7 @@ const testEventType = (generateRequest: RequestGenerator, generateResponse: Resp
             path: '/',
             region: 'eu-west-2',
             cookies: [],
+            meta: {} as any,
           }
           expect(handler).toHaveBeenCalledWith(request)
         })
@@ -242,6 +248,7 @@ const testEventType = (generateRequest: RequestGenerator, generateResponse: Resp
           generateRequest({
             uri: '/authorize',
           }),
+          {},
         )
         const resultEvent = generateResponse({
           status: '302',
@@ -270,6 +277,7 @@ const testEventType = (generateRequest: RequestGenerator, generateResponse: Resp
               uri: '/',
               env,
             }),
+            {},
           )
           const request: JSONRequest<any, any> = {
             env,
@@ -281,6 +289,7 @@ const testEventType = (generateRequest: RequestGenerator, generateResponse: Resp
             path: '/',
             region: 'eu-west-2',
             cookies: [],
+            meta: {} as any,
           }
           expect(handler).toHaveBeenCalledWith(request)
         })
@@ -297,6 +306,7 @@ const testEventType = (generateRequest: RequestGenerator, generateResponse: Resp
               uri: '/',
               env: {},
             }),
+            {},
           )
           const res = JSON.parse((result as CloudFrontResultResponse).body ?? '')
           expect(res).toHaveProperty('status', 'error')
@@ -326,6 +336,7 @@ const testEventType = (generateRequest: RequestGenerator, generateResponse: Resp
             env,
             body: JSON.stringify({ something: 'here' }),
           }),
+          {} as any,
         )
         const request: JSONRequest<any, any> = {
           env,
@@ -338,6 +349,7 @@ const testEventType = (generateRequest: RequestGenerator, generateResponse: Resp
           region: 'eu-west-2',
           cookies: [],
           body: { something: 'here' },
+          meta: {} as any,
         }
         expect(handler).toHaveBeenCalledWith(request)
       })
@@ -357,6 +369,7 @@ const testEventType = (generateRequest: RequestGenerator, generateResponse: Resp
           env,
           body: new URLSearchParams({ something: 'here' }).toString(),
         }),
+        {} as any,
       )
       const request: JSONRequest<any, any> = {
         env,
@@ -369,6 +382,7 @@ const testEventType = (generateRequest: RequestGenerator, generateResponse: Resp
         region: 'eu-west-2',
         cookies: [],
         body: { something: 'here' },
+        meta: {} as any,
       }
       expect(handler).toHaveBeenCalledWith(request)
     })
