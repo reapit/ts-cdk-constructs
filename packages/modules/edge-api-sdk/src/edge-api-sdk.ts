@@ -1,22 +1,25 @@
+import { Context } from 'aws-lambda'
 import * as cloudfront from './cloudfront'
 import * as httpApi from './http-api'
 
 import { EventInput, JSONRequestHandler, RCHeaders, RCRequest, RCResponse, RequestHandler } from './types'
+import { createLogger } from './logger'
 
-const eventToRequest = <EnvType>(event: EventInput): RCRequest<EnvType> => {
+const eventToRequest = <EnvType>(event: EventInput, context: Context): RCRequest<EnvType> => {
   console.log(JSON.stringify(event))
   if (cloudfront.isRequestEvent(event)) {
-    return cloudfront.toRCRequest<EnvType>(event)
+    return cloudfront.toRCRequest<EnvType>(event, context)
   }
   if (httpApi.isRequestEvent(event)) {
-    return httpApi.toRCRequest<EnvType>(event)
+    return httpApi.toRCRequest<EnvType>(event, context)
   }
 
   throw new Error('Unable to handle event')
 }
 
 const respondToEvent = (event: EventInput, response: RCResponse) => {
-  const req = eventToRequest<{ corsOrigin?: string }>(event)
+  // TODO: figure out a better way of just getting the cors origin here
+  const req = eventToRequest<{ corsOrigin?: string }>(event, {} as Context)
   const corsHeaders = req.env.corsOrigin
     ? {
         'Access-Control-Allow-Headers':
@@ -44,8 +47,9 @@ const respondToEvent = (event: EventInput, response: RCResponse) => {
 }
 
 export const requestHandler = <EnvType>(requestHandler: RequestHandler<EnvType>) => {
-  const fn = async (event: EventInput) => {
-    const request = eventToRequest<EnvType>(event)
+  const fn = async (event: EventInput, conext: Context) => {
+    const request = eventToRequest<EnvType>(event, conext)
+    const logger = createLogger(request)
     if (request.method === 'OPTIONS') {
       return respondToEvent(event, {
         status: 200,
@@ -53,7 +57,7 @@ export const requestHandler = <EnvType>(requestHandler: RequestHandler<EnvType>)
       })
     }
     try {
-      const response = await requestHandler(request)
+      const response = await requestHandler({ ...request, logger })
       return respondToEvent(event, response)
     } catch (e) {
       return errorResponseToEvent(event, e as Error)
@@ -84,8 +88,9 @@ const errorResponseToEvent = (event: EventInput, err: Error) => {
 export const jsonRequestHandler = <EnvType, BodyType = any>(
   jsonRequestHandler: JSONRequestHandler<EnvType, BodyType>,
 ) => {
-  const fn = async (event: EventInput) => {
-    const request = eventToRequest<EnvType>(event)
+  const fn = async (event: EventInput, context: Context) => {
+    const request = eventToRequest<EnvType>(event, context)
+    const logger = createLogger(request)
     const body = request.body ? JSON.parse(request.body) : undefined
     if (request.method === 'OPTIONS') {
       return respondToEvent(event, {
@@ -98,6 +103,7 @@ export const jsonRequestHandler = <EnvType, BodyType = any>(
       const response = await jsonRequestHandler({
         ...request,
         body: body as BodyType | undefined,
+        logger,
       })
 
       if (response.status === 302) {
@@ -130,8 +136,9 @@ export const jsonRequestHandler = <EnvType, BodyType = any>(
 export const formRequestHandler = <EnvType, BodyType = any>(
   formRequestHandler: JSONRequestHandler<EnvType, BodyType>,
 ) => {
-  const fn = async (event: EventInput) => {
-    const request = eventToRequest<EnvType>(event)
+  const fn = async (event: EventInput, context: Context) => {
+    const request = eventToRequest<EnvType>(event, context)
+    const logger = createLogger(request)
     const body = request.body ? Object.fromEntries(new URLSearchParams(request.body)) : undefined
     if (request.method === 'OPTIONS') {
       return respondToEvent(event, {
@@ -144,6 +151,7 @@ export const formRequestHandler = <EnvType, BodyType = any>(
       const response = await formRequestHandler({
         ...request,
         body: body as BodyType | undefined,
+        logger,
       })
 
       if (response.status === 302) {

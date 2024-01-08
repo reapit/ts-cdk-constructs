@@ -1,8 +1,14 @@
-import { CloudFrontRequestEvent, CloudFrontRequestResult, CloudFrontRequest, CloudFrontHeaders } from 'aws-lambda'
+import {
+  CloudFrontRequestEvent,
+  CloudFrontRequestResult,
+  CloudFrontRequest,
+  CloudFrontHeaders,
+  Context,
+} from 'aws-lambda'
 import { envKey } from './config'
 import { parseQueryString } from './parse-querystring'
 import { EventInput, HTTPMethod, RCHeaders, RCRequest, RCResponse } from './types'
-import { getEnvRegion } from './utils'
+import { getEnvRegion, sessionIdHeaderName } from './utils'
 import { parseCookies } from './parse-cookies'
 
 export type RequestEvent = CloudFrontRequestEvent
@@ -45,7 +51,7 @@ const getEnv = (req: CloudFrontRequest): Record<string, any> => {
   return str ? JSON.parse(str) : {}
 }
 
-export const toRCRequest = <EnvType>(event: RequestEvent): RCRequest<EnvType> => {
+export const toRCRequest = <EnvType>(event: RequestEvent, context: Context): RCRequest<EnvType> => {
   const request = event.Records[0].cf.request
   const body = requestBodyHandler(request.body)
   const query = parseQueryString(request.querystring)
@@ -59,6 +65,8 @@ export const toRCRequest = <EnvType>(event: RequestEvent): RCRequest<EnvType> =>
     env = env.domainMapping[host]
   }
 
+  const { functionName, functionVersion, awsRequestId } = context
+
   const obj: RCRequest<EnvType> = {
     method: request.method as HTTPMethod,
     path: request.uri,
@@ -67,6 +75,13 @@ export const toRCRequest = <EnvType>(event: RequestEvent): RCRequest<EnvType> =>
     env: env as EnvType,
     region,
     cookies: headers.cookie ? parseCookies(headers.cookie) : [],
+    meta: {
+      event,
+      sessionId: headers[sessionIdHeaderName].toString(),
+      functionName,
+      functionVersion,
+      invocationId: awsRequestId,
+    },
   }
 
   if (query && Object.keys(query).length) {
