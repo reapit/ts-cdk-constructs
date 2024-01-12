@@ -193,7 +193,7 @@ const testEventType = (generateRequest: RequestGenerator, generateResponse: Resp
             }),
             {},
           )
-          const request: JSONRequest<any, any> = {
+          const request = {
             headers: {
               host: ['google.com'],
             },
@@ -208,9 +208,9 @@ const testEventType = (generateRequest: RequestGenerator, generateResponse: Resp
             },
             region: 'eu-west-2',
             cookies: [],
-            meta: {} as any,
           }
-          expect(handler).toHaveBeenCalledWith(request)
+          const { logger, meta, ...rest } = handler.mock.lastCall[0]
+          expect(rest).toEqual(request)
         })
         it('should cope with no querystring', async () => {
           const handler = jest.fn().mockResolvedValue({})
@@ -220,7 +220,7 @@ const testEventType = (generateRequest: RequestGenerator, generateResponse: Resp
             }),
             {},
           )
-          const request: JSONRequest<any, any> = {
+          const request = {
             headers: {
               host: ['google.com'],
             },
@@ -230,9 +230,9 @@ const testEventType = (generateRequest: RequestGenerator, generateResponse: Resp
             path: '/',
             region: 'eu-west-2',
             cookies: [],
-            meta: {} as any,
           }
-          expect(handler).toHaveBeenCalledWith(request)
+          const { logger, meta, ...rest } = handler.mock.lastCall[0]
+          expect(rest).toEqual(request)
         })
       })
 
@@ -279,7 +279,7 @@ const testEventType = (generateRequest: RequestGenerator, generateResponse: Resp
             }),
             {},
           )
-          const request: JSONRequest<any, any> = {
+          const request = {
             env,
             headers: {
               host: ['google.com'],
@@ -289,9 +289,9 @@ const testEventType = (generateRequest: RequestGenerator, generateResponse: Resp
             path: '/',
             region: 'eu-west-2',
             cookies: [],
-            meta: {} as any,
           }
-          expect(handler).toHaveBeenCalledWith(request)
+          const { logger, meta, ...rest } = handler.mock.lastCall[0]
+          expect(rest).toEqual(request)
         })
       })
 
@@ -338,7 +338,7 @@ const testEventType = (generateRequest: RequestGenerator, generateResponse: Resp
           }),
           {} as any,
         )
-        const request: JSONRequest<any, any> = {
+        const request = {
           env,
           headers: {
             host: ['google.com'],
@@ -349,9 +349,9 @@ const testEventType = (generateRequest: RequestGenerator, generateResponse: Resp
           region: 'eu-west-2',
           cookies: [],
           body: { something: 'here' },
-          meta: {} as any,
         }
-        expect(handler).toHaveBeenCalledWith(request)
+        const { logger, meta, ...rest } = handler.mock.lastCall[0]
+        expect(rest).toEqual(request)
       })
     })
   })
@@ -371,7 +371,7 @@ const testEventType = (generateRequest: RequestGenerator, generateResponse: Resp
         }),
         {} as any,
       )
-      const request: JSONRequest<any, any> = {
+      const request = {
         env,
         headers: {
           host: ['google.com'],
@@ -382,9 +382,9 @@ const testEventType = (generateRequest: RequestGenerator, generateResponse: Resp
         region: 'eu-west-2',
         cookies: [],
         body: { something: 'here' },
-        meta: {} as any,
       }
-      expect(handler).toHaveBeenCalledWith(request)
+      const { logger, meta, ...rest } = handler.mock.lastCall[0]
+      expect(rest).toEqual(request)
     })
   })
 }
