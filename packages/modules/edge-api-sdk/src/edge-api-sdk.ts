@@ -1,22 +1,24 @@
+import { Context } from 'aws-lambda'
 import * as cloudfront from './cloudfront'
 import * as httpApi from './http-api'
 
 import { EventInput, JSONRequestHandler, RCHeaders, RCRequest, RCResponse, RequestHandler } from './types'
+import { createLogger, panic } from './logger'
 
-const eventToRequest = <EnvType>(event: EventInput): RCRequest<EnvType> => {
-  console.log(JSON.stringify(event))
+const eventToRequest = <EnvType>(event: EventInput, context: Context): RCRequest<EnvType> => {
   if (cloudfront.isRequestEvent(event)) {
-    return cloudfront.toRCRequest<EnvType>(event)
+    return cloudfront.toRCRequest<EnvType>(event, context)
   }
   if (httpApi.isRequestEvent(event)) {
-    return httpApi.toRCRequest<EnvType>(event)
+    return httpApi.toRCRequest<EnvType>(event, context)
   }
 
   throw new Error('Unable to handle event')
 }
 
 const respondToEvent = (event: EventInput, response: RCResponse) => {
-  const req = eventToRequest<{ corsOrigin?: string }>(event)
+  // TODO: figure out a better way of just getting the cors origin here
+  const req = eventToRequest<{ corsOrigin?: string }>(event, {} as Context)
   const corsHeaders = req.env.corsOrigin
     ? {
         'Access-Control-Allow-Headers':
@@ -44,19 +46,26 @@ const respondToEvent = (event: EventInput, response: RCResponse) => {
 }
 
 export const requestHandler = <EnvType>(requestHandler: RequestHandler<EnvType>) => {
-  const fn = async (event: EventInput) => {
-    const request = eventToRequest<EnvType>(event)
-    if (request.method === 'OPTIONS') {
-      return respondToEvent(event, {
-        status: 200,
-        headers: {},
-      })
-    }
+  const fn = async (event: EventInput, conext: Context) => {
     try {
-      const response = await requestHandler(request)
-      return respondToEvent(event, response)
+      const request = eventToRequest<EnvType>(event, conext)
+      const logger = createLogger(request)
+      if (request.method === 'OPTIONS') {
+        return respondToEvent(event, {
+          status: 200,
+          headers: {},
+        })
+      }
+      try {
+        const response = await requestHandler({ ...request, logger })
+        return respondToEvent(event, response)
+      } catch (e) {
+        logger.error(e)
+        return errorResponseToEvent(event, e as Error)
+      }
     } catch (e) {
-      return errorResponseToEvent(event, e as Error)
+      panic(e as Error, event)
+      throw new Error('unhandled error')
     }
   }
   fn.handler = requestHandler
@@ -64,7 +73,6 @@ export const requestHandler = <EnvType>(requestHandler: RequestHandler<EnvType>)
 }
 
 const errorResponseToEvent = (event: EventInput, err: Error) => {
-  console.error(err)
   return respondToEvent(event, {
     status: 500,
     headers: {
@@ -84,41 +92,49 @@ const errorResponseToEvent = (event: EventInput, err: Error) => {
 export const jsonRequestHandler = <EnvType, BodyType = any>(
   jsonRequestHandler: JSONRequestHandler<EnvType, BodyType>,
 ) => {
-  const fn = async (event: EventInput) => {
-    const request = eventToRequest<EnvType>(event)
-    const body = request.body ? JSON.parse(request.body) : undefined
-    if (request.method === 'OPTIONS') {
-      return respondToEvent(event, {
-        status: 200,
-        headers: {},
-      })
-    }
-
+  const fn = async (event: EventInput, context: Context) => {
     try {
-      const response = await jsonRequestHandler({
-        ...request,
-        body: body as BodyType | undefined,
-      })
-
-      if (response.status === 302) {
+      const request = eventToRequest<EnvType>(event, context)
+      const logger = createLogger(request)
+      const body = request.body ? JSON.parse(request.body) : undefined
+      if (request.method === 'OPTIONS') {
         return respondToEvent(event, {
-          status: response.status,
-          headers: {
-            ...(response.headers ?? {}),
-          },
+          status: 200,
+          headers: {},
         })
       }
 
-      return respondToEvent(event, {
-        status: response.status ?? 200,
-        headers: {
-          ...(response.headers ?? {}),
-          'content-type': ['application/json'],
-        },
-        body: response.body ? JSON.stringify(response.body) : undefined,
-      })
+      try {
+        const response = await jsonRequestHandler({
+          ...request,
+          body: body as BodyType | undefined,
+          logger,
+        })
+
+        if (response.status === 302) {
+          return respondToEvent(event, {
+            status: response.status,
+            headers: {
+              ...(response.headers ?? {}),
+            },
+          })
+        }
+
+        return respondToEvent(event, {
+          status: response.status ?? 200,
+          headers: {
+            ...(response.headers ?? {}),
+            'content-type': ['application/json'],
+          },
+          body: response.body ? JSON.stringify(response.body) : undefined,
+        })
+      } catch (e) {
+        logger.error(e)
+        return errorResponseToEvent(event, e as Error)
+      }
     } catch (e) {
-      return errorResponseToEvent(event, e as Error)
+      panic(e as Error, event)
+      throw new Error('unhandled error')
     }
   }
 
@@ -130,41 +146,49 @@ export const jsonRequestHandler = <EnvType, BodyType = any>(
 export const formRequestHandler = <EnvType, BodyType = any>(
   formRequestHandler: JSONRequestHandler<EnvType, BodyType>,
 ) => {
-  const fn = async (event: EventInput) => {
-    const request = eventToRequest<EnvType>(event)
-    const body = request.body ? Object.fromEntries(new URLSearchParams(request.body)) : undefined
-    if (request.method === 'OPTIONS') {
-      return respondToEvent(event, {
-        status: 200,
-        headers: {},
-      })
-    }
-
+  const fn = async (event: EventInput, context: Context) => {
     try {
-      const response = await formRequestHandler({
-        ...request,
-        body: body as BodyType | undefined,
-      })
-
-      if (response.status === 302) {
+      const request = eventToRequest<EnvType>(event, context)
+      const logger = createLogger(request)
+      const body = request.body ? Object.fromEntries(new URLSearchParams(request.body)) : undefined
+      if (request.method === 'OPTIONS') {
         return respondToEvent(event, {
-          status: response.status,
-          headers: {
-            ...(response.headers ?? {}),
-          },
+          status: 200,
+          headers: {},
         })
       }
 
-      return respondToEvent(event, {
-        status: response.status ?? 200,
-        headers: {
-          ...(response.headers ?? {}),
-          'content-type': ['application/json'],
-        },
-        body: response.body ? JSON.stringify(response.body) : undefined,
-      })
+      try {
+        const response = await formRequestHandler({
+          ...request,
+          body: body as BodyType | undefined,
+          logger,
+        })
+
+        if (response.status === 302) {
+          return respondToEvent(event, {
+            status: response.status,
+            headers: {
+              ...(response.headers ?? {}),
+            },
+          })
+        }
+
+        return respondToEvent(event, {
+          status: response.status ?? 200,
+          headers: {
+            ...(response.headers ?? {}),
+            'content-type': ['application/json'],
+          },
+          body: response.body ? JSON.stringify(response.body) : undefined,
+        })
+      } catch (e) {
+        logger.error(e)
+        return errorResponseToEvent(event, e as Error)
+      }
     } catch (e) {
-      return errorResponseToEvent(event, e as Error)
+      panic(e as Error, event)
+      throw new Error('unhandled error')
     }
   }
 

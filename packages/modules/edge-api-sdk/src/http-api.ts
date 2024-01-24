@@ -3,8 +3,9 @@ import {
   APIGatewayProxyResultV2,
   APIGatewayProxyStructuredResultV2,
   APIGatewayProxyEventHeaders,
+  Context,
 } from 'aws-lambda'
-import { envKey } from './config'
+import { envKey, sessionIdHeaderName } from './config'
 import { parseQueryString } from './parse-querystring'
 import { EventInput, HTTPMethod, RCHeaders, RCRequest, RCResponse } from './types'
 import { getEnvRegion } from './utils'
@@ -55,8 +56,16 @@ const getEnv = (headers: RCHeaders): Record<string, string> => {
   return env
 }
 
-export const toRCRequest = <EnvType>(request: RequestEvent): RCRequest<EnvType> => {
+export const toRCRequest = <EnvType>(request: RequestEvent, context: Context): RCRequest<EnvType> => {
   const headers = requestHeadersHandler(request.headers)
+  const { functionName, functionVersion, awsRequestId } = context
+  const meta = {
+    event: request,
+    sessionId: headers[sessionIdHeaderName]?.toString(),
+    functionName,
+    functionVersion,
+    invocationId: awsRequestId,
+  }
   const req = {
     method: request.requestContext.http.method as HTTPMethod,
     path: request.rawPath,
@@ -66,6 +75,7 @@ export const toRCRequest = <EnvType>(request: RequestEvent): RCRequest<EnvType> 
     headers,
     env: getEnv(headers) as EnvType,
     ...getEnvRegion(),
+    meta,
   }
   const query = parseQueryString(request.rawQueryString)
   if (query) {
