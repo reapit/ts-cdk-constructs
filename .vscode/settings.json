@@ -14,5 +14,6 @@
   "sonarlint.connectedMode.project": {
     "connectionId": "reapit",
     "projectKey": "reapit_ts-cdk-constructs"
-  }
+  },
+  "deepscan.enable": true
 }
