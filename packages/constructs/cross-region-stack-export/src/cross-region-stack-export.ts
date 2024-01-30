@@ -54,13 +54,23 @@ export class CrossRegionStackExport<ExportKey> extends Construct {
     })
   }
 
+  private roleCache: Record<string, Role> = {}
+  getReadOnlyRole(account: string) {
+    if (!this.roleCache[account]) {
+      this.roleCache[account] = new Role(this, `${account}-readOnlyRole`, {
+        assumedBy: new AccountPrincipal(account),
+        roleName: PhysicalName.GENERATE_IF_NEEDED,
+        managedPolicies: [ManagedPolicy.fromAwsManagedPolicyName('AmazonSSMReadOnlyAccess')],
+      })
+    }
+
+    return this.roleCache[account]
+  }
+
   getImporter(scope: Construct, id: string, alwaysUpdate?: boolean) {
     const { account } = Stack.of(scope)
-    const cdkReadOnlyRole = new Role(this, `${account}-readOnlyRole`, {
-      assumedBy: new AccountPrincipal(account),
-      roleName: PhysicalName.GENERATE_IF_NEEDED,
-      managedPolicies: [ManagedPolicy.fromAwsManagedPolicyName('AmazonSSMReadOnlyAccess')],
-    })
+    
+    const cdkReadOnlyRole = this.getReadOnlyRole(account)
     return new CrossRegionStackImport<ExportKey>(scope, id, this, cdkReadOnlyRole.roleArn, alwaysUpdate)
   }
 }
