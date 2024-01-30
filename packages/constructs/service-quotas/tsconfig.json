@@ -1,0 +1,3 @@
+{
+  "extends": "@reapit-cdk/tsconfig/base.json",
+}
