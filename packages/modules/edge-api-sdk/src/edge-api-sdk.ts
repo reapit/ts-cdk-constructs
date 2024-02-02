@@ -4,6 +4,7 @@ import * as httpApi from './http-api'
 
 import { EventInput, JSONRequestHandler, RCHeaders, RCRequest, RCResponse, RequestHandler } from './types'
 import { createLogger, panic } from './logger'
+import { sessionIdHeaderName } from './config'
 
 const eventToRequest = <EnvType>(event: EventInput, context: Context): RCRequest<EnvType> => {
   if (cloudfront.isRequestEvent(event)) {
@@ -16,14 +17,25 @@ const eventToRequest = <EnvType>(event: EventInput, context: Context): RCRequest
   throw new Error('Unable to handle event')
 }
 
+const allowHeaders = [
+  'Accept',
+  'Accept-Language',
+  'Api-Version',
+  'Authorization',
+  'Content-Type',
+  'Referer',
+  'User-Agent',
+  sessionIdHeaderName,
+]
+const allowMethods = ['POST', 'PUT', 'PATCH', 'GET', 'OPTIONS', 'DELETE']
+
 const respondToEvent = (event: EventInput, response: RCResponse) => {
   // TODO: figure out a better way of just getting the cors origin here
   const req = eventToRequest<{ corsOrigin?: string }>(event, {} as Context)
   const corsHeaders = req.env.corsOrigin
     ? {
-        'Access-Control-Allow-Headers':
-          'Accept, Accept-Language, Api-Version, Authorization, Content-Type, Referer, User-Agent',
-        'Access-Control-Allow-Methods': 'POST, PUT, PATCH, GET, OPTIONS, DELETE',
+        'Access-Control-Allow-Headers': allowHeaders.join(', '),
+        'Access-Control-Allow-Methods': allowMethods.join(', '),
         'Access-Control-Allow-Origin': req.env.corsOrigin,
         'Access-Control-Expose-Headers': '*',
         'Access-Control-Allow-Credentials': 'true',
