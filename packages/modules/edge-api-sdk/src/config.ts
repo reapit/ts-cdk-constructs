@@ -1,2 +1,2 @@
 export const envKey = 'env'
-export const sessionIdHeaderName = 'x-edge-api-session-id'
+export const sessionIdHeaderName = 'x-edgeapi-session-id'
