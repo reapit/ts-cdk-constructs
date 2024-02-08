@@ -116,9 +116,13 @@ export const getDomainValidationRecords = async (arn: string, attempt: number = 
 
 export const ensureWildcardCertificate = async (
   requestId: string,
-  domainMappings: { parentDomainName: string; hostedZoneId: string; roleArn?: string }[],
+  domainMappings: { parentDomainName: string; hostedZoneId: string; roleArn?: string; includeParent?: boolean }[],
 ): Promise<string> => {
-  const wildcardDomainNames = domainMappings.map(({ parentDomainName }) => `*.${parentDomainName}`)
+  const wildcardDomainNames = domainMappings
+    .map(({ parentDomainName, includeParent }) => {
+      return includeParent ? [parentDomainName, `*.${parentDomainName}`] : [`*.${parentDomainName}`]
+    })
+    .flat()
   console.log('ensureWildcardCert', wildcardDomainNames)
   const existing = await findCertificates(wildcardDomainNames)
   console.log('got existing', JSON.stringify(existing))

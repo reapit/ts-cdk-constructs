@@ -159,6 +159,82 @@ describe('wildcard-certificate', () => {
     expect(result.Data.certificateArn).toBe('cert-arn')
   })
 
+  it('should include the parent domain in the cert if told to', async () => {
+    acmMock.on(ListCertificatesCommand).resolves({
+      CertificateSummaryList: [],
+    })
+    acmMock.on(RequestCertificateCommand).resolves({
+      CertificateArn: 'cert-arn',
+    })
+    acmMock.on(DescribeCertificateCommand).resolves({
+      Certificate: {
+        DomainValidationOptions: [
+          {
+            ValidationStatus: 'SUCCESS',
+            DomainName: '',
+            ResourceRecord: {
+              Name: 'first-record-name.asdf.com',
+              Type: 'TXT',
+              Value: 'first-record-value',
+            },
+          },
+          {
+            ValidationStatus: 'SUCCESS',
+            DomainName: '',
+            ResourceRecord: {
+              Name: 'second-record-name.qwerty.com',
+              Type: 'TXT',
+              Value: 'second-record-value',
+            },
+          },
+        ],
+      },
+    })
+
+    route53Mock.on(ChangeResourceRecordSetsCommand).resolves({
+      ChangeInfo: {
+        Id: 'change-batch-id',
+        Status: 'INSYNC',
+        SubmittedAt: new Date(),
+      },
+    })
+
+    route53Mock.on(GetChangeCommand).resolves({
+      ChangeInfo: {
+        Id: 'change-batch-id',
+        Status: 'INSYNC',
+        SubmittedAt: new Date(),
+      },
+    })
+
+    const result = await onEvent(
+      genEvent('Create', [
+        {
+          parentDomainName: 'asdf.com',
+          hostedZoneId: '123',
+          includeParent: true,
+        },
+        {
+          parentDomainName: 'qwerty.com',
+          hostedZoneId: '456',
+          includeParent: true,
+        },
+      ]),
+    )
+
+    expect(acmMock).toHaveReceivedCommandWith(RequestCertificateCommand, {
+      DomainName: 'asdf.com',
+      SubjectAlternativeNames: ['asdf.com', '*.asdf.com', 'qwerty.com', '*.qwerty.com'],
+    })
+
+    if (!result.Data) {
+      throw new Error('no result data')
+    }
+    expect(result.Data).toBeDefined()
+    expect(result.Data).toHaveProperty('certificateArn')
+    expect(result.Data.certificateArn).toBe('cert-arn')
+  })
+
   it('should return a cert if it already exists', async () => {
     acmMock.on(ListCertificatesCommand).resolves({
       CertificateSummaryList: [

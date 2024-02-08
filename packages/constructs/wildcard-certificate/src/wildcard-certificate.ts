@@ -7,7 +7,13 @@ import { PolicyStatement } from 'aws-cdk-lib/aws-iam'
 import * as path from 'path'
 import { HostedZone } from 'aws-cdk-lib/aws-route53'
 
-type DetailedDomain = { domainName: string; hostedZoneArn?: string; account?: string; roleArn?: string }
+type DetailedDomain = {
+  domainName: string
+  hostedZoneArn?: string
+  account?: string
+  roleArn?: string
+  includeParent?: boolean
+}
 type Domain = DetailedDomain | string
 export interface WildcardCertificateProps {
   domains: Domain[]
