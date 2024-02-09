@@ -98,6 +98,7 @@ api.addEndpoint({
 
   // optional
   customMiddlewares: [
+    // @ts-expect-error
     (req, mapping) => {
       // req is CloudfrontRequest https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/aws-lambda/common/cloudfront.d.ts#L44
       // mapping is destination['user requested domain name'] e.g. mapping['example.org']

@@ -8,13 +8,13 @@
   ],
   "scripts": {
     "test": "jest --passWithNoTests --ignoreProjects 'integration tests' --coverage",
-    "check": "tsc packages/**/*.ts --noEmit",
+    "check": "tsc --noEmit",
     "build": "yarn workspaces foreach --all -v run build",
     "lint": "yarn workspaces foreach --all -v run lint",
     "integ": "jest --passWithNoTests --ignoreProjects 'unit tests' --silent false",
     "root:test": "jest --passWithNoTests --ignoreProjects 'integration tests'",
     "root:integ": "jest --passWithNoTests --ignoreProjects 'unit tests' --silent false",
-    "root:check": "tsc",
+    "root:check": "tsc --noEmit",
     "generate-readme": "reapit-cdk-generate-readme"
   },
   "devDependencies": {
