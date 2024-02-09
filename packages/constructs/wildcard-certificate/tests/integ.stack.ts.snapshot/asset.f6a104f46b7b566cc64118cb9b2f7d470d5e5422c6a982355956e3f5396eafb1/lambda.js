@@ -114,7 +114,7 @@ var ensureDnsRecords = async (hostedZones, records) => {
       }
       console.log("requested, waiting for propagation");
       await (0, import_client_route_53.waitUntilResourceRecordSetsChanged)(
-        { maxWaitTime: 60, client: client2 },
+        { maxWaitTime: 180, client: client2 },
         {
           Id: changeBatch.ChangeInfo?.Id
         }
@@ -203,7 +203,9 @@ var getDomainValidationRecords = async (arn, attempt = 0) => {
   return getDomainValidationRecords(arn, attempt + 1);
 };
 var ensureWildcardCertificate = async (requestId, domainMappings) => {
-  const wildcardDomainNames = domainMappings.map(({ parentDomainName }) => `*.${parentDomainName}`);
+  const wildcardDomainNames = domainMappings.map(({ parentDomainName, includeParent }) => {
+    return includeParent ? [parentDomainName, `*.${parentDomainName}`] : [`*.${parentDomainName}`];
+  }).flat();
   console.log("ensureWildcardCert", wildcardDomainNames);
   const existing = await findCertificates(wildcardDomainNames);
   console.log("got existing", JSON.stringify(existing));

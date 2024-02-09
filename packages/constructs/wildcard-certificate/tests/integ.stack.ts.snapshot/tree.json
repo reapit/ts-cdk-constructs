@@ -155,7 +155,7 @@
                       "aws:cdk:cloudformation:props": {
                         "code": {
                           "s3Bucket": "cdk-hnb659fds-assets-028446965111-eu-central-1",
-                          "s3Key": "b2250e994c12e54c55a0b1559e20bc93be1d248226bea980cdbb921e4b86a94e.zip"
+                          "s3Key": "f6a104f46b7b566cc64118cb9b2f7d470d5e5422c6a982355956e3f5396eafb1.zip"
                         },
                         "handler": "lambda.onEvent",
                         "role": {
@@ -165,7 +165,7 @@
                           ]
                         },
                         "runtime": "nodejs18.x",
-                        "timeout": 420
+                        "timeout": 540
                       }
                     },
                     "constructInfo": {
