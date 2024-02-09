@@ -535,7 +535,7 @@
                                   "lambdaFunctionAssociations": [
                                     {
                                       "lambdaFunctionArn": {
-                                        "Ref": "apis3qsredirectCurrentVersion201EBAF5ee6e5695a3c69fe42abc3c5457c9312d"
+                                        "Ref": "apis3qsredirectCurrentVersion201EBAF55dd549ae5a6e146a59fe732da0de29ab"
                                       },
                                       "eventType": "origin-response"
                                     }
@@ -663,7 +663,7 @@
                                   "lambdaFunctionAssociations": [
                                     {
                                       "lambdaFunctionArn": {
-                                        "Ref": "apiredirectmeredirectorCurrentVersionA5C47DBFae680f8ca3cdb946b8115b80d63e09e1"
+                                        "Ref": "apiredirectmeredirectorCurrentVersionA5C47DBF2893813a4e151d9f08ddc8311570ef3c"
                                       },
                                       "eventType": "origin-request",
                                       "includeBody": true
@@ -1155,7 +1155,7 @@
                           "aws:cdk:cloudformation:props": {
                             "code": {
                               "s3Bucket": "cdk-hnb659fds-assets-028446965111-us-east-1",
-                              "s3Key": "03c4398d27bfe8ea8baafc234fca408feb2dd1834f6998faad3792c49ca4099e.zip"
+                              "s3Key": "f5d3816822c0eeeeb093f8e2fd5dd237a5fe83afdf1e5e71d982dc280250672b.zip"
                             },
                             "handler": "s3-qs-redirect.handler",
                             "role": {
@@ -1500,7 +1500,7 @@
                           "aws:cdk:cloudformation:props": {
                             "code": {
                               "s3Bucket": "cdk-hnb659fds-assets-028446965111-us-east-1",
-                              "s3Key": "03c4398d27bfe8ea8baafc234fca408feb2dd1834f6998faad3792c49ca4099e.zip"
+                              "s3Key": "f5d3816822c0eeeeb093f8e2fd5dd237a5fe83afdf1e5e71d982dc280250672b.zip"
                             },
                             "handler": "production-redirector.handler",
                             "role": {

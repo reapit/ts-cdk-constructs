@@ -234,7 +234,7 @@
         {
          "EventType": "origin-response",
          "LambdaFunctionARN": {
-          "Ref": "apis3qsredirectCurrentVersion201EBAF5ee6e5695a3c69fe42abc3c5457c9312d"
+          "Ref": "apis3qsredirectCurrentVersion201EBAF55dd549ae5a6e146a59fe732da0de29ab"
          }
         }
        ],
@@ -363,7 +363,7 @@
          "EventType": "origin-request",
          "IncludeBody": true,
          "LambdaFunctionARN": {
-          "Ref": "apiredirectmeredirectorCurrentVersionA5C47DBFae680f8ca3cdb946b8115b80d63e09e1"
+          "Ref": "apiredirectmeredirectorCurrentVersionA5C47DBF2893813a4e151d9f08ddc8311570ef3c"
          }
         }
        ],
@@ -762,7 +762,7 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-028446965111-us-east-1",
-     "S3Key": "03c4398d27bfe8ea8baafc234fca408feb2dd1834f6998faad3792c49ca4099e.zip"
+     "S3Key": "f5d3816822c0eeeeb093f8e2fd5dd237a5fe83afdf1e5e71d982dc280250672b.zip"
     },
     "Handler": "s3-qs-redirect.handler",
     "Role": {
@@ -778,12 +778,12 @@
    ],
    "Metadata": {
     "aws:cdk:path": "edge-api-test-stack/api/api/s3-qs-redirect/Resource",
-    "aws:asset:path": "asset.03c4398d27bfe8ea8baafc234fca408feb2dd1834f6998faad3792c49ca4099e",
+    "aws:asset:path": "asset.f5d3816822c0eeeeb093f8e2fd5dd237a5fe83afdf1e5e71d982dc280250672b",
     "aws:asset:is-bundled": false,
     "aws:asset:property": "Code"
    }
   },
-  "apis3qsredirectCurrentVersion201EBAF5ee6e5695a3c69fe42abc3c5457c9312d": {
+  "apis3qsredirectCurrentVersion201EBAF55dd549ae5a6e146a59fe732da0de29ab": {
    "Type": "AWS::Lambda::Version",
    "Properties": {
     "FunctionName": {
@@ -954,7 +954,7 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-028446965111-us-east-1",
-     "S3Key": "03c4398d27bfe8ea8baafc234fca408feb2dd1834f6998faad3792c49ca4099e.zip"
+     "S3Key": "f5d3816822c0eeeeb093f8e2fd5dd237a5fe83afdf1e5e71d982dc280250672b.zip"
     },
     "Handler": "production-redirector.handler",
     "Role": {
@@ -970,12 +970,12 @@
    ],
    "Metadata": {
     "aws:cdk:path": "edge-api-test-stack/api/api/--redirect-me-redirector/Resource",
-    "aws:asset:path": "asset.03c4398d27bfe8ea8baafc234fca408feb2dd1834f6998faad3792c49ca4099e",
+    "aws:asset:path": "asset.f5d3816822c0eeeeb093f8e2fd5dd237a5fe83afdf1e5e71d982dc280250672b",
     "aws:asset:is-bundled": false,
     "aws:asset:property": "Code"
    }
   },
-  "apiredirectmeredirectorCurrentVersionA5C47DBFae680f8ca3cdb946b8115b80d63e09e1": {
+  "apiredirectmeredirectorCurrentVersionA5C47DBF2893813a4e151d9f08ddc8311570ef3c": {
    "Type": "AWS::Lambda::Version",
    "Properties": {
     "FunctionName": {
