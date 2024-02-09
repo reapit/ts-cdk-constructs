@@ -60,7 +60,7 @@ export const ensureDnsRecords = async (
       }
       console.log('requested, waiting for propagation')
       await waitUntilResourceRecordSetsChanged(
-        { maxWaitTime: 60, client },
+        { maxWaitTime: 180, client },
         {
           Id: changeBatch.ChangeInfo?.Id,
         },

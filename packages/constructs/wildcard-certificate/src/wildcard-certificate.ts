@@ -29,7 +29,7 @@ export class WildcardCertificate extends Construct {
 
     const lambda = new Function(this, 'lambda', {
       handler: 'lambda.onEvent',
-      timeout: Duration.minutes(7), // 5 min timeout for cert + 1 min timeout for r53 record change + 1 min wiggle room
+      timeout: Duration.minutes(9), // 5 min timeout for cert + 3 min timeout for r53 record change + 1 min wiggle room
       runtime: Runtime.NODEJS_18_X,
       code: Code.fromAsset(path.join(__dirname, '..', 'dist', 'lambda')),
     })
