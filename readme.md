@@ -1,5 +1,5 @@
 # @reapit-cdk/ts-constructs
-![coverage: 92.94%25](https://img.shields.io/badge/coverage-92.94%25-green)
+![coverage: 92.65%25](https://img.shields.io/badge/coverage-92.65%25-green)
 CDK Constructs Monorepo
 ## Constructs
 
@@ -27,7 +27,7 @@ CloudFront invalidations are [very error prone](https://github.com/aws/aws-cdk/i
 
 ![npm version](https://img.shields.io/npm/v/@reapit-cdk/cross-region-stack-export)
 ![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/cross-region-stack-export)
-![coverage: 74.02%25](https://img.shields.io/badge/coverage-74.02%25-orange)
+![coverage: 71.85%25](https://img.shields.io/badge/coverage-71.85%25-orange)
 ![Integ Tests: X](https://img.shields.io/badge/Integ%20Tests-X-red)
 
 Allows you to share values between stack across regions and accounts.
@@ -87,6 +87,14 @@ Creates a KMS key and replicates it to the desired regions. Useful when replicat
 ![Integ Tests: ✔](https://img.shields.io/badge/Integ%20Tests-%E2%9C%94-green)
 
 Creates a Secret and replicates it across the given regions. Requires a [ReplicatedKey](../replicated-key/readme.md) be passed in.
+<h3><a href="packages/constructs/service-quotas">@reapit-cdk/service-quotas</a></h3>
+
+![npm version](https://img.shields.io/npm/v/@reapit-cdk/service-quotas)
+![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/service-quotas)
+![coverage: 0%25](https://img.shields.io/badge/coverage-0%25-red)
+![Integ Tests: X](https://img.shields.io/badge/Integ%20Tests-X-red)
+
+This construct allows you to IaC your service quotas
 <h3><a href="packages/constructs/userpool-domain">@reapit-cdk/userpool-domain</a></h3>
 
 ![npm version](https://img.shields.io/npm/v/@reapit-cdk/userpool-domain)
@@ -124,7 +132,7 @@ This module helps write custom resource handlers. It's designed to work with the
 
 ![npm version](https://img.shields.io/npm/v/@reapit-cdk/edge-api-sdk)
 ![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/edge-api-sdk)
-![coverage: 95.74%25](https://img.shields.io/badge/coverage-95.74%25-green)
+![coverage: 95.8%25](https://img.shields.io/badge/coverage-95.8%25-green)
 
 Provides convenience wrappers for accepting and responding to [@reapit-cdk/edge-api]('../../constructs/edge-api/readme.md') lambda requests.
 <h3><a href="packages/modules/email-receiver-client">@reapit-cdk/email-receiver-client</a></h3>

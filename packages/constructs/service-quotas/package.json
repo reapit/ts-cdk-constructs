@@ -1,0 +1,53 @@
+{
+  "name": "@reapit-cdk/service-quotas",
+  "version": "0.0.0",
+  "description": "This construct allows you to IaC your service quotas",
+  "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/modules/service-quotas",
+  "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/modules/service-quotas/readme.md",
+  "bugs": {
+    "url": "https://github.com/reapit/ts-cdk-constructs/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Josh Balfour",
+    "email": "jbalfour@reapit.com"
+  },
+  "repository": {
+    "url": "https://github.com/reapit/ts-cdk-constructs.git"
+  },
+  "scripts": {
+    "build": "reapit-cdk-tsup --lambda",
+    "check": "yarn run root:check -p $(pwd)",
+    "lint": "echo 'skipping'",
+    "test": "yarn run root:test  -- $(pwd)",
+    "prepack": "yarn build",
+    "integ": "yarn run root:integ -- $(pwd)",
+    "jsii:build": "rpt-cdk-jsii",
+    "jsii:publish": "rpt-cdk-jsii --publish",
+    "gen-types": "ts-node src/generate-types.ts"
+  },
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "publishConfig": {
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts"
+  },
+  "peerDependencies": {
+    "aws-cdk-lib": "^2.96.2",
+    "constructs": "^10.2.70"
+  },
+  "devDependencies": {
+    "@aws-sdk/client-service-quotas": "3.414.0",
+    "@reapit-cdk/custom-resource-wrapper": "workspace:^",
+    "@reapit-cdk/eslint-config": "workspace:^",
+    "@reapit-cdk/integration-tests": "workspace:^",
+    "@reapit-cdk/jsii": "workspace:^",
+    "@reapit-cdk/tsup": "workspace:^",
+    "aws-cdk-lib": "^2.96.2",
+    "aws-lambda": "^1.0.7",
+    "aws-sdk-client-mock": "^3.0.0",
+    "constructs": "^10.2.70",
+    "ts-node": "^10.9.2",
+    "varname": "^6.0.0"
+  }
+}

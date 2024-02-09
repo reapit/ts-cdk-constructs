@@ -581,6 +581,7 @@ describe('edge-api', () => {
         pathPattern: '/google',
         destination,
         customMiddlewares: [
+          // @ts-expect-error
           (req, mapping) => {
             if (req.uri === '/authorize' || req.uri === '/login') {
               if (typeof mapping !== 'string') {

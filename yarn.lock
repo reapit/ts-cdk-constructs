@@ -707,6 +707,51 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@aws-sdk/client-service-quotas@npm:3.414.0":
+  version: 3.414.0
+  resolution: "@aws-sdk/client-service-quotas@npm:3.414.0"
+  dependencies:
+    "@aws-crypto/sha256-browser": "npm:3.0.0"
+    "@aws-crypto/sha256-js": "npm:3.0.0"
+    "@aws-sdk/client-sts": "npm:3.414.0"
+    "@aws-sdk/credential-provider-node": "npm:3.414.0"
+    "@aws-sdk/middleware-host-header": "npm:3.413.0"
+    "@aws-sdk/middleware-logger": "npm:3.413.0"
+    "@aws-sdk/middleware-recursion-detection": "npm:3.413.0"
+    "@aws-sdk/middleware-signing": "npm:3.413.0"
+    "@aws-sdk/middleware-user-agent": "npm:3.413.0"
+    "@aws-sdk/region-config-resolver": "npm:3.413.0"
+    "@aws-sdk/types": "npm:3.413.0"
+    "@aws-sdk/util-endpoints": "npm:3.413.0"
+    "@aws-sdk/util-user-agent-browser": "npm:3.413.0"
+    "@aws-sdk/util-user-agent-node": "npm:3.413.0"
+    "@smithy/config-resolver": "npm:^2.0.8"
+    "@smithy/fetch-http-handler": "npm:^2.1.3"
+    "@smithy/hash-node": "npm:^2.0.7"
+    "@smithy/invalid-dependency": "npm:^2.0.7"
+    "@smithy/middleware-content-length": "npm:^2.0.9"
+    "@smithy/middleware-endpoint": "npm:^2.0.7"
+    "@smithy/middleware-retry": "npm:^2.0.10"
+    "@smithy/middleware-serde": "npm:^2.0.7"
+    "@smithy/middleware-stack": "npm:^2.0.0"
+    "@smithy/node-config-provider": "npm:^2.0.10"
+    "@smithy/node-http-handler": "npm:^2.1.3"
+    "@smithy/protocol-http": "npm:^3.0.3"
+    "@smithy/smithy-client": "npm:^2.1.4"
+    "@smithy/types": "npm:^2.3.1"
+    "@smithy/url-parser": "npm:^2.0.7"
+    "@smithy/util-base64": "npm:^2.0.0"
+    "@smithy/util-body-length-browser": "npm:^2.0.0"
+    "@smithy/util-body-length-node": "npm:^2.1.0"
+    "@smithy/util-defaults-mode-browser": "npm:^2.0.8"
+    "@smithy/util-defaults-mode-node": "npm:^2.0.10"
+    "@smithy/util-retry": "npm:^2.0.0"
+    "@smithy/util-utf8": "npm:^2.0.0"
+    tslib: "npm:^2.5.0"
+  checksum: 5feea5842860634c517b0739d2e0904f3671adfa384eb3f1c821da22a4f1f5f0f6e149f574a0f45e587b26e2d860d4d6187b331ee615013692538484d6caf48e
+  languageName: node
+  linkType: hard
+
 "@aws-sdk/client-ses@npm:3.414.0":
   version: 3.414.0
   resolution: "@aws-sdk/client-ses@npm:3.414.0"
@@ -3678,6 +3723,28 @@ __metadata:
     constructs: "npm:^10.2.70"
   peerDependencies:
     "@reapit-cdk/replicated-key": ^0.0.2
+    aws-cdk-lib: ^2.96.2
+    constructs: ^10.2.70
+  languageName: unknown
+  linkType: soft
+
+"@reapit-cdk/service-quotas@workspace:packages/constructs/service-quotas":
+  version: 0.0.0-use.local
+  resolution: "@reapit-cdk/service-quotas@workspace:packages/constructs/service-quotas"
+  dependencies:
+    "@aws-sdk/client-service-quotas": "npm:3.414.0"
+    "@reapit-cdk/custom-resource-wrapper": "workspace:^"
+    "@reapit-cdk/eslint-config": "workspace:^"
+    "@reapit-cdk/integration-tests": "workspace:^"
+    "@reapit-cdk/jsii": "workspace:^"
+    "@reapit-cdk/tsup": "workspace:^"
+    aws-cdk-lib: "npm:^2.96.2"
+    aws-lambda: "npm:^1.0.7"
+    aws-sdk-client-mock: "npm:^3.0.0"
+    constructs: "npm:^10.2.70"
+    ts-node: "npm:^10.9.2"
+    varname: "npm:^6.0.0"
+  peerDependencies:
     aws-cdk-lib: ^2.96.2
     constructs: ^10.2.70
   languageName: unknown
@@ -10625,6 +10692,44 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ts-node@npm:^10.9.2":
+  version: 10.9.2
+  resolution: "ts-node@npm:10.9.2"
+  dependencies:
+    "@cspotcode/source-map-support": "npm:^0.8.0"
+    "@tsconfig/node10": "npm:^1.0.7"
+    "@tsconfig/node12": "npm:^1.0.7"
+    "@tsconfig/node14": "npm:^1.0.0"
+    "@tsconfig/node16": "npm:^1.0.2"
+    acorn: "npm:^8.4.1"
+    acorn-walk: "npm:^8.1.1"
+    arg: "npm:^4.1.0"
+    create-require: "npm:^1.1.0"
+    diff: "npm:^4.0.1"
+    make-error: "npm:^1.1.1"
+    v8-compile-cache-lib: "npm:^3.0.1"
+    yn: "npm:3.1.1"
+  peerDependencies:
+    "@swc/core": ">=1.2.50"
+    "@swc/wasm": ">=1.2.50"
+    "@types/node": "*"
+    typescript: ">=2.7"
+  peerDependenciesMeta:
+    "@swc/core":
+      optional: true
+    "@swc/wasm":
+      optional: true
+  bin:
+    ts-node: dist/bin.js
+    ts-node-cwd: dist/bin-cwd.js
+    ts-node-esm: dist/bin-esm.js
+    ts-node-script: dist/bin-script.js
+    ts-node-transpile-only: dist/bin-transpile.js
+    ts-script: dist/bin-script-deprecated.js
+  checksum: a91a15b3c9f76ac462f006fa88b6bfa528130dcfb849dd7ef7f9d640832ab681e235b8a2bc58ecde42f72851cc1d5d4e22c901b0c11aa51001ea1d395074b794
+  languageName: node
+  linkType: hard
+
 "tslib@npm:^1.11.1":
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
@@ -10897,6 +11002,13 @@ __metadata:
     "@types/istanbul-lib-coverage": "npm:^2.0.1"
     convert-source-map: "npm:^1.6.0"
   checksum: 95811ff2f17a31432c3fc7b3027b7e8c2c6ca5e60a7811c5050ce51920ab2b80df29feb04c52235bbfdaa9a6809acd5a5dd9668292e98c708617c19e087c3f68
+  languageName: node
+  linkType: hard
+
+"varname@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "varname@npm:6.0.0"
+  checksum: cbd756fa747dc2741572f6b41e2075d68448dfb47222d0caf7edb6beec77f9497ce24a57e24ab9fa2d91eb05787a4c3db66aa6f1e1f4971ad24fbcdf88ce554f
   languageName: node
   linkType: hard
 
