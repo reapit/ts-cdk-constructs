@@ -3,7 +3,7 @@
 
 ![npm version](https://img.shields.io/npm/v/@reapit-cdk/cross-region-stack-export)
 ![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/cross-region-stack-export)
-![coverage: 74.02%25](https://img.shields.io/badge/coverage-74.02%25-orange)
+![coverage: 71.85%25](https://img.shields.io/badge/coverage-71.85%25-orange)
 ![Integ Tests: X](https://img.shields.io/badge/Integ%20Tests-X-red)
 
 Allows you to share values between stack across regions and accounts.
