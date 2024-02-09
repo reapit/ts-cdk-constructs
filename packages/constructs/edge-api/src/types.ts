@@ -1,7 +1,7 @@
 import { Bucket } from 'aws-cdk-lib/aws-s3'
 import { EdgeAPILambda } from './edge-api-lambda'
 import { ICertificate } from 'aws-cdk-lib/aws-certificatemanager'
-import { CloudFrontRequest, CloudFrontResponse } from 'aws-lambda'
+import { CloudFrontRequest, CloudFrontResponse, CloudFrontResultResponse } from 'aws-lambda'
 import { HttpMethod } from '@aws-cdk/aws-apigatewayv2-alpha'
 import { ResponseHeadersPolicyProps } from 'aws-cdk-lib/aws-cloudfront'
 export { HttpMethod } from '@aws-cdk/aws-apigatewayv2-alpha'
@@ -24,7 +24,11 @@ export interface FrontendEndpoint extends BaseEndpoint {
   invalidationItems?: string[]
 }
 
-export type RequestMiddleware = (req: CloudFrontRequest, mapping: Destination) => void | Promise<void>
+export type RequestMiddleware = (
+  req: CloudFrontRequest,
+  mapping: Destination,
+) => void | Promise<void> | CloudFrontResultResponse | Promise<CloudFrontResultResponse>
+
 export type ResponseMiddleware = (
   req: CloudFrontRequest,
   res: CloudFrontResponse,
