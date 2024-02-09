@@ -20,7 +20,7 @@ const getCurrentQuotaValue = async (region: string, service: string, quota: stri
     }),
   )
 
-  if (!res.Quota || typeof res.Quota.Value === 'undefined') {
+  if (typeof res.Quota?.Value === 'undefined') {
     throw new Error(`Invalid response for ${service}/${quota}`)
   }
 
@@ -31,7 +31,7 @@ const getRequestedQuotaChanges = async (region: string, service: string, quota: 
   const client = new ServiceQuotasClient({
     region,
   })
-  const changes = await paginateListRequestedServiceQuotaChangeHistoryByQuota(
+  const changes = paginateListRequestedServiceQuotaChangeHistoryByQuota(
     {
       client,
     },
@@ -43,7 +43,7 @@ const getRequestedQuotaChanges = async (region: string, service: string, quota: 
 
   const agg: RequestedServiceQuotaChange[] = []
   for await (const code of changes) {
-    agg.push(...(code.RequestedQuotas || []))
+    agg.push(...(code.RequestedQuotas ?? []))
   }
   return agg
 }
@@ -111,6 +111,10 @@ const getStatus = (status: RequestStatus) => {
   return Status.GRANTED
 }
 
+const createdAtSort = (a: { createdAt: Date }, b: { createdAt: Date }) => {
+  return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+}
+
 const requestQuota = async (
   { desiredValue, quota, region, service }: Quota,
   { rerequestWhenDenied }: Config,
@@ -122,11 +126,10 @@ const requestQuota = async (
     const greaterThan = pending.filter((req) => {
       return req.value >= desiredValue
     })
+    greaterThan.sort(createdAtSort)
 
-    if (greaterThan) {
-      const [mostRecent] = greaterThan.sort((a, b) => {
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      })
+    if (greaterThan.length) {
+      const [mostRecent] = greaterThan
       const status = getStatus(mostRecent.status)
       if (rerequestWhenDenied) {
         if (status !== Status.DENIED) {
@@ -156,8 +159,7 @@ type Result = {
 export const requestQuotas = async (quotas: Quota[], config: Config) => {
   const results: Result[] = []
 
-  for (let i = 0; i < quotas.length; i++) {
-    const quota = quotas[i]
+  for (const quota of quotas) {
     const status = await requestQuota(quota, config)
     results.push({
       quota,

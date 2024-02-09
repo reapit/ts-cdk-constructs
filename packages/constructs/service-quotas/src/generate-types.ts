@@ -26,7 +26,7 @@ const getServiceCodes = async (): Promise<ServiceInfo[]> => {
   )
   const agg: ServiceInfo[] = []
   for await (const code of codes) {
-    agg.push(...(code.Services || []))
+    agg.push(...(code.Services ?? []))
   }
   return agg
 }
@@ -43,7 +43,7 @@ const getServiceQuotas = async (ServiceCode: string) => {
   )
   const agg: ServiceQuota[] = []
   for await (const quota of quotas) {
-    agg.push(...(quota.Quotas || []))
+    agg.push(...(quota.Quotas ?? []))
   }
 
   const defaultQuotas = paginateListAWSDefaultServiceQuotas(
@@ -55,7 +55,7 @@ const getServiceQuotas = async (ServiceCode: string) => {
     },
   )
   for await (const quota of defaultQuotas) {
-    agg.push(...(quota.Quotas || []))
+    agg.push(...(quota.Quotas ?? []))
   }
   return agg
 }
@@ -128,12 +128,12 @@ const getAll = async (): Promise<NestedQuotaPair[]> => {
     const serviceQuotas = await getServiceQuotas(ServiceCode)
 
     toReturn.push({
-      name: ServiceName || '',
+      name: ServiceName ?? '',
       code: ServiceCode,
       quotas: serviceQuotas.map(
         ({ QuotaCode, QuotaName }): QuotaPair => ({
-          code: QuotaCode || '',
-          name: QuotaName || '',
+          code: QuotaCode ?? '',
+          name: QuotaName ?? '',
         }),
       ),
     })
