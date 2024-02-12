@@ -5,10 +5,12 @@ import {
   RequestedServiceQuotaChange,
   RequestStatus,
   RequestServiceQuotaIncreaseCommand,
+  paginateListAWSDefaultServiceQuotas,
+  ServiceQuota,
 } from '@aws-sdk/client-service-quotas'
 import { Config, Quota } from '../types'
 
-const getCurrentQuotaValue = async (region: string, service: string, quota: string): Promise<number> => {
+export const getCurrentQuotaValue = async (region: string, service: string, quota: string): Promise<number> => {
   const client = new ServiceQuotasClient({
     region,
   })
@@ -115,11 +117,51 @@ const createdAtSort = (a: { createdAt: Date }, b: { createdAt: Date }) => {
   return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
 }
 
+const dqvCache: Record<string, ServiceQuota[]> = {}
+
+const getDefaultQuotaValues = async (region: string, service: string) => {
+  const key = [region, service].join(':')
+  if (!dqvCache[key]) {
+    const agg: ServiceQuota[] = []
+    const client = new ServiceQuotasClient({
+      region,
+    })
+    const defaultQuotas = paginateListAWSDefaultServiceQuotas(
+      {
+        client,
+      },
+      {
+        ServiceCode: service,
+      },
+    )
+    for await (const quota of defaultQuotas) {
+      agg.push(...(quota.Quotas ?? []))
+    }
+    dqvCache[key] = agg
+  }
+
+  return dqvCache[key]
+}
+
+const getDefaultQuotaValue = async (region: string, service: string, quota: string) => {
+  const agg = await getDefaultQuotaValues(region, service)
+  return agg.find((sq) => sq.QuotaCode === quota)?.Value
+}
+
 const requestQuota = async (
   { desiredValue, quota, region, service }: Quota,
   { rerequestWhenDenied }: Config,
 ): Promise<Status> => {
-  const currentValue = await getCurrentQuotaValue(region, service, quota)
+  let currentValue: number | undefined
+  try {
+    currentValue = await getCurrentQuotaValue(region, service, quota)
+  } catch (e) {
+    currentValue = await getDefaultQuotaValue(region, service, quota)
+  }
+
+  if (typeof currentValue === 'undefined') {
+    throw new Error(`unable to get current or default value of quota: ${service}/${quota}`)
+  }
 
   if (desiredValue >= currentValue) {
     const pending = await getPendingQuotaValue(region, service, quota)
