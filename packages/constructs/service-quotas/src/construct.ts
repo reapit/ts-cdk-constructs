@@ -43,13 +43,11 @@ export class ServiceQuotas extends Construct {
       new PolicyStatement({
         actions: ['iam:CreateServiceLinkedRole'],
         resources: ['arn:aws:iam::*:role/aws-service-role/servicequotas.amazonaws.com/AWSServiceRoleForServiceQuotas*'],
-        conditions: [
-          {
-            StringLike: {
-              'iam:AWSServiceName': 'servicequotas.amazonaws.com',
-            },
+        conditions: {
+          StringLike: {
+            'iam:AWSServiceName': 'servicequotas.amazonaws.com',
           },
-        ],
+        },
       }),
     )
 
