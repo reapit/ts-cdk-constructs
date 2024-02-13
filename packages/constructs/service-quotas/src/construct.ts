@@ -30,8 +30,33 @@ export class ServiceQuotas extends Construct {
           'servicequotas:ListRequestedServiceQuotaChangeHistoryByQuota',
           'servicequotas:GetServiceQuota',
           'servicequotas:RequestServiceQuotaIncrease',
+          'servicequotas:ListAWSDefaultServiceQuotas',
         ],
         resources: ['*'],
+      }),
+    )
+
+    // If we're the first thing to request a service quota increase,
+    // we must be able to create the service-linked role:
+    // https://repost.aws/questions/QUXbD4KCv6Q6qVl8zBRqcUKA/dependencyaccessdeniedexception-when-calling-the-requestservicequotaincrease-operation-for-appstream
+    lambda.addToRolePolicy(
+      new PolicyStatement({
+        actions: ['iam:CreateServiceLinkedRole'],
+        resources: ['arn:aws:iam::*:role/aws-service-role/servicequotas.amazonaws.com/AWSServiceRoleForServiceQuotas*'],
+        conditions: [
+          {
+            StringLike: {
+              'iam:AWSServiceName': 'servicequotas.amazonaws.com',
+            },
+          },
+        ],
+      }),
+    )
+
+    lambda.addToRolePolicy(
+      new PolicyStatement({
+        actions: ['iam:AttachRolePolicy', 'iam:PutRolePolicy'],
+        resources: ['arn:aws:iam::*:role/aws-service-role/servicequotas.amazonaws.com/AWSServiceRoleForServiceQuotas*'],
       }),
     )
 

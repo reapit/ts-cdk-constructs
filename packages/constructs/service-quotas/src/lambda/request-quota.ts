@@ -152,6 +152,9 @@ const requestQuota = async (
   { desiredValue, quota, region, service }: Quota,
   { rerequestWhenDenied }: Config,
 ): Promise<Status> => {
+  if (typeof desiredValue === 'string') {
+    desiredValue = parseInt(desiredValue, 10)
+  }
   let currentValue: number | undefined
   try {
     currentValue = await getCurrentQuotaValue(region, service, quota)
