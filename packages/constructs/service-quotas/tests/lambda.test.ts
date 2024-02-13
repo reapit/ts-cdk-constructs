@@ -39,7 +39,7 @@ const genEvent = (
 
 describe('service-quotas lambda', () => {
   beforeEach(() => {
-    sqMock.rejects()
+    sqMock.reset()
   })
 
   it('should request quotas that havent been requested', async () => {
