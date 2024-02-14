@@ -52,6 +52,7 @@ const getRequestedQuotaChanges = async (region: string, service: string, quota: 
 
 const getPendingQuotaValue = async (region: string, service: string, quota: string) => {
   const requestedChanges = await getRequestedQuotaChanges(region, service, quota)
+  console.log('requestedChanges', requestedChanges)
   const requests = requestedChanges.map((value) => {
     if (!value.DesiredValue || !value.Created) {
       throw new Error('invalid quota change request')
@@ -119,6 +120,12 @@ const createdAtSort = (a: { createdAt: Date }, b: { createdAt: Date }) => {
 
 const dqvCache: Record<string, ServiceQuota[]> = {}
 
+const clearDQVCache = () => {
+  Object.keys(dqvCache).forEach((key) => {
+    delete dqvCache[key]
+  })
+}
+
 const getDefaultQuotaValues = async (region: string, service: string) => {
   const key = [region, service].join(':')
   if (!dqvCache[key]) {
@@ -148,13 +155,7 @@ const getDefaultQuotaValue = async (region: string, service: string, quota: stri
   return agg.find((sq) => sq.QuotaCode === quota)?.Value
 }
 
-const requestQuota = async (
-  { desiredValue, quota, region, service }: Quota,
-  { rerequestWhenDenied }: Config,
-): Promise<Status> => {
-  if (typeof desiredValue === 'string') {
-    desiredValue = parseInt(desiredValue, 10)
-  }
+const getCurrentOrDefaultQuotaValue = async (region: string, service: string, quota: string) => {
   let currentValue: number | undefined
   try {
     currentValue = await getCurrentQuotaValue(region, service, quota)
@@ -165,6 +166,19 @@ const requestQuota = async (
   if (typeof currentValue === 'undefined') {
     throw new Error(`unable to get current or default value of quota: ${service}/${quota}`)
   }
+
+  return currentValue
+}
+
+const requestQuota = async (
+  { desiredValue, quota, region, service }: Quota,
+  { rerequestWhenDenied }: Config,
+): Promise<Status> => {
+  if (typeof desiredValue === 'string') {
+    desiredValue = parseInt(desiredValue, 10)
+  }
+
+  const currentValue = await getCurrentOrDefaultQuotaValue(region, service, quota)
 
   if (desiredValue >= currentValue) {
     const pending = await getPendingQuotaValue(region, service, quota)
@@ -190,7 +204,7 @@ const requestQuota = async (
     if (!status) {
       throw new Error('no status returned from request')
     }
-    return getStatus(status as RequestStatus)
+    return getStatus(status)
   }
 
   return Status.GRANTED
@@ -226,5 +240,6 @@ export const requestQuotas = async (quotas: Quota[], config: Config) => {
     }
   }
 
+  clearDQVCache()
   return results
 }

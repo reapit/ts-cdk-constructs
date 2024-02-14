@@ -69,7 +69,7 @@ describe('wildcard-certificate', () => {
             DomainName: '',
             ResourceRecord: {
               Name: 'first-record-name.asdf.com',
-              Type: 'TXT',
+              Type: 'CNAME',
               Value: 'first-record-value',
             },
           },
@@ -78,7 +78,7 @@ describe('wildcard-certificate', () => {
             DomainName: '',
             ResourceRecord: {
               Name: 'second-record-name.qwerty.com',
-              Type: 'TXT',
+              Type: 'CNAME',
               Value: 'second-record-value',
             },
           },
@@ -117,7 +117,7 @@ describe('wildcard-certificate', () => {
             Action: 'UPSERT',
             ResourceRecordSet: {
               Name: 'first-record-name.asdf.com',
-              Type: 'TXT',
+              Type: 'CNAME',
               TTL: 60,
               ResourceRecords: [
                 {
@@ -138,7 +138,7 @@ describe('wildcard-certificate', () => {
             Action: 'UPSERT',
             ResourceRecordSet: {
               Name: 'second-record-name.qwerty.com',
-              Type: 'TXT',
+              Type: 'CNAME',
               TTL: 60,
               ResourceRecords: [
                 {
@@ -174,7 +174,7 @@ describe('wildcard-certificate', () => {
             DomainName: '',
             ResourceRecord: {
               Name: 'first-record-name.asdf.com',
-              Type: 'TXT',
+              Type: 'CNAME',
               Value: 'first-record-value',
             },
           },
@@ -183,7 +183,7 @@ describe('wildcard-certificate', () => {
             DomainName: '',
             ResourceRecord: {
               Name: 'second-record-name.qwerty.com',
-              Type: 'TXT',
+              Type: 'CNAME',
               Value: 'second-record-value',
             },
           },
@@ -277,7 +277,7 @@ describe('wildcard-certificate', () => {
             DomainName: '',
             ResourceRecord: {
               Name: 'first-record-name.asdf.com',
-              Type: 'TXT',
+              Type: 'CNAME',
               Value: 'first-record-value',
             },
           },
@@ -286,7 +286,7 @@ describe('wildcard-certificate', () => {
             DomainName: '',
             ResourceRecord: {
               Name: 'second-record-name.qwerty.com',
-              Type: 'TXT',
+              Type: 'CNAME',
               Value: 'second-record-value',
             },
           },
@@ -327,7 +327,7 @@ describe('wildcard-certificate', () => {
             Action: 'UPSERT',
             ResourceRecordSet: {
               Name: 'first-record-name.asdf.com',
-              Type: 'TXT',
+              Type: 'CNAME',
               TTL: 60,
               ResourceRecords: [
                 {
@@ -348,7 +348,7 @@ describe('wildcard-certificate', () => {
             Action: 'UPSERT',
             ResourceRecordSet: {
               Name: 'second-record-name.qwerty.com',
-              Type: 'TXT',
+              Type: 'CNAME',
               TTL: 60,
               ResourceRecords: [
                 {
@@ -379,7 +379,7 @@ describe('wildcard-certificate', () => {
             DomainName: '',
             ResourceRecord: {
               Name: 'first-record-name.asdf.com',
-              Type: 'TXT',
+              Type: 'CNAME',
               Value: 'first-record-value',
             },
           },
@@ -388,7 +388,7 @@ describe('wildcard-certificate', () => {
             DomainName: '',
             ResourceRecord: {
               Name: 'second-record-name.qwerty.com',
-              Type: 'TXT',
+              Type: 'CNAME',
               Value: 'second-record-value',
             },
           },
@@ -450,7 +450,7 @@ describe('wildcard-certificate', () => {
             Action: 'UPSERT',
             ResourceRecordSet: {
               Name: 'first-record-name.asdf.com',
-              Type: 'TXT',
+              Type: 'CNAME',
               TTL: 60,
               ResourceRecords: [
                 {
@@ -471,7 +471,7 @@ describe('wildcard-certificate', () => {
             Action: 'UPSERT',
             ResourceRecordSet: {
               Name: 'second-record-name.qwerty.com',
-              Type: 'TXT',
+              Type: 'CNAME',
               TTL: 60,
               ResourceRecords: [
                 {
@@ -548,7 +548,7 @@ describe('wildcard-certificate', () => {
             DomainName: '',
             ResourceRecord: {
               Name: 'first-record-name.asdf.com',
-              Type: 'TXT',
+              Type: 'CNAME',
               Value: 'first-record-value',
             },
           },
@@ -557,7 +557,7 @@ describe('wildcard-certificate', () => {
             DomainName: '',
             ResourceRecord: {
               Name: 'second-record-name.qwerty.com',
-              Type: 'TXT',
+              Type: 'CNAME',
               Value: 'second-record-value',
             },
           },
@@ -608,7 +608,7 @@ describe('wildcard-certificate', () => {
             Action: 'UPSERT',
             ResourceRecordSet: {
               Name: 'first-record-name.asdf.com',
-              Type: 'TXT',
+              Type: 'CNAME',
               TTL: 60,
               ResourceRecords: [
                 {
@@ -629,7 +629,7 @@ describe('wildcard-certificate', () => {
             Action: 'UPSERT',
             ResourceRecordSet: {
               Name: 'second-record-name.qwerty.com',
-              Type: 'TXT',
+              Type: 'CNAME',
               TTL: 60,
               ResourceRecords: [
                 {
@@ -696,7 +696,7 @@ describe('wildcard-certificate', () => {
               DomainName: '',
               ResourceRecord: {
                 Name: 'first-record-name.asdf.com.',
-                Type: 'TXT',
+                Type: 'CNAME',
                 Value: 'first-record-value',
               },
             },
@@ -705,7 +705,7 @@ describe('wildcard-certificate', () => {
               DomainName: '',
               ResourceRecord: {
                 Name: 'second-record-name.qwerty.com.',
-                Type: 'TXT',
+                Type: 'CNAME',
                 Value: 'second-record-value',
               },
             },
@@ -756,7 +756,7 @@ describe('wildcard-certificate', () => {
             Action: 'UPSERT',
             ResourceRecordSet: {
               Name: 'first-record-name.asdf.com.',
-              Type: 'TXT',
+              Type: 'CNAME',
               TTL: 60,
               ResourceRecords: [
                 {
@@ -777,7 +777,7 @@ describe('wildcard-certificate', () => {
             Action: 'UPSERT',
             ResourceRecordSet: {
               Name: 'second-record-name.qwerty.com.',
-              Type: 'TXT',
+              Type: 'CNAME',
               TTL: 60,
               ResourceRecords: [
                 {
@@ -857,7 +857,7 @@ describe('wildcard-certificate', () => {
               DomainName: '',
               ResourceRecord: {
                 Name: 'second-record-name.qwerty.com.',
-                Type: 'TXT',
+                Type: 'CNAME',
                 Value: 'second-record-value',
               },
             },
@@ -933,7 +933,7 @@ describe('wildcard-certificate', () => {
               DomainName: '',
               ResourceRecord: {
                 Name: 'second-record-name.qwerty.com.',
-                Type: 'TXT',
+                Type: 'CNAME',
                 Value: 'second-record-value',
               },
             },

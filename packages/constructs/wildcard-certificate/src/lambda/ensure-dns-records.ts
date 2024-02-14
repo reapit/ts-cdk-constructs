@@ -1,5 +1,6 @@
 import { ResourceRecord } from '@aws-sdk/client-acm'
 import {
+  Change,
   ChangeResourceRecordSetsCommand,
   Route53Client,
   waitUntilResourceRecordSetsChanged,
@@ -29,7 +30,7 @@ export const ensureDnsRecords = async (
         credentials: roleArn ? await assumeRole({ roleArn }) : undefined,
       })
 
-      const Changes = [
+      const Changes: Change[] = [
         {
           Action: 'UPSERT',
           ResourceRecordSet: {

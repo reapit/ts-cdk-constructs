@@ -36,7 +36,7 @@ export class ServiceQuotas extends Construct {
       }),
     )
 
-    // If we're the first thing to request a service quota increase,
+    // If we're the first thing in the account to request a service quota increase,
     // we must be able to create the service-linked role:
     // https://repost.aws/questions/QUXbD4KCv6Q6qVl8zBRqcUKA/dependencyaccessdeniedexception-when-calling-the-requestservicequotaincrease-operation-for-appstream
     lambda.addToRolePolicy(

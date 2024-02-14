@@ -34,7 +34,7 @@
     "constructs": "^10.2.70"
   },
   "devDependencies": {
-    "@aws-sdk/client-cloudfront": "3.414.0",
+    "@aws-sdk/client-cloudfront": "3.513.0",
     "@reapit-cdk/eslint-config": "workspace:^",
     "@reapit-cdk/integration-tests": "workspace:^",
     "@reapit-cdk/jsii": "workspace:^",
