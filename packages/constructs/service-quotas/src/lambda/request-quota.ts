@@ -119,6 +119,12 @@ const createdAtSort = (a: { createdAt: Date }, b: { createdAt: Date }) => {
 
 const dqvCache: Record<string, ServiceQuota[]> = {}
 
+const clearDQVCache = () => {
+  Object.keys(dqvCache).forEach((key) => {
+    delete dqvCache[key]
+  })
+}
+
 const getDefaultQuotaValues = async (region: string, service: string) => {
   const key = [region, service].join(':')
   if (!dqvCache[key]) {
@@ -148,6 +154,22 @@ const getDefaultQuotaValue = async (region: string, service: string, quota: stri
   return agg.find((sq) => sq.QuotaCode === quota)?.Value
 }
 
+const getCurrentOrDefaultQuotaValue = async (region: string, service: string, quota: string) => {
+  let currentValue: number | undefined
+  try {
+    currentValue = await getCurrentQuotaValue(region, service, quota)
+  } catch (e) {
+    console.error(e)
+    currentValue = await getDefaultQuotaValue(region, service, quota)
+  }
+
+  if (typeof currentValue === 'undefined') {
+    throw new Error(`unable to get current or default value of quota: ${service}/${quota}`)
+  }
+
+  return currentValue
+}
+
 const requestQuota = async (
   { desiredValue, quota, region, service }: Quota,
   { rerequestWhenDenied }: Config,
@@ -155,16 +177,8 @@ const requestQuota = async (
   if (typeof desiredValue === 'string') {
     desiredValue = parseInt(desiredValue, 10)
   }
-  let currentValue: number | undefined
-  try {
-    currentValue = await getCurrentQuotaValue(region, service, quota)
-  } catch (e) {
-    currentValue = await getDefaultQuotaValue(region, service, quota)
-  }
 
-  if (typeof currentValue === 'undefined') {
-    throw new Error(`unable to get current or default value of quota: ${service}/${quota}`)
-  }
+  const currentValue = await getCurrentOrDefaultQuotaValue(region, service, quota)
 
   if (desiredValue >= currentValue) {
     const pending = await getPendingQuotaValue(region, service, quota)
@@ -226,5 +240,6 @@ export const requestQuotas = async (quotas: Quota[], config: Config) => {
     }
   }
 
+  clearDQVCache()
   return results
 }
