@@ -1,6 +1,6 @@
 /** @type {import('ts-jest').JestConfigWithTsJest} */
 module.exports = {
-  // silent: true, // uncomment this to get console.log
+  silent: true, // uncomment this to get console.log
   preset: 'ts-jest',
   projects: [{
     displayName: 'unit tests',
