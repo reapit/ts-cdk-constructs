@@ -16,14 +16,13 @@ const sqMock = mockClient(ServiceQuotasClient)
 process.env.TEST = '1'
 
 const genEvent = (
-  RequestType: string = 'Create',
   quotas: Quota[],
   config: Config = {
     failIfNotGranted: false,
     rerequestWhenDenied: false,
   },
 ): any => ({
-  RequestType,
+  RequestType: 'Create',
   LogicalResourceId: '1q23',
   RequestId: '1q23',
   ResourceProperties: {
@@ -61,11 +60,12 @@ describe('service-quotas lambda', () => {
         QuotaCode: 'quarks-per-blorb',
         ServiceCode: 'blorbfront',
         DesiredValue: 10,
+        Status: RequestStatus.PENDING,
       },
     })
 
     await onEvent(
-      genEvent(undefined, [
+      genEvent([
         {
           desiredValue: 10,
           quota: 'quarks-per-blorb',
@@ -108,11 +108,12 @@ describe('service-quotas lambda', () => {
         QuotaCode: 'quarks-per-blorb',
         ServiceCode: 'blorbfront',
         DesiredValue: 15,
+        Status: RequestStatus.PENDING,
       },
     })
 
     await onEvent(
-      genEvent(undefined, [
+      genEvent([
         {
           desiredValue: 15,
           quota: 'quarks-per-blorb',
@@ -155,11 +156,12 @@ describe('service-quotas lambda', () => {
         QuotaCode: 'quarks-per-blorb',
         ServiceCode: 'blorbfront',
         DesiredValue: 25,
+        Status: RequestStatus.PENDING,
       },
     })
 
     await onEvent(
-      genEvent(undefined, [
+      genEvent([
         {
           desiredValue: 25,
           quota: 'quarks-per-blorb',
@@ -191,11 +193,12 @@ describe('service-quotas lambda', () => {
         QuotaCode: 'quarks-per-blorb',
         ServiceCode: 'blorbfront',
         DesiredValue: 25,
+        Status: RequestStatus.PENDING,
       },
     })
 
     await onEvent(
-      genEvent(undefined, [
+      genEvent([
         {
           desiredValue: 25,
           quota: 'quarks-per-blorb',
@@ -233,12 +236,12 @@ describe('service-quotas lambda', () => {
         QuotaCode: 'quarks-per-blorb',
         ServiceCode: 'blorbfront',
         DesiredValue: 10,
+        Status: RequestStatus.PENDING,
       },
     })
 
     await onEvent(
       genEvent(
-        undefined,
         [
           {
             desiredValue: 10,
@@ -281,28 +284,30 @@ describe('service-quotas lambda', () => {
         QuotaCode: 'quarks-per-blorb',
         ServiceCode: 'blorbfront',
         DesiredValue: 10,
+        Status: RequestStatus.PENDING,
       },
     })
 
-    expect(async () => {
-      await onEvent(
-        genEvent(
-          undefined,
-          [
-            {
-              desiredValue: 10,
-              quota: 'quarks-per-blorb',
-              region: 'us-east-1',
-              service: 'blorbfront',
-            },
-          ],
+    const res = await onEvent(
+      genEvent(
+        [
           {
-            rerequestWhenDenied: false,
-            failIfNotGranted: true,
+            desiredValue: 10,
+            quota: 'quarks-per-blorb',
+            region: 'us-east-1',
+            service: 'blorbfront',
           },
-        ),
-      )
-    }).rejects
+        ],
+        {
+          rerequestWhenDenied: false,
+          failIfNotGranted: true,
+        },
+      ),
+    )
+    expect(res.Status).toBe('FAILED')
+    expect(res.Reason?.split('Error:')[1].split('\n')[0].trim()).toBe(
+      'config.failIfNotGranted is true, and 1 quotas are not yet granted',
+    )
   })
 
   it('should fail if not granted if failIfNotGranted config setting is true - existing request', async () => {
@@ -324,6 +329,7 @@ describe('service-quotas lambda', () => {
           ServiceCode: 'blorbfront',
           DesiredValue: 15,
           Status: RequestStatus.PENDING,
+          Created: new Date(),
         },
       ],
     })
@@ -333,28 +339,31 @@ describe('service-quotas lambda', () => {
         QuotaCode: 'quarks-per-blorb',
         ServiceCode: 'blorbfront',
         DesiredValue: 10,
+        Status: RequestStatus.PENDING,
       },
     })
 
-    expect(async () => {
-      await onEvent(
-        genEvent(
-          undefined,
-          [
-            {
-              desiredValue: 10,
-              quota: 'quarks-per-blorb',
-              region: 'us-east-1',
-              service: 'blorbfront',
-            },
-          ],
+    const res = await onEvent(
+      genEvent(
+        [
           {
-            rerequestWhenDenied: false,
-            failIfNotGranted: true,
+            desiredValue: 10,
+            quota: 'quarks-per-blorb',
+            region: 'us-east-1',
+            service: 'blorbfront',
           },
-        ),
-      )
-    }).rejects
+        ],
+        {
+          rerequestWhenDenied: false,
+          failIfNotGranted: true,
+        },
+      ),
+    )
+
+    expect(res.Status).toBe('FAILED')
+    expect(res.Reason?.split('Error:')[1].split('\n')[0].trim()).toBe(
+      'config.failIfNotGranted is true, and 1 quotas are not yet granted',
+    )
 
     expect(sqMock).toHaveReceivedCommandTimes(RequestServiceQuotaIncreaseCommand, 0)
   })
@@ -378,11 +387,12 @@ describe('service-quotas lambda', () => {
         QuotaCode: 'quarks-per-blorb',
         ServiceCode: 'blorbfront',
         DesiredValue: 10,
+        Status: RequestStatus.PENDING,
       },
     })
 
-    await onEvent(
-      genEvent(undefined, [
+    const res = await onEvent(
+      genEvent([
         {
           desiredValue: 10,
           quota: 'quarks-per-blorb',
@@ -391,5 +401,7 @@ describe('service-quotas lambda', () => {
         },
       ]),
     )
+
+    expect(res.Status).toBe('SUCCESS')
   })
 })

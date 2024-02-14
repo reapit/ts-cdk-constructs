@@ -52,6 +52,7 @@ const getRequestedQuotaChanges = async (region: string, service: string, quota: 
 
 const getPendingQuotaValue = async (region: string, service: string, quota: string) => {
   const requestedChanges = await getRequestedQuotaChanges(region, service, quota)
+  console.log('requestedChanges', requestedChanges)
   const requests = requestedChanges.map((value) => {
     if (!value.DesiredValue || !value.Created) {
       throw new Error('invalid quota change request')
@@ -159,7 +160,6 @@ const getCurrentOrDefaultQuotaValue = async (region: string, service: string, qu
   try {
     currentValue = await getCurrentQuotaValue(region, service, quota)
   } catch (e) {
-    console.error(e)
     currentValue = await getDefaultQuotaValue(region, service, quota)
   }
 
@@ -204,7 +204,7 @@ const requestQuota = async (
     if (!status) {
       throw new Error('no status returned from request')
     }
-    return getStatus(status as RequestStatus)
+    return getStatus(status)
   }
 
   return Status.GRANTED
