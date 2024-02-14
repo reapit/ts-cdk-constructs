@@ -35,10 +35,10 @@
     "constructs": "^10.2.70"
   },
   "devDependencies": {
-    "@aws-sdk/client-dynamodb": "3.414.0",
-    "@aws-sdk/client-secrets-manager": "3.414.0",
-    "@aws-sdk/client-sesv2": "3.414.0",
-    "@aws-sdk/lib-dynamodb": "3.414.0",
+    "@aws-sdk/client-dynamodb": "3.513.0",
+    "@aws-sdk/client-secrets-manager": "3.513.0",
+    "@aws-sdk/client-sesv2": "3.513.0",
+    "@aws-sdk/lib-dynamodb": "3.513.0",
     "@reapit-cdk/custom-resource-wrapper": "workspace:^",
     "@reapit-cdk/email-receiver-types": "workspace:^",
     "@reapit-cdk/eslint-config": "workspace:^",
@@ -48,7 +48,7 @@
     "@types/mailparser": "^3.4.0",
     "aws-cdk-lib": "^2.96.2",
     "aws-lambda": "^1.0.7",
-    "aws-sdk-client-mock": "^3.0.0",
+    "aws-sdk-client-mock": "^3.0.1",
     "constructs": "^10.2.70",
     "mailparser": "^3.6.5"
   }

@@ -124,7 +124,7 @@ describe('verification-waiter', () => {
 
   it('should error if it gets an invalid status back from AWS', async () => {
     sesv2Mock.on(GetEmailIdentityCommand).resolvesOnce({
-      VerificationStatus: 'something weird',
+      VerificationStatus: 'something weird' as any,
     })
     const result = await onEvent(genEvent('email-identity-name'))
     expect(result.Status).toBe('FAILED')
