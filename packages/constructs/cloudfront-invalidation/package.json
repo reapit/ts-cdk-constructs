@@ -8,14 +8,16 @@
     "url": "https://github.com/reapit/ts-cdk-constructs/issues"
   },
   "license": "MIT",
+  "types": "src/index.ts",
   "scripts": {
-    "publish": "yarn npm publish",
-    "build": "reapit-cdk-tsup",
+    "build": "yarn jsii:build && yarn jsii:package",
     "check": "yarn run root:check -p $(pwd)",
     "lint": "reapit-cdk-eslint",
     "test": "yarn run root:test -- $(pwd)",
-    "prepack": "yarn build",
-    "integ": "yarn run root:integ -- $(pwd)"
+    "integ": "yarn run root:integ -- $(pwd)",
+    "jsii:build": "jsii --generate-tsconfig tsconfig.jsii.json --fail-on-warnings",
+    "jsii:package": "jsii-pacmak",
+    "jsii:publish": "publib jsii-out"
   },
   "author": {
     "name": "Josh Balfour",
@@ -25,18 +27,44 @@
     "url": "https://github.com/reapit/ts-cdk-constructs.git"
   },
   "publishConfig": {
-    "main": "dist/index.js"
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts"
   },
   "main": "src/index.ts",
   "peerDependencies": {
     "aws-cdk-lib": "^2.96.2",
     "constructs": "^10.2.70"
   },
+  "stability": "stable",
+  "keywords": [
+    "awscdk"
+  ],
+  "jsii": {
+    "tsc": {
+      "outDir": "dist",
+      "rootDir": "src"
+    },
+    "versionFormat": "short",
+    "excludeTypescript": [
+      "tests",
+      "src/lambda"
+    ],
+    "outdir": "jsii-out",
+    "targets": {
+      "python": {
+        "distName": "reapit-cdk.cloudfront-invalidation",
+        "module": "reapit_cdk.cloudfront_invalidation"
+      }
+    }
+  },
   "devDependencies": {
     "@aws-sdk/client-cloudfront": "3.513.0",
     "@reapit-cdk/eslint-config": "workspace:^",
     "@reapit-cdk/tsup": "workspace:^",
-    "aws-cdk-lib": "^2.96.2",
-    "constructs": "^10.2.70"
+    "aws-cdk-lib": "2.96.2",
+    "constructs": "10.2.70",
+    "jsii": "^5.3.20",
+    "jsii-pacmak": "^1.94.0",
+    "publib": "^0.2.795"
   }
 }

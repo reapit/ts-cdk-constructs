@@ -3571,8 +3571,11 @@ __metadata:
     "@aws-sdk/client-cloudfront": "npm:3.513.0"
     "@reapit-cdk/eslint-config": "workspace:^"
     "@reapit-cdk/tsup": "workspace:^"
-    aws-cdk-lib: "npm:^2.96.2"
-    constructs: "npm:^10.2.70"
+    aws-cdk-lib: "npm:2.96.2"
+    constructs: "npm:10.2.70"
+    jsii: "npm:^5.3.20"
+    jsii-pacmak: "npm:^1.94.0"
+    publib: "npm:^0.2.795"
   peerDependencies:
     aws-cdk-lib: ^2.96.2
     constructs: ^10.2.70
@@ -3588,10 +3591,13 @@ __metadata:
     "@reapit-cdk/custom-resource-wrapper": "workspace:^"
     "@reapit-cdk/eslint-config": "workspace:^"
     "@reapit-cdk/tsup": "workspace:^"
-    aws-cdk-lib: "npm:^2.96.2"
+    aws-cdk-lib: "npm:2.96.2"
     aws-lambda: "npm:^1.0.7"
     aws-sdk-client-mock: "npm:^3.0.1"
-    constructs: "npm:^10.2.70"
+    constructs: "npm:10.2.70"
+    jsii: "npm:^5.3.20"
+    jsii-pacmak: "npm:^1.94.0"
+    publib: "npm:^0.2.795"
   peerDependencies:
     aws-cdk-lib: ^2.96.2
     constructs: ^10.2.70
