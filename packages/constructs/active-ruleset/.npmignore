@@ -2,3 +2,5 @@ src
 tests
 .eslintrc.js
 tsconfig.json
+!.jsii
+!.jsii.gz

@@ -35,6 +35,18 @@
     "aws-cdk-lib": "^2.96.2",
     "constructs": "^10.2.70"
   },
+  "stability": "stable",
+  "keywords": ["awscdk"],
+  "jsii": {
+    "outdir": "dist",
+    "versionFormat": "short",
+    "targets": {
+      "python": {
+        "distName": "reapit-cdk.active-ruleset",
+        "module": "reapit_cdk.active_ruleset"
+      }
+    }
+  },
   "devDependencies": {
     "@aws-sdk/client-ses": "3.513.0",
     "@reapit-cdk/custom-resource-wrapper": "workspace:^",
@@ -42,9 +54,9 @@
     "@reapit-cdk/integration-tests": "workspace:^",
     "@reapit-cdk/jsii": "workspace:^",
     "@reapit-cdk/tsup": "workspace:^",
-    "aws-cdk-lib": "^2.96.2",
+    "aws-cdk-lib": "2.96.2",
     "aws-lambda": "^1.0.7",
     "aws-sdk-client-mock": "^3.0.1",
-    "constructs": "^10.2.70"
+    "constructs": "10.2.70"
   }
 }
