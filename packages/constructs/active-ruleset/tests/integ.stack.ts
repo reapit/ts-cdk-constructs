@@ -1,5 +1,5 @@
 import { App, Stack } from '@reapit-cdk/integration-tests'
-import { ActiveRuleset } from '..'
+import { ActiveRuleset } from '../dist'
 import { CfnOutput } from 'aws-cdk-lib'
 
 const app = new App()

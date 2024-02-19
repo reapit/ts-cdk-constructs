@@ -16,14 +16,13 @@
     "url": "https://github.com/reapit/ts-cdk-constructs.git"
   },
   "scripts": {
+    "publish": "yarn npm publish",
     "build": "reapit-cdk-tsup --lambdas",
     "check": "yarn run root:check -p $(pwd)",
     "lint": "echo 'skipping...'",
     "test": "yarn run root:test  -- $(pwd)",
     "prepack": "yarn build",
     "integ": "yarn run root:integ -- $(pwd)",
-    "jsii:build": "rpt-cdk-jsii",
-    "jsii:publish": "rpt-cdk-jsii --publish",
     "setup": "ts-node src/setup"
   },
   "main": "src/index.ts",
@@ -42,8 +41,6 @@
     "@aws-sdk/client-secrets-manager": "3.513.0",
     "@reapit-cdk/custom-resource-wrapper": "workspace:^",
     "@reapit-cdk/eslint-config": "workspace:^",
-    "@reapit-cdk/integration-tests": "workspace:^",
-    "@reapit-cdk/jsii": "workspace:^",
     "@reapit-cdk/replicated-key": "workspace:^",
     "@reapit-cdk/replicated-secret": "workspace:^",
     "@reapit-cdk/tsup": "workspace:^",

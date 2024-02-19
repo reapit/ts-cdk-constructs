@@ -4,3 +4,6 @@ tests
 tsconfig.json
 !.jsii
 !.jsii.gz
+
+# Exclude jsii outdir
+jsii-out

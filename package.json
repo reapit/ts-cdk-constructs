@@ -27,9 +27,6 @@
     "aws-sdk-client-mock": "^3.0.1",
     "aws-sdk-client-mock-jest": "^3.0.1",
     "jest": "^29.7.0",
-    "jsii": "^5.3.20",
-    "jsii-pacmak": "^1.94.0",
-    "publib": "^0.2.795",
     "ts-jest": "^29.1.1",
     "typescript": "^5.2.2"
   }

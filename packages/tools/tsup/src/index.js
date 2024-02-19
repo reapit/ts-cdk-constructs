@@ -6,6 +6,7 @@ import { build } from 'tsup'
 
 const hasLambda = process.argv.slice(2).includes('--lambda')
 const hasLambdas = process.argv.slice(2).includes('--lambdas')
+const noMain = process.argv.slice(2).includes('--no-main')
 
 if (!hasLambda && !hasLambdas && process.argv.slice(2)[0]) {
   await build({
@@ -16,13 +17,15 @@ if (!hasLambda && !hasLambdas && process.argv.slice(2)[0]) {
   process.exit()
 }
 
-await build({
-  entry: ['src/index.ts'],
-  target: 'node18',
-  dts: true,
-  clean: true,
-  external: [/@reapit-cdk\/(.*)/],
-})
+if (!noMain) {
+  await build({
+    entry: ['src/index.ts'],
+    target: 'node18',
+    dts: true,
+    clean: true,
+    external: [/@reapit-cdk\/(.*)/],
+  })
+}
 
 if (hasLambda || hasLambdas) {
   const pkgJson = JSON.parse(fs.readFileSync(path.resolve('./package.json'), 'utf-8'))

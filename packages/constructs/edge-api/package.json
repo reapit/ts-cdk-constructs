@@ -9,14 +9,13 @@
   },
   "license": "MIT",
   "scripts": {
+    "publish": "yarn npm publish",
     "build": "reapit-cdk-tsup --lambdas",
     "check": "yarn run root:check -p $(pwd)",
     "lint": "reapit-cdk-eslint",
     "test": "yarn run root:test -- $(pwd)",
     "integ": "yarn run root:integ -- $(pwd)",
-    "prepack": "yarn build",
-    "jsii:build": "rpt-cdk-jsii",
-    "jsii:publish": "rpt-cdk-jsii --publish"
+    "prepack": "yarn build"
   },
   "author": {
     "name": "Josh Balfour",
@@ -41,8 +40,6 @@
   "devDependencies": {
     "@reapit-cdk/cloudfront-invalidation": "workspace:^",
     "@reapit-cdk/eslint-config": "workspace:^",
-    "@reapit-cdk/integration-tests": "workspace:^",
-    "@reapit-cdk/jsii": "workspace:^",
     "@reapit-cdk/tsup": "workspace:^",
     "aws-cdk-lib": "^2.96.2",
     "aws-lambda": "^1.0.7",

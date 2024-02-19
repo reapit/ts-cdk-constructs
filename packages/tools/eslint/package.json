@@ -6,6 +6,7 @@
     "reapit-cdk-eslint": "bin.js"
   },
   "scripts": {
+    "publish": "yarn npm publish",
     "lint": "reapit-cdk-eslint"
   },
   "dependencies": {
