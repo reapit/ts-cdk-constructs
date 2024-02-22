@@ -4,18 +4,18 @@ import * as path from 'path'
 import { CustomResource, Duration, Lazy } from 'aws-cdk-lib'
 import { PolicyStatement } from 'aws-cdk-lib/aws-iam'
 import { Provider } from 'aws-cdk-lib/custom-resources'
-import { Config, Quota } from './types'
+import { ServiceQuotasProps, Quota } from './types'
 
 import { AWSService, ServiceQuotaMap } from './quotas'
 
 export class ServiceQuotas extends Construct {
   private quotas: Quota[] = []
-  config: Config
+  private config: ServiceQuotasProps
 
-  constructor(scope: Construct, id: string, config: Config) {
+  constructor(scope: Construct, id: string, props: ServiceQuotasProps) {
     super(scope, id)
 
-    this.config = config
+    this.config = props
 
     const lambda = new Function(this, 'lambda', {
       code: Code.fromAsset(path.join(__dirname, '..', 'dist', 'lambda')),

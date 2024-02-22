@@ -63,7 +63,7 @@ const getServiceQuotas = async (ServiceCode: string) => {
 const varifyName = (name: string) => varname.camelcase(name)
 
 const enumify = (name: string, code: string) => {
-  return `${varifyName(name)} = '${code}'`
+  return `${varname.underscore(name).toUpperCase()} = '${code}'`
 }
 
 type QuotaPair = {

@@ -46,8 +46,7 @@
     },
     "versionFormat": "short",
     "excludeTypescript": [
-      "tests",
-      "src/lambda"
+      "tests"
     ],
     "outdir": "jsii-out",
     "targets": {

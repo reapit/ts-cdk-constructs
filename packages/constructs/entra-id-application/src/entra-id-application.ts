@@ -11,17 +11,17 @@ import { ReplicatedSecret } from '@reapit-cdk/replicated-secret'
 import { ReplicatedKey } from '@reapit-cdk/replicated-key'
 
 export interface EntraIDApplicationProps {
-  config: Application
-  bootstrapClientSecret: ISecret
-  removalPolicy?: RemovalPolicy
+  readonly config: Application
+  readonly bootstrapClientSecret: ISecret
+  readonly removalPolicy?: RemovalPolicy
 }
 
 export interface CreateKeyProps {
-  keyInfo: Omit<Omit<KeyInfo, 'endDateTime'>, 'startDateTime'>
-  validFor: Duration
-  removalPolicy?: RemovalPolicy
-  replicatedKey?: ReplicatedKey
-  replicaRegions?: string[]
+  readonly keyInfo: Omit<Omit<KeyInfo, 'endDateTime'>, 'startDateTime'>
+  readonly validFor: Duration
+  readonly removalPolicy?: RemovalPolicy
+  readonly replicatedKey?: ReplicatedKey
+  readonly replicaRegions?: string[]
 }
 
 export class EntraIDApplication extends Construct {
@@ -86,7 +86,7 @@ export class EntraIDApplication extends Construct {
     })
   }
 
-  getAttString = (attr: keyof Application) => {
+  getAttString(attr: keyof Application) {
     return this.app.getAttString(attr)
   }
 

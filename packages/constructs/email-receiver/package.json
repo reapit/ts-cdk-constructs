@@ -9,13 +9,14 @@
   },
   "license": "MIT",
   "scripts": {
-    "publish": "yarn npm publish",
-    "build": "reapit-cdk-tsup --lambdas",
+    "build": "yarn jsii:build && reapit-cdk-tsup --lambdas --no-main && yarn jsii:package",
     "check": "yarn run root:check -p $(pwd)",
     "lint": "reapit-cdk-eslint",
     "test": "yarn run root:test -- $(pwd)",
     "integ": "yarn run root:integ -- $(pwd)",
-    "prepack": "yarn build"
+    "jsii:build": "jsii --generate-tsconfig tsconfig.jsii.json --fail-on-warnings",
+    "jsii:package": "jsii-pacmak",
+    "jsii:publish": "publib jsii-out"
   },
   "author": {
     "name": "Josh Balfour",
@@ -25,11 +26,17 @@
     "url": "https://github.com/reapit/ts-cdk-constructs.git"
   },
   "publishConfig": {
-    "main": "dist/index.js"
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts"
   },
   "main": "src/index.ts",
+  "types": "src/index.ts",
+  "stability": "stable",
+  "keywords": [
+    "awscdk"
+  ],
   "peerDependencies": {
-    "@reapit-cdk/active-ruleset": "^0.0.1",
+    "@reapit-cdk/active-ruleset": "^0.0.0",
     "aws-cdk-lib": "^2.96.2",
     "constructs": "^10.2.70"
   },
@@ -43,10 +50,31 @@
     "@reapit-cdk/eslint-config": "workspace:^",
     "@reapit-cdk/tsup": "workspace:^",
     "@types/mailparser": "^3.4.0",
-    "aws-cdk-lib": "^2.96.2",
+    "aws-cdk-lib": "2.96.2",
     "aws-lambda": "^1.0.7",
     "aws-sdk-client-mock": "^3.0.1",
-    "constructs": "^10.2.70",
-    "mailparser": "^3.6.5"
+    "constructs": "10.2.70",
+    "jsii": "^5.3.20",
+    "jsii-pacmak": "^1.94.0",
+    "mailparser": "^3.6.5",
+    "publib": "^0.2.795"
+  },
+  "jsii": {
+    "tsc": {
+      "outDir": "dist",
+      "rootDir": "src"
+    },
+    "versionFormat": "short",
+    "excludeTypescript": [
+      "tests",
+      "src/lambdas"
+    ],
+    "outdir": "jsii-out",
+    "targets": {
+      "python": {
+        "distName": "reapit-cdk.email-receiver",
+        "module": "reapit_cdk.email_receiver"
+      }
+    }
   }
 }

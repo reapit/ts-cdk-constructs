@@ -15,6 +15,7 @@ const typeSyntaxKindToString = (kind: ts.SyntaxKind) => {
     case ts.SyntaxKind.AnyKeyword:
       return 'any'
   }
+  throw new Error('unhandled kind: '+kind)
 }
 
 const cleanComment = (comment: string) => {
@@ -130,6 +131,7 @@ const resolveReturnType = (callExpression: ts.CallExpression, typeChecker: ts.Ty
       isRedirection: true,
     }
   }
+  return
 }
 
 const forEachChildAsArray = (node: ts.Node) => {

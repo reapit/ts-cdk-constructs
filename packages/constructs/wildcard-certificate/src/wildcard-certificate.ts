@@ -7,16 +7,16 @@ import { PolicyStatement } from 'aws-cdk-lib/aws-iam'
 import * as path from 'path'
 import { HostedZone } from 'aws-cdk-lib/aws-route53'
 
-type DetailedDomain = {
-  domainName: string
-  hostedZoneArn?: string
-  account?: string
-  roleArn?: string
-  includeParent?: boolean
+export interface Domain {
+  readonly domainName: string
+  readonly hostedZoneArn?: string
+  readonly account?: string
+  readonly roleArn?: string
+  readonly includeParent?: boolean
 }
-type Domain = DetailedDomain | string
+
 export interface WildcardCertificateProps {
-  domains: Domain[]
+  readonly domains: Domain[]
 }
 
 const strIsDefined = (str: string | undefined): str is string => !!str
@@ -60,7 +60,7 @@ export class WildcardCertificate extends Construct {
     this.certificate = Certificate.fromCertificateArn(this, 'wildcard-cert', cr.getAttString('certificateArn'))
   }
 
-  private addRolesToLambda(lambda: Function, domains: (DetailedDomain & { account: string; hostedZoneArn: string })[]) {
+  private addRolesToLambda(lambda: Function, domains: (Domain & { account: string; hostedZoneArn: string })[]) {
     const scopeAccount = Stack.of(this).account
 
     const sameAccountZones = domains

@@ -1,4 +1,4 @@
-import { EdgeAPI, FrontendEndpoint, endpointIsLambdaEndpoint, endpointIsProxyEndpoint } from '@reapit-cdk/edge-api'
+import { EdgeAPI, IFrontendEndpoint, endpointIsLambdaEndpoint, endpointIsProxyEndpoint } from '@reapit-cdk/edge-api'
 import { Construct } from 'constructs'
 
 import { Bucket } from 'aws-cdk-lib/aws-s3'
@@ -9,12 +9,17 @@ import { EndpointInputItem } from './generation'
 import { getAbsoluteFSPath } from 'swagger-ui-dist'
 import { InfoObject } from 'openapi3-ts/oas30'
 
-interface EdgeAPISwaggerEndpointProps {
-  api: EdgeAPI
-  url: string
-  pathPattern?: string
-  info?: InfoObject
-  repoRoot?: string
+export type { IFrontendEndpoint } from '@reapit-cdk/edge-api' 
+
+export interface EdgeAPISwaggerEndpointProps {
+  readonly api: EdgeAPI
+  readonly url: string
+  readonly pathPattern?: string
+  /**
+   * @jsii ignore
+   */
+  readonly info?: InfoObject
+  readonly repoRoot?: string
 }
 
 const swaggerHtml = (urlPrefix: string) => `<!DOCTYPE html>
@@ -44,9 +49,9 @@ const swaggerHtml = (urlPrefix: string) => `<!DOCTYPE html>
 </body>
 </html>`
 
-export class EdgeAPISwaggerEndpoint extends Construct implements FrontendEndpoint {
+export class EdgeAPISwaggerEndpoint extends Construct implements IFrontendEndpoint {
   bucket: Bucket
-  invalidationItems: string[]
+  invalidationItems?: string[]
   pathPattern: string
 
   constructor(scope: Construct, id: string, props: EdgeAPISwaggerEndpointProps) {
@@ -76,7 +81,7 @@ export class EdgeAPISwaggerEndpoint extends Construct implements FrontendEndpoin
       endpointsInput: props.api._endpoints.map((endpoint): EndpointInputItem => {
         if (endpointIsLambdaEndpoint(endpoint)) {
           return {
-            codePath: endpoint.lambda.codePath,
+            codePath: endpoint.lambdaFunction.codePath,
             pathPattern: endpoint.pathPattern,
             isFrontend: false,
           }

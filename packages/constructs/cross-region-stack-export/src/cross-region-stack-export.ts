@@ -48,7 +48,7 @@ export class CrossRegionStackExport extends Construct {
   }
 
   setValue(id: string, value: string) {
-    new StringParameter(this, id as string, {
+    new StringParameter(this, id, {
       parameterName: this.getParameterName(id),
       stringValue: value,
     })

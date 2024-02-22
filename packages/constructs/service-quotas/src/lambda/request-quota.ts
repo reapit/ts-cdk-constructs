@@ -8,7 +8,7 @@ import {
   paginateListAWSDefaultServiceQuotas,
   ServiceQuota,
 } from '@aws-sdk/client-service-quotas'
-import { Config, Quota } from '../types'
+import { ServiceQuotasProps, Quota } from '../types'
 
 export const getCurrentQuotaValue = async (region: string, service: string, quota: string): Promise<number> => {
   const client = new ServiceQuotasClient({
@@ -172,7 +172,7 @@ const getCurrentOrDefaultQuotaValue = async (region: string, service: string, qu
 
 const requestQuota = async (
   { desiredValue, quota, region, service }: Quota,
-  { rerequestWhenDenied }: Config,
+  { rerequestWhenDenied }: ServiceQuotasProps,
 ): Promise<Status> => {
   if (typeof desiredValue === 'string') {
     desiredValue = parseInt(desiredValue, 10)
@@ -215,7 +215,7 @@ type Result = {
   status: Status
 }
 
-export const requestQuotas = async (quotas: Quota[], config: Config) => {
+export const requestQuotas = async (quotas: Quota[], config: ServiceQuotasProps) => {
   const results: Result[] = []
 
   for (const quota of quotas) {

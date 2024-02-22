@@ -16,13 +16,14 @@
     "url": "https://github.com/reapit/ts-cdk-constructs.git"
   },
   "scripts": {
-    "publish": "yarn npm publish",
-    "build": "reapit-cdk-tsup --lambdas",
+    "build": "yarn jsii:build && reapit-cdk-tsup --lambdas --no-main && yarn jsii:package",
     "check": "yarn run root:check -p $(pwd)",
-    "lint": "echo 'skipping...'",
-    "test": "yarn run root:test  -- $(pwd)",
-    "prepack": "yarn build",
+    "lint": "reapit-cdk-eslint",
+    "test": "yarn run root:test -- $(pwd)",
     "integ": "yarn run root:integ -- $(pwd)",
+    "jsii:build": "jsii --generate-tsconfig tsconfig.jsii.json --fail-on-warnings",
+    "jsii:package": "jsii-pacmak",
+    "jsii:publish": "publib jsii-out",
     "setup": "ts-node src/setup"
   },
   "main": "src/index.ts",
@@ -31,9 +32,13 @@
     "main": "dist/index.js",
     "types": "dist/index.d.ts"
   },
+  "stability": "stable",
+  "keywords": [
+    "awscdk"
+  ],
   "peerDependencies": {
-    "@reapit-cdk/replicated-key": "^0.0.2",
-    "@reapit-cdk/replicated-secret": "^0.0.4",
+    "@reapit-cdk/replicated-key": "^0.0.0",
+    "@reapit-cdk/replicated-secret": "^0.0.0",
     "aws-cdk-lib": "^2.96.2",
     "constructs": "^10.2.70"
   },
@@ -44,15 +49,41 @@
     "@reapit-cdk/replicated-key": "workspace:^",
     "@reapit-cdk/replicated-secret": "workspace:^",
     "@reapit-cdk/tsup": "workspace:^",
-    "aws-cdk-lib": "^2.96.2",
+    "aws-cdk-lib": "2.96.2",
     "aws-lambda": "^1.0.7",
     "aws-sdk-client-mock": "^3.0.1",
-    "constructs": "^10.2.70",
+    "constructs": "10.2.70",
+    "jsii": "^5.3.20",
+    "jsii-pacmak": "^1.94.0",
+    "publib": "^0.2.795",
     "ts-node": "^10.9.1"
   },
   "dependencies": {
     "@microsoft/microsoft-graph-client": "^3.0.7",
     "@microsoft/microsoft-graph-types": "^2.38.0",
     "commander": "^11.1.0"
+  },
+  "bundledDependencies": [
+    "@microsoft/microsoft-graph-client",
+    "@microsoft/microsoft-graph-types",
+    "commander"
+  ],
+  "jsii": {
+    "tsc": {
+      "outDir": "dist",
+      "rootDir": "src"
+    },
+    "versionFormat": "short",
+    "excludeTypescript": [
+      "tests",
+      "src/lambdas"
+    ],
+    "outdir": "jsii-out",
+    "targets": {
+      "python": {
+        "distName": "reapit-cdk.entra-id-application",
+        "module": "reapit_cdk.entra_id_application"
+      }
+    }
   }
 }

@@ -49,7 +49,7 @@ export class DevEdgeAPI extends Construct {
     this.addEndpoint({
       ...props.defaultEndpoint,
       pathPattern: '/*',
-    })
+    } as Endpoint)
   }
 
   private generateParameterMapping(
@@ -131,12 +131,12 @@ export class DevEdgeAPI extends Construct {
       }
     }
     if (endpointIsLambdaEndpoint(endpoint)) {
-      const { pathPattern, lambda } = endpoint
+      const { pathPattern, lambdaFunction } = endpoint
       const methods = endpoint.methods ?? [HttpMethod.ANY]
       this.api.addRoutes({
         path: pathPattern.replace('*', '{proxy+}'),
-        integration: new HttpLambdaIntegration(pathPattern + '-integration', lambda, {
-          parameterMapping: this.generateParameterMapping(lambda.edgeEnvironment),
+        integration: new HttpLambdaIntegration(pathPattern + '-integration', lambdaFunction, {
+          parameterMapping: this.generateParameterMapping(lambdaFunction.edgeEnvironment),
         }),
         methods,
       })
