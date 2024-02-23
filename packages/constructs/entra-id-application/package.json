@@ -15,8 +15,9 @@
   "repository": {
     "url": "https://github.com/reapit/ts-cdk-constructs.git"
   },
+  "bin": "node dist/setup",
   "scripts": {
-    "build": "yarn jsii:build && reapit-cdk-tsup --lambdas --no-main && yarn jsii:package",
+    "build": "yarn jsii:build && reapit-cdk-tsup --lambdas --setup --no-main && yarn jsii:package",
     "check": "yarn run root:check -p $(pwd)",
     "lint": "reapit-cdk-eslint",
     "test": "yarn run root:test -- $(pwd)",
@@ -76,7 +77,8 @@
     "versionFormat": "short",
     "excludeTypescript": [
       "tests",
-      "src/lambdas"
+      "src/lambdas",
+      "src/setup"
     ],
     "outdir": "jsii-out",
     "targets": {

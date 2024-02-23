@@ -63,7 +63,8 @@
     "versionFormat": "short",
     "excludeTypescript": [
       "tests",
-      "src/lambda"
+      "src/lambda",
+      "src/generate-types.ts"
     ],
     "outdir": "jsii-out",
     "targets": {

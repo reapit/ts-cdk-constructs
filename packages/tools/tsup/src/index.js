@@ -6,6 +6,7 @@ import { build } from 'tsup'
 
 const hasLambda = process.argv.slice(2).includes('--lambda')
 const hasLambdas = process.argv.slice(2).includes('--lambdas')
+const hasSetup = process.argv.slice(2).includes('--setup')
 const noMain = process.argv.slice(2).includes('--no-main')
 
 if (!hasLambda && !hasLambdas && process.argv.slice(2)[0]) {
@@ -45,6 +46,19 @@ if (hasLambda || hasLambdas) {
   }
   if (hasLambdas) {
     config.outDir = 'dist/lambdas'
+  }
+  await build(config)
+}
+
+if (hasSetup) {
+  const pkgJson = JSON.parse(fs.readFileSync(path.resolve('./package.json'), 'utf-8'))
+
+  const deps = [...Object.keys(pkgJson.dependencies || {}), ...Object.keys(pkgJson.devDependencies || {})]
+  const config = {
+    entry:  ['src/setup'],
+    target: 'node18',
+    outDir: 'dist/setup',
+    external: deps,
   }
   await build(config)
 }

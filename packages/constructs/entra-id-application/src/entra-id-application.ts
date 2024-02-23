@@ -1,14 +1,15 @@
 import { CustomResource, Duration, SecretValue, RemovalPolicy } from 'aws-cdk-lib'
 import { Code, Function, Runtime } from 'aws-cdk-lib/aws-lambda'
 import { Provider } from 'aws-cdk-lib/custom-resources'
-import { Application, PasswordCredential } from '@microsoft/microsoft-graph-types'
+import { PasswordCredential } from '@microsoft/microsoft-graph-types'
 import { Construct } from 'constructs'
 import * as path from 'path'
-import { KeyInfo } from './lambdas/entra-app-key'
 import { ISecret, Secret } from 'aws-cdk-lib/aws-secretsmanager'
-import { SecretObject } from './lambdas/types'
+import type { SecretObject } from './lambdas/types'
 import { ReplicatedSecret } from '@reapit-cdk/replicated-secret'
 import { ReplicatedKey } from '@reapit-cdk/replicated-key'
+import { Application } from './entra-id-types'
+export type { Application } from './entra-id-types'
 
 export interface EntraIDApplicationProps {
   readonly config: Application
@@ -16,12 +17,26 @@ export interface EntraIDApplicationProps {
   readonly removalPolicy?: RemovalPolicy
 }
 
+export interface KeyCreationInfo {
+  readonly displayName?: string
+  readonly hint?: string
+}
+
 export interface CreateKeyProps {
-  readonly keyInfo: Omit<Omit<KeyInfo, 'endDateTime'>, 'startDateTime'>
+  readonly keyInfo: KeyCreationInfo
   readonly validFor: Duration
   readonly removalPolicy?: RemovalPolicy
   readonly replicatedKey?: ReplicatedKey
   readonly replicaRegions?: string[]
+}
+
+export interface EntraIDApplicationKey {
+  readonly displayName: string
+  readonly startDateTime: string
+  readonly keyId: string
+  readonly endDateTime: string
+  readonly hint: string
+  readonly secret: Secret
 }
 
 export class EntraIDApplication extends Construct {
@@ -90,11 +105,7 @@ export class EntraIDApplication extends Construct {
     return this.app.getAttString(attr)
   }
 
-  createKey(
-    scope: Construct,
-    id: string,
-    props: CreateKeyProps,
-  ): Omit<PasswordCredential, 'secretText'> & { secret: Secret } {
+  createKey(scope: Construct, id: string, props: CreateKeyProps): EntraIDApplicationKey {
     if (props.validFor.toMilliseconds() < Duration.days(7).toMilliseconds()) {
       throw new Error('Key must be valid for more than 7 days.')
     }

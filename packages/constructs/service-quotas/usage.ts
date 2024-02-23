@@ -14,9 +14,9 @@ quotas.requestQuota(
   // region
   'us-east-1',
   // service (use the AWSService.${Service} helper or specify the e.g. 'cloudfront' string as any)
-  AWSService.AmazonCloudFront,
+  AWSService.AMAZON_CLOUD_FRONT,
   // quota (use the ${Service}Quota e.g. AmazonCloudFrontQuota helper or specify the 'LL-' string as any)
-  AmazonCloudFrontQuota.CacheBehaviorsPerDistribution,
+  AmazonCloudFrontQuota.CACHE_BEHAVIORS_PER_DISTRIBUTION,
   // desired value
   100,
 )
