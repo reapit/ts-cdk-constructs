@@ -121,10 +121,8 @@ export class DevEdgeAPI extends Construct {
           'proxy-integration',
           this.ensureHTTPS(this.pickDestination(endpoint.destination), endpoint.insecure) + destPath,
           {
-            parameterMapping: ParameterMapping.fromObject({
-              host: {
-                value: this.ensureNoProtocol(this.pickDestination(endpoint.destination)),
-              },
+            parameterMapping: new ParameterMapping().overwriteHeader('host', {
+              value: this.ensureNoProtocol(this.pickDestination(endpoint.destination)),
             }),
           },
         ),
@@ -137,10 +135,8 @@ export class DevEdgeAPI extends Construct {
             'proxy-integration',
             this.ensureHTTPS(this.pickDestination(endpoint.destination), endpoint.insecure) + destPath + '/{proxy}',
             {
-              parameterMapping: ParameterMapping.fromObject({
-                host: {
-                  value: this.ensureNoProtocol(this.pickDestination(endpoint.destination)),
-                },
+              parameterMapping: new ParameterMapping().overwriteHeader('host', {
+                value: this.ensureNoProtocol(this.pickDestination(endpoint.destination)),
               }),
             },
           ),
