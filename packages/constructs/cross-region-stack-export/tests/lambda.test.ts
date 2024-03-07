@@ -1,6 +1,6 @@
 import { mockClient } from 'aws-sdk-client-mock'
 import 'aws-sdk-client-mock-jest'
-import { GetParametersByPathCommand, SSMClient } from '@aws-sdk/client-ssm'
+import { GetParametersByPathCommand, GetParametersByPathCommandInput, SSMClient } from '@aws-sdk/client-ssm'
 import { AssumeRoleCommand, STSClient } from '@aws-sdk/client-sts'
 import { onEvent } from '../src/lambda/lambda'
 
@@ -16,14 +16,20 @@ describe('remote-parameters', () => {
   it('should fetch me the given parameters', async () => {
     ssmMock
       .on(GetParametersByPathCommand)
-      .resolvesOnce({
-        NextToken: '1234',
-        Parameters: [
-          {
-            Name: 'something',
-            Value: 'else',
-          },
-        ],
+      .callsFakeOnce(async (input: GetParametersByPathCommandInput) => {
+        if ((input.MaxResults || 0) > 10) {
+          throw new Error('maxresults too large')
+        }
+
+        return {
+          NextToken: '1234',
+          Parameters: [
+            {
+              Name: 'something',
+              Value: 'else',
+            },
+          ],
+        }
       })
       .resolvesOnce({
         NextToken: undefined,
@@ -53,6 +59,9 @@ describe('remote-parameters', () => {
     if (!res.Data) {
       throw new Error('res.Data undefined')
     }
+
+    expect(ssmMock).toHaveReceivedCommand(GetParametersByPathCommand)
+
 
     expect(res.Data['something']).toBe('else')
     expect(res.Data['another']).toBe('thing')
