@@ -12,7 +12,7 @@ import { DomainName, HttpApi, HttpMethod, ParameterMapping } from '@aws-cdk/aws-
 import { HttpLambdaIntegration, HttpUrlIntegration } from '@aws-cdk/aws-apigatewayv2-integrations-alpha'
 import { RecordTarget } from 'aws-cdk-lib/aws-route53'
 import { ApiGatewayv2DomainProperties } from 'aws-cdk-lib/aws-route53-targets'
-import { Fn } from 'aws-cdk-lib'
+import { Fn, Token } from 'aws-cdk-lib'
 import { Code, Function, Runtime } from 'aws-cdk-lib/aws-lambda'
 import * as path from 'path'
 
@@ -76,7 +76,10 @@ export class DevEdgeAPI extends Construct {
   }
 
   private ensureNoProtocol(url: string) {
-    return this.replaceStr(this.replaceStr(url, 'http://', ''), 'https://', '')
+    if (Token.isUnresolved(url)) {
+      return this.replaceStr(this.replaceStr(url, 'http://', ''), 'https://', '')
+    }
+    return url.replace('http://', '').replace('https://', '')
   }
 
   private ensureHTTPS(url: string, insecure?: boolean) {
