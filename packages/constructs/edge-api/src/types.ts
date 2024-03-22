@@ -190,7 +190,7 @@ export class ProxyEndpoint extends BaseEndpoint {
 export class RedirectionEndpoint extends BaseEndpoint {
   destination: Destination
   redirect: boolean
-  responseHeaderOverrides: ResponseHeadersPolicyProps | undefined
+  responseHeaderOverrides?: ResponseHeadersPolicyProps | undefined
 
   constructor({ destination, pathPattern, redirect, responseHeaderOverrides }: RedirectionEndpointProps) {
     super({

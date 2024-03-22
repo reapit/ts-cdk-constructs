@@ -1,6 +1,6 @@
 import { App, Stack } from '@reapit-cdk/integration-tests'
 import { ARecord, HostedZone } from 'aws-cdk-lib/aws-route53'
-import { EdgeAPI, EdgeAPILambda } from '../dist'
+import { EdgeAPI, EdgeAPILambda, RedirectionEndpoint, FrontendEndpoint, LambdaEndpoint, ProxyEndpoint } from '../dist'
 import { Certificate, CertificateValidation } from 'aws-cdk-lib/aws-certificatemanager'
 import { BucketDeployment, Source } from 'aws-cdk-lib/aws-s3-deployment'
 import { Bucket } from 'aws-cdk-lib/aws-s3'
@@ -21,7 +21,7 @@ export const edgeAPITest = (devMode?: boolean) => {
   if (!process.env.INTEG_DOMAIN) {
     throw new Error('process.env.INTEG_DOMAIN required')
   }
-  const parentDomainName = process.env.INTEG_DOMAIN ?? ''
+  const parentDomainName = process.env.INTEG_DOMAIN
   if (!process.env.INTEG_ZONE_ID) {
     throw new Error('process.env.INTEG_ZONE_ID required')
   }
@@ -80,67 +80,75 @@ export const edgeAPITest = (devMode?: boolean) => {
     sources: [Source.data('index.html', '<h1>it works!</h1>')],
   })
 
-  api.addEndpoint({
-    bucket,
-    pathPattern: '/bucket',
-    responseHeaderOverrides: {
-      securityHeadersBehavior: {
-        frameOptions: {
-          frameOption: HeadersFrameOption.DENY,
-          override: true,
+  api.addEndpoint(
+    new FrontendEndpoint({
+      bucket,
+      pathPattern: '/bucket',
+      responseHeaderOverrides: {
+        securityHeadersBehavior: {
+          frameOptions: {
+            frameOption: HeadersFrameOption.DENY,
+            override: true,
+          },
         },
       },
-    },
-  })
+    }),
+  )
 
-  api.addEndpoint({
-    pathPattern: '/get/*',
-    destination: 'httpbin.org',
-    responseHeaderOverrides: {
-      customHeadersBehavior: {
-        customHeaders: [
-          {
-            header: 'Server',
-            override: true,
-            value: 'CERN-NextStep-WorldWideWeb.app/1.1  libwww/2.07',
-          },
-        ],
-      },
-    },
-  })
-
-  api.addEndpoint({
-    pathPattern: '/api',
-    lambda: new EdgeAPILambda(stack, 'lambda', {
-      code: Code.fromInline(
-        devMode
-          ? 'module.exports = { handler: async (event) => JSON.parse(Buffer.from(event.headers.env, "base64").toString("utf-8")) }'
-          : 'module.exports = { handler: async (event) => ({ status: 200, bodyEncoding: "text", body: JSON.stringify(JSON.parse(event.Records[0].cf.request.origin.s3.customHeaders.env[0].value)) }) }',
-      ),
-      handler: 'index.handler',
-      runtime: Runtime.NODEJS_18_X,
-      environment: {
-        aVariable: 'contents',
+  api.addEndpoint(
+    new ProxyEndpoint({
+      pathPattern: '/get/*',
+      destination: 'httpbin.org',
+      responseHeaderOverrides: {
+        customHeadersBehavior: {
+          customHeaders: [
+            {
+              header: 'Server',
+              override: true,
+              value: 'CERN-NextStep-WorldWideWeb.app/1.1  libwww/2.07',
+            },
+          ],
+        },
       },
     }),
-    responseHeaderOverrides: {
-      customHeadersBehavior: {
-        customHeaders: [
-          {
-            header: 'X-CUSTOM-HEADER',
-            override: true,
-            value: 'CUSTOM-HEADER-VALUE',
-          },
-        ],
-      },
-    },
-  })
+  )
 
-  api.addEndpoint({
-    pathPattern: '/redirect-me',
-    redirect: true,
-    destination: 'https://google.com',
-  })
+  api.addEndpoint(
+    new LambdaEndpoint({
+      pathPattern: '/api',
+      lambdaFunction: new EdgeAPILambda(stack, 'lambda', {
+        code: Code.fromInline(
+          devMode
+            ? 'module.exports = { handler: async (event) => JSON.parse(Buffer.from(event.headers.env, "base64").toString("utf-8")) }'
+            : 'module.exports = { handler: async (event) => ({ status: 200, bodyEncoding: "text", body: JSON.stringify(JSON.parse(event.Records[0].cf.request.origin.s3.customHeaders.env[0].value)) }) }',
+        ),
+        handler: 'index.handler',
+        runtime: Runtime.NODEJS_18_X,
+        environment: {
+          aVariable: 'contents',
+        },
+      }),
+      responseHeaderOverrides: {
+        customHeadersBehavior: {
+          customHeaders: [
+            {
+              header: 'X-CUSTOM-HEADER',
+              override: true,
+              value: 'CUSTOM-HEADER-VALUE',
+            },
+          ],
+        },
+      },
+    }),
+  )
+
+  api.addEndpoint(
+    new RedirectionEndpoint({
+      pathPattern: '/redirect-me',
+      redirect: true,
+      destination: 'https://google.com',
+    }),
+  )
 
   new CfnOutput(stack, 'output', {
     value: `https://${domainName}`,
