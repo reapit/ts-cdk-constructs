@@ -55,7 +55,7 @@ if (hasSetup) {
 
   const deps = [...Object.keys(pkgJson.dependencies || {}), ...Object.keys(pkgJson.devDependencies || {})]
   const config = {
-    entry:  ['src/setup'],
+    entry: ['src/setup'],
     target: 'node18',
     outDir: 'dist/setup',
     external: deps,

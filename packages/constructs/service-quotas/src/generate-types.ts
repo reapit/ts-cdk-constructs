@@ -76,7 +76,7 @@ type NestedQuotaPair = QuotaPair & {
 }
 
 const tsify = (quotas: NestedQuotaPair[]) => {
-  const filteredQuotas = quotas.filter(q => q.quotas.length)
+  const filteredQuotas = quotas.filter((q) => q.quotas.length)
   return `
   ${filteredQuotas
     .map(({ name, quotas }) => {

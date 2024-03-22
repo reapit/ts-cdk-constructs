@@ -6,9 +6,4 @@ module.exports = {
     sourceType: 'module',
     project: './tsconfig.json',
   },
-  parserOptions: {
-    ecmaVersion: 'ESNext',
-    sourceType: 'module',
-    project: './tsconfig.json',
-  },
 }

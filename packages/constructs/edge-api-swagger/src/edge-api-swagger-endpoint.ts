@@ -9,7 +9,7 @@ import { EndpointInputItem } from './generation'
 import { getAbsoluteFSPath } from 'swagger-ui-dist'
 import { InfoObject } from 'openapi3-ts/oas30'
 
-export type { IFrontendEndpoint } from '@reapit-cdk/edge-api' 
+export type { IFrontendEndpoint } from '@reapit-cdk/edge-api'
 
 export interface EdgeAPISwaggerEndpointProps {
   readonly api: EdgeAPI

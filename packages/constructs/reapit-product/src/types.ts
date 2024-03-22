@@ -1,4 +1,3 @@
-
 /**
  * Model to create a new product
  */
@@ -34,7 +33,6 @@ export interface ReapitProduct {
   readonly isInternalApp: boolean
 }
 
-
 /**
  * Representation of a product
  */
@@ -46,7 +44,7 @@ export interface ProductModel {
   /**
    * The name of the product
    */
-  readonly  name: string
+  readonly name: string
   /**
    * The identifier of the product within the IDP
    */

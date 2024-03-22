@@ -69,7 +69,12 @@ const getPackageTypeInfo = async (cwd: string, subdir: string, coverage: Package
     packageType,
     packages: await Promise.all(
       subdirs.map((subdir) =>
-        getPackageInfo(parentDir, subdir, packageType, coverageInfo?.find((a) => a.name === subdir)),
+        getPackageInfo(
+          parentDir,
+          subdir,
+          packageType,
+          coverageInfo?.find((a) => a.name === subdir),
+        ),
       ),
     ),
   }

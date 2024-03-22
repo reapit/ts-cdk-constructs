@@ -7,7 +7,13 @@ import { Construct } from 'constructs'
 export class CrossRegionStackImport extends Construct {
   exporter: CrossRegionStackExport
   parameters: RemoteParameters
-  constructor(scope: Construct, id: string, fromExporter: CrossRegionStackExport, roleArn: string, alwaysUpdate?: boolean) {
+  constructor(
+    scope: Construct,
+    id: string,
+    fromExporter: CrossRegionStackExport,
+    roleArn: string,
+    alwaysUpdate?: boolean,
+  ) {
     super(scope, id)
     this.exporter = fromExporter
 
@@ -69,7 +75,7 @@ export class CrossRegionStackExport extends Construct {
 
   getImporter(scope: Construct, id: string, alwaysUpdate?: boolean) {
     const { account } = Stack.of(scope)
-    
+
     const cdkReadOnlyRole = this.getReadOnlyRole(account)
     return new CrossRegionStackImport(scope, id, this, cdkReadOnlyRole.roleArn, alwaysUpdate)
   }

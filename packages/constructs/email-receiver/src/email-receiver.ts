@@ -22,11 +22,7 @@ export class EmailReceiver extends Construct {
   table: Table
   domainName: string
 
-  constructor(
-    scope: Construct,
-    id: string,
-    props: EmailReceiverProps,
-  ) {
+  constructor(scope: Construct, id: string, props: EmailReceiverProps) {
     super(scope, id)
     const domain = (props.subdomain ?? 'email') + '.' + (props.parentDomain ?? props.hostedZone.zoneName)
     this.domainName = domain

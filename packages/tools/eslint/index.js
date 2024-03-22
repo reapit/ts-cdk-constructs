@@ -18,7 +18,15 @@ module.exports = {
     project: './packages/*/*/tsconfig.json',
   },
   plugins: ['@typescript-eslint', 'prettier'],
-  ignorePatterns: ['node_modules/', '**/node_modules/', '**/dist/','**/jsii-out/', 'tsconfig.json', '.eslintrc.js', '*.snapshot/'],
+  ignorePatterns: [
+    'node_modules/',
+    '**/node_modules/',
+    '**/dist/',
+    '**/jsii-out/',
+    'tsconfig.json',
+    '.eslintrc.js',
+    '*.snapshot/',
+  ],
   rules: {
     quotes: ['error', 'single', { avoidEscape: true, allowTemplateLiterals: false }],
     semi: ['error', 'never'],

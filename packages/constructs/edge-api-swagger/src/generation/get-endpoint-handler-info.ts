@@ -15,7 +15,7 @@ const typeSyntaxKindToString = (kind: ts.SyntaxKind) => {
     case ts.SyntaxKind.AnyKeyword:
       return 'any'
   }
-  throw new Error('unhandled kind: '+kind)
+  throw new Error('unhandled kind: ' + kind)
 }
 
 const cleanComment = (comment: string) => {
