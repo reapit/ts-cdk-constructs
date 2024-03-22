@@ -3734,10 +3734,12 @@ __metadata:
     publib: "npm:^0.2.795"
     ts-node: "npm:^10.9.1"
   peerDependencies:
-    "@reapit-cdk/replicated-key": ^0.0.2
-    "@reapit-cdk/replicated-secret": ^0.0.4
+    "@reapit-cdk/replicated-key": ^0.0.0
+    "@reapit-cdk/replicated-secret": ^0.0.0
     aws-cdk-lib: ^2.96.2
     constructs: ^10.2.70
+  bin:
+    entra-id-application: node dist/setup
   languageName: unknown
   linkType: soft
 
@@ -3842,7 +3844,7 @@ __metadata:
     jsii-pacmak: "npm:^1.94.0"
     publib: "npm:^0.2.795"
   peerDependencies:
-    "@reapit-cdk/replicated-key": ^0.0.0
+    "@reapit-cdk/replicated-key": ^0.0.2
     aws-cdk-lib: ^2.96.2
     constructs: ^10.2.70
   languageName: unknown

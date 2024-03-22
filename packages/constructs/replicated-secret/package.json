@@ -1,6 +1,6 @@
 {
   "name": "@reapit-cdk/replicated-secret",
-  "version": "0.0.0",
+  "version": "0.0.4",
   "description": "Creates a Secret and replicates it across the given regions. Requires a [ReplicatedKey](../replicated-key/readme.md) be passed in.",
   "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/replicated-secret",
   "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/replicated-secret/readme.md",
@@ -36,7 +36,7 @@
     "awscdk"
   ],
   "peerDependencies": {
-    "@reapit-cdk/replicated-key": "^0.0.0",
+    "@reapit-cdk/replicated-key": "^0.0.2",
     "aws-cdk-lib": "^2.96.2",
     "constructs": "^10.2.70"
   },

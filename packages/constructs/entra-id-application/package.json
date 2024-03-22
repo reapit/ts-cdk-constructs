@@ -1,6 +1,6 @@
 {
   "name": "@reapit-cdk/entra-id-application",
-  "version": "0.0.0",
+  "version": "0.0.4",
   "description": "This construct creates and manages a Microsoft Entra ID Application",
   "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/entra-id-application",
   "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/entra-id-application/readme.md",

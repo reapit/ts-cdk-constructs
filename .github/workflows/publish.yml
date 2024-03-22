@@ -41,10 +41,6 @@ jobs:
         run: |
           yarn workspace ${{ steps.tagName.outputs.package }} run test
 
-      - name: Set Version
-        run: |
-          yarn workspace ${{ steps.tagName.outputs.package }} version ${{ steps.tagName.outputs.version }}
-
       - name: Authenticate with NPM
         run: |
           yarn config set npmAuthToken ${{ secrets.CDK_NPM_TOKEN }}

@@ -1,7 +1,7 @@
 {
   "name": "@reapit-cdk/userpool-domain",
   "description": "This construct returns the given Cognito UserPool's UserPoolDomain, or creates one. This resolves an issue with [AWS::Cognito::UserPoolDomain](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-cognito-userpooldomain.html), since that will fail if one already exists.",
-  "version": "0.0.0",
+  "version": "0.0.11",
   "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/userpool-domain",
   "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/userpool-domain/readme.md",
   "bugs": {
