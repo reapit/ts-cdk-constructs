@@ -214,7 +214,7 @@ export interface EdgeAPIProps {
   readonly devMode?: boolean
   readonly domains: string[]
   readonly certificate: ICertificate
-  readonly defaultEndpoint: IBaseEndpoint
+  readonly defaultEndpoint: Endpoint
   readonly webAclId?: string
   readonly defaultResponseHeaderOverrides?: ResponseHeaderOverrides
 }

@@ -46,10 +46,10 @@ export class DevEdgeAPI extends Construct {
       },
     })
 
-    this.addEndpoint({
-      ...props.defaultEndpoint,
-      pathPattern: '/*',
-    } as Endpoint)
+    if (props.defaultEndpoint.pathPattern !== '/*') {
+      throw new Error('defaultEndpoint pathPattern is not "/*"')
+    }
+    this.addEndpoint(props.defaultEndpoint)
   }
 
   private generateParameterMapping(
@@ -129,8 +129,7 @@ export class DevEdgeAPI extends Construct {
           methods,
         })
       }
-    }
-    if (endpointIsLambdaEndpoint(endpoint)) {
+    } else if (endpointIsLambdaEndpoint(endpoint)) {
       const { pathPattern, lambdaFunction } = endpoint
       const methods = endpoint.methods ?? [HttpMethod.ANY]
       this.api.addRoutes({
@@ -140,8 +139,7 @@ export class DevEdgeAPI extends Construct {
         }),
         methods,
       })
-    }
-    if (endpointIsFrontendEndpoint(endpoint)) {
+    } else if (endpointIsFrontendEndpoint(endpoint)) {
       const { pathPattern, bucket } = endpoint
       const integration = new HttpLambdaIntegration(pathPattern + '-integration', this.getRedirector(), {
         parameterMapping: this.generateParameterMapping({ destination: bucket.bucketWebsiteUrl }),
@@ -164,8 +162,7 @@ export class DevEdgeAPI extends Construct {
         ),
         methods: [HttpMethod.GET],
       })
-    }
-    if (endpointIsRedirectionEndpoint(endpoint)) {
+    } else if (endpointIsRedirectionEndpoint(endpoint)) {
       const { pathPattern, destination } = endpoint
       const integration = new HttpLambdaIntegration(pathPattern + '-integration', this.getRedirector(), {
         parameterMapping: this.generateParameterMapping({ destination: this.pickDestination(destination) }),
@@ -183,6 +180,8 @@ export class DevEdgeAPI extends Construct {
           methods: [HttpMethod.GET],
         })
       }
+    } else {
+      throw new Error('unhandled endpoint type: ' + typeof endpoint + ' - ' + JSON.stringify(endpoint))
     }
   }
 }

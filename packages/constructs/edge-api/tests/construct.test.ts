@@ -1,13 +1,19 @@
 import { Template } from 'aws-cdk-lib/assertions'
 import * as cdk from 'aws-cdk-lib'
-import { EdgeAPI } from '../src'
+import {
+  EdgeAPI,
+  EdgeAPIProps,
+  FrontendEndpoint,
+  HttpMethod,
+  LambdaEndpoint,
+  RedirectionEndpoint,
+  ProxyEndpoint,
+  EdgeAPILambda,
+} from '../src'
 import { Certificate } from 'aws-cdk-lib/aws-certificatemanager'
-import { EdgeAPIProps, FrontendEndpoint, HttpMethod, LambdaEndpoint } from '../src/types'
 import { Bucket } from 'aws-cdk-lib/aws-s3'
-import { EdgeAPILambda } from '../src/edge-api-lambda'
 import { Code, Runtime } from 'aws-cdk-lib/aws-lambda'
 import { CloudFrontRequest, CloudFrontRequestEvent } from 'aws-lambda'
-import { ProxyEndpoint } from '../dist'
 
 const testGeneratedLambda = async (code: string, req: CloudFrontRequestEvent): Promise<CloudFrontRequest> => {
   const handler = eval(`${code} handler`)
@@ -27,9 +33,10 @@ const synth = (region: string = 'us-east-1', props: Partial<EdgeAPIProps> = {}) 
   const api = new EdgeAPI(stack, 'api', {
     certificate,
     domains: ['example.org'],
-    defaultEndpoint: {
+    defaultEndpoint: new ProxyEndpoint({
       destination: 'example.com',
-    },
+      pathPattern: '/*',
+    }),
     ...props,
   })
   const template = () => Template.fromStack(stack)
@@ -61,9 +68,10 @@ describe('edge-api', () => {
           new EdgeAPI(stack, 'api', {
             certificate,
             domains: ['example.org'],
-            defaultEndpoint: {
+            defaultEndpoint: new ProxyEndpoint({
               destination: 'example.com',
-            },
+              pathPattern: '/*',
+            }),
           }),
       ).toThrowError('stack region must be explicitly specified')
     })
@@ -82,9 +90,10 @@ describe('edge-api', () => {
           new EdgeAPI(stack, 'api', {
             certificate,
             domains: ['example.org'],
-            defaultEndpoint: {
+            defaultEndpoint: new ProxyEndpoint({
               destination: 'example.com',
-            },
+              pathPattern: '/*',
+            }),
           }),
       ).toThrowError('deploying non-devMode EdgeAPI to a region other than us-east-1 is not yet supported, sorry')
     })
@@ -600,26 +609,28 @@ describe('edge-api', () => {
           idpProviderName: 'b',
         },
       }
-      api.addEndpoint({
-        pathPattern: '/google',
-        destination,
-        customMiddlewares: [
-          // @ts-expect-error
-          (req, mapping) => {
-            if (req.uri === '/authorize' || req.uri === '/login') {
-              if (typeof mapping !== 'string') {
-                const ip = `identity_provider=${mapping.idpProviderName}`
-                if (req.querystring.length) {
-                  req.querystring = `${ip}&${req.querystring}`
-                } else {
-                  req.querystring = ip
+      api.addEndpoint(
+        new ProxyEndpoint({
+          pathPattern: '/google',
+          destination,
+          customMiddlewares: [
+            // @ts-expect-error
+            (req, mapping) => {
+              if (req.uri === '/authorize' || req.uri === '/login') {
+                if (typeof mapping !== 'string') {
+                  const ip = `identity_provider=${mapping.idpProviderName}`
+                  if (req.querystring.length) {
+                    req.querystring = `${ip}&${req.querystring}`
+                  } else {
+                    req.querystring = ip
+                  }
                 }
+                req.uri = '/oauth2/authorize'
               }
-              req.uri = '/oauth2/authorize'
-            }
-          },
-        ],
-      })
+            },
+          ],
+        }),
+      )
       const result = template()
       result.hasResourceProperties('AWS::CloudFront::Distribution', {
         DistributionConfig: {
@@ -706,11 +717,13 @@ describe('edge-api', () => {
 
     test('add a redirection endpoint', () => {
       const { api, template } = synth('us-east-1', {})
-      api.addEndpoint({
-        pathPattern: '/redirect-me',
-        destination: 'google.com',
-        redirect: true,
-      })
+      api.addEndpoint(
+        new RedirectionEndpoint({
+          pathPattern: '/redirect-me',
+          destination: 'google.com',
+          redirect: true,
+        }),
+      )
 
       const result = template()
       result.hasResourceProperties('AWS::CloudFront::Distribution', {
@@ -916,10 +929,11 @@ describe('edge-api', () => {
     test('add a redirection endpoint - root', () => {
       const { template } = synth('us-east-1', {
         devMode: true,
-        defaultEndpoint: {
+        defaultEndpoint: new RedirectionEndpoint({
           redirect: true,
           destination: 'google.com',
-        },
+          pathPattern: '/*',
+        }),
       })
       const result = template()
       result.hasResourceProperties('AWS::ApiGatewayV2::Route', {
@@ -1058,11 +1072,13 @@ describe('edge-api', () => {
     })
     test('add a redirect endpoint', () => {
       const { api, template } = synth('us-east-1', { devMode: true })
-      api.addEndpoint({
-        pathPattern: '/redirect-me',
-        destination: 'google.com',
-        redirect: true,
-      })
+      api.addEndpoint(
+        new RedirectionEndpoint({
+          pathPattern: '/redirect-me',
+          destination: 'google.com',
+          redirect: true,
+        }),
+      )
       const result = template()
       result.hasResourceProperties('AWS::ApiGatewayV2::Route', {
         ApiId: {
