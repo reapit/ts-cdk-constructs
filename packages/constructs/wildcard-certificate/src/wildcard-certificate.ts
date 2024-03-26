@@ -49,10 +49,11 @@ export class WildcardCertificate extends Construct {
     const cr = new CustomResource(this, 'resource', {
       serviceToken: provider.serviceToken,
       properties: {
-        domainMappings: domains.map(({ domainName, roleArn, hostedZoneArn }) => ({
+        domainMappings: domains.map(({ domainName, roleArn, hostedZoneArn, includeParent }) => ({
           parentDomainName: domainName,
           hostedZoneId: Arn.extractResourceName(hostedZoneArn, 'hostedzone'),
           roleArn,
+          includeParent,
         })),
       },
     })
