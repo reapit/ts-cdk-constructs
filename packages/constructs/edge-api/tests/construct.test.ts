@@ -9,6 +9,7 @@ import {
   RedirectionEndpoint,
   ProxyEndpoint,
   EdgeAPILambda,
+  RequestMiddleware,
 } from '../src'
 import { Certificate } from 'aws-cdk-lib/aws-certificatemanager'
 import { Bucket } from 'aws-cdk-lib/aws-s3'
@@ -614,20 +615,22 @@ describe('edge-api', () => {
           pathPattern: '/google',
           destination,
           customMiddlewares: [
-            // @ts-expect-error
-            (req, mapping) => {
-              if (req.uri === '/authorize' || req.uri === '/login') {
-                if (typeof mapping !== 'string') {
-                  const ip = `identity_provider=${mapping.idpProviderName}`
-                  if (req.querystring.length) {
-                    req.querystring = `${ip}&${req.querystring}`
-                  } else {
-                    req.querystring = ip
+            new RequestMiddleware(
+              // @ts-expect-error
+              (req, mapping) => {
+                if (req.uri === '/authorize' || req.uri === '/login') {
+                  if (typeof mapping !== 'string') {
+                    const ip = `identity_provider=${mapping.idpProviderName}`
+                    if (req.querystring.length) {
+                      req.querystring = `${ip}&${req.querystring}`
+                    } else {
+                      req.querystring = ip
+                    }
                   }
+                  req.uri = '/oauth2/authorize'
                 }
-                req.uri = '/oauth2/authorize'
-              }
-            },
+              },
+            ),
           ],
         }),
       )
@@ -663,12 +666,13 @@ describe('edge-api', () => {
         },
       })
       const lambdas = result.findResources('AWS::Lambda::Function')
-      const code = Object.values(lambdas)
+      const codes = Object.values(lambdas)
         .filter((lambda) => {
           return !!lambda.Properties.Code.ZipFile
         })
         .map((lambda) => lambda.Properties.Code.ZipFile)
-        .find((code) => code.includes('identity_provider=${mapping.idpProviderName}'))
+
+      const code = codes.find((code) => code.includes('identity_provider=${mapping.idpProviderName}'))
 
       const lambdaResult = await testGeneratedLambda(code, {
         Records: [
