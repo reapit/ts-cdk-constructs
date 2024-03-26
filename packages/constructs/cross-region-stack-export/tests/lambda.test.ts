@@ -13,6 +13,7 @@ describe('remote-parameters', () => {
     stsMock.reset()
   })
 
+
   it('should fetch me the given parameters', async () => {
     ssmMock
       .on(GetParametersByPathCommand)
