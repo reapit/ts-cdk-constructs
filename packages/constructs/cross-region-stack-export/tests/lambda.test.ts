@@ -59,14 +59,13 @@ describe('remote-parameters', () => {
   })
 
   it('should fetch me the given parameters assuming the given role', async () => {
-    const creds = {
-      AccessKeyId: 'key-id',
-      SecretAccessKey: 'secret',
-      Expiration: new Date(),
-      SessionToken: 'token',
-    }
     stsMock.on(AssumeRoleCommand).resolves({
-      Credentials: creds,
+      Credentials: {
+        AccessKeyId: 'key-id',
+        SecretAccessKey: 'secret',
+        Expiration: new Date(),
+        SessionToken: 'token',
+      },
     })
     ssmMock
       .on(GetParametersByPathCommand)
