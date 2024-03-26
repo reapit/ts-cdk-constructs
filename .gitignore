@@ -137,6 +137,7 @@ cdk-integ.out.*
 ## jsii
 packages/constructs/**/*.d.ts
 packages/constructs/**/*/*.js
+!packages/constructs/**/*/.eslintrc.js
 packages/constructs/**/tests/*.js
 packages/constructs/**/usage.js
 packages/constructs/**/tsconfig.jsii.json
