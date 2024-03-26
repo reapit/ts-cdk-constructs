@@ -764,23 +764,7 @@ describe('edge-api', () => {
         },
         IntegrationMethod: 'ANY',
         IntegrationType: 'HTTP_PROXY',
-        IntegrationUri: {
-          'Fn::Join': [
-            '',
-            [
-              'https://',
-              {
-                'Fn::Join': [
-                  '',
-                  {
-                    'Fn::Split': ['https://', 'example.com'],
-                  },
-                ],
-              },
-              '/{proxy}',
-            ],
-          ],
-        },
+        IntegrationUri: 'https://example.com/{proxy}',
       })
       result.hasResourceProperties('AWS::ApiGatewayV2::DomainName', {
         DomainName: 'example.org',
@@ -1054,23 +1038,7 @@ describe('edge-api', () => {
         },
         IntegrationMethod: 'ANY',
         IntegrationType: 'HTTP_PROXY',
-        IntegrationUri: {
-          'Fn::Join': [
-            '',
-            [
-              'https://',
-              {
-                'Fn::Join': [
-                  '',
-                  {
-                    'Fn::Split': ['https://', 'google.com'],
-                  },
-                ],
-              },
-              '/google',
-            ],
-          ],
-        },
+        IntegrationUri: 'https://google.com/google',
         PayloadFormatVersion: '1.0',
       })
     })

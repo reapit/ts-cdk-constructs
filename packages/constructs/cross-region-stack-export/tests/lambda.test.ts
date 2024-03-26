@@ -61,7 +61,6 @@ describe('remote-parameters', () => {
     }
 
     expect(ssmMock).toHaveReceivedCommand(GetParametersByPathCommand)
-
     expect(res.Data['something']).toBe('else')
     expect(res.Data['another']).toBe('thing')
   })

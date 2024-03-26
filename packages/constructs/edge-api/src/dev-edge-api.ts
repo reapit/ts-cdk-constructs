@@ -12,7 +12,7 @@ import { DomainName, HttpApi, HttpMethod, ParameterMapping } from '@aws-cdk/aws-
 import { HttpLambdaIntegration, HttpUrlIntegration } from '@aws-cdk/aws-apigatewayv2-integrations-alpha'
 import { RecordTarget } from 'aws-cdk-lib/aws-route53'
 import { ApiGatewayv2DomainProperties } from 'aws-cdk-lib/aws-route53-targets'
-import { Fn } from 'aws-cdk-lib'
+import { Fn, Token } from 'aws-cdk-lib'
 import { Code, Function, Runtime } from 'aws-cdk-lib/aws-lambda'
 import * as path from 'path'
 
@@ -75,9 +75,16 @@ export class DevEdgeAPI extends Construct {
     return Fn.join(replace, Fn.split(find, str))
   }
 
+  private ensureNoProtocol(url: string) {
+    if (Token.isUnresolved(url)) {
+      return this.replaceStr(this.replaceStr(url, 'http://', ''), 'https://', '')
+    }
+    return url.replace('http://', '').replace('https://', '')
+  }
+
   private ensureHTTPS(url: string, insecure?: boolean) {
     const protocol = insecure ? 'http' : 'https'
-    return `${protocol}://${this.replaceStr(this.replaceStr(url, 'http://', ''), 'https://', '')}`
+    return `${protocol}://${this.ensureNoProtocol(url)}`
   }
 
   private pickDestination(destination: Destination): string {
@@ -116,6 +123,11 @@ export class DevEdgeAPI extends Construct {
         integration: new HttpUrlIntegration(
           'proxy-integration',
           this.ensureHTTPS(this.pickDestination(endpoint.destination), endpoint.insecure) + destPath,
+          {
+            parameterMapping: new ParameterMapping().overwriteHeader('host', {
+              value: this.ensureNoProtocol(this.pickDestination(endpoint.destination)),
+            }),
+          },
         ),
         methods,
       })
@@ -125,6 +137,11 @@ export class DevEdgeAPI extends Construct {
           integration: new HttpUrlIntegration(
             'proxy-integration',
             this.ensureHTTPS(this.pickDestination(endpoint.destination), endpoint.insecure) + destPath + '/{proxy}',
+            {
+              parameterMapping: new ParameterMapping().overwriteHeader('host', {
+                value: this.ensureNoProtocol(this.pickDestination(endpoint.destination)),
+              }),
+            },
           ),
           methods,
         })

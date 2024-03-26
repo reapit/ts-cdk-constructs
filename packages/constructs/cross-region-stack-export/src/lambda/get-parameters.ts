@@ -51,7 +51,7 @@ const getPaginatedParams = async (ssmClient: SSMClient, path: string): Promise<P
       Path: path,
       Recursive: true,
       WithDecryption: true,
-      MaxResults: 100,
+      MaxResults: 10,
     },
   )
   const results = []
