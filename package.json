@@ -10,7 +10,7 @@
     "test": "jest --passWithNoTests --ignoreProjects 'integration tests' --coverage",
     "check": "tsc --noEmit",
     "build": "yarn workspaces foreach --all -v run build",
-    "lint": "cat /home/runner/work/ts-cdk-constructs/ts-cdk-constructs/packages/constructs/cross-region-stack-export/tests/lambda.test.ts && yarn workspaces foreach --all -v run lint",
+    "lint": "yarn workspaces foreach --all -v run lint",
     "integ": "jest --passWithNoTests --ignoreProjects 'unit tests' --silent false",
     "root:test": "jest --passWithNoTests --ignoreProjects 'integration tests'",
     "root:integ": "jest --passWithNoTests --ignoreProjects 'unit tests' --silent false",
