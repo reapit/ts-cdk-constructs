@@ -15,7 +15,7 @@
   "scripts": {
     "test": "jest --passWithNoTests --ignoreProjects 'integration tests' --coverage",
     "check": "tsc --noEmit",
-    "build": "yarn workspaces foreach --all -v run build",
+    "build": "yarn workspace @reapit-cdk/replicated-secret build && yarn workspace @reapit-cdk/replicated-key build && yarn workspaces foreach --all -v run build",
     "lint": "yarn workspaces foreach --all -v run lint",
     "integ": "jest --passWithNoTests --ignoreProjects 'unit tests' --silent false",
     "root:test": "jest --passWithNoTests --ignoreProjects 'integration tests'",
