@@ -4,6 +4,12 @@
   "packageManager": "yarn@4.0.0",
   "private": true,
   "workspaces": [
+    "packages/constructs/replicated-secret",
+    "packages/constructs/replicated-key",
+    "packages/constructs/active-ruleset",
+    "packages/constructs/cloudfront-invalidation",
+    "packages/constructs/edge-api",
+    "packages/constructs/entra-id-application",
     "packages/*/*"
   ],
   "scripts": {
