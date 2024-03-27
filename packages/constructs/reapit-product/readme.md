@@ -36,6 +36,12 @@ const productProvider = new ReapitProductProvider(stack, 'product-provider', {
 
 const product = productProvider.createProduct(stack, 'product', {
   name: 'a product name',
+  callbackUrls: [],
+  grant: 'authorizationCode',
+  isInternalApp: true,
+  requiresUserAdmin: false,
+  scopes: [],
+  signoutUrls: [],
 })
 
 new CfnOutput(stack, 'client-id', {
