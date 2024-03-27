@@ -357,11 +357,13 @@ var onEvent = customResourceWrapper({
     if (objectHasChanged(oldProps, props)) {
       return handler(props);
     }
+    return;
   },
   onDelete: async ({ physicalResourceId }) => {
     if (physicalResourceId) {
       await deleteIfUnused(physicalResourceId);
     }
+    return;
   }
 });
 // Annotate the CommonJS export names for ESM import in node:
