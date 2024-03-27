@@ -25,7 +25,7 @@
                         "path": "certificate-test-stack/certificate/lambda/ServiceRole/ImportServiceRole",
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.Resource",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       },
                       "Resource": {
@@ -64,7 +64,7 @@
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_iam.CfnRole",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       },
                       "DefaultPolicy": {
@@ -106,19 +106,19 @@
                             },
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           }
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_iam.Policy",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       }
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_iam.Role",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   },
                   "Code": {
@@ -130,7 +130,7 @@
                         "path": "certificate-test-stack/certificate/lambda/Code/Stage",
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.AssetStaging",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       },
                       "AssetBucket": {
@@ -138,13 +138,13 @@
                         "path": "certificate-test-stack/certificate/lambda/Code/AssetBucket",
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_s3.BucketBase",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       }
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   },
                   "Resource": {
@@ -155,7 +155,7 @@
                       "aws:cdk:cloudformation:props": {
                         "code": {
                           "s3Bucket": "cdk-hnb659fds-assets-028446965111-eu-central-1",
-                          "s3Key": "f6a104f46b7b566cc64118cb9b2f7d470d5e5422c6a982355956e3f5396eafb1.zip"
+                          "s3Key": "501ad497dad0b7e72a16cd3b93ce7e17687eb484d1e641f841ff639595f955a4.zip"
                         },
                         "handler": "lambda.onEvent",
                         "role": {
@@ -170,13 +170,13 @@
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   }
                 },
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.aws_lambda.Function",
-                  "version": "2.99.1"
+                  "version": "2.96.2"
                 }
               },
               "provider": {
@@ -196,7 +196,7 @@
                             "path": "certificate-test-stack/certificate/provider/framework-onEvent/ServiceRole/ImportServiceRole",
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.Resource",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           },
                           "Resource": {
@@ -235,7 +235,7 @@
                             },
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.aws_iam.CfnRole",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           },
                           "DefaultPolicy": {
@@ -289,19 +289,19 @@
                                 },
                                 "constructInfo": {
                                   "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
-                                  "version": "2.99.1"
+                                  "version": "2.96.2"
                                 }
                               }
                             },
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.aws_iam.Policy",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           }
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_iam.Role",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       },
                       "Code": {
@@ -313,7 +313,7 @@
                             "path": "certificate-test-stack/certificate/provider/framework-onEvent/Code/Stage",
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.AssetStaging",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           },
                           "AssetBucket": {
@@ -321,13 +321,13 @@
                             "path": "certificate-test-stack/certificate/provider/framework-onEvent/Code/AssetBucket",
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.aws_s3.BucketBase",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           }
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       },
                       "Resource": {
@@ -364,19 +364,19 @@
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       }
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_lambda.Function",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   }
                 },
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.custom_resources.Provider",
-                  "version": "2.99.1"
+                  "version": "2.96.2"
                 }
               },
               "resource": {
@@ -388,13 +388,13 @@
                     "path": "certificate-test-stack/certificate/resource/Default",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.CfnResource",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   }
                 },
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.CustomResource",
-                  "version": "2.99.1"
+                  "version": "2.96.2"
                 }
               },
               "wildcard-cert": {
@@ -402,13 +402,13 @@
                 "path": "certificate-test-stack/certificate/wildcard-cert",
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.Resource",
-                  "version": "2.99.1"
+                  "version": "2.96.2"
                 }
               }
             },
             "constructInfo": {
-              "fqn": "constructs.Construct",
-              "version": "10.2.70"
+              "fqn": "@reapit-cdk/wildcard-certificate.WildcardCertificate",
+              "version": "0.0.4"
             }
           },
           "output": {
@@ -416,7 +416,7 @@
             "path": "certificate-test-stack/output",
             "constructInfo": {
               "fqn": "aws-cdk-lib.CfnOutput",
-              "version": "2.99.1"
+              "version": "2.96.2"
             }
           },
           "CDKMetadata": {
