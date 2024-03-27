@@ -51,7 +51,13 @@ const swaggerHtml = (urlPrefix: string) => `<!DOCTYPE html>
 
 export class EdgeAPISwaggerEndpoint extends Construct implements IFrontendEndpoint {
   bucket: Bucket
-  invalidationItems: string[]
+  invalidationItems?: string[] = [
+    '/index.html',
+    '/openapi.json',
+    '/swagger-ui-bundle.js',
+    '/swagger-ui-standalone-preset.js',
+    '/swagger-ui.css',
+  ]
   pathPattern: string
 
   constructor(scope: Construct, id: string, props: EdgeAPISwaggerEndpointProps) {
@@ -113,13 +119,5 @@ export class EdgeAPISwaggerEndpoint extends Construct implements IFrontendEndpoi
       destinationKeyPrefix,
       retainOnDelete: false,
     })
-
-    this.invalidationItems = [
-      '/index.html',
-      '/openapi.json',
-      '/swagger-ui-bundle.js',
-      '/swagger-ui-standalone-preset.js',
-      '/swagger-ui.css',
-    ]
   }
 }

@@ -36,7 +36,7 @@
     "awscdk"
   ],
   "peerDependencies": {
-    "@reapit-cdk/active-ruleset": "^0.0.0",
+    "@reapit-cdk/active-ruleset": "^0.0.3",
     "aws-cdk-lib": "^2.96.2",
     "constructs": "^10.2.70"
   },
