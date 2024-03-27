@@ -30,9 +30,10 @@ const api = new EdgeAPI(stack, 'api', {
   certificate,
   domains: ['example.org', 'example.com'],
   devMode: false, // optional, defaults to false
-  defaultEndpoint: {
+  defaultEndpoint: new ProxyEndpoint({
     destination: 'example.com',
-  },
+    pathPattern: '/*',
+  }),
 })
 
 const lambdaFunction = new EdgeAPILambda(stack, 'lambda', {

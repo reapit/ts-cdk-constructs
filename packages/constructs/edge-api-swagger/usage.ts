@@ -1,5 +1,5 @@
 import { Stack, App } from 'aws-cdk-lib'
-import { EdgeAPI, EdgeAPILambda, LambdaEndpoint } from '@reapit-cdk/edge-api'
+import { EdgeAPI, EdgeAPILambda, LambdaEndpoint, ProxyEndpoint } from '@reapit-cdk/edge-api'
 import { Code, Runtime } from 'aws-cdk-lib/aws-lambda'
 import { EdgeAPISwaggerEndpoint } from '@reapit-cdk/edge-api-swagger'
 import { Certificate } from 'aws-cdk-lib/aws-certificatemanager'
@@ -15,9 +15,10 @@ const api = new EdgeAPI(stack, 'api', {
   certificate,
   domains: ['example.org', 'example.com'],
   devMode: false,
-  defaultEndpoint: {
+  defaultEndpoint: new ProxyEndpoint({
     destination: 'example.com',
-  },
+    pathPattern: '/*',
+  }),
 })
 
 const lambdaFunction = new EdgeAPILambda(stack, 'lambda', {

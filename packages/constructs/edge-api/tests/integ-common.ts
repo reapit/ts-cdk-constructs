@@ -41,9 +41,10 @@ export const edgeAPITest = (devMode?: boolean) => {
       domainName,
       validation: CertificateValidation.fromDns(zone),
     }),
-    defaultEndpoint: {
+    defaultEndpoint: new ProxyEndpoint({
       destination: 'example.org',
-    },
+      pathPattern: '/*',
+    }),
     defaultResponseHeaderOverrides: {
       customHeadersBehavior: {
         customHeaders: [

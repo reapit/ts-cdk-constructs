@@ -51,7 +51,7 @@ const swaggerHtml = (urlPrefix: string) => `<!DOCTYPE html>
 
 export class EdgeAPISwaggerEndpoint extends Construct implements IFrontendEndpoint {
   bucket: Bucket
-  invalidationItems?: string[] = [
+  invalidationItems: string[] | undefined = [
     '/index.html',
     '/openapi.json',
     '/swagger-ui-bundle.js',
