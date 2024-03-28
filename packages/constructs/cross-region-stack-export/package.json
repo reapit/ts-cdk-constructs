@@ -1,6 +1,6 @@
 {
   "name": "@reapit-cdk/cross-region-stack-export",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "Allows you to share values between stack across regions and accounts.",
   "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/cross-region-stack-export",
   "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/cross-region-stack-export/readme.md",

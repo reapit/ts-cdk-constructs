@@ -1,6 +1,6 @@
 {
   "name": "@reapit-cdk/email-receiver",
-  "version": "0.0.7",
+  "version": "0.1.0",
   "description": "This construct sets up everything necessary to receive email. The emails get stored in a dynamodb table, queryable by recipient. This is designed to be used in end-to-end tests, with the [@reapit-cdk/email-receiver-client](../../libs/email-receiver-client) helper library.",
   "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/email-receiver",
   "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/email-receiver/readme.md",
@@ -36,7 +36,7 @@
     "awscdk"
   ],
   "peerDependencies": {
-    "@reapit-cdk/active-ruleset": "^0.0.3",
+    "@reapit-cdk/active-ruleset": "^0.1.0",
     "aws-cdk-lib": "^2.96.2",
     "constructs": "^10.2.70"
   },

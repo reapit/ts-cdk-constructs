@@ -1,6 +1,6 @@
 {
   "name": "@reapit-cdk/edge-api",
-  "version": "0.0.35",
+  "version": "0.1.0",
   "description": "This construct creates a truly globally available API where code executes at the edge. Because changes take a long time to propagate to all edge locations, there is a `devMode` flag which will instead deploy your API to a [HTTP API](https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api.html). This is compatible with hotswapping, so [`cdk watch`](https://docs.aws.amazon.com/cdk/v2/guide/cli.html#cli-deploy-watch) works very well. In order to make it easy to develop APIs which handle both event formats and work around the environment variable limitation, I recommend you use the lightweight request wrapper [@reapit-cdk/edge-api-sdk](../../modules/edge-api-sdk) which normalises the event format and offers some extra helpers.",
   "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/edge-api",
   "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/edge-api/readme.md",
@@ -44,7 +44,7 @@
     "@aws-cdk/aws-apigatewayv2-integrations-alpha": "2.96.2-alpha.0"
   },
   "peerDependencies": {
-    "@reapit-cdk/cloudfront-invalidation": "^0.0.1",
+    "@reapit-cdk/cloudfront-invalidation": "^0.1.0",
     "aws-cdk-lib": "^2.96.2",
     "constructs": "^10.2.70"
   },

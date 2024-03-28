@@ -1,6 +1,6 @@
 {
   "name": "@reapit-cdk/entra-id-application",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "This construct creates and manages a Microsoft Entra ID Application",
   "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/entra-id-application",
   "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/entra-id-application/readme.md",
@@ -38,8 +38,8 @@
     "awscdk"
   ],
   "peerDependencies": {
-    "@reapit-cdk/replicated-key": "^0.0.2",
-    "@reapit-cdk/replicated-secret": "^0.0.4",
+    "@reapit-cdk/replicated-key": "^0.1.0",
+    "@reapit-cdk/replicated-secret": "^0.1.0",
     "aws-cdk-lib": "^2.96.2",
     "constructs": "^10.2.70"
   },
