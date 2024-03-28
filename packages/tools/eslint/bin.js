@@ -16,7 +16,7 @@ async function lint() {
   const warnings = results.reduce((acc, result) => acc + result.warningCount, 0)
 
   if (problems > 0) {
-    console.log(`Found ${errors} errors, ${warnings} warnings`)
+    console.log(`Found ${errors} errors, and ${warnings} warnings`)
     const formatter = await eslint.loadFormatter()
     const output = await formatter.format(results)
     console.log(output)
