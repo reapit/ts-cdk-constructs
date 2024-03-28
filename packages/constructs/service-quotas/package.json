@@ -1,6 +1,6 @@
 {
   "name": "@reapit-cdk/service-quotas",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "This construct allows you to IaC your service quotas",
   "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/modules/service-quotas",
   "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/modules/service-quotas/readme.md",
@@ -16,22 +16,26 @@
     "url": "https://github.com/reapit/ts-cdk-constructs.git"
   },
   "scripts": {
-    "build": "reapit-cdk-tsup --lambda",
+    "build": "yarn jsii:build && reapit-cdk-tsup --lambda --no-main && yarn jsii:package",
     "check": "yarn run root:check -p $(pwd)",
-    "lint": "echo 'skipping'",
-    "test": "yarn run root:test  -- $(pwd)",
-    "prepack": "yarn build",
+    "lint": "reapit-cdk-eslint",
+    "test": "yarn run root:test -- $(pwd)",
     "integ": "yarn run root:integ -- $(pwd)",
-    "jsii:build": "rpt-cdk-jsii",
-    "jsii:publish": "rpt-cdk-jsii --publish",
+    "jsii:build": "jsii --generate-tsconfig tsconfig.jsii.json --fail-on-warnings",
+    "jsii:package": "jsii-pacmak",
+    "jsii:publish": "publib jsii-out",
     "gen-types": "ts-node src/generate-types.ts"
   },
-  "main": "src/index.ts",
-  "types": "src/index.ts",
   "publishConfig": {
     "main": "dist/index.js",
     "types": "dist/index.d.ts"
   },
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "stability": "stable",
+  "keywords": [
+    "awscdk"
+  ],
   "peerDependencies": {
     "aws-cdk-lib": "^2.96.2",
     "constructs": "^10.2.70"
@@ -40,14 +44,34 @@
     "@aws-sdk/client-service-quotas": "3.513.0",
     "@reapit-cdk/custom-resource-wrapper": "workspace:^",
     "@reapit-cdk/eslint-config": "workspace:^",
-    "@reapit-cdk/integration-tests": "workspace:^",
-    "@reapit-cdk/jsii": "workspace:^",
     "@reapit-cdk/tsup": "workspace:^",
-    "aws-cdk-lib": "^2.96.2",
+    "aws-cdk-lib": "2.96.2",
     "aws-lambda": "^1.0.7",
     "aws-sdk-client-mock": "^3.0.1",
-    "constructs": "^10.2.70",
+    "constructs": "10.2.70",
+    "jsii": "^5.3.20",
+    "jsii-pacmak": "^1.94.0",
+    "publib": "^0.2.795",
     "ts-node": "^10.9.2",
     "varname": "^6.0.0"
+  },
+  "jsii": {
+    "tsc": {
+      "outDir": "dist",
+      "rootDir": "src"
+    },
+    "versionFormat": "short",
+    "excludeTypescript": [
+      "tests",
+      "src/lambda",
+      "src/generate-types.ts"
+    ],
+    "outdir": "jsii-out",
+    "targets": {
+      "python": {
+        "distName": "reapit-cdk.service-quotas",
+        "module": "reapit_cdk.service_quotas"
+      }
+    }
   }
 }

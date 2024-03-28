@@ -1,10 +1,18 @@
 import { Template } from 'aws-cdk-lib/assertions'
 import * as cdk from 'aws-cdk-lib'
-import { EdgeAPI } from '../src'
+import {
+  EdgeAPI,
+  EdgeAPIProps,
+  FrontendEndpoint,
+  HttpMethod,
+  LambdaEndpoint,
+  RedirectionEndpoint,
+  ProxyEndpoint,
+  EdgeAPILambda,
+  RequestMiddleware,
+} from '../src'
 import { Certificate } from 'aws-cdk-lib/aws-certificatemanager'
-import { EdgeAPIProps, HttpMethod } from '../src/types'
 import { Bucket } from 'aws-cdk-lib/aws-s3'
-import { EdgeAPILambda } from '../src/edge-api-lambda'
 import { Code, Runtime } from 'aws-cdk-lib/aws-lambda'
 import { CloudFrontRequest, CloudFrontRequestEvent } from 'aws-lambda'
 
@@ -26,9 +34,10 @@ const synth = (region: string = 'us-east-1', props: Partial<EdgeAPIProps> = {}) 
   const api = new EdgeAPI(stack, 'api', {
     certificate,
     domains: ['example.org'],
-    defaultEndpoint: {
+    defaultEndpoint: new ProxyEndpoint({
       destination: 'example.com',
-    },
+      pathPattern: '/*',
+    }),
     ...props,
   })
   const template = () => Template.fromStack(stack)
@@ -60,9 +69,10 @@ describe('edge-api', () => {
           new EdgeAPI(stack, 'api', {
             certificate,
             domains: ['example.org'],
-            defaultEndpoint: {
+            defaultEndpoint: new ProxyEndpoint({
               destination: 'example.com',
-            },
+              pathPattern: '/*',
+            }),
           }),
       ).toThrowError('stack region must be explicitly specified')
     })
@@ -81,9 +91,10 @@ describe('edge-api', () => {
           new EdgeAPI(stack, 'api', {
             certificate,
             domains: ['example.org'],
-            defaultEndpoint: {
+            defaultEndpoint: new ProxyEndpoint({
               destination: 'example.com',
-            },
+              pathPattern: '/*',
+            }),
           }),
       ).toThrowError('deploying non-devMode EdgeAPI to a region other than us-east-1 is not yet supported, sorry')
     })
@@ -141,10 +152,12 @@ describe('edge-api', () => {
     })
     test('add a frontend endpoint', () => {
       const { api, stack, template } = synth('us-east-1', {})
-      api.addEndpoint({
-        pathPattern: '/frontend',
-        bucket: new Bucket(stack, 'bucket'),
-      })
+      api.addEndpoint(
+        new FrontendEndpoint({
+          pathPattern: '/frontend',
+          bucket: new Bucket(stack, 'bucket'),
+        }),
+      )
       const result = template()
       result.hasResourceProperties('AWS::CloudFront::Distribution', {
         DistributionConfig: {
@@ -201,17 +214,19 @@ describe('edge-api', () => {
     })
     test('add a lambda endpoint', () => {
       const { api, stack, template } = synth('us-east-1', {})
-      api.addEndpoint({
-        pathPattern: '/api/lambda',
-        lambda: new EdgeAPILambda(stack, 'lambda', {
-          code: Code.fromInline('export const handler = () => {}'),
-          handler: 'index.handler',
-          runtime: Runtime.NODEJS_18_X,
-          environment: {
-            aVariable: 'contents',
-          },
+      api.addEndpoint(
+        new LambdaEndpoint({
+          pathPattern: '/api/lambda',
+          lambdaFunction: new EdgeAPILambda(stack, 'lambda', {
+            code: Code.fromInline('export const handler = () => {}'),
+            handler: 'index.handler',
+            runtime: Runtime.NODEJS_18_X,
+            environment: {
+              aVariable: 'contents',
+            },
+          }),
         }),
-      })
+      )
 
       const result = template()
       result.hasResourceProperties('AWS::CloudFront::Distribution', {
@@ -266,18 +281,20 @@ describe('edge-api', () => {
     })
     test('add a lambda endpoint - GET only', () => {
       const { api, stack, template } = synth('us-east-1', {})
-      api.addEndpoint({
-        pathPattern: '/api/lambda',
-        methods: [HttpMethod.GET],
-        lambda: new EdgeAPILambda(stack, 'lambda', {
-          code: Code.fromInline('export const handler = () => {}'),
-          handler: 'index.handler',
-          runtime: Runtime.NODEJS_18_X,
-          environment: {
-            aVariable: 'contents',
-          },
+      api.addEndpoint(
+        new LambdaEndpoint({
+          pathPattern: '/api/lambda',
+          methods: [HttpMethod.GET],
+          lambdaFunction: new EdgeAPILambda(stack, 'lambda', {
+            code: Code.fromInline('export const handler = () => {}'),
+            handler: 'index.handler',
+            runtime: Runtime.NODEJS_18_X,
+            environment: {
+              aVariable: 'contents',
+            },
+          }),
         }),
-      })
+      )
 
       const result = template()
       result.hasResourceProperties('AWS::CloudFront::Distribution', {
@@ -292,18 +309,20 @@ describe('edge-api', () => {
     })
     test('add a lambda endpoint - GET, HEAD', () => {
       const { api, stack, template } = synth('us-east-1', {})
-      api.addEndpoint({
-        pathPattern: '/api/lambda',
-        methods: [HttpMethod.GET, HttpMethod.HEAD],
-        lambda: new EdgeAPILambda(stack, 'lambda', {
-          code: Code.fromInline('export const handler = () => {}'),
-          handler: 'index.handler',
-          runtime: Runtime.NODEJS_18_X,
-          environment: {
-            aVariable: 'contents',
-          },
+      api.addEndpoint(
+        new LambdaEndpoint({
+          pathPattern: '/api/lambda',
+          methods: [HttpMethod.GET, HttpMethod.HEAD],
+          lambdaFunction: new EdgeAPILambda(stack, 'lambda', {
+            code: Code.fromInline('export const handler = () => {}'),
+            handler: 'index.handler',
+            runtime: Runtime.NODEJS_18_X,
+            environment: {
+              aVariable: 'contents',
+            },
+          }),
         }),
-      })
+      )
 
       const result = template()
       result.hasResourceProperties('AWS::CloudFront::Distribution', {
@@ -319,18 +338,20 @@ describe('edge-api', () => {
 
     test('add a lambda endpoint - GET, HEAD, OPTIONS', () => {
       const { api, stack, template } = synth('us-east-1', {})
-      api.addEndpoint({
-        pathPattern: '/api/lambda',
-        methods: [HttpMethod.GET, HttpMethod.HEAD, HttpMethod.OPTIONS],
-        lambda: new EdgeAPILambda(stack, 'lambda', {
-          code: Code.fromInline('export const handler = () => {}'),
-          handler: 'index.handler',
-          runtime: Runtime.NODEJS_18_X,
-          environment: {
-            aVariable: 'contents',
-          },
+      api.addEndpoint(
+        new LambdaEndpoint({
+          pathPattern: '/api/lambda',
+          methods: [HttpMethod.GET, HttpMethod.HEAD, HttpMethod.OPTIONS],
+          lambdaFunction: new EdgeAPILambda(stack, 'lambda', {
+            code: Code.fromInline('export const handler = () => {}'),
+            handler: 'index.handler',
+            runtime: Runtime.NODEJS_18_X,
+            environment: {
+              aVariable: 'contents',
+            },
+          }),
         }),
-      })
+      )
 
       const result = template()
       result.hasResourceProperties('AWS::CloudFront::Distribution', {
@@ -346,18 +367,20 @@ describe('edge-api', () => {
 
     test('add a lambda endpoint - POST', () => {
       const { api, stack, template } = synth('us-east-1', {})
-      api.addEndpoint({
-        pathPattern: '/api/lambda',
-        methods: [HttpMethod.POST],
-        lambda: new EdgeAPILambda(stack, 'lambda', {
-          code: Code.fromInline('export const handler = () => {}'),
-          handler: 'index.handler',
-          runtime: Runtime.NODEJS_18_X,
-          environment: {
-            aVariable: 'contents',
-          },
+      api.addEndpoint(
+        new LambdaEndpoint({
+          pathPattern: '/api/lambda',
+          methods: [HttpMethod.POST],
+          lambdaFunction: new EdgeAPILambda(stack, 'lambda', {
+            code: Code.fromInline('export const handler = () => {}'),
+            handler: 'index.handler',
+            runtime: Runtime.NODEJS_18_X,
+            environment: {
+              aVariable: 'contents',
+            },
+          }),
         }),
-      })
+      )
 
       const result = template()
       result.hasResourceProperties('AWS::CloudFront::Distribution', {
@@ -372,19 +395,21 @@ describe('edge-api', () => {
     })
     test('add a lambda endpoint - static', () => {
       const { api, stack, template } = synth('us-east-1', {})
-      api.addEndpoint({
-        pathPattern: '/api/lambda',
-        methods: [HttpMethod.GET, HttpMethod.HEAD, HttpMethod.OPTIONS],
-        static: true,
-        lambda: new EdgeAPILambda(stack, 'lambda', {
-          code: Code.fromInline('export const handler = () => {}'),
-          handler: 'index.handler',
-          runtime: Runtime.NODEJS_18_X,
-          environment: {
-            aVariable: 'contents',
-          },
+      api.addEndpoint(
+        new LambdaEndpoint({
+          pathPattern: '/api/lambda',
+          methods: [HttpMethod.GET, HttpMethod.HEAD, HttpMethod.OPTIONS],
+          isStatic: true,
+          lambdaFunction: new EdgeAPILambda(stack, 'lambda', {
+            code: Code.fromInline('export const handler = () => {}'),
+            handler: 'index.handler',
+            runtime: Runtime.NODEJS_18_X,
+            environment: {
+              aVariable: 'contents',
+            },
+          }),
         }),
-      })
+      )
 
       const result = template()
       result.hasResourceProperties('AWS::CloudFront::Distribution', {
@@ -399,10 +424,12 @@ describe('edge-api', () => {
     })
     test('add a proxy endpoint', () => {
       const { api, template } = synth('us-east-1', {})
-      api.addEndpoint({
-        pathPattern: '/google',
-        destination: 'google.com',
-      })
+      api.addEndpoint(
+        new ProxyEndpoint({
+          pathPattern: '/google',
+          destination: 'google.com',
+        }),
+      )
       const result = template()
       const CacheBehaviors = [
         {
@@ -440,14 +467,16 @@ describe('edge-api', () => {
 
     test('add a proxy endpoint - disableBuiltInMiddlewares', () => {
       const { api, template } = synth('us-east-1', {})
-      api.addEndpoint({
-        pathPattern: '/google',
-        destination: 'google.com',
-        disableBuiltInMiddlewares: {
-          cookie: true,
-          redirect: true,
-        },
-      })
+      api.addEndpoint(
+        new ProxyEndpoint({
+          pathPattern: '/google',
+          destination: 'google.com',
+          disableBuiltInMiddlewares: {
+            cookie: true,
+            redirect: true,
+          },
+        }),
+      )
       const result = template()
       result.hasResourceProperties('AWS::CloudFront::Distribution', {
         DistributionConfig: {
@@ -477,10 +506,12 @@ describe('edge-api', () => {
         'example.org': 'google.com',
         'example.com.au': 'google.com.au',
       }
-      api.addEndpoint({
-        pathPattern: '/google',
-        destination,
-      })
+      api.addEndpoint(
+        new ProxyEndpoint({
+          pathPattern: '/google',
+          destination,
+        }),
+      )
       const result = template()
       result.hasResourceProperties('AWS::CloudFront::Distribution', {
         DistributionConfig: {
@@ -526,10 +557,12 @@ describe('edge-api', () => {
           destination: 'google.com.au',
         },
       }
-      api.addEndpoint({
-        pathPattern: '/google',
-        destination,
-      })
+      api.addEndpoint(
+        new ProxyEndpoint({
+          pathPattern: '/google',
+          destination,
+        }),
+      )
       const result = template()
       result.hasResourceProperties('AWS::CloudFront::Distribution', {
         DistributionConfig: {
@@ -577,26 +610,30 @@ describe('edge-api', () => {
           idpProviderName: 'b',
         },
       }
-      api.addEndpoint({
-        pathPattern: '/google',
-        destination,
-        customMiddlewares: [
-          // @ts-expect-error
-          (req, mapping) => {
-            if (req.uri === '/authorize' || req.uri === '/login') {
-              if (typeof mapping !== 'string') {
-                const ip = `identity_provider=${mapping.idpProviderName}`
-                if (req.querystring.length) {
-                  req.querystring = `${ip}&${req.querystring}`
-                } else {
-                  req.querystring = ip
+      api.addEndpoint(
+        new ProxyEndpoint({
+          pathPattern: '/google',
+          destination,
+          customMiddlewares: [
+            new RequestMiddleware(
+              // @ts-expect-error
+              (req, mapping) => {
+                if (req.uri === '/authorize' || req.uri === '/login') {
+                  if (typeof mapping !== 'string') {
+                    const ip = `identity_provider=${mapping.idpProviderName}`
+                    if (req.querystring.length) {
+                      req.querystring = `${ip}&${req.querystring}`
+                    } else {
+                      req.querystring = ip
+                    }
+                  }
+                  req.uri = '/oauth2/authorize'
                 }
-              }
-              req.uri = '/oauth2/authorize'
-            }
-          },
-        ],
-      })
+              },
+            ),
+          ],
+        }),
+      )
       const result = template()
       result.hasResourceProperties('AWS::CloudFront::Distribution', {
         DistributionConfig: {
@@ -629,12 +666,13 @@ describe('edge-api', () => {
         },
       })
       const lambdas = result.findResources('AWS::Lambda::Function')
-      const code = Object.values(lambdas)
+      const codes = Object.values(lambdas)
         .filter((lambda) => {
           return !!lambda.Properties.Code.ZipFile
         })
         .map((lambda) => lambda.Properties.Code.ZipFile)
-        .find((code) => code.includes('identity_provider=${mapping.idpProviderName}'))
+
+      const code = codes.find((code) => code.includes('identity_provider=${mapping.idpProviderName}'))
 
       const lambdaResult = await testGeneratedLambda(code, {
         Records: [
@@ -683,11 +721,13 @@ describe('edge-api', () => {
 
     test('add a redirection endpoint', () => {
       const { api, template } = synth('us-east-1', {})
-      api.addEndpoint({
-        pathPattern: '/redirect-me',
-        destination: 'google.com',
-        redirect: true,
-      })
+      api.addEndpoint(
+        new RedirectionEndpoint({
+          pathPattern: '/redirect-me',
+          destination: 'google.com',
+          redirect: true,
+        }),
+      )
 
       const result = template()
       result.hasResourceProperties('AWS::CloudFront::Distribution', {
@@ -767,10 +807,12 @@ describe('edge-api', () => {
     })
     test('add a frontend endpoint', () => {
       const { api, stack, template } = synth('us-east-1', { devMode: true })
-      api.addEndpoint({
-        pathPattern: '/frontend',
-        bucket: new Bucket(stack, 'bucket'),
-      })
+      api.addEndpoint(
+        new FrontendEndpoint({
+          pathPattern: '/frontend',
+          bucket: new Bucket(stack, 'bucket'),
+        }),
+      )
       const result = template()
       result.hasResourceProperties('AWS::ApiGatewayV2::Integration', {
         ApiId: {
@@ -875,10 +917,11 @@ describe('edge-api', () => {
     test('add a redirection endpoint - root', () => {
       const { template } = synth('us-east-1', {
         devMode: true,
-        defaultEndpoint: {
+        defaultEndpoint: new RedirectionEndpoint({
           redirect: true,
           destination: 'google.com',
-        },
+          pathPattern: '/*',
+        }),
       })
       const result = template()
       result.hasResourceProperties('AWS::ApiGatewayV2::Route', {
@@ -914,17 +957,19 @@ describe('edge-api', () => {
     })
     test('add a lambda endpoint', () => {
       const { api, stack, template } = synth('us-east-1', { devMode: true })
-      api.addEndpoint({
-        pathPattern: '/api/lambda',
-        lambda: new EdgeAPILambda(stack, 'lambda', {
-          code: Code.fromInline('export const handler = () => {}'),
-          handler: 'index.handler',
-          runtime: Runtime.NODEJS_18_X,
-          environment: {
-            aVariable: 'contents',
-          },
+      api.addEndpoint(
+        new LambdaEndpoint({
+          pathPattern: '/api/lambda',
+          lambdaFunction: new EdgeAPILambda(stack, 'lambda', {
+            code: Code.fromInline('export const handler = () => {}'),
+            handler: 'index.handler',
+            runtime: Runtime.NODEJS_18_X,
+            environment: {
+              aVariable: 'contents',
+            },
+          }),
         }),
-      })
+      )
       const result = template()
       result.hasResourceProperties('AWS::ApiGatewayV2::Route', {
         ApiId: {
@@ -962,10 +1007,12 @@ describe('edge-api', () => {
     })
     test('add a proxy endpoint', () => {
       const { api, template } = synth('us-east-1', { devMode: true })
-      api.addEndpoint({
-        pathPattern: '/google',
-        destination: 'google.com',
-      })
+      api.addEndpoint(
+        new ProxyEndpoint({
+          pathPattern: '/google',
+          destination: 'google.com',
+        }),
+      )
       const result = template()
       result.hasResourceProperties('AWS::ApiGatewayV2::Route', {
         ApiId: {
@@ -997,11 +1044,13 @@ describe('edge-api', () => {
     })
     test('add a redirect endpoint', () => {
       const { api, template } = synth('us-east-1', { devMode: true })
-      api.addEndpoint({
-        pathPattern: '/redirect-me',
-        destination: 'google.com',
-        redirect: true,
-      })
+      api.addEndpoint(
+        new RedirectionEndpoint({
+          pathPattern: '/redirect-me',
+          destination: 'google.com',
+          redirect: true,
+        }),
+      )
       const result = template()
       result.hasResourceProperties('AWS::ApiGatewayV2::Route', {
         ApiId: {

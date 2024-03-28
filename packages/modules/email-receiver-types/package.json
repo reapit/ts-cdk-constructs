@@ -13,6 +13,7 @@
     "url": "https://github.com/reapit/ts-cdk-constructs.git"
   },
   "scripts": {
+    "publish": "yarn npm publish",
     "lint": "reapit-cdk-eslint",
     "prepack": "reapit-version-package",
     "test": "echo 'skipping...'"

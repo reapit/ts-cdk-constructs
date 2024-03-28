@@ -41,25 +41,13 @@ jobs:
         run: |
           yarn workspace ${{ steps.tagName.outputs.package }} run test
 
-      - name: Set Version
-        run: |
-          yarn workspace ${{ steps.tagName.outputs.package }} version ${{ steps.tagName.outputs.version }}
-
-      # - name: JSII Build (if needed)
-      #   run: |
-      #     yarn workspace ${{ steps.tagName.outputs.package }} run jsii:build
-
       - name: Authenticate with NPM
         run: |
           yarn config set npmAuthToken ${{ secrets.CDK_NPM_TOKEN }}
 
-      - name: Publish to NPM
+      - name: Publish
+        env:
+          TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
         run: |
-          yarn workspace ${{ steps.tagName.outputs.package }} npm publish
-
-      # - name: Publish to PyPI (if needed)
-      #   env:
-      #     TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
-      #     TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-      #   run: |
-      #     yarn workspace ${{ steps.tagName.outputs.package }} run jsii:publish
+          yarn workspace ${{ steps.tagName.outputs.package }} run publish

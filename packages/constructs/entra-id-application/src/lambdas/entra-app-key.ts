@@ -1,7 +1,6 @@
 import { PasswordCredential, Application } from '@microsoft/microsoft-graph-types'
 import { client } from './entra-sdk-client'
-
-export type KeyInfo = Omit<Omit<PasswordCredential, 'customKeyIdentifier'>, 'secretText'>
+import { KeyInfo } from './types'
 
 export const getEntraAppKey = async (appId: string, keyId: string) => {
   const app: Application = await client.api(`/applications(appId='${appId}')`).get()

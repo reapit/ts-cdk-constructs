@@ -12,7 +12,14 @@ const stack = new Stack(app, 'stack-name', {
 
 // simple example
 const wildcardCertificate = new WildcardCertificate(stack, 'cert', {
-  domains: ['example.org', 'example.com'],
+  domains: [
+    {
+      domainName: 'example.org',
+    },
+    {
+      domainName: 'example.com',
+    },
+  ],
 })
 new CfnOutput(stack, 'wildcardCertificateArn', {
   value: wildcardCertificate.certificate.certificateArn,

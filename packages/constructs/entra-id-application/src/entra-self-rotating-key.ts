@@ -5,7 +5,7 @@ import { Code, Function, Runtime } from 'aws-cdk-lib/aws-lambda'
 import * as path from 'path'
 
 export interface EntraSelfRotatingKeyProps {
-  secret: ISecret
+  readonly secret: ISecret
 }
 
 export class EntraSelfRotatingKey extends Construct {

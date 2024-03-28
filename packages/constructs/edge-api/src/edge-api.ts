@@ -12,8 +12,11 @@ export class EdgeAPI extends Construct {
 
   route53Target: RecordTarget
 
+  /** @internal */
   _distribution?: Distribution
+  /** @internal */
   _httpApi?: HttpApi
+  /** @internal */
   _endpoints: Endpoint[]
 
   constructor(scope: Construct, id: string, props: EdgeAPIProps) {

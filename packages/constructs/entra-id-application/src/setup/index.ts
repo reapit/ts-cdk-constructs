@@ -1,3 +1,5 @@
+#!/bin/env node
+
 import { Command } from 'commander'
 import { randomUUID } from 'crypto'
 import { Duration } from 'aws-cdk-lib'

@@ -4,10 +4,16 @@ import { StringParameter } from 'aws-cdk-lib/aws-ssm'
 import { RemoteParameters } from './remote-parameters'
 import { Construct } from 'constructs'
 
-export class CrossRegionStackImport<ExportKey> extends Construct {
-  exporter: CrossRegionStackExport<ExportKey>
+export class CrossRegionStackImport extends Construct {
+  exporter: CrossRegionStackExport
   parameters: RemoteParameters
-  constructor(scope: Construct, id: string, fromExporter: CrossRegionStackExport<ExportKey>, roleArn: string, alwaysUpdate?: boolean) {
+  constructor(
+    scope: Construct,
+    id: string,
+    fromExporter: CrossRegionStackExport,
+    roleArn: string,
+    alwaysUpdate?: boolean,
+  ) {
     super(scope, id)
     this.exporter = fromExporter
 
@@ -21,12 +27,12 @@ export class CrossRegionStackImport<ExportKey> extends Construct {
     stack.addDependency(this.exporter.sourceStack)
   }
 
-  getValue(stackExport: ExportKey | string) {
+  getValue(stackExport: string) {
     return this.parameters.get(this.exporter.getParameterName(stackExport))
   }
 }
 
-export class CrossRegionStackExport<ExportKey> extends Construct {
+export class CrossRegionStackExport extends Construct {
   parameterPath: string
   sourceStack: Stack
 
@@ -43,12 +49,12 @@ export class CrossRegionStackExport<ExportKey> extends Construct {
     this.parameterPath = `/${stack.account}/${stack.region}/${stack.stackName}/exports`
   }
 
-  getParameterName(stackExport: ExportKey | string) {
+  getParameterName(stackExport: string) {
     return `${this.parameterPath}/${stackExport}`
   }
 
-  setValue(id: ExportKey | string, value: string) {
-    new StringParameter(this, id as string, {
+  setValue(id: string, value: string) {
+    new StringParameter(this, id, {
       parameterName: this.getParameterName(id),
       stringValue: value,
     })
@@ -69,8 +75,8 @@ export class CrossRegionStackExport<ExportKey> extends Construct {
 
   getImporter(scope: Construct, id: string, alwaysUpdate?: boolean) {
     const { account } = Stack.of(scope)
-    
+
     const cdkReadOnlyRole = this.getReadOnlyRole(account)
-    return new CrossRegionStackImport<ExportKey>(scope, id, this, cdkReadOnlyRole.roleArn, alwaysUpdate)
+    return new CrossRegionStackImport(scope, id, this, cdkReadOnlyRole.roleArn, alwaysUpdate)
   }
 }

@@ -4,12 +4,18 @@
   "packageManager": "yarn@4.0.0",
   "private": true,
   "workspaces": [
+    "packages/constructs/replicated-key",
+    "packages/constructs/replicated-secret",
+    "packages/constructs/active-ruleset",
+    "packages/constructs/cloudfront-invalidation",
+    "packages/constructs/edge-api",
+    "packages/constructs/entra-id-application",
     "packages/*/*"
   ],
   "scripts": {
     "test": "jest --passWithNoTests --ignoreProjects 'integration tests' --coverage",
     "check": "tsc --noEmit",
-    "build": "yarn workspaces foreach --all -v run build",
+    "build": "yarn workspace @reapit-cdk/replicated-key build && yarn workspace @reapit-cdk/replicated-secret build && yarn workspaces foreach --all -v run build",
     "lint": "yarn workspaces foreach --all -v run lint",
     "integ": "jest --passWithNoTests --ignoreProjects 'unit tests' --silent false",
     "root:test": "jest --passWithNoTests --ignoreProjects 'integration tests'",

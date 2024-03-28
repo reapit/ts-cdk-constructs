@@ -10,6 +10,7 @@
   "license": "MIT",
   "main": "src/index.ts",
   "scripts": {
+    "publish": "yarn npm publish",
     "postinstall": "yarn build",
     "build": "reapit-cdk-tsup src/jest-environment.ts"
   },

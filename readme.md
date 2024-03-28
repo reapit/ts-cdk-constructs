@@ -1,5 +1,5 @@
 # @reapit-cdk/ts-constructs
-![coverage: 92.33%25](https://img.shields.io/badge/coverage-92.33%25-green)
+![coverage: 92.11%25](https://img.shields.io/badge/coverage-92.11%25-green)
 CDK Constructs Monorepo
 ## Constructs
 
@@ -35,7 +35,7 @@ Allows you to share values between stack across regions and accounts.
 
 ![npm version](https://img.shields.io/npm/v/@reapit-cdk/edge-api)
 ![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/edge-api)
-![coverage: 95.41%25](https://img.shields.io/badge/coverage-95.41%25-green)
+![coverage: 95.09%25](https://img.shields.io/badge/coverage-95.09%25-green)
 ![Integ Tests: ✔](https://img.shields.io/badge/Integ%20Tests-%E2%9C%94-green)
 
 This construct creates a truly globally available API where code executes at the edge. Because changes take a long time to propagate to all edge locations, there is a `devMode` flag which will instead deploy your API to a [HTTP API](https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api.html). This is compatible with hotswapping, so [`cdk watch`](https://docs.aws.amazon.com/cdk/v2/guide/cli.html#cli-deploy-watch) works very well. In order to make it easy to develop APIs which handle both event formats and work around the environment variable limitation, I recommend you use the lightweight request wrapper [@reapit-cdk/edge-api-sdk](../../modules/edge-api-sdk) which normalises the event format and offers some extra helpers.
@@ -107,7 +107,7 @@ This construct returns the given Cognito UserPool's UserPoolDomain, or creates o
 
 ![npm version](https://img.shields.io/npm/v/@reapit-cdk/wildcard-certificate)
 ![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/wildcard-certificate)
-![coverage: 97.89%25](https://img.shields.io/badge/coverage-97.89%25-green)
+![coverage: 96.75%25](https://img.shields.io/badge/coverage-96.75%25-green)
 ![Integ Tests: ✔](https://img.shields.io/badge/Integ%20Tests-%E2%9C%94-green)
 
 This construct returns a wildcard certificate valid for subdomains of the given domain names, creating and validating on if it doesn't exist. It supports cross-account DNS validation, you can pass in arns of roles from other accounts and it'll assume them whilst doing the Route53 updates.
@@ -180,13 +180,6 @@ Generates package readmes.
 ![coverage: 0%25](https://img.shields.io/badge/coverage-0%25-red)
 
 Easily run integration tests for CDK constructs using Jest. On successful test suite run, snapshots the stack which gets stored in your repo alongside the test. Subsequent test runs will diff the stack against the snapshot, and only run the tests if something changes.
-<h3><a href="packages/tools/jsii">@reapit-cdk/jsii</a></h3>
-
-![npm version](https://img.shields.io/npm/v/@reapit-cdk/jsii)
-![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/jsii)
-![coverage: 0%25](https://img.shields.io/badge/coverage-0%25-red)
-
-JSII tools for @reapit-cdk.
 <h3><a href="packages/tools/tsconfig">@reapit-cdk/tsconfig</a></h3>
 
 ![npm version](https://img.shields.io/npm/v/@reapit-cdk/tsconfig)

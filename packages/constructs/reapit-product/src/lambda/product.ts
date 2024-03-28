@@ -1,6 +1,6 @@
 import { createSignedFetcher } from 'aws-sigv4-fetch'
 import { randomUUID } from 'crypto'
-import { CreateProductModel, ProductModel } from '@reapit/foundations-ts-definitions/types/organisations-schema'
+import { ReapitProduct, ProductModel } from '../types'
 const headers = {
   'content-type': 'application/json',
   'api-version': 'latest',
@@ -22,7 +22,7 @@ const signedFetch = createSignedFetcher({
   region,
 })
 
-export type CreateProduct = Omit<CreateProductModel, 'id'>
+export type CreateProduct = ReapitProduct
 
 export const createProduct = async (product: CreateProduct): Promise<ProductModel> => {
   const id = randomUUID()

@@ -12,15 +12,17 @@ import { Code, Function, Runtime } from 'aws-cdk-lib/aws-lambda'
 import * as path from 'path'
 import { EmailIdentityVerificationWaiter } from './email-identity-verification-waiter'
 
+export interface EmailReceiverProps {
+  readonly parentDomain?: string
+  readonly subdomain?: string
+  readonly hostedZone: IHostedZone
+}
+
 export class EmailReceiver extends Construct {
   table: Table
   domainName: string
 
-  constructor(
-    scope: Construct,
-    id: string,
-    props: { parentDomain?: string; subdomain?: string; hostedZone: IHostedZone },
-  ) {
+  constructor(scope: Construct, id: string, props: EmailReceiverProps) {
     super(scope, id)
     const domain = (props.subdomain ?? 'email') + '.' + (props.parentDomain ?? props.hostedZone.zoneName)
     this.domainName = domain

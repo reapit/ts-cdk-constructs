@@ -92,26 +92,11 @@
     },
     "IntegrationMethod": "ANY",
     "IntegrationType": "HTTP_PROXY",
-    "IntegrationUri": {
-     "Fn::Join": [
-      "",
-      [
-       "https://",
-       {
-        "Fn::Join": [
-         "",
-         {
-          "Fn::Split": [
-           "https://",
-           "example.org"
-          ]
-         }
-        ]
-       }
-      ]
-     ]
-    },
-    "PayloadFormatVersion": "1.0"
+    "IntegrationUri": "https://example.org",
+    "PayloadFormatVersion": "1.0",
+    "RequestParameters": {
+     "overwrite:header.host": "example.org"
+    }
    },
    "Metadata": {
     "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/ANY--/proxy-integration/Resource"
@@ -149,27 +134,11 @@
     },
     "IntegrationMethod": "ANY",
     "IntegrationType": "HTTP_PROXY",
-    "IntegrationUri": {
-     "Fn::Join": [
-      "",
-      [
-       "https://",
-       {
-        "Fn::Join": [
-         "",
-         {
-          "Fn::Split": [
-           "https://",
-           "example.org"
-          ]
-         }
-        ]
-       },
-       "/{proxy}"
-      ]
-     ]
-    },
-    "PayloadFormatVersion": "1.0"
+    "IntegrationUri": "https://example.org/{proxy}",
+    "PayloadFormatVersion": "1.0",
+    "RequestParameters": {
+     "overwrite:header.host": "example.org"
+    }
    },
    "Metadata": {
     "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/ANY--{proxy+}/proxy-integration/Resource"
@@ -409,27 +378,11 @@
     },
     "IntegrationMethod": "ANY",
     "IntegrationType": "HTTP_PROXY",
-    "IntegrationUri": {
-     "Fn::Join": [
-      "",
-      [
-       "https://",
-       {
-        "Fn::Join": [
-         "",
-         {
-          "Fn::Split": [
-           "https://",
-           "httpbin.org"
-          ]
-         }
-        ]
-       },
-       "/get"
-      ]
-     ]
-    },
-    "PayloadFormatVersion": "1.0"
+    "IntegrationUri": "https://httpbin.org/get",
+    "PayloadFormatVersion": "1.0",
+    "RequestParameters": {
+     "overwrite:header.host": "httpbin.org"
+    }
    },
    "Metadata": {
     "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/ANY--get/proxy-integration/Resource"
@@ -467,27 +420,11 @@
     },
     "IntegrationMethod": "ANY",
     "IntegrationType": "HTTP_PROXY",
-    "IntegrationUri": {
-     "Fn::Join": [
-      "",
-      [
-       "https://",
-       {
-        "Fn::Join": [
-         "",
-         {
-          "Fn::Split": [
-           "https://",
-           "httpbin.org"
-          ]
-         }
-        ]
-       },
-       "/get/{proxy}"
-      ]
-     ]
-    },
-    "PayloadFormatVersion": "1.0"
+    "IntegrationUri": "https://httpbin.org/get/{proxy}",
+    "PayloadFormatVersion": "1.0",
+    "RequestParameters": {
+     "overwrite:header.host": "httpbin.org"
+    }
    },
    "Metadata": {
     "aws:cdk:path": "edge-api-test-stack-dev/api/api/api/ANY--get--{proxy+}/proxy-integration/Resource"
@@ -1091,7 +1028,7 @@
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/01Sy07DMBD8lt7dhRaB6I0ShEDipVTiWi3ONpj6EdkbosryvyM7pc1pZtajtXfHS4irFSxmOIS5bPZzrb4gbhjlXtQUXO8lCRzCNkryrHZKIpNBiy15iNW5JqqdncgksFMtMg14+F1CrHb2wRlU9g1N8a47lWHD2P7rV+w6Zdusni1T65GVs1nWrs8tNZqvBkuzD/JGhZDPH3sr/41T/oIH8p/ki2mjbKuJ3cmRhEIDsXaaxhs0iQ+nlTxkObIkwtU2YgjEAdYZREOddgdDluG+l3vih1MhuyGO1XsMJEaa2x3ZCOdbpjoJn4e8voK4rkk635RnFbYhTkmUB+R95R2Nq9jqPOMWhyC1gvUQKq3K2KLqAztzSrC0OvP3nruek1jdwHKOuvtGuJzdHb/ARcZpekdHnAT4xNzlBDOOEU7yy8WSWGGTKFMS1jUEP+Hid3ELixVczn6CUnPfW1aGoB7xDwPK1X+UAgAA"
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/1VSXW/bMAz8LX1X1CXFiuVtqYthA9quSIC9BqzMeGz0YUh0jUDQfx9oJan3dHfUgRJ5Wum8XuvlDYxpYdrjwtKbzjsGc1TNwW8xhSEaLGp9r/Pqf9flUMGY9tlgZDqQAUYHHjqMOjefNek2k0VBTx0wjnD6WOncHPxjcED+Bdzk3fQksGPoLvoZ+p58J+qXZ+wiMAU/PTMM0tKCe2thavaK0VFKcv5j8OZinPMnOGH8g3Ey7ch3FjlcHUUROJ23wWK9waJ6DZbMSWRlRaW7fYaUkJPeCKgWextODj3rh8EckR+vBXHrXKsPkFBVKu3OrMLnLXNdVJQhv97pvNmiCbGt+QjbIZeipgfIvmRHdRV7KzPuYUzGkt6MqbE0ja2aIXFw1wRnUQv/PXA/cFGrBdj+L+gvN9/Pyd8KzqM7O/IsvZ/MvcQnWPObhSfFKa6JzXIspSgfWtTv6fZj+U0v5Ve+J6JFHDyTQ72t+A8jcl3qsgIAAA=="
    },
    "Metadata": {
     "aws:cdk:path": "edge-api-test-stack-dev/CDKMetadata/Default"

@@ -5,7 +5,7 @@ export type Quota = {
   desiredValue: number
 }
 
-export type Config = {
-  rerequestWhenDenied: boolean
-  failIfNotGranted: boolean
+export interface ServiceQuotasProps {
+  readonly rerequestWhenDenied: boolean
+  readonly failIfNotGranted: boolean
 }

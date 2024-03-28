@@ -1,18 +1,17 @@
 import { Construct } from 'constructs'
-import { CreateProductModel, ProductModel } from '@reapit/foundations-ts-definitions/types/organisations-schema'
 import { Code, Function, Runtime } from 'aws-cdk-lib/aws-lambda'
 import { Provider } from 'aws-cdk-lib/custom-resources'
 import { CustomResource, Duration, Token, TokenComparison, Fn, Stack } from 'aws-cdk-lib'
 import * as path from 'path'
 import { IRestApi } from 'aws-cdk-lib/aws-apigateway'
 import { PolicyStatement } from 'aws-cdk-lib/aws-iam'
+import { ReapitProduct, ProductModel } from './types'
+export type { ReapitProduct, ProductModel } from './types'
 
 export interface ReapitProductProviderProps {
-  organisationsServiceApiGateway: IRestApi
-  stageName: string
+  readonly organisationsServiceApiGateway: IRestApi
+  readonly stageName: string
 }
-
-export type ReapitProduct = Omit<CreateProductModel, 'id'>
 
 export class ReapitProductProvider extends Construct {
   provider: Provider
@@ -50,7 +49,7 @@ export class ReapitProductProvider extends Construct {
     })
   }
 
-  createProduct(scope: Construct, id: string, product: ReapitProduct): Required<ProductModel> {
+  createProduct(scope: Construct, id: string, product: ReapitProduct): ProductModel {
     const cr = new CustomResource(scope, id, {
       serviceToken: this.provider.serviceToken,
       properties: product,

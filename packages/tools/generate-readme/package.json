@@ -6,6 +6,7 @@
     "ts-node": "^10.9.1"
   },
   "scripts": {
+    "publish": "yarn npm publish",
     "lint": "reapit-cdk-eslint"
   },
   "bin": {

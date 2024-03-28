@@ -20,6 +20,7 @@ import {
   Endpoint,
   FrontendEndpoint,
   HttpMethod,
+  IBaseEndpoint,
   LambdaEndpoint,
   ProxyEndpoint,
   RedirectionEndpoint,
@@ -74,10 +75,7 @@ export class ProductionEdgeAPI extends Construct {
     }
 
     const distribution = new Distribution(this, 'Resource', {
-      defaultBehavior: this.endpointToBehaviorOptions({
-        ...props.defaultEndpoint,
-        pathPattern: '',
-      }),
+      defaultBehavior: this.endpointToBehaviorOptions(props.defaultEndpoint),
       domainNames: props.domains,
       certificate: props.certificate,
       webAclId: props.webAclId,
@@ -123,25 +121,25 @@ export class ProductionEdgeAPI extends Construct {
   private lambdaEndpointToAddBehaviorOptions(endpoint: LambdaEndpoint): EndpointBehaviorOptions[] {
     const origin = new S3Origin(this.bucket, {
       originAccessIdentity: this.originAccessIdentity,
-      customHeaders: endpoint.lambda.edgeEnvironment
+      customHeaders: endpoint.lambdaFunction.edgeEnvironment
         ? {
-            env: Fn.toJsonString(endpoint.lambda.edgeEnvironment),
+            env: Fn.toJsonString(endpoint.lambdaFunction.edgeEnvironment),
           }
         : undefined,
     })
     const addBehaviorOptions: AddBehaviorOptions = {
       allowedMethods: this.methodsToAllowedMethods(endpoint.methods),
-      cachePolicy: endpoint.static ? CachePolicy.CACHING_OPTIMIZED : CachePolicy.CACHING_DISABLED,
+      cachePolicy: endpoint.isStatic ? CachePolicy.CACHING_OPTIMIZED : CachePolicy.CACHING_DISABLED,
       originRequestPolicy: OriginRequestPolicy.ALL_VIEWER,
       edgeLambdas: [
         {
           eventType: LambdaEdgeEventType.ORIGIN_REQUEST,
           includeBody: true,
-          functionVersion: endpoint.lambda.currentVersion,
+          functionVersion: endpoint.lambdaFunction.currentVersion,
         },
       ],
     }
-    if (endpoint.static) {
+    if (endpoint.isStatic) {
       this.invalidationPaths.push(endpoint.pathPattern)
     }
     return [
@@ -404,7 +402,7 @@ export class ProductionEdgeAPI extends Construct {
 
   private redirectionEndpointToAddBehaviorOptions(endpoint: RedirectionEndpoint): EndpointBehaviorOptions[] {
     // TODO: reuse the redirector
-    const lambda = new EdgeAPILambda(this, endpoint.pathPattern + '-redirector', {
+    const lambdaFunction = new EdgeAPILambda(this, endpoint.pathPattern + '-redirector', {
       runtime: Runtime.NODEJS_18_X,
       handler: 'production-redirector.handler',
       code: Code.fromAsset(path.resolve(__dirname, 'lambdas')),
@@ -412,14 +410,16 @@ export class ProductionEdgeAPI extends Construct {
         destination: endpoint.destination,
       } as any,
     })
-    return this.lambdaEndpointToAddBehaviorOptions({
-      pathPattern: endpoint.pathPattern,
-      lambda,
-    })
+    return this.lambdaEndpointToAddBehaviorOptions(
+      new LambdaEndpoint({
+        pathPattern: endpoint.pathPattern,
+        lambdaFunction,
+      }),
+    )
   }
 
-  private endpointToBehaviorOptions(endpoint: Endpoint): BehaviorOptions {
-    const [{ addBehaviorOptions, origin }] = this.endpointToAddBehaviorOptions(endpoint)
+  private endpointToBehaviorOptions(endpoint: IBaseEndpoint): BehaviorOptions {
+    const [{ addBehaviorOptions, origin }] = this.endpointToAddBehaviorOptions(endpoint as Endpoint)
     return {
       ...addBehaviorOptions,
       origin,

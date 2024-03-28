@@ -31,6 +31,7 @@ var wait = (ms) => {
   if (!process.env.TEST) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
+  return;
 };
 var waitForReplication = async (secretId, regions, iteration = 0) => {
   const res = await client.send(

@@ -9,6 +9,7 @@
     "@reapit-cdk/eslint-config": "workspace:^"
   },
   "scripts": {
+    "publish": "yarn npm publish",
     "lint": "reapit-cdk-eslint"
   },
   "bin": {
