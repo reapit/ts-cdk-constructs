@@ -18,7 +18,6 @@
   },
   "scripts": {
     "publish": "yarn npm publish",
-    "publish": "yarn npm publish",
     "check": "yarn run root:check -p $(pwd)",
     "lint": "reapit-cdk-eslint",
     "test": "yarn run root:test -- $(pwd)",

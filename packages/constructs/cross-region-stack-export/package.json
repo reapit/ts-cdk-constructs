@@ -24,7 +24,7 @@
     "integ": "yarn run root:integ -- $(pwd)",
     "jsii:build": "jsii --generate-tsconfig tsconfig.jsii.json --fail-on-warnings",
     "jsii:package": "jsii-pacmak",
-    "jsii:publish": "publib jsii-out"
+    "jsii:publish": "bash ../../../node_modules/publib/bin/publib jsii-out"
   },
   "main": "src/index.ts",
   "types": "src/index.ts",
@@ -70,6 +70,6 @@
     "constructs": "10.2.70",
     "jsii": "^5.3.20",
     "jsii-pacmak": "^1.94.0",
-    "publib": "^0.2.795"
+    "publib": "^0.2.812"
   }
 }
