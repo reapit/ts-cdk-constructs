@@ -10,7 +10,7 @@
   "license": "MIT",
   "scripts": {
     "publish": "yarn jsii:publish",
-    "build": "yarn jsii:build && reapit-cdk-tsup --lambdas --no-main && yarn jsii:package",
+    "build": "yarn workspaces build @reapit-cdk/active-ruleset && yarn jsii:build && reapit-cdk-tsup --lambdas --no-main && yarn jsii:package",
     "check": "yarn run root:check -p $(pwd)",
     "lint": "reapit-cdk-eslint",
     "test": "yarn run root:test -- $(pwd)",

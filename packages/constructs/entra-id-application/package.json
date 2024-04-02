@@ -18,7 +18,7 @@
   "bin": "node dist/setup",
   "scripts": {
     "publish": "yarn jsii:publish",
-    "build": "yarn jsii:build && reapit-cdk-tsup --lambdas --setup --no-main && yarn jsii:package",
+    "build": "yarn workspaces @reapit-cdk/replicated-secret build && yarn jsii:build && reapit-cdk-tsup --lambdas --setup --no-main && yarn jsii:package",
     "check": "yarn run root:check -p $(pwd)",
     "lint": "reapit-cdk-eslint",
     "test": "yarn run root:test -- $(pwd)",
