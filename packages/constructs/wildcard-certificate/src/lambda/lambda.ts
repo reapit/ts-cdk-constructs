@@ -32,10 +32,12 @@ export const onEvent = customResourceWrapper({
     if (objectHasChanged(oldProps, props)) {
       return handler(props)
     }
+    return
   },
   onDelete: async ({ physicalResourceId }) => {
     if (physicalResourceId) {
       await deleteIfUnused(physicalResourceId)
     }
+    return
   },
 })

@@ -5,8 +5,8 @@ import { Provider } from 'aws-cdk-lib/custom-resources'
 import { Construct } from 'constructs'
 import * as path from 'path'
 
-interface UserPoolDomainProps {
-  userPool: IUserPool
+export interface UserPoolDomainProps {
+  readonly userPool: IUserPool
 }
 
 export class UserPoolDomain extends Construct {

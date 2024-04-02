@@ -57,7 +57,7 @@
         }
       }
     },
-    "2864320662a0759680577395e12c9657532003f0631965c47d26abaf094f69f7": {
+    "b69aa600f8b880258da198b72586a9d11c65f2655c449a685a9bb3b89714d2ba": {
       "source": {
         "path": "edge-api-test-stack-dev.template.json",
         "packaging": "file"
@@ -65,7 +65,7 @@
       "destinations": {
         "028446965111-eu-central-1": {
           "bucketName": "cdk-hnb659fds-assets-028446965111-eu-central-1",
-          "objectKey": "2864320662a0759680577395e12c9657532003f0631965c47d26abaf094f69f7.json",
+          "objectKey": "b69aa600f8b880258da198b72586a9d11c65f2655c449a685a9bb3b89714d2ba.json",
           "region": "eu-central-1",
           "assumeRoleArn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-file-publishing-role-028446965111-eu-central-1"
         }

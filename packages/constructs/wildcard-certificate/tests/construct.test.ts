@@ -11,7 +11,11 @@ const synth = (domains?: WildcardCertificateProps['domains']) => {
     },
   })
   const wildcardCertificate = new WildcardCertificate(stack, 'cert', {
-    domains: domains ?? ['example.org'],
+    domains: domains ?? [
+      {
+        domainName: 'example.org',
+      },
+    ],
   })
   const template = Template.fromStack(stack)
   return {
@@ -86,7 +90,11 @@ describe('wildcard-certificate', () => {
     const stack = new cdk.Stack(app)
     expect(() => {
       new WildcardCertificate(stack, 'cert', {
-        domains: ['example.org'],
+        domains: [
+          {
+            domainName: 'example.org',
+          },
+        ],
       })
     }).toThrowError('Stack region and account must be specified if hostedZoneArn is not specified')
   })

@@ -13,7 +13,7 @@
             "path": "edge-api-test-stack/zone",
             "constructInfo": {
               "fqn": "aws-cdk-lib.Resource",
-              "version": "2.99.1"
+              "version": "2.96.2"
             }
           },
           "cert": {
@@ -44,13 +44,13 @@
                 },
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.aws_certificatemanager.CfnCertificate",
-                  "version": "2.99.1"
+                  "version": "2.96.2"
                 }
               }
             },
             "constructInfo": {
               "fqn": "aws-cdk-lib.aws_certificatemanager.Certificate",
-              "version": "2.99.1"
+              "version": "2.96.2"
             }
           },
           "api": {
@@ -74,7 +74,7 @@
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_s3.CfnBucket",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       },
                       "Policy": {
@@ -163,19 +163,19 @@
                             },
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.aws_s3.CfnBucketPolicy",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           }
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_s3.BucketPolicy",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       }
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_s3.Bucket",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   },
                   "oia": {
@@ -195,13 +195,13 @@
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_cloudfront.CfnCloudFrontOriginAccessIdentity",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       }
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_cloudfront.OriginAccessIdentity",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   },
                   "defaultResponseHeadersPolicy": {
@@ -230,13 +230,13 @@
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_cloudfront.CfnResponseHeadersPolicy",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       }
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_cloudfront.ResponseHeadersPolicy",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   },
                   "rewriter-example.org": {
@@ -252,7 +252,7 @@
                             "path": "edge-api-test-stack/api/api/rewriter-example.org/ServiceRole/ImportServiceRole",
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.Resource",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           },
                           "Resource": {
@@ -298,13 +298,13 @@
                             },
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.aws_iam.CfnRole",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           }
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_iam.Role",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       },
                       "Resource": {
@@ -328,7 +328,7 @@
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       },
                       "CurrentVersion": {
@@ -348,19 +348,19 @@
                             },
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.aws_lambda.CfnVersion",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           }
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_lambda.Version",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       }
                     },
                     "constructInfo": {
-                      "fqn": "aws-cdk-lib.aws_lambda.Function",
-                      "version": "2.99.1"
+                      "fqn": "@reapit-cdk/edge-api.EdgeAPILambda",
+                      "version": "0.0.35"
                     }
                   },
                   "Resource": {
@@ -535,7 +535,7 @@
                                   "lambdaFunctionAssociations": [
                                     {
                                       "lambdaFunctionArn": {
-                                        "Ref": "apis3qsredirectCurrentVersion201EBAF5ee6e5695a3c69fe42abc3c5457c9312d"
+                                        "Ref": "apis3qsredirectCurrentVersion201EBAF55dd549ae5a6e146a59fe732da0de29ab"
                                       },
                                       "eventType": "origin-response"
                                     }
@@ -663,7 +663,7 @@
                                   "lambdaFunctionAssociations": [
                                     {
                                       "lambdaFunctionArn": {
-                                        "Ref": "apiredirectmeredirectorCurrentVersionA5C47DBFae680f8ca3cdb946b8115b80d63e09e1"
+                                        "Ref": "apiredirectmeredirectorCurrentVersionA5C47DBF2893813a4e151d9f08ddc8311570ef3c"
                                       },
                                       "eventType": "origin-request",
                                       "includeBody": true
@@ -685,7 +685,7 @@
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_cloudfront.CfnDistribution",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       },
                       "Origin2": {
@@ -723,7 +723,7 @@
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_cloudfront.Distribution",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   },
                   "invalidation": {
@@ -735,7 +735,7 @@
                         "path": "edge-api-test-stack/api/api/invalidation/CreateInvalidation",
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_stepfunctions_tasks.CallAwsService",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       },
                       "CreateInvalidationStateMachine": {
@@ -751,7 +751,7 @@
                                 "path": "edge-api-test-stack/api/api/invalidation/CreateInvalidationStateMachine/Role/ImportRole",
                                 "constructInfo": {
                                   "fqn": "aws-cdk-lib.Resource",
-                                  "version": "2.99.1"
+                                  "version": "2.96.2"
                                 }
                               },
                               "Resource": {
@@ -776,7 +776,7 @@
                                 },
                                 "constructInfo": {
                                   "fqn": "aws-cdk-lib.aws_iam.CfnRole",
-                                  "version": "2.99.1"
+                                  "version": "2.96.2"
                                 }
                               },
                               "DefaultPolicy": {
@@ -819,19 +819,19 @@
                                     },
                                     "constructInfo": {
                                       "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
-                                      "version": "2.99.1"
+                                      "version": "2.96.2"
                                     }
                                   }
                                 },
                                 "constructInfo": {
                                   "fqn": "aws-cdk-lib.aws_iam.Policy",
-                                  "version": "2.99.1"
+                                  "version": "2.96.2"
                                 }
                               }
                             },
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.aws_iam.Role",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           },
                           "Resource": {
@@ -866,7 +866,7 @@
                             },
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.aws_stepfunctions.CfnStateMachine",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           },
                           "EventsRole": {
@@ -878,7 +878,7 @@
                                 "path": "edge-api-test-stack/api/api/invalidation/CreateInvalidationStateMachine/EventsRole/ImportEventsRole",
                                 "constructInfo": {
                                   "fqn": "aws-cdk-lib.Resource",
-                                  "version": "2.99.1"
+                                  "version": "2.96.2"
                                 }
                               },
                               "Resource": {
@@ -903,7 +903,7 @@
                                 },
                                 "constructInfo": {
                                   "fqn": "aws-cdk-lib.aws_iam.CfnRole",
-                                  "version": "2.99.1"
+                                  "version": "2.96.2"
                                 }
                               },
                               "DefaultPolicy": {
@@ -938,25 +938,25 @@
                                     },
                                     "constructInfo": {
                                       "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
-                                      "version": "2.99.1"
+                                      "version": "2.96.2"
                                     }
                                   }
                                 },
                                 "constructInfo": {
                                   "fqn": "aws-cdk-lib.aws_iam.Policy",
-                                  "version": "2.99.1"
+                                  "version": "2.96.2"
                                 }
                               }
                             },
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.aws_iam.Role",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           }
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_stepfunctions.StateMachine",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       },
                       "DeploymentComplete": {
@@ -1006,13 +1006,13 @@
                             },
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.aws_events.CfnRule",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           }
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_events.Rule",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       }
                     },
@@ -1044,13 +1044,13 @@
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_cloudfront.CfnResponseHeadersPolicy",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       }
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_cloudfront.ResponseHeadersPolicy",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   },
                   "s3-qs-redirect": {
@@ -1066,7 +1066,7 @@
                             "path": "edge-api-test-stack/api/api/s3-qs-redirect/ServiceRole/ImportServiceRole",
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.Resource",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           },
                           "Resource": {
@@ -1112,13 +1112,13 @@
                             },
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.aws_iam.CfnRole",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           }
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_iam.Role",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       },
                       "Code": {
@@ -1130,7 +1130,7 @@
                             "path": "edge-api-test-stack/api/api/s3-qs-redirect/Code/Stage",
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.AssetStaging",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           },
                           "AssetBucket": {
@@ -1138,13 +1138,13 @@
                             "path": "edge-api-test-stack/api/api/s3-qs-redirect/Code/AssetBucket",
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.aws_s3.BucketBase",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           }
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       },
                       "Resource": {
@@ -1155,7 +1155,7 @@
                           "aws:cdk:cloudformation:props": {
                             "code": {
                               "s3Bucket": "cdk-hnb659fds-assets-028446965111-us-east-1",
-                              "s3Key": "03c4398d27bfe8ea8baafc234fca408feb2dd1834f6998faad3792c49ca4099e.zip"
+                              "s3Key": "f5d3816822c0eeeeb093f8e2fd5dd237a5fe83afdf1e5e71d982dc280250672b.zip"
                             },
                             "handler": "s3-qs-redirect.handler",
                             "role": {
@@ -1169,7 +1169,7 @@
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       },
                       "CurrentVersion": {
@@ -1189,19 +1189,19 @@
                             },
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.aws_lambda.CfnVersion",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           }
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_lambda.Version",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       }
                     },
                     "constructInfo": {
-                      "fqn": "aws-cdk-lib.aws_lambda.Function",
-                      "version": "2.99.1"
+                      "fqn": "@reapit-cdk/edge-api.EdgeAPILambda",
+                      "version": "0.0.35"
                     }
                   },
                   "--get--*-headers": {
@@ -1230,13 +1230,13 @@
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_cloudfront.CfnResponseHeadersPolicy",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       }
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_cloudfront.ResponseHeadersPolicy",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   },
                   "rewriter-httpbin.org": {
@@ -1252,7 +1252,7 @@
                             "path": "edge-api-test-stack/api/api/rewriter-httpbin.org/ServiceRole/ImportServiceRole",
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.Resource",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           },
                           "Resource": {
@@ -1298,13 +1298,13 @@
                             },
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.aws_iam.CfnRole",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           }
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_iam.Role",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       },
                       "Resource": {
@@ -1328,7 +1328,7 @@
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       },
                       "CurrentVersion": {
@@ -1348,19 +1348,19 @@
                             },
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.aws_lambda.CfnVersion",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           }
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_lambda.Version",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       }
                     },
                     "constructInfo": {
-                      "fqn": "aws-cdk-lib.aws_lambda.Function",
-                      "version": "2.99.1"
+                      "fqn": "@reapit-cdk/edge-api.EdgeAPILambda",
+                      "version": "0.0.35"
                     }
                   },
                   "--api-headers": {
@@ -1389,13 +1389,13 @@
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_cloudfront.CfnResponseHeadersPolicy",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       }
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_cloudfront.ResponseHeadersPolicy",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   },
                   "--redirect-me-redirector": {
@@ -1411,7 +1411,7 @@
                             "path": "edge-api-test-stack/api/api/--redirect-me-redirector/ServiceRole/ImportServiceRole",
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.Resource",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           },
                           "Resource": {
@@ -1457,13 +1457,13 @@
                             },
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.aws_iam.CfnRole",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           }
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_iam.Role",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       },
                       "Code": {
@@ -1475,7 +1475,7 @@
                             "path": "edge-api-test-stack/api/api/--redirect-me-redirector/Code/Stage",
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.AssetStaging",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           },
                           "AssetBucket": {
@@ -1483,13 +1483,13 @@
                             "path": "edge-api-test-stack/api/api/--redirect-me-redirector/Code/AssetBucket",
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.aws_s3.BucketBase",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           }
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       },
                       "Resource": {
@@ -1500,7 +1500,7 @@
                           "aws:cdk:cloudformation:props": {
                             "code": {
                               "s3Bucket": "cdk-hnb659fds-assets-028446965111-us-east-1",
-                              "s3Key": "03c4398d27bfe8ea8baafc234fca408feb2dd1834f6998faad3792c49ca4099e.zip"
+                              "s3Key": "f5d3816822c0eeeeb093f8e2fd5dd237a5fe83afdf1e5e71d982dc280250672b.zip"
                             },
                             "handler": "production-redirector.handler",
                             "role": {
@@ -1514,7 +1514,7 @@
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       },
                       "CurrentVersion": {
@@ -1534,19 +1534,19 @@
                             },
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.aws_lambda.CfnVersion",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           }
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_lambda.Version",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       }
                     },
                     "constructInfo": {
-                      "fqn": "aws-cdk-lib.aws_lambda.Function",
-                      "version": "2.99.1"
+                      "fqn": "@reapit-cdk/edge-api.EdgeAPILambda",
+                      "version": "0.0.35"
                     }
                   }
                 },
@@ -1557,8 +1557,8 @@
               }
             },
             "constructInfo": {
-              "fqn": "constructs.Construct",
-              "version": "10.2.70"
+              "fqn": "@reapit-cdk/edge-api.EdgeAPI",
+              "version": "0.0.35"
             }
           },
           "arecord": {
@@ -1595,13 +1595,13 @@
                 },
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.aws_route53.CfnRecordSet",
-                  "version": "2.99.1"
+                  "version": "2.96.2"
                 }
               }
             },
             "constructInfo": {
               "fqn": "aws-cdk-lib.aws_route53.ARecord",
-              "version": "2.99.1"
+              "version": "2.96.2"
             }
           },
           "AWSCloudFrontPartitionHostedZoneIdMap": {
@@ -1609,7 +1609,7 @@
             "path": "edge-api-test-stack/AWSCloudFrontPartitionHostedZoneIdMap",
             "constructInfo": {
               "fqn": "aws-cdk-lib.CfnMapping",
-              "version": "2.99.1"
+              "version": "2.96.2"
             }
           },
           "bucket": {
@@ -1642,7 +1642,7 @@
                 },
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.aws_s3.CfnBucket",
-                  "version": "2.99.1"
+                  "version": "2.96.2"
                 }
               },
               "Policy": {
@@ -1726,19 +1726,19 @@
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_s3.CfnBucketPolicy",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   }
                 },
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.aws_s3.BucketPolicy",
-                  "version": "2.99.1"
+                  "version": "2.96.2"
                 }
               }
             },
             "constructInfo": {
               "fqn": "aws-cdk-lib.aws_s3.Bucket",
-              "version": "2.99.1"
+              "version": "2.96.2"
             }
           },
           "deployment": {
@@ -1758,7 +1758,7 @@
                         "path": "edge-api-test-stack/deployment/AwsCliLayer/Code/Stage",
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.AssetStaging",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       },
                       "AssetBucket": {
@@ -1766,13 +1766,13 @@
                         "path": "edge-api-test-stack/deployment/AwsCliLayer/Code/AssetBucket",
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_s3.BucketBase",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       }
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   },
                   "Resource": {
@@ -1790,13 +1790,13 @@
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_lambda.CfnLayerVersion",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   }
                 },
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.lambda_layer_awscli.AwsCliLayer",
-                  "version": "2.99.1"
+                  "version": "2.96.2"
                 }
               },
               "CustomResourceHandler": {
@@ -1804,7 +1804,7 @@
                 "path": "edge-api-test-stack/deployment/CustomResourceHandler",
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.aws_lambda.SingletonFunction",
-                  "version": "2.99.1"
+                  "version": "2.96.2"
                 }
               },
               "Asset1": {
@@ -1816,7 +1816,7 @@
                     "path": "edge-api-test-stack/deployment/Asset1/Stage",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.AssetStaging",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   },
                   "AssetBucket": {
@@ -1824,13 +1824,13 @@
                     "path": "edge-api-test-stack/deployment/Asset1/AssetBucket",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_s3.BucketBase",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   }
                 },
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
-                  "version": "2.99.1"
+                  "version": "2.96.2"
                 }
               },
               "CustomResource": {
@@ -1842,19 +1842,19 @@
                     "path": "edge-api-test-stack/deployment/CustomResource/Default",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.CfnResource",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   }
                 },
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.CustomResource",
-                  "version": "2.99.1"
+                  "version": "2.96.2"
                 }
               }
             },
             "constructInfo": {
               "fqn": "aws-cdk-lib.aws_s3_deployment.BucketDeployment",
-              "version": "2.99.1"
+              "version": "2.96.2"
             }
           },
           "Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C": {
@@ -1870,7 +1870,7 @@
                     "path": "edge-api-test-stack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/ServiceRole/ImportServiceRole",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.Resource",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   },
                   "Resource": {
@@ -1909,7 +1909,7 @@
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_iam.CfnRole",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   },
                   "DefaultPolicy": {
@@ -2008,19 +2008,19 @@
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       }
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_iam.Policy",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   }
                 },
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.aws_iam.Role",
-                  "version": "2.99.1"
+                  "version": "2.96.2"
                 }
               },
               "Code": {
@@ -2032,7 +2032,7 @@
                     "path": "edge-api-test-stack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/Code/Stage",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.AssetStaging",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   },
                   "AssetBucket": {
@@ -2040,13 +2040,13 @@
                     "path": "edge-api-test-stack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/Code/AssetBucket",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_s3.BucketBase",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   }
                 },
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
-                  "version": "2.99.1"
+                  "version": "2.96.2"
                 }
               },
               "Resource": {
@@ -2082,13 +2082,13 @@
                 },
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
-                  "version": "2.99.1"
+                  "version": "2.96.2"
                 }
               }
             },
             "constructInfo": {
               "fqn": "aws-cdk-lib.aws_lambda.Function",
-              "version": "2.99.1"
+              "version": "2.96.2"
             }
           },
           "lambda": {
@@ -2104,7 +2104,7 @@
                     "path": "edge-api-test-stack/lambda/ServiceRole/ImportServiceRole",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.Resource",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   },
                   "Resource": {
@@ -2150,13 +2150,13 @@
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_iam.CfnRole",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   }
                 },
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.aws_iam.Role",
-                  "version": "2.99.1"
+                  "version": "2.96.2"
                 }
               },
               "Resource": {
@@ -2180,7 +2180,7 @@
                 },
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
-                  "version": "2.99.1"
+                  "version": "2.96.2"
                 }
               },
               "CurrentVersion": {
@@ -2200,19 +2200,19 @@
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_lambda.CfnVersion",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   }
                 },
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.aws_lambda.Version",
-                  "version": "2.99.1"
+                  "version": "2.96.2"
                 }
               }
             },
             "constructInfo": {
-              "fqn": "aws-cdk-lib.aws_lambda.Function",
-              "version": "2.99.1"
+              "fqn": "@reapit-cdk/edge-api.EdgeAPILambda",
+              "version": "0.0.35"
             }
           },
           "output": {
@@ -2220,7 +2220,7 @@
             "path": "edge-api-test-stack/output",
             "constructInfo": {
               "fqn": "aws-cdk-lib.CfnOutput",
-              "version": "2.99.1"
+              "version": "2.96.2"
             }
           },
           "CDKMetadata": {

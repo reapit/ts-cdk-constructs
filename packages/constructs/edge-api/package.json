@@ -1,6 +1,6 @@
 {
   "name": "@reapit-cdk/edge-api",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "This construct creates a truly globally available API where code executes at the edge. Because changes take a long time to propagate to all edge locations, there is a `devMode` flag which will instead deploy your API to a [HTTP API](https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api.html). This is compatible with hotswapping, so [`cdk watch`](https://docs.aws.amazon.com/cdk/v2/guide/cli.html#cli-deploy-watch) works very well. In order to make it easy to develop APIs which handle both event formats and work around the environment variable limitation, I recommend you use the lightweight request wrapper [@reapit-cdk/edge-api-sdk](../../modules/edge-api-sdk) which normalises the event format and offers some extra helpers.",
   "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/edge-api",
   "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/edge-api/readme.md",
@@ -9,14 +9,14 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "reapit-cdk-tsup --lambdas",
+    "build": "yarn jsii:build && reapit-cdk-tsup --lambdas --no-main && yarn jsii:package",
     "check": "yarn run root:check -p $(pwd)",
     "lint": "reapit-cdk-eslint",
     "test": "yarn run root:test -- $(pwd)",
     "integ": "yarn run root:integ -- $(pwd)",
-    "prepack": "yarn build",
-    "jsii:build": "rpt-cdk-jsii",
-    "jsii:publish": "rpt-cdk-jsii --publish"
+    "jsii:build": "jsii --generate-tsconfig tsconfig.jsii.json --fail-on-warnings",
+    "jsii:package": "jsii-pacmak",
+    "jsii:publish": "publib jsii-out"
   },
   "author": {
     "name": "Josh Balfour",
@@ -25,28 +25,61 @@
   "repository": {
     "url": "https://github.com/reapit/ts-cdk-constructs.git"
   },
-  "publishConfig": {
-    "main": "dist/index.js"
-  },
   "main": "src/index.ts",
+  "types": "src/index.ts",
+  "typesVersions": {
+    "<=3.9": {
+      "dist/*": [
+        "dist/.types-compat/ts3.9/*",
+        "dist/.types-compat/ts3.9/*/index.d.ts"
+      ]
+    }
+  },
+  "publishConfig": {
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts"
+  },
   "dependencies": {
     "@aws-cdk/aws-apigatewayv2-alpha": "2.96.2-alpha.0",
     "@aws-cdk/aws-apigatewayv2-integrations-alpha": "2.96.2-alpha.0"
   },
   "peerDependencies": {
-    "@reapit-cdk/cloudfront-invalidation": "^0.0.1",
+    "@reapit-cdk/cloudfront-invalidation": "^0.1.0",
     "aws-cdk-lib": "^2.96.2",
     "constructs": "^10.2.70"
+  },
+  "stability": "stable",
+  "keywords": [
+    "awscdk"
+  ],
+  "jsii": {
+    "tsc": {
+      "outDir": "dist",
+      "rootDir": "src"
+    },
+    "versionFormat": "short",
+    "excludeTypescript": [
+      "tests",
+      "src/lambdas"
+    ],
+    "outdir": "jsii-out",
+    "targets": {
+      "python": {
+        "distName": "reapit-cdk.edge-api",
+        "module": "reapit_cdk.edge_api"
+      }
+    }
   },
   "devDependencies": {
     "@reapit-cdk/cloudfront-invalidation": "workspace:^",
     "@reapit-cdk/eslint-config": "workspace:^",
-    "@reapit-cdk/integration-tests": "workspace:^",
-    "@reapit-cdk/jsii": "workspace:^",
     "@reapit-cdk/tsup": "workspace:^",
-    "aws-cdk-lib": "^2.96.2",
+    "aws-cdk-lib": "2.96.2",
     "aws-lambda": "^1.0.7",
     "aws-sdk-client-mock": "^3.0.1",
-    "constructs": "^10.2.70"
+    "constructs": "10.2.70",
+    "jsii": "^5.3.20",
+    "jsii-pacmak": "^1.94.0",
+    "publib": "^0.2.795"
   }
 }

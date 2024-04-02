@@ -63,7 +63,7 @@ const getServiceQuotas = async (ServiceCode: string) => {
 const varifyName = (name: string) => varname.camelcase(name)
 
 const enumify = (name: string, code: string) => {
-  return `${varifyName(name)} = '${code}'`
+  return `${varname.underscore(name).toUpperCase()} = '${code}'`
 }
 
 type QuotaPair = {
@@ -76,8 +76,9 @@ type NestedQuotaPair = QuotaPair & {
 }
 
 const tsify = (quotas: NestedQuotaPair[]) => {
+  const filteredQuotas = quotas.filter((q) => q.quotas.length)
   return `
-  ${quotas
+  ${filteredQuotas
     .map(({ name, quotas }) => {
       return `export enum ${varifyName(name)}Quota {
         ${unq(quotas)
@@ -89,14 +90,14 @@ const tsify = (quotas: NestedQuotaPair[]) => {
     })
     .join('\n')}
   export enum AWSService {
-    ${quotas
+    ${filteredQuotas
       .map(({ name, code }) => {
         return enumify(name, code)
       })
       .join(',\n')}
   }
   export type ServiceQuotaMap = {
-    ${quotas
+    ${filteredQuotas
       .map(({ name, code }) => {
         return `'${code}': ${varifyName(name)}Quota`
       })
@@ -151,7 +152,8 @@ const go = async () => {
   await output(all)
 }
 
-// const goCached = async () => {
+// // cached
+// const go = async () => {
 //   const all = JSON.parse(await fs.readFile('quotas.json', 'utf-8'))
 //   await output(all)
 // }

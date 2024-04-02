@@ -6,6 +6,7 @@ const wait = (ms: number) => {
   if (!process.env.TEST) {
     return new Promise((resolve) => setTimeout(resolve, ms))
   }
+  return
 }
 
 export const waitForReplication = async (secretId: string, regions: string[], iteration: number = 0): Promise<void> => {

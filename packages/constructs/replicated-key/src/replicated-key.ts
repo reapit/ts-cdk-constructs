@@ -7,12 +7,16 @@ import { generateKeyPolicy } from './generate-key-policy'
 import { Code, Function, Runtime } from 'aws-cdk-lib/aws-lambda'
 import * as path from 'path'
 
+export interface ReplicatedKeyProps {
+  readonly replicaRegions: string[]
+}
+
 export class ReplicatedKey extends Construct {
   private masterKey: IKey
   private keys: Partial<Record<string, IKey>> = {}
   dependable: IDependable
 
-  constructor(scope: Construct, id: string, props: { replicaRegions: string[] }) {
+  constructor(scope: Construct, id: string, props: ReplicatedKeyProps) {
     super(scope, id)
     const stack = Stack.of(this)
     const masterRegion = stack.region

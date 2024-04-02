@@ -1,6 +1,6 @@
 {
   "name": "@reapit-cdk/edge-api-swagger",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Add a swagger endpoint to your EdgeAPI",
   "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/edge-api-swagger",
   "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/edge-api-swagger/readme.md",
@@ -16,14 +16,14 @@
     "url": "https://github.com/reapit/ts-cdk-constructs.git"
   },
   "scripts": {
-    "build": "reapit-cdk-tsup",
+    "build": "yarn jsii:build && yarn jsii:package",
     "check": "yarn run root:check -p $(pwd)",
-    "lint": "echo 'skipping...'",
-    "test": "yarn run root:test  -- $(pwd)",
-    "prepack": "yarn build",
+    "lint": "reapit-cdk-eslint",
+    "test": "yarn run root:test -- $(pwd)",
     "integ": "yarn run root:integ -- $(pwd)",
-    "jsii:build": "rpt-cdk-jsii",
-    "jsii:publish": "rpt-cdk-jsii --publish"
+    "jsii:build": "jsii --generate-tsconfig tsconfig.jsii.json --fail-on-warnings",
+    "jsii:package": "jsii-pacmak",
+    "jsii:publish": "publib jsii-out"
   },
   "main": "src/index.ts",
   "types": "src/index.ts",
@@ -31,22 +31,50 @@
     "main": "dist/index.js",
     "types": "dist/index.d.ts"
   },
+  "stability": "stable",
+  "keywords": [
+    "awscdk"
+  ],
+  "bundledDependencies": [
+    "openapi3-ts",
+    "swagger-ui-dist",
+    "typescript"
+  ],
   "dependencies": {
     "openapi3-ts": "^4.1.2",
     "swagger-ui-dist": "^5.9.0",
     "typescript": "^5.1.3"
   },
   "peerDependencies": {
-    "@reapit-cdk/edge-api": "^0.0.0",
+    "@reapit-cdk/edge-api": "^0.1.0",
     "aws-cdk-lib": "^2.96.2",
     "constructs": "^10.2.70"
   },
   "devDependencies": {
+    "@reapit-cdk/edge-api": "workspace:^",
     "@reapit-cdk/eslint-config": "workspace:^",
-    "@reapit-cdk/integration-tests": "workspace:^",
-    "@reapit-cdk/jsii": "workspace:^",
     "@reapit-cdk/tsup": "workspace:^",
-    "aws-cdk-lib": "^2.96.2",
-    "constructs": "^10.2.70"
+    "aws-cdk-lib": "2.96.2",
+    "constructs": "10.2.70",
+    "jsii": "^5.3.20",
+    "jsii-pacmak": "^1.94.0",
+    "publib": "^0.2.795"
+  },
+  "jsii": {
+    "tsc": {
+      "outDir": "dist",
+      "rootDir": "src"
+    },
+    "versionFormat": "short",
+    "excludeTypescript": [
+      "tests"
+    ],
+    "outdir": "jsii-out",
+    "targets": {
+      "python": {
+        "distName": "reapit-cdk.edge-api-swapper",
+        "module": "reapit_cdk.edge_api_swagger"
+      }
+    }
   }
 }

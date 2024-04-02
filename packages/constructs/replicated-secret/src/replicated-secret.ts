@@ -8,10 +8,10 @@ import { Code, Function, Runtime } from 'aws-cdk-lib/aws-lambda'
 import * as path from 'path'
 
 export interface MultiRegionSecretProps {
-  replicatedKey: ReplicatedKey
-  replicaRegions: string[]
-  secretObjectValue?: SecretProps['secretObjectValue']
-  secretStringValue?: SecretProps['secretStringValue']
+  readonly replicatedKey: ReplicatedKey
+  readonly replicaRegions: string[]
+  readonly secretObjectValue?: SecretProps['secretObjectValue']
+  readonly secretStringValue?: SecretProps['secretStringValue']
 }
 
 const secretArnToNameWithSuffix = (secret: ISecret) => {
@@ -127,11 +127,11 @@ export class ReplicatedSecret extends Secret {
     return super.grantWrite(grantee)
   }
 
-  grantRead(grantee: IGrantable): Grant {
+  grantRead(grantee: IGrantable, versionStages?: string[]): Grant {
     Object.values(this.secrets).forEach((secret) => {
-      secret?.grantRead(grantee)
+      secret?.grantRead(grantee, versionStages)
     })
     this.replicatedKey.grantDecrypt(grantee)
-    return super.grantRead(grantee)
+    return super.grantRead(grantee, versionStages)
   }
 }

@@ -10,14 +10,17 @@ import { mockClient } from 'aws-sdk-client-mock'
 import 'aws-sdk-client-mock-jest'
 
 import { onEvent } from '../src/lambda/lambda'
-import { Config, Quota } from '../src/types'
+import { Quota } from '../src/types'
 
 const sqMock = mockClient(ServiceQuotasClient)
 process.env.TEST = '1'
 
 const genEvent = (
   quotas: Quota[],
-  config: Config = {
+  config: {
+    failIfNotGranted: boolean
+    rerequestWhenDenied: boolean
+  } = {
     failIfNotGranted: false,
     rerequestWhenDenied: false,
   },

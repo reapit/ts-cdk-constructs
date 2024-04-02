@@ -12,5 +12,5 @@
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true
   },
-  "exclude": ["node_modules", "*.snapshot"]
+  "exclude": ["node_modules", "*.snapshot", "jsii-out", "dist"]
 }

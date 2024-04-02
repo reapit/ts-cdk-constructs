@@ -2,3 +2,8 @@ src
 tests
 .eslintrc.js
 tsconfig.json
+!.jsii
+!.jsii.gz
+
+# Exclude jsii outdir
+jsii-out
