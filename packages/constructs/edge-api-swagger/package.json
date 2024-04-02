@@ -17,7 +17,7 @@
   },
   "scripts": {
     "publish": "yarn jsii:publish",
-    "build": "yarn workspaces @reapit-cdk/edge-api build && yarn jsii:build && yarn jsii:package",
+    "build": "yarn workspace @reapit-cdk/edge-api build && yarn jsii:build && yarn jsii:package",
     "check": "yarn run root:check -p $(pwd)",
     "lint": "reapit-cdk-eslint",
     "test": "yarn run root:test -- $(pwd)",
