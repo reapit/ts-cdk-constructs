@@ -10,7 +10,7 @@
   "license": "MIT",
   "scripts": {
     "publish": "yarn jsii:publish",
-    "build": "yarn workspaces build @reapit-cdk/cloudfront-invalidation && yarn jsii:build && reapit-cdk-tsup --lambdas --no-main && yarn jsii:package",
+    "build": "yarn workspace build @reapit-cdk/cloudfront-invalidation && yarn jsii:build && reapit-cdk-tsup --lambdas --no-main && yarn jsii:package",
     "check": "yarn run root:check -p $(pwd)",
     "lint": "reapit-cdk-eslint",
     "test": "yarn run root:test -- $(pwd)",
