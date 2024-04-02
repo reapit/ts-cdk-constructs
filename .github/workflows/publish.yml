@@ -41,13 +41,10 @@ jobs:
         run: |
           yarn workspace ${{ steps.tagName.outputs.package }} run test
 
-      - name: Authenticate with NPM
-        run: |
-          yarn config set npmAuthToken ${{ secrets.CDK_NPM_TOKEN }}
-
       - name: Publish
         env:
           TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+          NPM_TOKEN: ${{ secrets.CDK_NPM_TOKEN }}
         run: |
           yarn workspace ${{ steps.tagName.outputs.package }} run publish
