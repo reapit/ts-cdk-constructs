@@ -10,6 +10,7 @@
   "license": "MIT",
   "types": "src/index.ts",
   "scripts": {
+    "publish": "yarn jsii:publish",
     "build": "yarn jsii:build && yarn jsii:package",
     "check": "yarn run root:check -p $(pwd)",
     "lint": "reapit-cdk-eslint",
