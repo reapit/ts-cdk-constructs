@@ -1,6 +1,6 @@
 {
   "name": "@reapit-cdk/cloudfront-invalidation",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "CloudFront invalidations are [very error prone](https://github.com/aws/aws-cdk/issues/15891#issuecomment-966456154), making it hard to invalidate distributions reliably. This construct aims to solve this problem by using a step function which is triggered on stack update, and uses exponential backoff to retry the invalidation. Inspired by https://github.com/aws/aws-cdk/issues/15891#issuecomment-1362163142.",
   "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/cloudfront-invalidation",
   "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/cloudfront-invalidation/readme.md",

@@ -1,6 +1,6 @@
 {
   "name": "@reapit-cdk/replicated-key",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Creates a KMS key and replicates it to the desired regions. Useful when replicating secrets across regions.",
   "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/replicated-key",
   "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/replicated-key/readme.md",
