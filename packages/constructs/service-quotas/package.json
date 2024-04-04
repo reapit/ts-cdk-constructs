@@ -1,6 +1,6 @@
 {
   "name": "@reapit-cdk/service-quotas",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "This construct allows you to IaC your service quotas",
   "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/modules/service-quotas",
   "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/modules/service-quotas/readme.md",

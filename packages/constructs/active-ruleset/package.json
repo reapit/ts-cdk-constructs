@@ -1,6 +1,6 @@
 {
   "name": "@reapit-cdk/active-ruleset",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "This construct returns the currently active SES receipt RuleSet, or creates one. This enables you to add rules to it.",
   "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/active-ruleset",
   "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/active-ruleset/readme.md",

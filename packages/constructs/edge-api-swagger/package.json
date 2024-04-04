@@ -1,6 +1,6 @@
 {
   "name": "@reapit-cdk/edge-api-swagger",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Add a swagger endpoint to your EdgeAPI",
   "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/edge-api-swagger",
   "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/edge-api-swagger/readme.md",
@@ -47,7 +47,7 @@
     "typescript": "^5.1.3"
   },
   "peerDependencies": {
-    "@reapit-cdk/edge-api": "^0.1.0",
+    "@reapit-cdk/edge-api": "^0.1.1",
     "aws-cdk-lib": "^2.96.2",
     "constructs": "^10.2.70"
   },

@@ -7,3 +7,6 @@ tsconfig.json
 
 # Exclude jsii outdir
 jsii-out
+
+!dist
+src/**/*
