@@ -8,7 +8,7 @@
     "url": "https://github.com/reapit/ts-cdk-constructs/issues"
   },
   "license": "MIT",
-  "types": "src/index.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
     "publish": "yarn jsii:publish",
     "build": "yarn jsii:build && yarn jsii:package",
@@ -27,11 +27,7 @@
   "repository": {
     "url": "https://github.com/reapit/ts-cdk-constructs.git"
   },
-  "publishConfig": {
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts"
-  },
-  "main": "src/index.ts",
+  "main": "dist/index.js",
   "peerDependencies": {
     "aws-cdk-lib": "^2.96.2",
     "constructs": "^10.2.70"

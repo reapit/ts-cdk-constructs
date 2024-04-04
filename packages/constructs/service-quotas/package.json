@@ -27,12 +27,8 @@
     "jsii:publish": "bash ../../../node_modules/publib/bin/publib jsii-out",
     "gen-types": "ts-node src/generate-types.ts"
   },
-  "publishConfig": {
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts"
-  },
-  "main": "src/index.ts",
-  "types": "src/index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "stability": "stable",
   "keywords": [
     "awscdk"

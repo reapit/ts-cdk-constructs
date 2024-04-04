@@ -28,12 +28,8 @@
     "jsii:publish": "bash ../../../node_modules/publib/bin/publib jsii-out",
     "setup": "ts-node src/setup"
   },
-  "main": "src/index.ts",
-  "types": "src/index.ts",
-  "publishConfig": {
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts"
-  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "stability": "stable",
   "keywords": [
     "awscdk"
