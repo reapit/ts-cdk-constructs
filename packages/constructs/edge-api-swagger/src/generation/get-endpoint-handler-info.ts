@@ -14,6 +14,8 @@ const typeSyntaxKindToString = (kind: ts.SyntaxKind) => {
       return 'null'
     case ts.SyntaxKind.AnyKeyword:
       return 'any'
+    case ts.SyntaxKind.TypeLiteral:
+      return 'literal'
   }
   throw new Error('unhandled kind: ' + kind)
 }
