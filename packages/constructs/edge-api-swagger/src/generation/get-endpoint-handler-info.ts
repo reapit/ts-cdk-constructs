@@ -17,7 +17,8 @@ const typeSyntaxKindToString = (kind: ts.SyntaxKind) => {
     case ts.SyntaxKind.TypeLiteral:
       return 'literal'
   }
-  throw new Error('unhandled kind: ' + kind)
+  console.error(new Error('unhandled kind: ' + kind))
+  return 'unknown'
 }
 
 const cleanComment = (comment: string) => {
