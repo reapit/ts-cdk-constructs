@@ -50,5 +50,5 @@ api.addEndpoint(
       title: '', // defaults to Edge API
       version: '', // defaults to 1.0.0
     },
-  }),
+  }).endpoint,
 )

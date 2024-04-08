@@ -1,4 +1,4 @@
-import { EdgeAPI, IFrontendEndpoint, endpointIsLambdaEndpoint, endpointIsProxyEndpoint } from '@reapit-cdk/edge-api'
+import { EdgeAPI, FrontendEndpoint, endpointIsLambdaEndpoint, endpointIsProxyEndpoint } from '@reapit-cdk/edge-api'
 import { Construct } from 'constructs'
 
 import { Bucket } from 'aws-cdk-lib/aws-s3'
@@ -49,7 +49,7 @@ const swaggerHtml = (urlPrefix: string) => `<!DOCTYPE html>
 </body>
 </html>`
 
-export class EdgeAPISwaggerEndpoint extends Construct implements IFrontendEndpoint {
+export class EdgeAPISwaggerEndpoint extends Construct {
   bucket: Bucket
   invalidationItems: string[] | undefined = [
     '/index.html',
@@ -59,6 +59,7 @@ export class EdgeAPISwaggerEndpoint extends Construct implements IFrontendEndpoi
     '/swagger-ui.css',
   ]
   pathPattern: string
+  endpoint: FrontendEndpoint
 
   constructor(scope: Construct, id: string, props: EdgeAPISwaggerEndpointProps) {
     super(scope, id)
@@ -119,5 +120,7 @@ export class EdgeAPISwaggerEndpoint extends Construct implements IFrontendEndpoi
       destinationKeyPrefix,
       retainOnDelete: false,
     })
+
+    this.endpoint = new FrontendEndpoint(this)
   }
 }
