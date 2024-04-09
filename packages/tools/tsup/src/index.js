@@ -25,6 +25,9 @@ if (!noMain) {
     dts: true,
     clean: true,
     external: [/@reapit-cdk\/(.*)/],
+
+    // metafile: true,
+    noExternal: ['@sentry/core', '@sentry/utils'],
   })
 }
 
