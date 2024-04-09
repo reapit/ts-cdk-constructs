@@ -1,20 +1,16 @@
 import { EventInput, JSONRequest, RCRequest } from './types'
 import { format } from 'util'
 
-type LogFn = (message?: any, ...optionalParams: any[]) => void
+export type LogLevel = 'info' | 'warning' | 'error' | 'critical' | 'panic'
 
-type LogLevel = 'info' | 'warning' | 'error' | 'critical' | 'panic'
-
-export type Logger = Record<LogLevel, LogFn>
-
-type LogEntry = {
+export type LogEntry = {
   level: LogLevel
   message: string
   timestamp: Date
   error?: Error
 }
 
-type MinimalLogPayload = {
+export type MinimalLogPayload = {
   event: EventInput
   functionName: string
   functionVersion: string
@@ -73,30 +69,10 @@ const scrub = <T extends MinimalLogPayload | LogPayload>(payload: T): T => {
   }
 }
 
-const writeOut = (payload: MinimalLogPayload | LogPayload) => {
+export type Transport = (payload: MinimalLogPayload | LogPayload) => void | Promise<void>
+
+export const consoleTransport = (payload: MinimalLogPayload | LogPayload) => {
   console.log(JSON.stringify(scrub(payload)))
-}
-
-const flush = (request: RCRequest<any>, entries: LogEntry[], centralize: boolean) => {
-  const {
-    meta: { functionName, functionVersion, invocationId, sessionId, event },
-    region,
-  } = request
-
-  const payload: LogPayload = {
-    entries,
-    event,
-    functionName,
-    functionVersion,
-    invocationId,
-    sessionId,
-    region,
-    request,
-    centralize,
-    timestamp: new Date(),
-  }
-
-  writeOut(payload)
 }
 
 type AdditionalLogData = {
@@ -128,7 +104,7 @@ export const panic = (error: Error, event: EventInput) => {
       },
     ],
   }
-  writeOut(payload)
+  consoleTransport(payload)
 }
 
 const stringifiableError = (error?: Error): Error | undefined => {
@@ -142,12 +118,18 @@ const stringifiableError = (error?: Error): Error | undefined => {
   }
 }
 
-export const createLogger = (request: RCRequest<any>): Logger => {
-  const entries: LogEntry[] = []
+export type LoggerConfig = {
+  transports: Transport[]
+}
 
-  const logFn =
-    (level: LogLevel): LogFn =>
-    (...args) => {
+export class Logger {
+  private request: RCRequest<any>
+  private entries: LogEntry[] = []
+  private transports: Transport[]
+  private queue: (void | Promise<void>)[] = []
+
+  private logFn(level: LogLevel) {
+    return (...args: any[]) => {
       if (level === 'warning') {
         console.warn(...args)
       } else if (level === 'critical' || level === 'error' || level === 'panic') {
@@ -157,23 +139,64 @@ export const createLogger = (request: RCRequest<any>): Logger => {
       } else {
         console.log(...args)
       }
-      entries.push({
+      this.entries.push({
         level,
         message: format(...args),
         timestamp: new Date(),
         error: stringifiableError(args.find(isAdditionalLogData)?.error),
       })
-      const centralize = level === 'error' || level === 'critical'
+      const centralize = level === 'error' || level === 'critical' || level === 'panic'
       if (centralize) {
-        flush(request, entries, centralize)
+        this.writeOut(centralize)
       }
     }
+  }
 
-  return {
-    info: logFn('info'),
-    warning: logFn('warning'),
-    error: logFn('error'),
-    critical: logFn('critical'),
-    panic: logFn('panic'),
+  private writeOut(centralize: boolean) {
+    const {
+      meta: { functionName, functionVersion, invocationId, sessionId, event },
+      region,
+    } = this.request
+
+    const payload: LogPayload = {
+      entries: this.entries,
+      event,
+      functionName,
+      functionVersion,
+      invocationId,
+      sessionId,
+      region,
+      request: this.request,
+      centralize,
+      timestamp: new Date(),
+    }
+
+    this.queue.push(...this.transports.map((transport) => transport(payload)))
+  }
+
+  info(...args: any[]) {
+    this.logFn('info')(...args)
+  }
+
+  warning(...args: any[]) {
+    this.logFn('warning')(...args)
+  }
+  error(...args: any[]) {
+    this.logFn('error')(...args)
+  }
+  critical(...args: any[]) {
+    this.logFn('critical')(...args)
+  }
+  panic(...args: any[]) {
+    this.logFn('panic')(...args)
+  }
+
+  async flush() {
+    await Promise.all(this.queue)
+  }
+
+  constructor(request: RCRequest<any>, config?: LoggerConfig) {
+    this.request = request
+    this.transports = config?.transports || [consoleTransport]
   }
 }

@@ -1,6 +1,6 @@
 import { CloudFrontRequestEvent } from 'aws-lambda'
 import { JSONRequest } from '../src'
-import { LogPayload, createLogger, panic } from '../src/logger'
+import { LogPayload, Logger, LoggerConfig, panic } from '../src/logger'
 
 const generateCloudfrontRequest = ({
   headers = {
@@ -56,7 +56,7 @@ const generateCloudfrontRequest = ({
   }
 }
 
-const getLogger = (body: any = { password: 'user-password' }) => {
+const getLogger = (body: any = { password: 'user-password' }, config?: LoggerConfig) => {
   const request: JSONRequest<any, any> = {
     env: {},
     headers: {
@@ -76,7 +76,7 @@ const getLogger = (body: any = { password: 'user-password' }) => {
       sessionId: 'session-id',
     },
   }
-  const logger = createLogger(request)
+  const logger = new Logger(request, config)
   return logger
 }
 
@@ -206,5 +206,25 @@ describe('logger', () => {
     expect(format.entries[0].error?.message).toBe('something went very wrong')
     expect(format.entries[0].error?.name).toBe('Big Error')
     expect(format.entries[0].level).toBe('panic')
+  })
+
+  it('transports - should be called', () => {
+    const transportMock = jest.fn()
+    const logger = getLogger(undefined, {
+      transports: [transportMock],
+    })
+    logger.info('something')
+    logger.info('something again')
+    logger.critical('oh no')
+    expect(transportMock).toHaveBeenCalledTimes(1)
+    const entries = transportMock.mock.calls[0][0].entries
+    expect(entries[0].level).toEqual('info')
+    expect(entries[0].message).toEqual('something')
+
+    expect(entries[1].level).toEqual('info')
+    expect(entries[1].message).toEqual('something again')
+
+    expect(entries[2].level).toEqual('critical')
+    expect(entries[2].message).toEqual('oh no')
   })
 })

@@ -3,7 +3,7 @@ import * as cloudfront from './cloudfront'
 import * as httpApi from './http-api'
 
 import { EventInput, JSONRequestHandler, RCHeaders, RCRequest, RCResponse, RequestHandler } from './types'
-import { createLogger, panic } from './logger'
+import { Logger, LoggerConfig, panic } from './logger'
 import { sessionIdHeaderName } from './config'
 
 const eventToRequest = <EnvType>(event: EventInput, context: Context): RCRequest<EnvType> => {
@@ -57,12 +57,17 @@ const respondToEvent = (event: EventInput, response: RCResponse) => {
   }
 }
 
-export const requestHandler = <EnvType>(requestHandler: RequestHandler<EnvType>) => {
+export type HandlerConfig = {
+  loggerConfig: LoggerConfig
+}
+
+export const requestHandler = <EnvType>(requestHandler: RequestHandler<EnvType>, handlerConfig: HandlerConfig) => {
   const fn = async (event: EventInput, conext: Context) => {
     try {
       const request = eventToRequest<EnvType>(event, conext)
-      const logger = createLogger(request)
+      const logger = new Logger(request, handlerConfig?.loggerConfig)
       if (request.method === 'OPTIONS') {
+        await logger.flush()
         return respondToEvent(event, {
           status: 200,
           headers: {},
@@ -70,6 +75,7 @@ export const requestHandler = <EnvType>(requestHandler: RequestHandler<EnvType>)
       }
       try {
         const response = await requestHandler({ ...request, logger })
+        await logger.flush()
         return respondToEvent(event, response)
       } catch (e) {
         logger.error(e)
@@ -103,13 +109,15 @@ const errorResponseToEvent = (event: EventInput, err: Error) => {
 
 export const jsonRequestHandler = <EnvType, BodyType = any>(
   jsonRequestHandler: JSONRequestHandler<EnvType, BodyType>,
+  handlerConfig?: HandlerConfig,
 ) => {
   const fn = async (event: EventInput, context: Context) => {
     try {
       const request = eventToRequest<EnvType>(event, context)
-      const logger = createLogger(request)
+      const logger = new Logger(request, handlerConfig?.loggerConfig)
       const body = request.body ? JSON.parse(request.body) : undefined
       if (request.method === 'OPTIONS') {
+        await logger.flush()
         return respondToEvent(event, {
           status: 200,
           headers: {},
@@ -122,6 +130,7 @@ export const jsonRequestHandler = <EnvType, BodyType = any>(
           body: body as BodyType | undefined,
           logger,
         })
+        await logger.flush()
 
         if (response.status === 302) {
           return respondToEvent(event, {
@@ -157,13 +166,15 @@ export const jsonRequestHandler = <EnvType, BodyType = any>(
 
 export const formRequestHandler = <EnvType, BodyType = any>(
   formRequestHandler: JSONRequestHandler<EnvType, BodyType>,
+  handlerConfig?: HandlerConfig,
 ) => {
   const fn = async (event: EventInput, context: Context) => {
     try {
       const request = eventToRequest<EnvType>(event, context)
-      const logger = createLogger(request)
+      const logger = new Logger(request, handlerConfig?.loggerConfig)
       const body = request.body ? Object.fromEntries(new URLSearchParams(request.body)) : undefined
       if (request.method === 'OPTIONS') {
+        await logger.flush()
         return respondToEvent(event, {
           status: 200,
           headers: {},
@@ -176,6 +187,7 @@ export const formRequestHandler = <EnvType, BodyType = any>(
           body: body as BodyType | undefined,
           logger,
         })
+        await logger.flush()
 
         if (response.status === 302) {
           return respondToEvent(event, {

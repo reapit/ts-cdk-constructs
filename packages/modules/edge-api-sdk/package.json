@@ -1,8 +1,8 @@
 {
   "name": "@reapit-cdk/edge-api-sdk",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
   "description": "Provides convenience wrappers for accepting and responding to [@reapit-cdk/edge-api]('../../constructs/edge-api/readme.md') lambda requests.",
-  "version": "0.0.0",
+  "version": "0.0.9",
   "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/modules/edge-api-sdk",
   "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/modules/edge-api-sdk/readme.md",
   "bugs": {
@@ -13,9 +13,6 @@
     "url": "https://github.com/reapit/ts-cdk-constructs.git"
   },
   "license": "MIT",
-  "publishConfig": {
-    "main": "dist/index.js"
-  },
   "scripts": {
     "publish": "yarn npm publish",
     "check": "yarn run root:check -p $(pwd)",
@@ -29,5 +26,10 @@
     "@reapit-cdk/tsup": "workspace:^",
     "@types/aws-lambda": "^8.10.121",
     "aws-lambda": "^1.0.7"
+  },
+  "dependencies": {
+    "@sentry/node": "^7.109.0",
+    "@sentry/types": "^7.109.0",
+    "@sentry/utils": "^7.109.0"
   }
 }
