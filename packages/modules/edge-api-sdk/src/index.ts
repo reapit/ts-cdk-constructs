@@ -1,4 +1,4 @@
 export * from './edge-api-sdk'
 export * from './types'
 export * from './config'
-export * from './sentry/sentry'
+export * as Sentry from './sentry/sentry'

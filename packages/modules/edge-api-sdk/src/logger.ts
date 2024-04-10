@@ -120,6 +120,7 @@ const stringifiableError = (error?: Error): Error | undefined => {
 
 export type LoggerConfig = {
   transports: Transport[]
+  noConsole?: boolean
 }
 
 export class Logger {
@@ -197,6 +198,9 @@ export class Logger {
 
   constructor(request: RCRequest<any>, config?: LoggerConfig) {
     this.request = request
-    this.transports = config?.transports || [consoleTransport]
+    this.transports = config?.transports || []
+    if (!config?.noConsole) {
+      this.transports.unshift(consoleTransport)
+    }
   }
 }
