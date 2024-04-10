@@ -61,10 +61,27 @@ export type HandlerConfig = {
   loggerConfig: LoggerConfig
 }
 
-export const requestHandler = <EnvType>(requestHandler: RequestHandler<EnvType>, handlerConfig: HandlerConfig) => {
-  const fn = async (event: EventInput, conext: Context) => {
+export type HandlerConfigResolver<EnvType> = (request: RCRequest<EnvType>) => HandlerConfig
+
+const resolveHandlerConfig = <EnvType>(
+  configOrResolver: HandlerConfig | HandlerConfigResolver<EnvType> | undefined,
+  request: RCRequest<EnvType>,
+): HandlerConfig | undefined => {
+  if (typeof configOrResolver === 'function') {
+    return configOrResolver(request)
+  } else {
+    return configOrResolver
+  }
+}
+
+export const requestHandler = <EnvType>(
+  requestHandler: RequestHandler<EnvType>,
+  handlerConfigOrResolver?: HandlerConfig | HandlerConfigResolver<EnvType>,
+) => {
+  const fn = async (event: EventInput, context: Context) => {
     try {
-      const request = eventToRequest<EnvType>(event, conext)
+      const request = eventToRequest<EnvType>(event, context)
+      const handlerConfig = resolveHandlerConfig(handlerConfigOrResolver, request)
       const logger = new Logger(request, handlerConfig?.loggerConfig)
       if (request.method === 'OPTIONS') {
         await logger.flush()
@@ -109,11 +126,12 @@ const errorResponseToEvent = (event: EventInput, err: Error) => {
 
 export const jsonRequestHandler = <EnvType, BodyType = any>(
   jsonRequestHandler: JSONRequestHandler<EnvType, BodyType>,
-  handlerConfig?: HandlerConfig,
+  handlerConfigOrResolver?: HandlerConfig | HandlerConfigResolver<EnvType>,
 ) => {
   const fn = async (event: EventInput, context: Context) => {
     try {
       const request = eventToRequest<EnvType>(event, context)
+      const handlerConfig = resolveHandlerConfig(handlerConfigOrResolver, request)
       const logger = new Logger(request, handlerConfig?.loggerConfig)
       const body = request.body ? JSON.parse(request.body) : undefined
       if (request.method === 'OPTIONS') {
@@ -166,11 +184,12 @@ export const jsonRequestHandler = <EnvType, BodyType = any>(
 
 export const formRequestHandler = <EnvType, BodyType = any>(
   formRequestHandler: JSONRequestHandler<EnvType, BodyType>,
-  handlerConfig?: HandlerConfig,
+  handlerConfigOrResolver?: HandlerConfig | HandlerConfigResolver<EnvType>,
 ) => {
   const fn = async (event: EventInput, context: Context) => {
     try {
       const request = eventToRequest<EnvType>(event, context)
+      const handlerConfig = resolveHandlerConfig(handlerConfigOrResolver, request)
       const logger = new Logger(request, handlerConfig?.loggerConfig)
       const body = request.body ? Object.fromEntries(new URLSearchParams(request.body)) : undefined
       if (request.method === 'OPTIONS') {

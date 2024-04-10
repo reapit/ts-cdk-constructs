@@ -7,7 +7,35 @@ import {
   CloudFrontRequestEvent,
   CloudFrontResultResponse,
 } from 'aws-lambda'
-import { jsonRequestHandler, JSONRequest, RedirectionResponse, formRequestHandler, requestHandler } from '../src'
+import { jsonRequestHandler, RedirectionResponse, formRequestHandler, requestHandler } from '../src'
+import { Logger, LoggerConfig } from '../src/logger'
+
+const mockLoggerInfo = jest.fn()
+const mockLoggerError = jest.fn()
+const mockLoggerPanic = jest.fn()
+const mockLoggerFlush = jest.fn()
+
+jest.mock('../src/logger', () => {
+  return {
+    Logger: jest.fn().mockImplementation(() => {
+      return {
+        info: mockLoggerInfo,
+        error: mockLoggerError,
+        panic: mockLoggerPanic,
+        flush: mockLoggerFlush,
+      }
+    }),
+  }
+})
+
+beforeEach(() => {
+  //@ts-expect-error
+  Logger.mockClear()
+  mockLoggerInfo.mockClear()
+  mockLoggerError.mockClear()
+  mockLoggerPanic.mockClear()
+  mockLoggerFlush.mockClear()
+})
 
 process.env.AWS_REGION = 'eu-west-2'
 
@@ -299,8 +327,6 @@ const testEventType = (generateRequest: RequestGenerator, generateResponse: Resp
       describe('error handling', () => {
         it('should allow errors to be thrown', async () => {
           const message = 'asdfg'
-          const ce = jest.spyOn(console, 'error').mockImplementation(() => {})
-          const cl = jest.spyOn(console, 'log').mockImplementation(() => {})
           const handler = jest.fn().mockRejectedValue(new Error(message))
           const result = await func(handler)(
             generateRequest({
@@ -314,10 +340,59 @@ const testEventType = (generateRequest: RequestGenerator, generateResponse: Resp
           expect(res).toHaveProperty('error')
           expect(res.error).toHaveProperty('message', message)
 
-          expect(ce).toHaveBeenCalled()
-          expect(cl).toHaveBeenCalled()
-          ce.mockRestore()
-          cl.mockRestore()
+          expect(mockLoggerError).toHaveBeenCalled()
+        })
+      })
+
+      describe('config resolution', () => {
+        it('should pass handlerConfig.loggerConfig to the logger', async () => {
+          const handler = jest.fn().mockResolvedValue({})
+
+          const loggerConfig: LoggerConfig = {
+            transports: [],
+          }
+
+          const request = generateRequest({
+            uri: '/',
+          })
+
+          await func(handler, {
+            loggerConfig,
+          })(request, {})
+
+          expect(Logger).toHaveBeenCalledWith(expect.any(Object), loggerConfig)
+        })
+
+        it('should run the resolver to get the handlerConfig if needed', async () => {
+          const loggerConfig: LoggerConfig = {
+            transports: [],
+          }
+          const handler = jest.fn().mockResolvedValue({})
+          const handlerConfigResolver = jest.fn().mockReturnValue({
+            loggerConfig,
+          })
+
+          const request = generateRequest({
+            uri: '/',
+          })
+
+          await func(handler, handlerConfigResolver)(request, {})
+
+          expect(Logger).toHaveBeenCalledWith(
+            expect.objectContaining({
+              path: '/',
+              method: 'GET',
+              host: 'google.com',
+            }),
+            loggerConfig,
+          )
+          expect(handlerConfigResolver).toHaveBeenCalledWith(
+            expect.objectContaining({
+              path: '/',
+              method: 'GET',
+              host: 'google.com',
+            }),
+          )
         })
       })
     })
