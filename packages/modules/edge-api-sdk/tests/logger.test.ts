@@ -2,7 +2,7 @@ import { CloudFrontRequestEvent } from 'aws-lambda'
 import { JSONRequest } from '../src'
 import { LogPayload, Logger, LoggerConfig, panic } from '../src/logger'
 
-const generateCloudfrontRequest = ({
+export const generateCloudfrontRequest = ({
   headers = {
     host: [{ key: 'host', value: 'google.com' }],
   },
