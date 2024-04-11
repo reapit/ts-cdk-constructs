@@ -22,6 +22,7 @@ export type InitProps = {
   dsn: string
   environment?: string
   release?: string
+  sessionId?: string
 }
 
 const logLevelToSeverityLevel = (logLevel: LogLevel): SeverityLevel => {
@@ -47,6 +48,11 @@ export const init = (props: InitProps): Transport => {
           }
         : undefined,
       timestamp: errorEntry?.timestamp.getTime(),
+      tags: {
+        sessionId: props.sessionId,
+      },
+      release: props.release,
+      environment: props.environment,
       breadcrumbs: payload.entries.map((entry) => {
         return {
           level: logLevelToSeverityLevel(entry.level),
