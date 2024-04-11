@@ -13,17 +13,11 @@ import {
 import { SeverityLevel } from '@sentry/types'
 
 import { LogLevel, LogPayload, MinimalLogPayload, Transport } from '../logger'
+import { RCHeaders, RCQuery, RCRequest } from '../types'
 
 const stackParser = stackParserFromStackParserOptions(
   createStackParser(nodeStackLineParser(createGetModuleFromFilename())),
 )
-
-export type InitProps = {
-  dsn: string
-  environment?: string
-  release?: string
-  sessionId?: string
-}
 
 const logLevelToSeverityLevel = (logLevel: LogLevel): SeverityLevel => {
   if (logLevel === 'panic' || logLevel === 'critical') {
@@ -32,8 +26,40 @@ const logLevelToSeverityLevel = (logLevel: LogLevel): SeverityLevel => {
   return logLevel
 }
 
-export const init = (props: InitProps): Transport => {
-  const components = dsnFromString(props.dsn)
+export const getCookies = (cookie: string): Record<string, string> =>
+  Object.fromEntries(
+    cookie
+      .split('; ')
+      .map((v) => {
+        try {
+          return v.split(/=(.*)/s).map(decodeURIComponent)
+        } catch {
+          return ['', '']
+        }
+      })
+      .filter(([v]) => !!v),
+  )
+
+const pickFirst = (queryOrHeaders: RCQuery | RCHeaders) => {
+  return Object.entries(queryOrHeaders)
+    .map(([k, v]) => [k, Array.isArray(v) ? v[0] : v])
+    .reduce((pv, cv) => {
+      return {
+        ...pv,
+        [cv[0]]: cv[1],
+      }
+    }, {})
+}
+
+export const init = (request: RCRequest<{ sentryDsn: string; sentryRelease: string }>): Transport => {
+  const {
+    host,
+    cookies,
+    env: { sentryDsn, sentryRelease },
+    region,
+    meta: { sessionId, functionName, functionVersion, invocationId },
+  } = request
+  const components = dsnFromString(sentryDsn)
   if (!components) {
     throw new Error('invalid DSN provided')
   }
@@ -49,10 +75,34 @@ export const init = (props: InitProps): Transport => {
         : undefined,
       timestamp: errorEntry?.timestamp.getTime(),
       tags: {
-        sessionId: props.sessionId,
+        sessionId,
+        functionName,
       },
-      release: props.release,
-      environment: props.environment,
+      contexts: {
+        invocation: {
+          functionName,
+          functionVersion,
+          invocationId,
+          region,
+        },
+      },
+      request: {
+        headers: pickFirst(request.headers),
+        method: request.method,
+        query_string: request.query ? pickFirst(request.query) : undefined,
+        cookies: cookies.map(getCookies).reduce(
+          (pv, cv) => {
+            return {
+              ...pv,
+              ...cv,
+            }
+          },
+          {} as Record<string, string>,
+        ),
+        url: request.path,
+      },
+      release: sentryRelease,
+      environment: host,
       breadcrumbs: payload.entries.map((entry) => {
         return {
           level: logLevelToSeverityLevel(entry.level),
