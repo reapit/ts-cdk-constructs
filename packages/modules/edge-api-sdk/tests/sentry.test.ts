@@ -92,7 +92,7 @@ describe('sentry logger transport', () => {
       {
         level: 'critical',
         message: 'the error message',
-        timestamp: new Date(1),
+        timestamp: new Date(1000),
         error: new Error('oh no'),
       },
     ])
@@ -118,7 +118,7 @@ describe('sentry logger transport', () => {
       {
         level: 'critical',
         message: 'the error message',
-        timestamp: new Date(1),
+        timestamp: new Date(1000),
         error: new Error('oh no'),
       },
     ])
