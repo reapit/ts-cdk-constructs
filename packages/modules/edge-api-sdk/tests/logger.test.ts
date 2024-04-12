@@ -132,10 +132,8 @@ describe('logger', () => {
     logger.info('b')
     logger.info('c')
     logger.error({
-      error: {
-        name: 'Error',
-        message: 'something went wrong',
-      },
+      name: 'Error',
+      message: 'something went wrong',
     })
     logger.info('d')
     logger.info('e')
@@ -146,7 +144,7 @@ describe('logger', () => {
     expect(format.entries[0].message).toBe('a')
     expect(format.entries[1].message).toBe('b')
     expect(format.entries[2].message).toBe('c')
-    expect(format.entries[3].message).toBe("{ error: { name: 'Error', message: 'something went wrong' } }")
+    expect(format.entries[3].message).toBe("{ name: 'Error', message: 'something went wrong' }")
     expect(format.entries[3].error?.message).toBe('something went wrong')
 
     expect(format.functionName).toBe('function-name')
