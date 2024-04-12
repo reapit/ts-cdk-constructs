@@ -342,6 +342,20 @@ const testEventType = (generateRequest: RequestGenerator, generateResponse: Resp
 
           expect(mockLoggerError).toHaveBeenCalled()
         })
+
+        it('should flush the logger after an error is thrown', async () => {
+          const handler = jest.fn().mockRejectedValue(new Error(''))
+          await func(handler)(
+            generateRequest({
+              uri: '/',
+              env: {},
+            }),
+            {},
+          )
+
+          expect(mockLoggerError).toHaveBeenCalled()
+          expect(mockLoggerFlush).toHaveBeenCalled()
+        })
       })
 
       describe('config resolution', () => {
