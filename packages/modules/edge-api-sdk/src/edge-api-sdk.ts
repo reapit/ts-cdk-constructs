@@ -96,6 +96,7 @@ export const requestHandler = <EnvType>(
         return respondToEvent(event, response)
       } catch (e) {
         logger.error(e)
+        await logger.flush()
         return errorResponseToEvent(event, e as Error)
       }
     } catch (e) {
@@ -169,6 +170,7 @@ export const jsonRequestHandler = <EnvType, BodyType = any>(
         })
       } catch (e) {
         logger.error(e)
+        await logger.flush()
         return errorResponseToEvent(event, e as Error)
       }
     } catch (e) {
@@ -227,6 +229,7 @@ export const formRequestHandler = <EnvType, BodyType = any>(
         })
       } catch (e) {
         logger.error(e)
+        await logger.flush()
         return errorResponseToEvent(event, e as Error)
       }
     } catch (e) {
