@@ -74,6 +74,23 @@ const resolveHandlerConfig = <EnvType>(
   }
 }
 
+const attemptPanicLog = async (
+  e: any,
+  event: EventInput,
+  context: Context,
+  handlerConfigOrResolver?: HandlerConfig | HandlerConfigResolver<any>,
+) => {
+  try {
+    const request = eventToRequest<any>(event, context)
+    const handlerConfig = resolveHandlerConfig(handlerConfigOrResolver, request)
+    const logger = new Logger(request, handlerConfig?.loggerConfig)
+    await logger.critical(e)
+    await logger.flush()
+  } catch (e) {
+    panic(e as Error, event)
+  }
+}
+
 export const requestHandler = <EnvType>(
   requestHandler: RequestHandler<EnvType>,
   handlerConfigOrResolver?: HandlerConfig | HandlerConfigResolver<EnvType>,
@@ -101,6 +118,7 @@ export const requestHandler = <EnvType>(
       }
     } catch (e) {
       panic(e as Error, event)
+      await attemptPanicLog(e, event, context, handlerConfigOrResolver)
       throw new Error('unhandled error')
     }
   }
@@ -175,6 +193,7 @@ export const jsonRequestHandler = <EnvType, BodyType = any>(
       }
     } catch (e) {
       panic(e as Error, event)
+      await attemptPanicLog(e, event, context, handlerConfigOrResolver)
       throw new Error('unhandled error')
     }
   }
@@ -234,6 +253,7 @@ export const formRequestHandler = <EnvType, BodyType = any>(
       }
     } catch (e) {
       panic(e as Error, event)
+      await attemptPanicLog(e, event, context, handlerConfigOrResolver)
       throw new Error('unhandled error')
     }
   }
