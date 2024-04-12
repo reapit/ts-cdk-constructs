@@ -7,13 +7,13 @@ import {
   nodeStackLineParser,
   exceptionFromError,
   dsnFromString,
-  serializeEnvelope,
 } from '@sentry/utils'
 
 import { SeverityLevel } from '@sentry/types'
 
 import { LogLevel, LogPayload, MinimalLogPayload, Transport } from '../logger'
 import { RCHeaders, RCQuery, RCRequest } from '../types'
+import { serializeEnvelope } from './serialize-envelope'
 
 const stackParser = stackParserFromStackParserOptions(
   createStackParser(nodeStackLineParser(createGetModuleFromFilename())),
@@ -51,6 +51,8 @@ const pickFirst = (queryOrHeaders: RCQuery | RCHeaders) => {
     }, {})
 }
 
+const dateToSecs = (d: Date) => Math.round(d.getTime() / 1000)
+
 export const init = (request: RCRequest<{ sentryDsn: string; sentryRelease: string }>): Transport => {
   const {
     host,
@@ -73,7 +75,7 @@ export const init = (request: RCRequest<{ sentryDsn: string; sentryRelease: stri
             values: [exception],
           }
         : undefined,
-      timestamp: errorEntry?.timestamp.getTime(),
+      timestamp: errorEntry ? dateToSecs(errorEntry?.timestamp) : undefined,
       tags: {
         sessionId,
         functionName,
@@ -107,7 +109,7 @@ export const init = (request: RCRequest<{ sentryDsn: string; sentryRelease: stri
         return {
           level: logLevelToSeverityLevel(entry.level),
           message: entry.message,
-          timestamp: entry.timestamp.getTime(),
+          timestamp: dateToSecs(entry.timestamp),
         }
       }),
     })
