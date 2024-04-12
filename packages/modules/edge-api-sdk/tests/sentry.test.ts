@@ -2,11 +2,13 @@ import { enableFetchMocks } from 'jest-fetch-mock'
 import fetchMock from 'jest-fetch-mock'
 enableFetchMocks()
 
-import { JSONRequest } from '../src'
+import { JSONRequest, jsonRequestHandler } from '../src'
 import { init } from '../src/sentry/sentry'
 import { generateCloudfrontRequest } from './logger.test'
 import { LogEntry, LogPayload } from '../src/logger'
 import { Event } from '@sentry/types'
+
+process.env.AWS_REGION = 'eu-west-2'
 
 const generateLogPayload = (entries: LogEntry[]): LogPayload => {
   const event = generateCloudfrontRequest({})
@@ -150,5 +152,43 @@ describe('sentry logger transport', () => {
       cookies: {},
       url: '/',
     })
+  })
+})
+
+describe('sentry in edge-api-sdk', () => {
+  beforeEach(() => {
+    fetchMock.resetMocks()
+  })
+
+  it('should send unhandled errors to sentry', async () => {
+    const handler = jest.fn().mockRejectedValue(new Error('error message'))
+    const env = {
+      sentryDsn: 'https://asdf@qwerty.ingest.sentry.io/123456',
+      sentryRelease: 'localhost',
+    }
+
+    await jsonRequestHandler<any>(handler, (request) => ({
+      loggerConfig: {
+        transports: [init(request)],
+      },
+    }))(
+      generateCloudfrontRequest({
+        uri: '/',
+        env,
+        body: JSON.stringify({ something: 'here' }),
+      }),
+      {} as any,
+    )
+
+    expect(fetchMock).toBeCalledTimes(1)
+
+    const [, reqInit] = fetchMock.mock.calls[0]
+    const [, , event] = (reqInit?.body as string)?.split('\n').map((str) => JSON.parse(str)) ?? []
+    const ev = event as Event
+
+    expect(ev).toHaveProperty('exception')
+    const values = ev?.exception?.values
+    expect(values?.[0].type).toEqual('Error')
+    expect(values?.[0].value).toEqual('error message')
   })
 })

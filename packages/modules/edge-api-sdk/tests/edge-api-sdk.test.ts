@@ -123,7 +123,7 @@ const generateApiGatewayRequest = ({
   }
 }
 
-const generateCloudfrontRequest = ({
+export const generateCloudfrontRequest = ({
   headers = {
     host: [{ key: 'host', value: 'google.com' }],
   },

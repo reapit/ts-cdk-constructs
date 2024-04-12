@@ -75,17 +75,6 @@ export const consoleTransport = (payload: MinimalLogPayload | LogPayload) => {
   console.log(JSON.stringify(scrub(payload)))
 }
 
-type AdditionalLogData = {
-  error: Error
-}
-
-const isAdditionalLogData = (thing: any): thing is AdditionalLogData => {
-  if (typeof thing === 'object' && thing.error && typeof thing.error === 'object' && thing.error.name) {
-    return true
-  }
-  return false
-}
-
 export const panic = (error: Error, event: EventInput) => {
   const { AWS_REGION, AWS_LAMBDA_FUNCTION_NAME, AWS_LAMBDA_FUNCTION_VERSION } = process.env
   const payload: MinimalLogPayload = {
@@ -123,6 +112,10 @@ export type LoggerConfig = {
   noConsole?: boolean
 }
 
+const isError = (arg: any): arg is Error => {
+  return typeof arg === 'object' && typeof arg.name === 'string'
+}
+
 export class Logger {
   private request: RCRequest<any>
   private entries: LogEntry[] = []
@@ -144,7 +137,7 @@ export class Logger {
         level,
         message: format(...args),
         timestamp: new Date(),
-        error: stringifiableError(args.find(isAdditionalLogData)?.error),
+        error: args.find(isError),
       })
       const centralize = level === 'error' || level === 'critical' || level === 'panic'
       if (centralize) {
