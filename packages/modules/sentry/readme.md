@@ -1,16 +1,16 @@
-# @reapit-cdk/email-receiver-types
+# @reapit-cdk/sentry
 
 
-![npm version](https://img.shields.io/npm/v/@reapit-cdk/email-receiver-types)
-![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/email-receiver-types)
-![coverage: 0%25](https://img.shields.io/badge/coverage-0%25-red)
+![npm version](https://img.shields.io/npm/v/@reapit-cdk/sentry)
+![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/sentry)
+![coverage: 85.23%25](https://img.shields.io/badge/coverage-85.23%25-green)
 
-Types for @reapit-cdk/email-receiver and client.
+Minimal Sentry SDK
 
 ## Package Installation:
 
 ```sh
-yarn add --dev @reapit-cdk/email-receiver-types
+yarn add --dev @reapit-cdk/sentry
 # or
-npm install @reapit-cdk/email-receiver-types --save-dev
+npm install @reapit-cdk/sentry --save-dev
 ```

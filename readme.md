@@ -1,5 +1,5 @@
 # @reapit-cdk/ts-constructs
-![coverage: 92.11%25](https://img.shields.io/badge/coverage-92.11%25-green)
+![coverage: 90.32%25](https://img.shields.io/badge/coverage-90.32%25-green)
 CDK Constructs Monorepo
 ## Constructs
 
@@ -132,7 +132,7 @@ This module helps write custom resource handlers. It's designed to work with the
 
 ![npm version](https://img.shields.io/npm/v/@reapit-cdk/edge-api-sdk)
 ![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/edge-api-sdk)
-![coverage: 95.8%25](https://img.shields.io/badge/coverage-95.8%25-green)
+![coverage: 93.53%25](https://img.shields.io/badge/coverage-93.53%25-green)
 
 Provides convenience wrappers for accepting and responding to [@reapit-cdk/edge-api]('../../constructs/edge-api/readme.md') lambda requests.
 <h3><a href="packages/modules/email-receiver-client">@reapit-cdk/email-receiver-client</a></h3>
@@ -149,6 +149,13 @@ This module helps you write tests which rely on receiving emails. Once you have 
 ![coverage: 0%25](https://img.shields.io/badge/coverage-0%25-red)
 
 Types for @reapit-cdk/email-receiver and client.
+<h3><a href="packages/modules/sentry">@reapit-cdk/sentry</a></h3>
+
+![npm version](https://img.shields.io/npm/v/@reapit-cdk/sentry)
+![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/sentry)
+![coverage: 85.23%25](https://img.shields.io/badge/coverage-85.23%25-green)
+
+Minimal Sentry SDK
 
 </details>
 
