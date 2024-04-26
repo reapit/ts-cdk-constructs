@@ -3,7 +3,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "description": "Provides convenience wrappers for accepting and responding to [@reapit-cdk/edge-api]('../../constructs/edge-api/readme.md') lambda requests.",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/modules/edge-api-sdk",
   "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/modules/edge-api-sdk/readme.md",
   "bugs": {

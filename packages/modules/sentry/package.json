@@ -2,7 +2,7 @@
   "name": "@reapit-cdk/sentry",
   "description": "Minimal Sentry SDK",
   "main": "src/index.ts",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/modules/sentry",
   "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/modules/sentry/readme.md",
   "bugs": {
