@@ -2,13 +2,66 @@ import { enableFetchMocks } from 'jest-fetch-mock'
 import fetchMock from 'jest-fetch-mock'
 enableFetchMocks()
 
-import { JSONRequest, jsonRequestHandler } from '../src'
-import { init } from '../src/sentry/sentry'
-import { generateCloudfrontRequest } from './logger.test'
-import { LogEntry, LogPayload } from '../src/logger'
+import { JSONRequest, jsonRequestHandler } from '@reapit-cdk/edge-api-sdk/src'
+import { initSentryLogger } from '../src/edge-api-sentry-logger'
+import { LogEntry, LogPayload } from '@reapit-cdk/edge-api-sdk/src/logger'
 import { Event } from '@sentry/types'
 
 process.env.AWS_REGION = 'eu-west-2'
+
+const generateCloudfrontRequest = ({
+  headers = {
+    host: [{ key: 'host', value: 'google.com' }],
+  },
+  method = 'GET',
+  querystring = '',
+  uri,
+  body = JSON.stringify('something'),
+  env,
+}: any): any => {
+  return {
+    Records: [
+      {
+        cf: {
+          config: {
+            distributionDomainName: 'asdf',
+            distributionId: 'asdf',
+            eventType: 'origin-request',
+            requestId: '1234',
+          },
+          request: {
+            clientIp: '1.1.1.1',
+            headers,
+            method,
+            querystring,
+            uri,
+            origin: {
+              s3: {
+                authMethod: 'origin-access-identity',
+                domainName: '',
+                path: '',
+                region: '',
+                customHeaders: env
+                  ? {
+                      env: [{ key: 'env', value: JSON.stringify(env) }],
+                    }
+                  : {},
+              },
+            },
+            body: body
+              ? {
+                  action: 'replace',
+                  encoding: 'text',
+                  inputTruncated: false,
+                  data: body,
+                }
+              : undefined,
+          },
+        },
+      },
+    ],
+  }
+}
 
 const generateLogPayload = (entries: LogEntry[]): LogPayload => {
   const event = generateCloudfrontRequest({})
@@ -52,13 +105,13 @@ const generateLogPayload = (entries: LogEntry[]): LogPayload => {
   }
 }
 
-describe('sentry logger transport', () => {
+describe('edge-api-sentry-logger', () => {
   beforeEach(() => {
     fetchMock.resetMocks()
   })
   it('should init', () => {
     const { request } = generateLogPayload([])
-    init(request)
+    initSentryLogger(request)
   })
 
   it('should send exceptions to sentry', async () => {
@@ -70,7 +123,7 @@ describe('sentry logger transport', () => {
         error: new Error('oh no'),
       },
     ])
-    const report = init(payload.request)
+    const report = initSentryLogger(payload.request)
 
     await report(payload)
 
@@ -98,7 +151,7 @@ describe('sentry logger transport', () => {
         error: new Error('oh no'),
       },
     ])
-    const report = init(payload.request)
+    const report = initSentryLogger(payload.request)
 
     await report(payload)
     const [, reqInit] = fetchMock.mock.calls[0]
@@ -124,7 +177,7 @@ describe('sentry logger transport', () => {
         error: new Error('oh no'),
       },
     ])
-    const report = init(payload.request)
+    const report = initSentryLogger(payload.request)
     await report(payload)
     const [, reqInit] = fetchMock.mock.calls[0]
     const [, , event] = (reqInit?.body as string)?.split('\n').map((str) => JSON.parse(str)) ?? []
@@ -169,7 +222,7 @@ describe('sentry in edge-api-sdk', () => {
 
     await jsonRequestHandler<any>(handler, (request) => ({
       loggerConfig: {
-        transports: [init(request)],
+        transports: [initSentryLogger(request)],
       },
     }))(
       generateCloudfrontRequest({
