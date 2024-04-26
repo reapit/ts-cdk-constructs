@@ -3,7 +3,7 @@
   "type": "module",
   "description": "Easily build @reapit-cdk constructs and custom resource lambdas.",
   "dependencies": {
-    "tsup": "7.2.0"
+    "tsup": "8.0.2"
   },
   "devDependencies": {
     "@reapit-cdk/eslint-config": "workspace:^"
