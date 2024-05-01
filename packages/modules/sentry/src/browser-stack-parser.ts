@@ -91,7 +91,7 @@ const chromeStackParserFn: StackLineParserFn = (line) => {
   const parts = chromeRegex.exec(line)
 
   if (parts) {
-    const isEval = parts[2] && parts[2].startsWith('eval') // start of line
+    const isEval = parts?.[2]?.startsWith('eval') // start of line
 
     if (isEval) {
       const subMatch = chromeEvalRegex.exec(parts[2])
