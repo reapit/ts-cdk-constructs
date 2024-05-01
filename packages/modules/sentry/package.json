@@ -17,7 +17,7 @@
     "check": "yarn run root:check -p $(pwd)",
     "lint": "reapit-cdk-eslint",
     "test": "yarn run root:test -- $(pwd)",
-    "build": "reapit-cdk-tsup",
+    "build": "reapit-cdk-tsup --is-sentry",
     "prepack": "yarn build"
   },
   "devDependencies": {
@@ -26,8 +26,10 @@
   },
   "dependencies": {
     "@reapit-cdk/edge-api-sdk": "workspace:^",
-    "@sentry/node": "^7.112.2",
-    "@sentry/types": "^7.112.2",
-    "@sentry/utils": "^7.112.2"
+    "@sentry-internal/browser-utils": "8.0.0-beta.5",
+    "@sentry/browser": "8.0.0-beta.5",
+    "@sentry/node": "8.0.0-beta.5",
+    "@sentry/types": "8.0.0-beta.5",
+    "@sentry/utils": "8.0.0-beta.5"
   }
 }

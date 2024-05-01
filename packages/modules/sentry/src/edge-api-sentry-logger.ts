@@ -17,6 +17,7 @@ import {
 
 import { createGetModuleFromFilename } from './module'
 import { getCookies, sendEnvelope, validateSentryDsn } from './sentry'
+import { dateToSecs } from './utils'
 
 const stackParser = stackParserFromStackParserOptions(
   createStackParser(nodeStackLineParser(createGetModuleFromFilename())),
@@ -39,8 +40,6 @@ const pickFirst = (queryOrHeaders: RCQuery | RCHeaders) =>
       }),
       {},
     )
-
-const dateToSecs = (d: Date) => Math.round(d.getTime() / 1000)
 
 export const initSentryLogger = (request: RCRequest<{ sentryDsn: string; sentryRelease: string }>): Transport => {
   const {
