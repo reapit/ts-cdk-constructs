@@ -1,3 +1,26 @@
+/** 
+ * MIT License
+
+Copyright (c) 2024 Functional Software, Inc. dba Sentry
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+ */
 import { StackFrame, StackLineParserFn, StackLineParser } from '@sentry/types'
 import { createStackParser } from '@sentry/utils'
 
@@ -68,7 +91,7 @@ const chromeStackParserFn: StackLineParserFn = (line) => {
   const parts = chromeRegex.exec(line)
 
   if (parts) {
-    const isEval = parts[2] && parts[2].indexOf('eval') === 0 // start of line
+    const isEval = parts[2] && parts[2].startsWith('eval') // start of line
 
     if (isEval) {
       const subMatch = chromeEvalRegex.exec(parts[2])
@@ -87,8 +110,6 @@ const chromeStackParserFn: StackLineParserFn = (line) => {
 
     return createFrame(filename, func, parts[3] ? +parts[3] : undefined, parts[4] ? +parts[4] : undefined)
   }
-
-  return
 }
 
 export const chromeStackLineParser: StackLineParser = [CHROME_PRIORITY, chromeStackParserFn]
@@ -125,8 +146,6 @@ const gecko: StackLineParserFn = (line) => {
 
     return createFrame(filename, func, parts[4] ? +parts[4] : undefined, parts[5] ? +parts[5] : undefined)
   }
-
-  return
 }
 
 export const geckoStackLineParser: StackLineParser = [GECKO_PRIORITY, gecko]

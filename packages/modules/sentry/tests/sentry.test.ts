@@ -1,5 +1,4 @@
-import { enableFetchMocks } from 'jest-fetch-mock'
-import fetchMock from 'jest-fetch-mock'
+import fetchMock, { enableFetchMocks } from 'jest-fetch-mock'
 enableFetchMocks()
 
 import { JSONRequest, jsonRequestHandler } from '@reapit-cdk/edge-api-sdk/src'
