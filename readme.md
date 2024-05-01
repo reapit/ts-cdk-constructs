@@ -1,5 +1,5 @@
 # @reapit-cdk/ts-constructs
-![coverage: 90.32%25](https://img.shields.io/badge/coverage-90.32%25-green)
+![coverage: 88.39%25](https://img.shields.io/badge/coverage-88.39%25-green)
 CDK Constructs Monorepo
 ## Constructs
 
@@ -153,7 +153,7 @@ Types for @reapit-cdk/email-receiver and client.
 
 ![npm version](https://img.shields.io/npm/v/@reapit-cdk/sentry)
 ![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/sentry)
-![coverage: 85.39%25](https://img.shields.io/badge/coverage-85.39%25-green)
+![coverage: 78.02%25](https://img.shields.io/badge/coverage-78.02%25-orange)
 
 Minimal Sentry SDK
 
