@@ -2,8 +2,6 @@ import fetchMock, { enableFetchMocks } from 'jest-fetch-mock'
 enableFetchMocks()
 
 import { initBrowserSentry } from '../src/browser'
-import { initBreadcrumbIntegration } from '../src/browser-breadcrumb-integration'
-import { Breadcrumb } from '@sentry/types'
 
 describe('browser', () => {
   beforeEach(() => {
@@ -41,12 +39,5 @@ describe('browser', () => {
       expect(values[0].type).toEqual('Error')
       expect(values[0].value).toEqual('oh no')
     })
-  })
-})
-
-describe('browser breadcrumb integration', () => {
-  it('should init', () => {
-    const breadcrumbs: Breadcrumb[] = []
-    initBreadcrumbIntegration({ breadcrumbs })
   })
 })

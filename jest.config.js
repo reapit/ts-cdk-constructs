@@ -24,7 +24,7 @@ module.exports = {
   }, {
     displayName: 'browser unit tests',
     testMatch: [
-      '<rootDir>/packages/**/browser.test.ts',
+      '<rootDir>/packages/**/*.browser.test.ts',
     ],
     testEnvironment: 'jsdom',
     transform: {
