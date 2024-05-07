@@ -79,7 +79,7 @@ const generateLogPayload = (entries: LogEntry[]): LogPayload => {
       a: 'b',
     },
     region: 'eu-west-2',
-    cookies: ['a=b'],
+    cookies: ['c=d'],
     body: {},
     meta: {
       event,
@@ -201,7 +201,9 @@ describe('edge-api-sentry-logger', () => {
       query_string: {
         a: 'b',
       },
-      cookies: {},
+      cookies: {
+        c: 'd',
+      },
       url: '/',
     })
   })
