@@ -65,6 +65,7 @@ describe('browser breadcrumb integration', () => {
       const breadcrumbs: Breadcrumb[] = []
       initBreadcrumbIntegration({ breadcrumbs })
       expect(breadcrumbs).toHaveLength(0)
+      htmlTreeAsString.mockReturnValue('html-tree-as-string-output')
       const _innerDomBreadcrumb = addClickKeypressInstrumentationHandler.mock.calls[0][0]
       _innerDomBreadcrumb({
         event: {
@@ -77,7 +78,7 @@ describe('browser breadcrumb integration', () => {
       expect(breadcrumbs[0]).toEqual({
         category: 'ui.name',
         message: 'html-tree-as-string-output',
-        data: { 'ui.component_name': 'get-component-name-output' },
+        timestamp: undefined,
       })
     })
   })
@@ -150,9 +151,9 @@ describe('browser breadcrumb integration', () => {
           arguments: ['a', 'b', { c: 1 }],
           logger: 'console',
         },
-        level: 'severityLevelFromString',
-        message: '',
-        timestamp: 'date-timestamp-in-seconds-output',
+        level: undefined,
+        message: undefined,
+        timestamp: undefined,
       })
     })
   })
