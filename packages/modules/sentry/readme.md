@@ -3,7 +3,7 @@
 
 ![npm version](https://img.shields.io/npm/v/@reapit-cdk/sentry)
 ![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/sentry)
-![coverage: 76.5%25](https://img.shields.io/badge/coverage-76.5%25-orange)
+![coverage: 85.96%25](https://img.shields.io/badge/coverage-85.96%25-green)
 
 Minimal Sentry SDK
 
