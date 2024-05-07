@@ -16,7 +16,7 @@ import {
 } from '@reapit-cdk/edge-api-sdk'
 
 import { createGetModuleFromFilename } from './module'
-import { getCookies, sendEnvelope, validateSentryDsn } from './sentry'
+import { sendEnvelope, validateSentryDsn } from './sentry'
 import { dateToSecs } from './utils'
 
 const stackParser = stackParserFromStackParserOptions(
@@ -40,6 +40,20 @@ const pickFirst = (queryOrHeaders: RCQuery | RCHeaders) =>
       }),
       {},
     )
+
+const getCookies = (cookie: string): Record<string, string> =>
+  Object.fromEntries(
+    cookie
+      .split('; ')
+      .map((v) => {
+        try {
+          return v.split(/=(.*)/s).map(decodeURIComponent)
+        } catch {
+          return ['', '']
+        }
+      })
+      .filter(([v]) => !!v),
+  )
 
 export const initSentryLogger = (request: RCRequest<{ sentryDsn: string; sentryRelease: string }>): Transport => {
   const {
