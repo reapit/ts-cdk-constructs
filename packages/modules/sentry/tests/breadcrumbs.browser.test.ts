@@ -48,6 +48,14 @@ describe('browser breadcrumb integration', () => {
     dateTimestampInSeconds.mockReset()
     severityLevelFromString.mockReset()
     safeJoin.mockReset()
+
+    htmlTreeAsString.mockReturnValue('html-tree-as-string-output')
+    getComponentName.mockReturnValue('get-component-name-output')
+    dateTimestampInSeconds.mockReturnValue('date-timestamp-in-seconds-output')
+
+    severityLevelFromString.mockReturnValue('severityLevelFromString')
+
+    safeJoin.mockImplementation((args: any[], delimiter: string) => args.join(delimiter))
   })
 
   it('should init', () => {
@@ -78,7 +86,10 @@ describe('browser breadcrumb integration', () => {
       expect(breadcrumbs[0]).toEqual({
         category: 'ui.name',
         message: 'html-tree-as-string-output',
-        timestamp: undefined,
+        data: {
+          'ui.component_name': 'get-component-name-output',
+        },
+        timestamp: 'date-timestamp-in-seconds-output',
       })
     })
   })
@@ -99,6 +110,7 @@ describe('browser breadcrumb integration', () => {
       expect(breadcrumbs[0]).toEqual({
         category: 'navigation',
         data: { from: '/path', to: '/path' },
+        timestamp: 'date-timestamp-in-seconds-output',
       })
     })
   })
@@ -130,6 +142,7 @@ describe('browser breadcrumb integration', () => {
           status_code: 200,
         },
         type: 'http',
+        timestamp: 'date-timestamp-in-seconds-output',
       })
     })
   })
@@ -151,9 +164,9 @@ describe('browser breadcrumb integration', () => {
           arguments: ['a', 'b', { c: 1 }],
           logger: 'console',
         },
-        level: undefined,
-        message: undefined,
-        timestamp: undefined,
+        level: 'severityLevelFromString',
+        message: 'a b [object Object]',
+        timestamp: 'date-timestamp-in-seconds-output',
       })
     })
   })
@@ -186,6 +199,7 @@ describe('browser breadcrumb integration', () => {
           body: 'something',
         },
         type: 'http',
+        timestamp: 'date-timestamp-in-seconds-output',
       })
     })
   })
