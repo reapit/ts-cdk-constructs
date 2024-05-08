@@ -3622,6 +3622,28 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@reapit-cdk/delete-custom-userpool-domain@workspace:packages/constructs/delete-custom-userpool-domain":
+  version: 0.0.0-use.local
+  resolution: "@reapit-cdk/delete-custom-userpool-domain@workspace:packages/constructs/delete-custom-userpool-domain"
+  dependencies:
+    "@aws-sdk/client-cognito-identity-provider": "npm:3.513.0"
+    "@reapit-cdk/custom-resource-wrapper": "workspace:^"
+    "@reapit-cdk/eslint-config": "workspace:^"
+    "@reapit-cdk/tsup": "workspace:^"
+    "@reapit-cdk/userpool-domain": "workspace:^"
+    aws-cdk-lib: "npm:2.96.2"
+    aws-lambda: "npm:^1.0.7"
+    aws-sdk-client-mock: "npm:^3.0.1"
+    constructs: "npm:10.2.70"
+    jsii: "npm:^5.3.20"
+    jsii-pacmak: "npm:^1.94.0"
+    publib: "npm:^0.2.812"
+  peerDependencies:
+    aws-cdk-lib: ^2.96.2
+    constructs: ^10.2.70
+  languageName: unknown
+  linkType: soft
+
 "@reapit-cdk/edge-api-sdk@workspace:packages/modules/edge-api-sdk":
   version: 0.0.0-use.local
   resolution: "@reapit-cdk/edge-api-sdk@workspace:packages/modules/edge-api-sdk"
@@ -3927,7 +3949,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@reapit-cdk/userpool-domain@workspace:packages/constructs/userpool-domain":
+"@reapit-cdk/userpool-domain@workspace:^, @reapit-cdk/userpool-domain@workspace:packages/constructs/userpool-domain":
   version: 0.0.0-use.local
   resolution: "@reapit-cdk/userpool-domain@workspace:packages/constructs/userpool-domain"
   dependencies:

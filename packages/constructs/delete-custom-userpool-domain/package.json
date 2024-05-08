@@ -1,0 +1,71 @@
+{
+  "name": "@reapit-cdk/delete-custom-userpool-domain",
+  "description": "This construct does a thing",
+  "version": "0.0.0",
+  "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/delete-custom-userpool-domain",
+  "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/delete-custom-userpool-domain/readme.md",
+  "bugs": {
+    "url": "https://github.com/reapit/ts-cdk-constructs/issues"
+  },
+  "license": "MIT",
+  "scripts": {
+    "publish": "yarn jsii:publish",
+    "build": "yarn jsii:build && reapit-cdk-tsup --lambda --no-main && yarn jsii:package",
+    "check": "yarn run root:check -p $(pwd)",
+    "lint": "reapit-cdk-eslint",
+    "test": "yarn run root:test -- $(pwd)",
+    "integ": "yarn run root:integ -- $(pwd)",
+    "jsii:build": "jsii --generate-tsconfig tsconfig.jsii.json --fail-on-warnings",
+    "jsii:package": "jsii-pacmak",
+    "jsii:publish": "bash ../../../node_modules/publib/bin/publib jsii-out"
+  },
+  "author": {
+    "name": "Craig Duggan",
+    "email": "cduggan@reapit.com"
+  },
+  "repository": {
+    "url": "https://github.com/reapit/ts-cdk-constructs.git"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "stability": "stable",
+  "keywords": [
+    "awscdk"
+  ],
+  "peerDependencies": {
+    "aws-cdk-lib": "^2.96.2",
+    "constructs": "^10.2.70"
+  },
+  "devDependencies": {
+    "@aws-sdk/client-cognito-identity-provider": "3.513.0",
+    "@reapit-cdk/custom-resource-wrapper": "workspace:^",
+    "@reapit-cdk/eslint-config": "workspace:^",
+    "@reapit-cdk/tsup": "workspace:^",
+    "@reapit-cdk/userpool-domain": "workspace:^",
+    "aws-cdk-lib": "2.96.2",
+    "aws-lambda": "^1.0.7",
+    "aws-sdk-client-mock": "^3.0.1",
+    "constructs": "10.2.70",
+    "jsii": "^5.3.20",
+    "jsii-pacmak": "^1.94.0",
+    "publib": "^0.2.812"
+  },
+  "jsii": {
+    "tsc": {
+      "outDir": "dist",
+      "rootDir": "src"
+    },
+    "versionFormat": "short",
+    "excludeTypescript": [
+      "tests",
+      "src/lambda"
+    ],
+    "outdir": "jsii-out",
+    "targets": {
+      "python": {
+        "distName": "reapit-cdk.delete-custom-userpool-domain",
+        "module": "reapit_cdk.delete_custom_userpool_domain"
+      }
+    }
+  }
+}
