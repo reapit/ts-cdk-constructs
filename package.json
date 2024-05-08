@@ -1,7 +1,7 @@
 {
   "name": "@reapit-cdk/ts-constructs",
   "description": "CDK Constructs Monorepo",
-  "packageManager": "yarn@4.0.0",
+  "packageManager": "yarn@4.2.1+sha512.4326f6a5a916363bfd3533f984bc4c91d47a0c6af2d79fc6e8a25dec14a1be88ec354e2b1d2919461647ec8df1d39303575f7726827704cdf9909d38621c9300",
   "private": true,
   "workspaces": [
     "packages/constructs/replicated-key",
