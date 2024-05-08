@@ -50,6 +50,7 @@ initBrowserSentry({
 
 // for browser usage, with breadcrumb integration
 import { initBreadcrumbIntegration } from '@reapit-cdk/sentry/dist/browser-breadcrumb-integration'
+
 initBrowserSentry({
   componentName: '',
   dsn: '',
