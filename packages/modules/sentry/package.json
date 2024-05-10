@@ -17,7 +17,7 @@
     "check": "yarn run root:check -p $(pwd)",
     "lint": "reapit-cdk-eslint",
     "test": "yarn run root:test -- $(pwd)",
-    "build": "reapit-cdk-tsup --is-sentry",
+    "build": "yarn workspace @reapit-cdk/edge-api-sdk build && reapit-cdk-tsup --is-sentry",
     "prepack": "yarn build"
   },
   "devDependencies": {
