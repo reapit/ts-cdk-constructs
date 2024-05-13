@@ -18,7 +18,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-deploy-role-028446965111-us-east-1",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-cfn-exec-role-028446965111-us-east-1",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-028446965111-us-east-1/6f37e0c86a2da26a8b9238736662ecf22b886a4408bae9ee33ed1e15b434c4d3.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-028446965111-us-east-1/eecf89aba70325737dc96d71ded8561ff2fda0eb0997d95bb3585fbbd3728174.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -34,12 +34,6 @@
         "delete-custom-userpool-domain-test-stack.assets"
       ],
       "metadata": {
-        "/delete-custom-userpool-domain-test-stack/domainName": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "domainName"
-          }
-        ],
         "/delete-custom-userpool-domain-test-stack/Certificate/Resource": [
           {
             "type": "aws:cdk:logicalId",

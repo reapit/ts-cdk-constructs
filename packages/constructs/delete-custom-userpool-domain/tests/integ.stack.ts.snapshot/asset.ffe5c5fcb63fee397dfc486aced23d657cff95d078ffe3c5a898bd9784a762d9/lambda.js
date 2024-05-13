@@ -36,9 +36,6 @@ var deleteCustomUserPoolDomain = async (userPoolId) => {
       UserPoolId: userPoolId
     })
   );
-  console.log("--------------------------------------------------");
-  console.log(userPool.UserPool);
-  console.log("--------------------------------------------------");
   const { CustomDomain } = userPool.UserPool || {};
   if (CustomDomain) {
     await client.send(

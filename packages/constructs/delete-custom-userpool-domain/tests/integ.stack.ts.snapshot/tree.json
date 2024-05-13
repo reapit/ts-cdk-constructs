@@ -16,14 +16,6 @@
               "version": "2.96.2"
             }
           },
-          "domainName": {
-            "id": "domainName",
-            "path": "delete-custom-userpool-domain-test-stack/domainName",
-            "constructInfo": {
-              "fqn": "aws-cdk-lib.CfnOutput",
-              "version": "2.96.2"
-            }
-          },
           "Certificate": {
             "id": "Certificate",
             "path": "delete-custom-userpool-domain-test-stack/Certificate",
@@ -540,7 +532,7 @@
                       "aws:cdk:cloudformation:props": {
                         "code": {
                           "s3Bucket": "cdk-hnb659fds-assets-028446965111-us-east-1",
-                          "s3Key": "04d79813d5ffc3c78b91f8e05db04d4e3ac1272e34c7d5456ab07375cbd1634b.zip"
+                          "s3Key": "ffe5c5fcb63fee397dfc486aced23d657cff95d078ffe3c5a898bd9784a762d9.zip"
                         },
                         "handler": "lambda.onEvent",
                         "role": {

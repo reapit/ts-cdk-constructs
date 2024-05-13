@@ -1,14 +1,4 @@
 {
- "Outputs": {
-  "domainName": {
-   "Value": "delete-userpool-test.integ.dev.paas.reapit.cloud"
-  },
-  "userPoolId": {
-   "Value": {
-    "Ref": "UserPool6BA7E5F2"
-   }
-  }
- },
  "Resources": {
   "Certificate4E7ABB08": {
    "Type": "AWS::CertificateManager::Certificate",
@@ -330,7 +320,7 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-028446965111-us-east-1",
-     "S3Key": "04d79813d5ffc3c78b91f8e05db04d4e3ac1272e34c7d5456ab07375cbd1634b.zip"
+     "S3Key": "ffe5c5fcb63fee397dfc486aced23d657cff95d078ffe3c5a898bd9784a762d9.zip"
     },
     "Handler": "lambda.onEvent",
     "Role": {
@@ -351,7 +341,7 @@
    ],
    "Metadata": {
     "aws:cdk:path": "delete-custom-userpool-domain-test-stack/DeleteCustomDomain/lambda/Resource",
-    "aws:asset:path": "asset.04d79813d5ffc3c78b91f8e05db04d4e3ac1272e34c7d5456ab07375cbd1634b",
+    "aws:asset:path": "asset.ffe5c5fcb63fee397dfc486aced23d657cff95d078ffe3c5a898bd9784a762d9",
     "aws:asset:is-bundled": false,
     "aws:asset:property": "Code"
    }
@@ -514,7 +504,7 @@
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/12QzW7CMBCEn4W72bZBrcoRUvVWFSXqGRlniRYSL/JuQJXld6/MT0p7mvF8I8ueAuJ8Dk8Te5Kpa/bTjjYQa7Vub8qtr1B4CA6Tmb9A8bd0Y7n3OehhUGNPso4Og9KWnFXsrbctBojlb5brd8dkHLeelCF+CYYVc5cbo7+ZN+4t+Xt0SZLpbL9pLMSafNuhsn8fvFNib0ZTbscwGbI9xBV35L4zuLqKu/PTsiYTeFB8nkFcVOg4NJctsqtRk5HZ2oqgCiyyGJnBcnB71KWV/KNBlPt1uA4kEBcnKc/hONoq8JEaDMn8A3erm/PttdqWfJvBhz0cyLcpGc8Nwk4ejk+vUDxCMdkJ0TQMXqlHqC76AwPNV2LcAQAA"
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/12QzW7CMBCEn4W72ZagVuUIQb1VRYl6RsZZIpPEi7xrUGX53Svzk9Ke5vPMarWeAuJiAbOJPvPUNN20tzuItWjTqXLvKmQK3mBSi1co/g7dM6XPvI0Gvdi9NVpw0E636CGWv15e9vBMylDrrBDEL0a/IerzxMh3WNOgrXuMrk5SvR52jYZYW9f2KOTegzNiyakRyv1oJmX1AHFDvTXfObhRRf3ltKxJeQqCL3OIywoN+ebaQKYaJSmebzUzCsMyi+I5rILpUFaa848CCw1bf6uFIS7PXF7MsaqNp5Nt0Cf1L3joWl2216Jb69ocfOjj8YafQY5BUlKOGoQDP51mb1A8QzE5sLVTH5zYAaG66g+N3JOL3AEAAA=="
    },
    "Metadata": {
     "aws:cdk:path": "delete-custom-userpool-domain-test-stack/CDKMetadata/Default"
@@ -528,6 +518,13 @@
    },
    "aws-cn": {
     "zoneId": "Z3RFFRIM2A3IF5"
+   }
+  }
+ },
+ "Outputs": {
+  "userPoolId": {
+   "Value": {
+    "Ref": "UserPool6BA7E5F2"
    }
   }
  },
