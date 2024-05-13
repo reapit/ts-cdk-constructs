@@ -4125,7 +4125,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@reapit-cdk/edge-api-sdk@workspace:packages/modules/edge-api-sdk":
+"@reapit-cdk/edge-api-sdk@workspace:^, @reapit-cdk/edge-api-sdk@workspace:packages/modules/edge-api-sdk":
   version: 0.0.0-use.local
   resolution: "@reapit-cdk/edge-api-sdk@workspace:packages/modules/edge-api-sdk"
   dependencies:
