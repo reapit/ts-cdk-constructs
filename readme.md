@@ -1,5 +1,5 @@
 # @reapit-cdk/ts-constructs
-![coverage: 90.82%25](https://img.shields.io/badge/coverage-90.82%25-green)
+![coverage: 90.85%25](https://img.shields.io/badge/coverage-90.85%25-green)
 CDK Constructs Monorepo
 ## Constructs
 
@@ -31,6 +31,14 @@ CloudFront invalidations are [very error prone](https://github.com/aws/aws-cdk/i
 ![Integ Tests: X](https://img.shields.io/badge/Integ%20Tests-X-red)
 
 Allows you to share values between stack across regions and accounts.
+<h3><a href="packages/constructs/delete-custom-userpool-domain">@reapit-cdk/delete-custom-userpool-domain</a></h3>
+
+![npm version](https://img.shields.io/npm/v/@reapit-cdk/delete-custom-userpool-domain)
+![npm downloads](https://img.shields.io/npm/dm/@reapit-cdk/delete-custom-userpool-domain)
+![coverage: 99.02%25](https://img.shields.io/badge/coverage-99.02%25-green)
+![Integ Tests: ✔](https://img.shields.io/badge/Integ%20Tests-%E2%9C%94-green)
+
+This construct removes the custom domain configured for a Amazon Cognito hosted UI and auth API endpoints.
 <h3><a href="packages/constructs/edge-api">@reapit-cdk/edge-api</a></h3>
 
 ![npm version](https://img.shields.io/npm/v/@reapit-cdk/edge-api)

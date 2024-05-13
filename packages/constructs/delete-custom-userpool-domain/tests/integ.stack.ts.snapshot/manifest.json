@@ -1,0 +1,167 @@
+{
+  "version": "34.0.0",
+  "artifacts": {
+    "delete-custom-userpool-domain-test-stack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "delete-custom-userpool-domain-test-stack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "delete-custom-userpool-domain-test-stack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://028446965111/us-east-1",
+      "properties": {
+        "templateFile": "delete-custom-userpool-domain-test-stack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-deploy-role-028446965111-us-east-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-cfn-exec-role-028446965111-us-east-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-028446965111-us-east-1/eecf89aba70325737dc96d71ded8561ff2fda0eb0997d95bb3585fbbd3728174.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "delete-custom-userpool-domain-test-stack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::028446965111:role/cdk-hnb659fds-lookup-role-028446965111-us-east-1",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "delete-custom-userpool-domain-test-stack.assets"
+      ],
+      "metadata": {
+        "/delete-custom-userpool-domain-test-stack/Certificate/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "Certificate4E7ABB08"
+          }
+        ],
+        "/delete-custom-userpool-domain-test-stack/UserPool/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UserPool6BA7E5F2"
+          }
+        ],
+        "/delete-custom-userpool-domain-test-stack/UserPool/Domain/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UserPoolDomainD0EA232A"
+          }
+        ],
+        "/delete-custom-userpool-domain-test-stack/UserPool/Domain/CloudFrontDomainName/Resource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UserPoolDomainCloudFrontDomainNameE213E594"
+          }
+        ],
+        "/delete-custom-userpool-domain-test-stack/UserPool/Domain/CloudFrontDomainName/CustomResourcePolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UserPoolDomainCloudFrontDomainNameCustomResourcePolicy7DE54188"
+          }
+        ],
+        "/delete-custom-userpool-domain-test-stack/ARecord/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ARecordE7B57761"
+          }
+        ],
+        "/delete-custom-userpool-domain-test-stack/AWS679f53fac002430cb0da5b7982bd2287/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2"
+          }
+        ],
+        "/delete-custom-userpool-domain-test-stack/AWS679f53fac002430cb0da5b7982bd2287/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AWS679f53fac002430cb0da5b7982bd22872D164C4C"
+          }
+        ],
+        "/delete-custom-userpool-domain-test-stack/AWSCloudFrontPartitionHostedZoneIdMap": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AWSCloudFrontPartitionHostedZoneIdMap"
+          }
+        ],
+        "/delete-custom-userpool-domain-test-stack/userPoolId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "userPoolId"
+          }
+        ],
+        "/delete-custom-userpool-domain-test-stack/DeleteCustomDomain/lambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DeleteCustomDomainlambdaServiceRoleA526790E"
+          }
+        ],
+        "/delete-custom-userpool-domain-test-stack/DeleteCustomDomain/lambda/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DeleteCustomDomainlambdaServiceRoleDefaultPolicy39792671"
+          }
+        ],
+        "/delete-custom-userpool-domain-test-stack/DeleteCustomDomain/lambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DeleteCustomDomainlambdaDA9A2548"
+          }
+        ],
+        "/delete-custom-userpool-domain-test-stack/DeleteCustomDomain/provider/framework-onEvent/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DeleteCustomDomainproviderframeworkonEventServiceRoleD581E8F8"
+          }
+        ],
+        "/delete-custom-userpool-domain-test-stack/DeleteCustomDomain/provider/framework-onEvent/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DeleteCustomDomainproviderframeworkonEventServiceRoleDefaultPolicy06F5D659"
+          }
+        ],
+        "/delete-custom-userpool-domain-test-stack/DeleteCustomDomain/provider/framework-onEvent/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DeleteCustomDomainproviderframeworkonEvent4FA458D2"
+          }
+        ],
+        "/delete-custom-userpool-domain-test-stack/DeleteCustomDomain/resource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DeleteCustomDomainresourceFEB35F78"
+          }
+        ],
+        "/delete-custom-userpool-domain-test-stack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/delete-custom-userpool-domain-test-stack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/delete-custom-userpool-domain-test-stack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "delete-custom-userpool-domain-test-stack"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}
