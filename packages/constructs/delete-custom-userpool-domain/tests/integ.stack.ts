@@ -5,7 +5,6 @@ import { ARecord, HostedZone, RecordTarget } from 'aws-cdk-lib/aws-route53'
 import { Certificate, CertificateValidation } from 'aws-cdk-lib/aws-certificatemanager'
 import { UserPoolDomainTarget } from 'aws-cdk-lib/aws-route53-targets'
 import { DeleteCustomUserPoolDomain } from '../dist'
-// import { DeleteCustomUserPoolDomain } from '../dist'
 
 const app = new App()
 
@@ -18,7 +17,6 @@ if (!process.env.INTEG_DOMAIN) {
   throw new Error('process.env.INTEG_DOMAIN required')
 }
 const parentDomainName = process.env.INTEG_DOMAIN
-console.log(`parentDomainName: ${parentDomainName}`)
 
 if (!process.env.INTEG_ZONE_ID) {
   throw new Error('process.env.INTEG_ZONE_ID required')
@@ -26,14 +24,12 @@ if (!process.env.INTEG_ZONE_ID) {
 
 const stack = new Stack(app, 'delete-custom-userpool-domain-test-stack', { env })
 
+const domainName = `delete-userpool-test.${parentDomainName}`
+
 const hostedZone = HostedZone.fromHostedZoneAttributes(stack, 'zone', {
   hostedZoneId: process.env.INTEG_ZONE_ID,
   zoneName: parentDomainName,
 })
-
-const domainName = `delete-userpool-test.${parentDomainName}`
-new CfnOutput(stack, 'domainName', { value: domainName })
-console.log(`domainName: ${domainName}`)
 
 const certificate = new Certificate(stack, 'Certificate', {
   domainName: domainName,

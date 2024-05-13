@@ -32,7 +32,6 @@ describe('delete-custom-userpool-domain', () => {
   })
   test('the lambda has the right permissions', () => {
     const { template, userPool, stack } = synth()
-
     template.hasResourceProperties('AWS::IAM::Policy', {
       PolicyDocument: {
         Statement: [

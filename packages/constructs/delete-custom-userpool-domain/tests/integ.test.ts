@@ -16,7 +16,6 @@ describe('delete-custom-userpool-domain integration', () => {
 
     const result = await client.send(new DescribeUserPoolCommand({ UserPoolId: integ.outputs.userPoolId }))
     const { CustomDomain } = result.UserPool ?? {}
-    console.log(`CustomDomain: ${CustomDomain}`)
 
     expect(CustomDomain).toBeUndefined()
   })
