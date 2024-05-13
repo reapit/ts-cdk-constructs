@@ -1,0 +1,35 @@
+{
+  "name": "@reapit-cdk/sentry",
+  "description": "Minimal Sentry SDK",
+  "main": "src/index.ts",
+  "version": "0.0.1",
+  "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/modules/sentry",
+  "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/modules/sentry/readme.md",
+  "bugs": {
+    "url": "https://github.com/reapit/ts-cdk-constructs/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reapit/ts-cdk-constructs.git"
+  },
+  "scripts": {
+    "publish": "yarn npm publish",
+    "check": "yarn run root:check -p $(pwd)",
+    "lint": "reapit-cdk-eslint",
+    "test": "yarn run root:test -- $(pwd)",
+    "build": "yarn workspace @reapit-cdk/edge-api-sdk build && reapit-cdk-tsup --is-sentry",
+    "prepack": "yarn build"
+  },
+  "devDependencies": {
+    "@reapit-cdk/eslint-config": "workspace:^",
+    "@reapit-cdk/tsup": "workspace:^"
+  },
+  "dependencies": {
+    "@reapit-cdk/edge-api-sdk": "workspace:^",
+    "@sentry-internal/browser-utils": "8.0.0-beta.5",
+    "@sentry/browser": "8.0.0-beta.5",
+    "@sentry/node": "8.0.0-beta.5",
+    "@sentry/types": "8.0.0-beta.5",
+    "@sentry/utils": "8.0.0-beta.5"
+  }
+}

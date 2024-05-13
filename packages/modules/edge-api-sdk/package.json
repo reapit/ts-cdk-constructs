@@ -3,7 +3,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "description": "Provides convenience wrappers for accepting and responding to [@reapit-cdk/edge-api]('../../constructs/edge-api/readme.md') lambda requests.",
-  "version": "0.0.23",
+  "version": "0.0.25",
   "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/modules/edge-api-sdk",
   "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/modules/edge-api-sdk/readme.md",
   "bugs": {
@@ -28,10 +28,5 @@
     "@types/aws-lambda": "^8.10.121",
     "aws-lambda": "^1.0.7",
     "jest-fetch-mock": "^3.0.3"
-  },
-  "dependencies": {
-    "@sentry/node": "^7.109.0",
-    "@sentry/types": "^7.109.0",
-    "@sentry/utils": "^7.109.0"
   }
 }

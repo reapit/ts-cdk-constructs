@@ -8,6 +8,21 @@ const hasLambda = process.argv.slice(2).includes('--lambda')
 const hasLambdas = process.argv.slice(2).includes('--lambdas')
 const hasSetup = process.argv.slice(2).includes('--setup')
 const noMain = process.argv.slice(2).includes('--no-main')
+const isSentry = process.argv.slice(2).includes('--is-sentry')
+
+if (isSentry) {
+  await build({
+    entry: ['src/index.ts', 'src/edge-api-sentry-logger.ts', 'src/browser-breadcrumb-integration.ts', 'src/browser.ts'],
+    target: 'node18',
+    dts: true,
+    clean: true,
+    external: [/@reapit-cdk\/(.*)/],
+
+    metafile: true,
+    noExternal: ['@sentry/core', '@sentry/utils', '@sentry/node', '@sentry/browser', '@sentry-internal/browser-utils'],
+  })
+  process.exit()
+}
 
 if (!hasLambda && !hasLambdas && process.argv.slice(2)[0]) {
   await build({
@@ -25,9 +40,6 @@ if (!noMain) {
     dts: true,
     clean: true,
     external: [/@reapit-cdk\/(.*)/],
-
-    // metafile: true,
-    noExternal: ['@sentry/core', '@sentry/utils'],
   })
 }
 

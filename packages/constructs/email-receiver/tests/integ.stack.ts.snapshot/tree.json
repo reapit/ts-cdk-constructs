@@ -13,7 +13,7 @@
             "path": "email-receiver-test-stack/zone",
             "constructInfo": {
               "fqn": "aws-cdk-lib.Resource",
-              "version": "2.99.1"
+              "version": "2.96.2"
             }
           },
           "email-receiver": {
@@ -58,7 +58,7 @@
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_dynamodb.CfnTable",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   },
                   "ScalingRole": {
@@ -66,13 +66,13 @@
                     "path": "email-receiver-test-stack/email-receiver/table/ScalingRole",
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.Resource",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   }
                 },
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.aws_dynamodb.Table",
-                  "version": "2.99.1"
+                  "version": "2.96.2"
                 }
               },
               "topic": {
@@ -88,13 +88,13 @@
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_sns.CfnTopic",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   }
                 },
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.aws_sns.Topic",
-                  "version": "2.99.1"
+                  "version": "2.96.2"
                 }
               },
               "Identity": {
@@ -112,13 +112,13 @@
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_ses.CfnEmailIdentity",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   }
                 },
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.aws_ses.EmailIdentity",
-                  "version": "2.99.1"
+                  "version": "2.96.2"
                 }
               },
               "dkim-0": {
@@ -148,7 +148,7 @@
                 },
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.aws_route53.CfnRecordSet",
-                  "version": "2.99.1"
+                  "version": "2.96.2"
                 }
               },
               "dkim-1": {
@@ -178,7 +178,7 @@
                 },
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.aws_route53.CfnRecordSet",
-                  "version": "2.99.1"
+                  "version": "2.96.2"
                 }
               },
               "dkim-2": {
@@ -208,7 +208,7 @@
                 },
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.aws_route53.CfnRecordSet",
-                  "version": "2.99.1"
+                  "version": "2.96.2"
                 }
               },
               "mx-record": {
@@ -232,7 +232,7 @@
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_route53.CfnRecordSet",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   },
                   "DeleteExistingRecordSetCustomResource": {
@@ -244,19 +244,19 @@
                         "path": "email-receiver-test-stack/email-receiver/mx-record/DeleteExistingRecordSetCustomResource/Default",
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.CfnResource",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       }
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.CustomResource",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   }
                 },
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.aws_route53.MxRecord",
-                  "version": "2.99.1"
+                  "version": "2.96.2"
                 }
               },
               "waiter": {
@@ -276,7 +276,7 @@
                             "path": "email-receiver-test-stack/email-receiver/waiter/lambda/ServiceRole/ImportServiceRole",
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.Resource",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           },
                           "Resource": {
@@ -315,7 +315,7 @@
                             },
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.aws_iam.CfnRole",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           },
                           "DefaultPolicy": {
@@ -362,19 +362,19 @@
                                 },
                                 "constructInfo": {
                                   "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
-                                  "version": "2.99.1"
+                                  "version": "2.96.2"
                                 }
                               }
                             },
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.aws_iam.Policy",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           }
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_iam.Role",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       },
                       "Code": {
@@ -386,7 +386,7 @@
                             "path": "email-receiver-test-stack/email-receiver/waiter/lambda/Code/Stage",
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.AssetStaging",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           },
                           "AssetBucket": {
@@ -394,13 +394,13 @@
                             "path": "email-receiver-test-stack/email-receiver/waiter/lambda/Code/AssetBucket",
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.aws_s3.BucketBase",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           }
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       },
                       "Resource": {
@@ -411,7 +411,7 @@
                           "aws:cdk:cloudformation:props": {
                             "code": {
                               "s3Bucket": "cdk-hnb659fds-assets-028446965111-eu-central-1",
-                              "s3Key": "cfa281d1e696e61ca92349c05c0ed1fc64177a582ab9a8947c1f43602bf484d7.zip"
+                              "s3Key": "8ed1ecf154a19dce18842d6cea41a06a506bf2ac868c993cde896d17e5f6954d.zip"
                             },
                             "handler": "verification-waiter.onEvent",
                             "role": {
@@ -426,13 +426,13 @@
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       }
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_lambda.Function",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   },
                   "provider": {
@@ -452,7 +452,7 @@
                                 "path": "email-receiver-test-stack/email-receiver/waiter/provider/framework-onEvent/ServiceRole/ImportServiceRole",
                                 "constructInfo": {
                                   "fqn": "aws-cdk-lib.Resource",
-                                  "version": "2.99.1"
+                                  "version": "2.96.2"
                                 }
                               },
                               "Resource": {
@@ -491,7 +491,7 @@
                                 },
                                 "constructInfo": {
                                   "fqn": "aws-cdk-lib.aws_iam.CfnRole",
-                                  "version": "2.99.1"
+                                  "version": "2.96.2"
                                 }
                               },
                               "DefaultPolicy": {
@@ -545,19 +545,19 @@
                                     },
                                     "constructInfo": {
                                       "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
-                                      "version": "2.99.1"
+                                      "version": "2.96.2"
                                     }
                                   }
                                 },
                                 "constructInfo": {
                                   "fqn": "aws-cdk-lib.aws_iam.Policy",
-                                  "version": "2.99.1"
+                                  "version": "2.96.2"
                                 }
                               }
                             },
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.aws_iam.Role",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           },
                           "Code": {
@@ -569,7 +569,7 @@
                                 "path": "email-receiver-test-stack/email-receiver/waiter/provider/framework-onEvent/Code/Stage",
                                 "constructInfo": {
                                   "fqn": "aws-cdk-lib.AssetStaging",
-                                  "version": "2.99.1"
+                                  "version": "2.96.2"
                                 }
                               },
                               "AssetBucket": {
@@ -577,13 +577,13 @@
                                 "path": "email-receiver-test-stack/email-receiver/waiter/provider/framework-onEvent/Code/AssetBucket",
                                 "constructInfo": {
                                   "fqn": "aws-cdk-lib.aws_s3.BucketBase",
-                                  "version": "2.99.1"
+                                  "version": "2.96.2"
                                 }
                               }
                             },
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           },
                           "Resource": {
@@ -620,19 +620,19 @@
                             },
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           }
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_lambda.Function",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       }
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.custom_resources.Provider",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   },
                   "resource": {
@@ -644,13 +644,13 @@
                         "path": "email-receiver-test-stack/email-receiver/waiter/resource/Default",
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.CfnResource",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       }
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.CustomResource",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   }
                 },
@@ -672,7 +672,7 @@
                         "path": "email-receiver-test-stack/email-receiver/receiver-lambda/ServiceRole/ImportServiceRole",
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.Resource",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       },
                       "Resource": {
@@ -711,7 +711,7 @@
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_iam.CfnRole",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       },
                       "DefaultPolicy": {
@@ -760,19 +760,19 @@
                             },
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           }
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_iam.Policy",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       }
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_iam.Role",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   },
                   "Code": {
@@ -784,7 +784,7 @@
                         "path": "email-receiver-test-stack/email-receiver/receiver-lambda/Code/Stage",
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.AssetStaging",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       },
                       "AssetBucket": {
@@ -792,13 +792,13 @@
                         "path": "email-receiver-test-stack/email-receiver/receiver-lambda/Code/AssetBucket",
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_s3.BucketBase",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       }
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   },
                   "Resource": {
@@ -809,7 +809,7 @@
                       "aws:cdk:cloudformation:props": {
                         "code": {
                           "s3Bucket": "cdk-hnb659fds-assets-028446965111-eu-central-1",
-                          "s3Key": "cfa281d1e696e61ca92349c05c0ed1fc64177a582ab9a8947c1f43602bf484d7.zip"
+                          "s3Key": "8ed1ecf154a19dce18842d6cea41a06a506bf2ac868c993cde896d17e5f6954d.zip"
                         },
                         "environment": {
                           "variables": {
@@ -830,7 +830,7 @@
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   },
                   "AllowInvoke:emailreceiverteststackemailreceivertopic4D1F3568": {
@@ -854,7 +854,7 @@
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   },
                   "topic": {
@@ -881,19 +881,19 @@
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_sns.CfnSubscription",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       }
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_sns.Subscription",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   }
                 },
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.aws_lambda.Function",
-                  "version": "2.99.1"
+                  "version": "2.96.2"
                 }
               },
               "active-ruleset": {
@@ -913,7 +913,7 @@
                             "path": "email-receiver-test-stack/email-receiver/active-ruleset/lambda/ServiceRole/ImportServiceRole",
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.Resource",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           },
                           "Resource": {
@@ -952,7 +952,7 @@
                             },
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.aws_iam.CfnRole",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           },
                           "DefaultPolicy": {
@@ -991,19 +991,19 @@
                                 },
                                 "constructInfo": {
                                   "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
-                                  "version": "2.99.1"
+                                  "version": "2.96.2"
                                 }
                               }
                             },
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.aws_iam.Policy",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           }
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_iam.Role",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       },
                       "Code": {
@@ -1015,7 +1015,7 @@
                             "path": "email-receiver-test-stack/email-receiver/active-ruleset/lambda/Code/Stage",
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.AssetStaging",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           },
                           "AssetBucket": {
@@ -1023,13 +1023,13 @@
                             "path": "email-receiver-test-stack/email-receiver/active-ruleset/lambda/Code/AssetBucket",
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.aws_s3.BucketBase",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           }
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       },
                       "Resource": {
@@ -1055,13 +1055,13 @@
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       }
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.aws_lambda.Function",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   },
                   "provider": {
@@ -1081,7 +1081,7 @@
                                 "path": "email-receiver-test-stack/email-receiver/active-ruleset/provider/framework-onEvent/ServiceRole/ImportServiceRole",
                                 "constructInfo": {
                                   "fqn": "aws-cdk-lib.Resource",
-                                  "version": "2.99.1"
+                                  "version": "2.96.2"
                                 }
                               },
                               "Resource": {
@@ -1120,7 +1120,7 @@
                                 },
                                 "constructInfo": {
                                   "fqn": "aws-cdk-lib.aws_iam.CfnRole",
-                                  "version": "2.99.1"
+                                  "version": "2.96.2"
                                 }
                               },
                               "DefaultPolicy": {
@@ -1174,19 +1174,19 @@
                                     },
                                     "constructInfo": {
                                       "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
-                                      "version": "2.99.1"
+                                      "version": "2.96.2"
                                     }
                                   }
                                 },
                                 "constructInfo": {
                                   "fqn": "aws-cdk-lib.aws_iam.Policy",
-                                  "version": "2.99.1"
+                                  "version": "2.96.2"
                                 }
                               }
                             },
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.aws_iam.Role",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           },
                           "Code": {
@@ -1198,7 +1198,7 @@
                                 "path": "email-receiver-test-stack/email-receiver/active-ruleset/provider/framework-onEvent/Code/Stage",
                                 "constructInfo": {
                                   "fqn": "aws-cdk-lib.AssetStaging",
-                                  "version": "2.99.1"
+                                  "version": "2.96.2"
                                 }
                               },
                               "AssetBucket": {
@@ -1206,13 +1206,13 @@
                                 "path": "email-receiver-test-stack/email-receiver/active-ruleset/provider/framework-onEvent/Code/AssetBucket",
                                 "constructInfo": {
                                   "fqn": "aws-cdk-lib.aws_s3.BucketBase",
-                                  "version": "2.99.1"
+                                  "version": "2.96.2"
                                 }
                               }
                             },
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           },
                           "Resource": {
@@ -1249,19 +1249,19 @@
                             },
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           }
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_lambda.Function",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       }
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.custom_resources.Provider",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   },
                   "resource": {
@@ -1273,13 +1273,13 @@
                         "path": "email-receiver-test-stack/email-receiver/active-ruleset/resource/Default",
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.CfnResource",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       }
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.CustomResource",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   },
                   "ses-ruleset": {
@@ -1322,31 +1322,31 @@
                             },
                             "constructInfo": {
                               "fqn": "aws-cdk-lib.aws_ses.CfnReceiptRule",
-                              "version": "2.99.1"
+                              "version": "2.96.2"
                             }
                           }
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_ses.ReceiptRule",
-                          "version": "2.99.1"
+                          "version": "2.96.2"
                         }
                       }
                     },
                     "constructInfo": {
                       "fqn": "aws-cdk-lib.Resource",
-                      "version": "2.99.1"
+                      "version": "2.96.2"
                     }
                   }
                 },
                 "constructInfo": {
-                  "fqn": "constructs.Construct",
-                  "version": "10.2.70"
+                  "fqn": "@reapit-cdk/active-ruleset.ActiveRuleset",
+                  "version": "0.1.2"
                 }
               }
             },
             "constructInfo": {
-              "fqn": "constructs.Construct",
-              "version": "10.2.70"
+              "fqn": "@reapit-cdk/email-receiver.EmailReceiver",
+              "version": "0.1.2"
             }
           },
           "Custom::DeleteExistingRecordSetCustomResourceProvider": {
@@ -1358,7 +1358,7 @@
                 "path": "email-receiver-test-stack/Custom::DeleteExistingRecordSetCustomResourceProvider/Staging",
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.AssetStaging",
-                  "version": "2.99.1"
+                  "version": "2.96.2"
                 }
               },
               "Role": {
@@ -1366,7 +1366,7 @@
                 "path": "email-receiver-test-stack/Custom::DeleteExistingRecordSetCustomResourceProvider/Role",
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.CfnResource",
-                  "version": "2.99.1"
+                  "version": "2.96.2"
                 }
               },
               "Handler": {
@@ -1374,13 +1374,13 @@
                 "path": "email-receiver-test-stack/Custom::DeleteExistingRecordSetCustomResourceProvider/Handler",
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.CfnResource",
-                  "version": "2.99.1"
+                  "version": "2.96.2"
                 }
               }
             },
             "constructInfo": {
               "fqn": "aws-cdk-lib.CustomResourceProvider",
-              "version": "2.99.1"
+              "version": "2.96.2"
             }
           },
           "output": {
@@ -1388,7 +1388,7 @@
             "path": "email-receiver-test-stack/output",
             "constructInfo": {
               "fqn": "aws-cdk-lib.CfnOutput",
-              "version": "2.99.1"
+              "version": "2.96.2"
             }
           },
           "CDKMetadata": {

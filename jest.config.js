@@ -3,12 +3,30 @@ module.exports = {
   // silent: true, // uncomment this to get console.log
   preset: 'ts-jest',
   projects: [{
-    displayName: 'unit tests',
+    displayName: 'node unit tests',
     testMatch: [
       '<rootDir>/packages/**/*.test.ts',
     ],
-    testPathIgnorePatterns: ["integ.*"],
+    testPathIgnorePatterns: ["integ.*", 'browser.*'],
     testEnvironment: 'node',
+    transform: {
+      // '^.+\\.[tj]sx?$' to process js/ts with `ts-jest`
+      // '^.+\\.m?[tj]sx?$' to process js/ts/mjs/mts with `ts-jest`
+      '^.+\\.tsx?$': [
+        'ts-jest',
+        {
+          tsconfig: {
+            sourceMap: true,
+          },
+        },
+      ],
+    },
+  }, {
+    displayName: 'browser unit tests',
+    testMatch: [
+      '<rootDir>/packages/**/*.browser.test.ts',
+    ],
+    testEnvironment: 'jsdom',
     transform: {
       // '^.+\\.[tj]sx?$' to process js/ts with `ts-jest`
       // '^.+\\.m?[tj]sx?$' to process js/ts/mjs/mts with `ts-jest`
