@@ -1,6 +1,6 @@
 {
   "name": "@reapit-cdk/delete-custom-userpool-domain",
-  "description": "This construct does a thing",
+  "description": "This construct removes the custom domain configured for a Amazon Cognito hosted UI and auth API endpoints.",
   "version": "0.0.0",
   "homepage": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/delete-custom-userpool-domain",
   "readme": "https://github.com/reapit/ts-cdk-constructs/blob/main/packages/constructs/delete-custom-userpool-domain/readme.md",
